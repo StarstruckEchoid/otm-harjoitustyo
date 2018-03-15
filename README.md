@@ -3,3 +3,6 @@
 Tämä on OTM-harjoitustyö. Tässä työssä harjoitellaan *gitin* oikeaoppista käyttöä.
 ## Aiheesta muualla
 Katso kurssin ensimmäisen viikon laskarit.
+## Linkkejä
+[GitLog](/laskarit/viikko1/gitlog.txt)  
+[Komentorivi](/laskarit/viikko1/komentorivi.txt)
