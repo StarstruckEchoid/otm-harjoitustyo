@@ -6,3 +6,5 @@ Date:   Thu Mar 15 14:12:13 2018 +0200
 
  README.md | 0
  1 file changed, 0 insertions(+), 0 deletions(-)
+
+//PS: Omasta mielestä meni aika hyvin tämä!
