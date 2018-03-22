@@ -11,10 +11,10 @@ Pelillä on vain yksi käyttäjärooli: käyttäjä.
 ## Käyttöliittymäluonnos
 
 Aloitusvalikko:  
-![UI luonnos 1](/uiLuonnos1.jpg)
+![UI luonnos 1](/dokumentaatio/uiLuonnos1.jpg)
 
 Pelitilanne ja pelivalikko:  
-![UI luonnos 2](/uiLuonnos2.jpg)
+![UI luonnos 2](/dokumentaatio/uiLuonnos2.jpg)
 
 ## Pelin tarjoama toiminnallisuus
 
