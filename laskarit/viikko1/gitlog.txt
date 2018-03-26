@@ -1,10 +1,71 @@
-commit 8eaf7d07e533e6986b4a81c6ba4aea960a56fc10
+commit b6698d60e07066aec1cdf34cf76ac9bb904b29aa
 Author: Juho Gröhn <juho.grohn@gmail.com>
-Date:   Thu Mar 15 14:12:13 2018 +0200
+Date:   Thu Mar 15 14:10:11 2018 +0200
 
-    initial commit
+    Poistettiin file1. Uudelleennimettiin file2 -> file22.
 
- README.md | 0
- 1 file changed, 0 insertions(+), 0 deletions(-)
+commit d3cf0e9903289f1fb1e0a77b84bbf1900b1bc98a
+Author: Juho Gröhn <juho.grohn@gmail.com>
+Date:   Thu Mar 15 13:57:39 2018 +0200
 
-//PS: Omasta mielestä meni aika hyvin tämä!
+    Luotiin kansio tiedostoja ja sinne tiedostot file1, file2, file3.
+
+commit 4392129c9c20f83746016b3ede2c13feac3ad6f0
+Author: Juho Gröhn <juho.grohn@gmail.com>
+Date:   Thu Mar 15 13:49:18 2018 +0200
+
+    Muokattiin tiedostoja eka.txt ja kolmas.txt.
+
+commit 62e83621e9f1dd7e33082afa5e4b21b3c77107ef
+Author: Juho Gröhn <juho.grohn@gmail.com>
+Date:   Thu Mar 15 13:41:48 2018 +0200
+
+    Uudelleennimettiin tiedosto.txt -> eka.txt.
+
+commit 59c13eb7c42e0de55e7eedf44dfe6e447a1e19aa
+Author: Juho Gröhn <juho.grohn@gmail.com>
+Date:   Thu Mar 15 13:38:04 2018 +0200
+
+    Poistettiin tiedosto toinen.txt.
+
+commit ef161428255713426b82b32f9218006b134442f2
+Author: Juho Gröhn <juho.grohn@gmail.com>
+Date:   Thu Mar 15 13:34:03 2018 +0200
+
+    Muokattiin pastan loppuosaa hieman.
+
+commit 2fcc578b8da5644b0626ac7a6fa27183791519ce
+Author: Juho Gröhn <juho.grohn@gmail.com>
+Date:   Thu Mar 15 13:31:48 2018 +0200
+
+    Ylikirjoitettiin tiedosto.txt -tiedoston sisällöksi järkyttävä copypasta.
+
+commit 8371fab432a71de030b827a515a519445c574028
+Author: Juho Gröhn <juho.grohn@gmail.com>
+Date:   Thu Mar 15 13:07:53 2018 +0200
+
+    Lisättiin kansio stuff ja sinne tiedosto neljäs.txt.
+
+commit 367abdfa8ec99c8e905f652a1fb13e9c33219a8f
+Author: Juho Gröhn <juho.grohn@gmail.com>
+Date:   Thu Mar 15 13:00:51 2018 +0200
+
+    Muokattiin tiedostoja toinen.txt ja kolmas.txt
+
+commit c9b1db44775967fc50a0852c121dae79f7399a7e
+Author: Juho Gröhn <juho.grohn@gmail.com>
+Date:   Thu Mar 15 12:57:01 2018 +0200
+
+    Luotiin kolmas.txt.
+
+commit fe2abc8d72036e2539043e1e5a6b410fa73d2c57
+Author: Juho Gröhn <juho.grohn@gmail.com>
+Date:   Thu Mar 15 12:50:32 2018 +0200
+
+    Kirjoitettiin tiedosto.txt:iin, luotiin toinen.txt.
+
+commit ef2d860a0f96b9c4c010fa9abfb76819f5733411
+Author: Juho Gröhn <juho.grohn@gmail.com>
+Date:   Thu Mar 15 12:47:20 2018 +0200
+
+    Luotiin tiedosto.txt.
