@@ -55,7 +55,7 @@ public class OTMKurssiprojekti extends Application {
         //Teksti
         Text t = new Text();
         t.setFont(Font.font("MONOSPACED"));
-        t.setText(Arrays.deepToString(tdl.getLevelData()));
+//        t.setText(Arrays.deepToString(tdl.getLevelData()));
 
         BorderPane hud = new BorderPane();
         hud.setBottom(btn);

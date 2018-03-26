@@ -5,18 +5,46 @@
  */
 package otmkurssiprojekti.Level;
 
+import otmkurssiprojekti.Level.GameObjects.TopDownObject;
+
 /**
  *
  * @author gjuho
+ * @param <T>
  */
-public class TopDownLevelObject {
+public class TopDownLevelObject<T extends TopDownObject> {
     
-    private TopDownObject object;
+    private T topDownObject;
     private Coords coords;
     private Direction direction;
+
+    public TopDownLevelObject() {
+        this.topDownObject = null;
+    }
+
+    public TopDownLevelObject(T object, Coords coords, Direction direction) {
+        this.topDownObject = object;
+        this.coords = coords;
+        this.direction = direction;
+    }
     
     public void move(Direction dir) {
         coords.add(dir.getCoords());
     }
+
+    public Coords getCoords() {
+        return coords;
+    }
+
+    public T getTopDownObject() {
+        return topDownObject;
+    }
+
+    @Override
+    public String toString() {
+        return topDownObject.toString();
+    }
+    
+    
     
 }
