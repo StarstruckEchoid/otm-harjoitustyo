@@ -13,13 +13,15 @@ import otmkurssiprojekti.Level.GameObjects.GameObject;
  * @param <T>
  */
 public class GameLevelObject<T extends GameObject> {
-    
-    private T topDownObject;
-    private Coords coords;
+
+    private final T topDownObject;
+    private final Coords coords;
     private Direction direction;
 
     public GameLevelObject() {
         this.topDownObject = null;
+        this.coords = new Coords();
+        this.direction = Direction.DOWN;
     }
 
     public GameLevelObject(T object, Coords coords, Direction direction) {
@@ -27,13 +29,21 @@ public class GameLevelObject<T extends GameObject> {
         this.coords = coords;
         this.direction = direction;
     }
-    
-    public void move(Direction dir) {
+
+    protected void move(Direction dir) {
         coords.add(dir.getCoords());
+    }
+
+    public void setDirection(Direction direction) {
+        this.direction = direction;
     }
 
     public Coords getCoords() {
         return coords;
+    }
+
+    public Direction getDirection() {
+        return direction;
     }
 
     public T getTopDownObject() {
@@ -44,7 +54,5 @@ public class GameLevelObject<T extends GameObject> {
     public String toString() {
         return topDownObject.toString();
     }
-    
-    
-    
+
 }

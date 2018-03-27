@@ -17,10 +17,12 @@ import otmkurssiprojekti.Level.GameObjects.GameCharacters.GameCharacter;
  */
 public class GameLevel {
 
-    private GameLevelObject<PlayerCharacter> player;
-    private List<GameLevelObject<GameCharacter>> npcs;
+    private final Coords dimensions; //The level is a box from origin to dimensions Coords.
+    private final GameLevelObject<PlayerCharacter> player;
+    private final List<GameLevelObject<GameCharacter>> npcs;
 
     public GameLevel() {
+        this.dimensions = new Coords(15, 15, 7); //By default, the level size is  16x16x8
         this.player = new GameLevelObject(
                 new PlayerCharacter(10, 10, 10),
                 new Coords(0, 0, 0),
@@ -29,13 +31,28 @@ public class GameLevel {
         this.npcs = new ArrayList<>();
     }
 
+    public GameLevel(GameLevelObject<PlayerCharacter> player, List<GameLevelObject<GameCharacter>> npcs) {
+        this.dimensions = new Coords(16, 16, 8);
+        this.player = player;
+        this.npcs = npcs;
+    }
+
+    public GameLevel(Coords dimensions, GameLevelObject<PlayerCharacter> player, List<GameLevelObject<GameCharacter>> npcs) {
+        this.dimensions = dimensions;
+        this.player = player;
+        this.npcs = npcs;
+    }
+
     public GameLevelObject<PlayerCharacter> getPlayer() {
         return player;
     }
-
-    public GameLevel(GameLevelObject<PlayerCharacter> player, List<GameLevelObject<GameCharacter>> npcs) {
-        this.player = player;
-        this.npcs = npcs;
+    
+    public void movePlayer(Direction dir){
+        Coords playerCoords = this.player.getCoords();
+        Coords newCoords = playerCoords.sum(dir.getCoords());
+        if(newCoords.greaterThan(new Coords(0,0,0)) && newCoords.lesserThan(dimensions)){
+            player.move(dir);
+        }
     }
 
     public GameObject[][][] getLevelData() {

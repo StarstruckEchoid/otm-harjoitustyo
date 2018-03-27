@@ -7,6 +7,7 @@ package otmkurssiprojekti;
 
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -55,6 +56,27 @@ public class OutputController {
     public void setDisplayToLevelText() {
         Parent level = this.getLevelTextRepresentation();
         this.scene.setRoot(level);
+    }
+    
+    public Parent getMainMenu(){
+        BorderPane main = new BorderPane();
+        
+        Text t = new Text();
+        t.setFont(Font.font("VERDANA"));
+        t.setText("Main Menu");
+        
+        Button btn = new Button();
+        btn.setText("START");
+        
+        main.setTop(t);
+        main.setCenter(btn);
+        
+        return main;
+    }
+    
+    public void setDisplayToMainMenu(){
+        Parent mainmenu = this.getMainMenu();
+        this.scene.setRoot(mainmenu);
     }
     
 }

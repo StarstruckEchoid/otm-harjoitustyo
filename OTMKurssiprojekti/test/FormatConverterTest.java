@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -12,6 +13,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import otmkurssiprojekti.FormatConverter;
+import otmkurssiprojekti.Level.*;
+import otmkurssiprojekti.Level.GameObjects.GameCharacters.PlayerCharacter;
+import otmkurssiprojekti.Level.GameObjects.GameObject;
 
 /**
  *
@@ -187,7 +191,7 @@ public class FormatConverterTest {
                 = "111\n"
                 + "222\n"
                 + "333\n"
-                +"\n"
+                + "\n"
                 + "444\n"
                 + "555\n"
                 + "666";
@@ -206,8 +210,8 @@ public class FormatConverterTest {
 
         testStringToMatrix(testable, correct);
     }
-    
-        @Test
+
+    @Test
     public void testStringToMatrix2() {
         String testable
                 = "1111\n"
@@ -233,6 +237,34 @@ public class FormatConverterTest {
         };
 
         testStringToMatrix(testable, correct);
+    }
+
+    @Test
+    public void testLevelDataToMatrix1() {
+        GameLevel glvl = new GameLevel(
+                new GameLevelObject<>(new PlayerCharacter(), new Coords(3, 2, 1), Direction.DOWN),
+                new ArrayList<>()
+        );
+
+        char[][][] matrix = FormatConverter.levelDataToMatrix(glvl.getLevelData());
+        assertTrue(matrix[1][2][3] == '@');
+    }
+
+    @Test
+    public void testLevelDataToMatrix2() {
+        GameLevel glvl = new GameLevel(
+                new GameLevelObject<>(new PlayerCharacter(), new Coords(7, 0, 3), Direction.DOWN),
+                new ArrayList<>()
+        );
+
+        char[][][] matrix = FormatConverter.levelDataToMatrix(glvl.getLevelData());
+        assertTrue(matrix[3][0][7] == '@');
+    }
+
+    public static void testLevelDataToMatrix(GameObject[][][] levelData, char[][][] matrix) {
+        char[][][] conversion = FormatConverter.levelDataToMatrix(levelData);
+
+        assertTrue(Arrays.deepEquals(conversion, matrix));
     }
 
     public static void testStringToMatrix(String testable, char[][][] correct) {

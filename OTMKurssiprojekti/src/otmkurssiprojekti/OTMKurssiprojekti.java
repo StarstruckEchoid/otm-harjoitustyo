@@ -5,22 +5,11 @@
  */
 package otmkurssiprojekti;
 
-import java.util.Arrays;
 import javafx.application.Application;
-import javafx.event.*;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import otmkurssiprojekti.Level.Direction;
 import otmkurssiprojekti.Level.GameLevel;
-import otmkurssiprojekti.Level.GameLevelObject;
-import otmkurssiprojekti.Level.GameObjects.GameCharacters.PlayerCharacter;
 
 /**
  *

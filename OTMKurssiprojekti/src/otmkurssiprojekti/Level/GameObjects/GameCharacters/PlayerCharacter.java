@@ -13,6 +13,10 @@ import otmkurssiprojekti.Level.GameObjects.GameObject;
  */
 public class PlayerCharacter extends GameCharacter {
 
+    public PlayerCharacter() {
+        super(10, 1, 1);
+    }
+
     public PlayerCharacter(int hp, int str, int end) {
         super(hp, str, end);
     }
@@ -31,6 +35,5 @@ public class PlayerCharacter extends GameCharacter {
     public void interact(GameObject t) {
         //Others can not interact with the player.
     }
-    
-    
+
 }

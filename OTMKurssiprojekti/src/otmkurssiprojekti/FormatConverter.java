@@ -5,7 +5,6 @@
  */
 package otmkurssiprojekti;
 
-import java.util.Arrays;
 import otmkurssiprojekti.Level.GameObjects.GameObject;
 
 /**
