@@ -5,7 +5,8 @@
  */
 package otmkurssiprojekti.Level;
 
-import otmkurssiprojekti.Level.GameObjects.TopDownObject;
+import java.util.ArrayList;
+import otmkurssiprojekti.Level.GameObjects.GameObject;
 import otmkurssiprojekti.Level.GameObjects.GameCharacters.PlayerCharacter;
 import java.util.List;
 import otmkurssiprojekti.Level.GameObjects.GameCharacters.GameCharacter;
@@ -14,27 +15,36 @@ import otmkurssiprojekti.Level.GameObjects.GameCharacters.GameCharacter;
  *
  * @author gjuho
  */
-public class TopDownLevel {
+public class GameLevel {
 
-    private TopDownLevelObject<PlayerCharacter> player;
-    private List<TopDownLevelObject<GameCharacter>> npcs;
+    private GameLevelObject<PlayerCharacter> player;
+    private List<GameLevelObject<GameCharacter>> npcs;
 
-    public TopDownLevel() {
-        this.player = new TopDownLevelObject<>();
+    public GameLevel() {
+        this.player = new GameLevelObject(
+                new PlayerCharacter(10, 10, 10),
+                new Coords(0, 0, 0),
+                Direction.UP
+        );
+        this.npcs = new ArrayList<>();
     }
 
-    public TopDownLevel(TopDownLevelObject<PlayerCharacter> player, List<TopDownLevelObject<GameCharacter>> npcs) {
+    public GameLevelObject<PlayerCharacter> getPlayer() {
+        return player;
+    }
+
+    public GameLevel(GameLevelObject<PlayerCharacter> player, List<GameLevelObject<GameCharacter>> npcs) {
         this.player = player;
         this.npcs = npcs;
     }
 
-    public TopDownObject[][][] getLevelData() {
-        TopDownObject[][][] levelData = new TopDownObject[16][16][8];
+    public GameObject[][][] getLevelData() {
+        GameObject[][][] levelData = new GameObject[8][16][16];
         //Player.
         Coords playerCoords = player.getCoords();
         levelData[playerCoords.z][playerCoords.y][playerCoords.x] = player.getTopDownObject();
         //Others characters.
-        for(TopDownLevelObject npc : npcs){
+        for (GameLevelObject npc : npcs) {
             Coords npcc = npc.getCoords();
             levelData[npcc.z][npcc.y][npcc.x] = npc.getTopDownObject();
         }

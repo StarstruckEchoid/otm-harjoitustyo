@@ -8,6 +8,8 @@ package otmkurssiprojekti;
 import java.util.Arrays;
 import javafx.application.Application;
 import javafx.event.*;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -15,52 +17,41 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import otmkurssiprojekti.Level.TopDownLevel;
+import otmkurssiprojekti.Level.Direction;
+import otmkurssiprojekti.Level.GameLevel;
+import otmkurssiprojekti.Level.GameLevelObject;
+import otmkurssiprojekti.Level.GameObjects.GameCharacters.PlayerCharacter;
 
 /**
  *
  * @author gjuho
  */
 public class OTMKurssiprojekti extends Application {
-    
-    private TopDownLevel tdl;
-    
+
+    private GameLevel gamelvl;
+    private Scene mainScene;
+    private InputController inControl;
+    private OutputController outControl;
+
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
     public void init() throws Exception {
-        tdl = new TopDownLevel();
+        gamelvl = new GameLevel();
+        mainScene = new Scene(new BorderPane());
+        outControl = new OutputController(mainScene, gamelvl);
+        mainScene.setRoot(outControl.getLevelTextRepresentation());
+        inControl = new InputController(outControl);
     }
-    
-    
 
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Adventure Game");
-        primaryStage.setResizable(false);
-        
-        //Nappi
-        Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-            }
-        });
-        
-        //Teksti
-        Text t = new Text();
-        t.setFont(Font.font("MONOSPACED"));
-//        t.setText(Arrays.deepToString(tdl.getLevelData()));
-
-        BorderPane hud = new BorderPane();
-        hud.setBottom(btn);
-        hud.setCenter(t);
-        primaryStage.setScene(new Scene(hud, 1024, 1024));
+        //Näppäimistösyöte.
+        mainScene.setOnKeyPressed(e -> inControl.handleKeyEvent(e));
+        primaryStage.setScene(mainScene);
         primaryStage.show();
     }
 

@@ -9,7 +9,7 @@ package otmkurssiprojekti.Level.GameObjects;
  *
  * @author gjuho
  */
-public abstract class TopDownObject {
+public abstract class GameObject {
 
     public abstract char getId();
 
@@ -17,17 +17,14 @@ public abstract class TopDownObject {
 
     public abstract int getAttackStrength();
 
-    public abstract void touch(TopDownObject t);
+    public abstract void touch(GameObject t);
 
-    public abstract void interact(TopDownObject t);
+    public abstract void interact(GameObject t);
 
     public abstract void takeDamage(int dmg);
 
     @Override
     public String toString() {
-        if (this == null) {
-            return " ";
-        }
         return "" + this.getId();
     }
 

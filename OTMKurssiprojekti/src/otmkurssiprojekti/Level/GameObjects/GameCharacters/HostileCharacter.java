@@ -5,7 +5,7 @@
  */
 package otmkurssiprojekti.Level.GameObjects.GameCharacters;
 
-import otmkurssiprojekti.Level.GameObjects.TopDownObject;
+import otmkurssiprojekti.Level.GameObjects.GameObject;
 
 /**
  *
@@ -26,13 +26,13 @@ class HostileCharacter extends GameCharacter {
 
     //Anything that touches the hostile NPC will get damaged.
     @Override
-    public void touch(TopDownObject t) {
+    public void touch(GameObject t) {
         t.takeDamage(this.getAttackStrength());
     }
 
     //A hostile NPC can not be interacted with.
     @Override
-    public void interact(TopDownObject t) {
+    public void interact(GameObject t) {
     }
 
 }

@@ -6,7 +6,7 @@
 package otmkurssiprojekti;
 
 import java.util.Arrays;
-import otmkurssiprojekti.Level.GameObjects.TopDownObject;
+import otmkurssiprojekti.Level.GameObjects.GameObject;
 
 /**
  *
@@ -50,6 +50,36 @@ public class FormatConverter {
         }
         return matrix;
     }
+
+    public static char[][][] levelDataToMatrix(GameObject[][][] levelData) {
+        int xLim = levelData[0][0].length;
+        int yLim = levelData[0].length;
+        int zLim = levelData.length;
+        char[][][] matrix = new char[zLim][yLim][xLim];
+        for (int z = 0; z < zLim; z++) {
+            for (int y = 0; y < yLim; y++) {
+                for (int x = 0; x < xLim; x++) {
+                    GameObject go = levelData[z][y][x];
+                    if (go == null) {
+                        matrix[z][y][x] = ' ';
+                    } else {
+                        matrix[z][y][x] = go.getId();
+                    }
+                }
+            }
+        }
+        return matrix;
+    }
     
+    public static String projectionToDenseString(char[][] matrix){
+        StringBuilder sb = new StringBuilder();
+        for(int i=matrix.length; i>0; i--){
+            char[] row = matrix[i-1];
+            sb.append(">");
+            sb.append(String.valueOf(row));
+            sb.append("<\n");
+        }
+        return sb.toString();
+    }
 
 }

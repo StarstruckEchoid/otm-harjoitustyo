@@ -5,24 +5,24 @@
  */
 package otmkurssiprojekti.Level;
 
-import otmkurssiprojekti.Level.GameObjects.TopDownObject;
+import otmkurssiprojekti.Level.GameObjects.GameObject;
 
 /**
  *
  * @author gjuho
  * @param <T>
  */
-public class TopDownLevelObject<T extends TopDownObject> {
+public class GameLevelObject<T extends GameObject> {
     
     private T topDownObject;
     private Coords coords;
     private Direction direction;
 
-    public TopDownLevelObject() {
+    public GameLevelObject() {
         this.topDownObject = null;
     }
 
-    public TopDownLevelObject(T object, Coords coords, Direction direction) {
+    public GameLevelObject(T object, Coords coords, Direction direction) {
         this.topDownObject = object;
         this.coords = coords;
         this.direction = direction;

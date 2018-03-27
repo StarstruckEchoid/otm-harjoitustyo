@@ -5,7 +5,7 @@
  */
 package otmkurssiprojekti.Level.GameObjects.GameCharacters;
 
-import otmkurssiprojekti.Level.GameObjects.TopDownObject;
+import otmkurssiprojekti.Level.GameObjects.GameObject;
 
 /**
  *
@@ -23,12 +23,12 @@ public class PlayerCharacter extends GameCharacter {
     }
 
     @Override
-    public void touch(TopDownObject t) {
+    public void touch(GameObject t) {
         //By default, player doesn't do anything to TDOs it touches, eg. it doesn't hurt them or interact with them.
     }
 
     @Override
-    public void interact(TopDownObject t) {
+    public void interact(GameObject t) {
         //Others can not interact with the player.
     }
     

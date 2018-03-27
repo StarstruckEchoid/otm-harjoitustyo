@@ -5,13 +5,13 @@
  */
 package otmkurssiprojekti.Level.GameObjects.GameCharacters;
 
-import otmkurssiprojekti.Level.GameObjects.TopDownObject;
+import otmkurssiprojekti.Level.GameObjects.GameObject;
 
 /**
  *
  * @author Juho Gröhn
  */
-public abstract class GameCharacter extends TopDownObject {
+public abstract class GameCharacter extends GameObject {
     int hp;
     int str;
     int end;
@@ -38,11 +38,11 @@ public abstract class GameCharacter extends TopDownObject {
 
     //Some NPCs damage any TDO that interacts with them. Others do nothing.
     @Override
-    public abstract void touch(TopDownObject t);
+    public abstract void touch(GameObject t);
 
     //Some NPCs, like traders, can be interacted with. Others, like enemies, can not.
     @Override
-    public abstract void interact(TopDownObject t);
+    public abstract void interact(GameObject t);
 
     @Override
     public void takeDamage(int dmg) {

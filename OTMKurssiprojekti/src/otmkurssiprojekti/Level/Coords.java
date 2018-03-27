@@ -34,15 +34,20 @@ class Coords {
     }
 
     public void add(Coords c) {
-        this.x -= c.x;
-        this.y -= c.y;
-        this.z -= c.z;
+        this.x += c.x;
+        this.y += c.y;
+        this.z += c.z;
     }
 
     public void multiply(int s) {
         this.x *= s;
         this.y *= s;
         this.z *= s;
+    }
+
+    @Override
+    public String toString() {
+        return "(" + x + "," + y + "," + z + ")";
     }
 
 }

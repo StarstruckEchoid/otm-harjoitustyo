@@ -5,13 +5,13 @@
  */
 package otmkurssiprojekti.Level.GameObjects.GameBlocks;
 
-import otmkurssiprojekti.Level.GameObjects.TopDownObject;
+import otmkurssiprojekti.Level.GameObjects.GameObject;
 
 /**
  *
  * @author Juho Gröhn
  */
-public abstract class GameBlock extends TopDownObject {
+public abstract class GameBlock extends GameObject {
 
     private char id;
 
@@ -32,10 +32,10 @@ public abstract class GameBlock extends TopDownObject {
 
     //Most blocks do nothing upon touching or interaction.
     @Override
-    public abstract void touch(TopDownObject t);
+    public abstract void touch(GameObject t);
 
     @Override
-    public abstract void interact(TopDownObject t);
+    public abstract void interact(GameObject t);
 
     //Blocks do not take damage.
     @Override
