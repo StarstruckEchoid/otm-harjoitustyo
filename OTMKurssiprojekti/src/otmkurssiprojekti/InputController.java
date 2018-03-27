@@ -23,7 +23,47 @@ public class InputController {
     }
 
     public void handleKeyEvent(KeyEvent e) {
+        GameWindow window = this.outputController.window;
+        switch (window) {
+            case IN_GAME:
+                handleInGame(e);
+                break;
+            case PAUSE_MENU:
+                handlePauseMenu(e);
+                break;
+            case QUIT_GAME:
+                handleQuitGame(e);
+                break;
+            case MAIN_MENU:
+                handleMainMenu(e);
+                break;
+            case NEW_PLAYER:
+                handleNewPlayer(e);
+                break;
+            case LOAD_PLAYER:
+                handleLoadPlayer(e);
+                break;
+            case PLAYER_MENU:
+                handlePlayerMenu(e);
+                break;
+            case NEW_GAME:
+                handleNewGame(e);
+                break;
+            case LOAD_GAME:
+                handleLoadGame(e);
+                break;
+            case SAVE_GAME:
+                handleSaveGame(e);
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    public void handleInGame(KeyEvent e) {
         KeyCode kc = e.getCode();
+
         GameLevel gamelvl = outputController.getGamelvl();
         switch (kc) {
 
@@ -33,8 +73,8 @@ public class InputController {
             case D:
                 this.movePlayer(e);
                 break;
-            case M:
-                outputController.setDisplayToMainMenu();
+            case ESCAPE:
+                outputController.setDisplayToPauseMenu();
                 break;
             default:
                 break;
@@ -60,7 +100,57 @@ public class InputController {
             default:
                 break;
         }
-        outputController.setDisplayToLevelText();
+        outputController.setDisplayToInGameText();
+    }
+
+    private void handlePauseMenu(KeyEvent e) {
+        KeyCode kc = e.getCode();
+        switch (kc) {
+            case ESCAPE:
+                outputController.setDisplayToInGameText();
+                break;
+            case A:
+                break;
+            case S:
+                break;
+            case X:
+                outputController.setDisplayToMainMenu();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void handleQuitGame(KeyEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void handleMainMenu(KeyEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void handleNewPlayer(KeyEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void handleLoadPlayer(KeyEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void handlePlayerMenu(KeyEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void handleNewGame(KeyEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void handleLoadGame(KeyEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void handleSaveGame(KeyEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

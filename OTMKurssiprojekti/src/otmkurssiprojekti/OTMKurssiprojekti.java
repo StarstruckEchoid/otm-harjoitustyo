@@ -31,13 +31,15 @@ public class OTMKurssiprojekti extends Application {
         gamelvl = new GameLevel();
         mainScene = new Scene(new BorderPane());
         outControl = new OutputController(mainScene, gamelvl);
-        mainScene.setRoot(outControl.getLevelTextRepresentation());
+        mainScene.setRoot(outControl.getInGameText());
         inControl = new InputController(outControl);
+        outControl.setWindow(GameWindow.IN_GAME);
     }
 
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Adventure Game");
+        primaryStage.setMaximized(true);
         //Näppäimistösyöte.
         mainScene.setOnKeyPressed(e -> inControl.handleKeyEvent(e));
         primaryStage.setScene(mainScene);
