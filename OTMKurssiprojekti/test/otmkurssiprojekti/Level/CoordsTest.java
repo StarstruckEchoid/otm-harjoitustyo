@@ -81,22 +81,24 @@ public class CoordsTest {
 
     @Test
     public void testLesserThan() {
-        Coords less = new Coords(0, 4, 9);
+        Coords less = new Coords(-1, 4, 9);
         Coords more = new Coords(1, 10, 20);
         Coords diagonal = new Coords(-1, 5, 11);
+        assertTrue(!coords.lesserThan(coords));
         assertTrue(less.lesserThan(coords));
         assertTrue(!more.lesserThan(coords));
         assertTrue(!diagonal.lesserThan(coords));
     }
 
     @Test
-    public void testGreaterThan() {
+    public void testGreaterThanOrEqualTo() {
         Coords less = new Coords(0, 4, 9);
         Coords more = new Coords(1, 10, 20);
         Coords diagonal = new Coords(-1, 5, 11);
-        assertTrue(!less.greaterThan(coords));
-        assertTrue(more.greaterThan(coords));
-        assertTrue(!diagonal.greaterThan(coords));
+        assertTrue(coords.greaterThanOrEqualTo(coords));
+        assertTrue(!less.greaterThanOrEqualTo(coords));
+        assertTrue(more.greaterThanOrEqualTo(coords));
+        assertTrue(!diagonal.greaterThanOrEqualTo(coords));
     }
 
     @Test

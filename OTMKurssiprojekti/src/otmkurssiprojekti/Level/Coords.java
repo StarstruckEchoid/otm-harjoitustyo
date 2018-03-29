@@ -61,13 +61,13 @@ public class Coords {
 
     //This is true if all coords less than c. Good for analysing whether the coords are within a set box boundary.
     public Boolean lesserThan(Coords c) {
-        return this.x <= c.x
-                && this.y <= c.y
-                && this.z <= c.z;
+        return this.x < c.x
+                && this.y < c.y
+                && this.z < c.z;
     }
 
     //Similar, but in reverse.
-    public Boolean greaterThan(Coords c) {
+    public Boolean greaterThanOrEqualTo(Coords c) {
         return this.x >= c.x
                 && this.y >= c.y
                 && this.z >= c.z;

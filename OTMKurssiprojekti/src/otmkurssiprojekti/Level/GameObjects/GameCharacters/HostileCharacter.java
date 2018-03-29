@@ -11,7 +11,7 @@ import otmkurssiprojekti.Level.GameObjects.GameObject;
  *
  * @author Juho Gröhn
  */
-class HostileCharacter extends GameCharacter {
+public class HostileCharacter extends GameCharacter {
     private char id;
 
     public HostileCharacter(char id, int hp, int str, int end) {

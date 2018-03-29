@@ -243,6 +243,7 @@ public class FormatConverterTest {
     public void testLevelDataToMatrix1() {
         GameLevel glvl = new GameLevel(
                 new GameLevelObject<>(new PlayerCharacter(), new Coords(3, 2, 1), Direction.DOWN),
+                new ArrayList<>(),
                 new ArrayList<>()
         );
 
@@ -254,6 +255,7 @@ public class FormatConverterTest {
     public void testLevelDataToMatrix2() {
         GameLevel glvl = new GameLevel(
                 new GameLevelObject<>(new PlayerCharacter(), new Coords(7, 0, 3), Direction.DOWN),
+                new ArrayList<>(),
                 new ArrayList<>()
         );
 

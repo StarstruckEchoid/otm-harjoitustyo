@@ -5,11 +5,10 @@
  */
 package otmkurssiprojekti.Level;
 
-import java.util.ArrayList;
-import otmkurssiprojekti.Level.GameObjects.GameObject;
-import otmkurssiprojekti.Level.GameObjects.GameCharacters.PlayerCharacter;
-import java.util.List;
-import otmkurssiprojekti.Level.GameObjects.GameCharacters.GameCharacter;
+import java.util.*;
+import otmkurssiprojekti.Level.GameObjects.*;
+import otmkurssiprojekti.Level.GameObjects.GameBlocks.*;
+import otmkurssiprojekti.Level.GameObjects.GameCharacters.*;
 
 /**
  *
@@ -17,40 +16,51 @@ import otmkurssiprojekti.Level.GameObjects.GameCharacters.GameCharacter;
  */
 public class GameLevel {
 
-    private final Coords dimensions; //The level is a box from origin to dimensions Coords.
+    private static Coords dimensions = new Coords(16, 16, 8); //The level is a box from origin to dimensions Coords exclusive. Ie. The level has a size 16x16x8.
     private final GameLevelObject<PlayerCharacter> player;
     private final List<GameLevelObject<GameCharacter>> npcs;
+    private final List<GameLevelObject<GameBlock>> blocks;
 
     public GameLevel() {
-        this.dimensions = new Coords(15, 15, 7); //By default, the level size is  16x16x8
         this.player = new GameLevelObject(
                 new PlayerCharacter(10, 10, 10),
                 new Coords(0, 0, 0),
                 Direction.UP
         );
         this.npcs = new ArrayList<>();
+        this.blocks = new ArrayList<>();
     }
 
-    public GameLevel(GameLevelObject<PlayerCharacter> player, List<GameLevelObject<GameCharacter>> npcs) {
-        this.dimensions = new Coords(16, 16, 8);
+    public GameLevel(GameLevelObject<PlayerCharacter> player, List<GameLevelObject<GameCharacter>> npcs, List<GameLevelObject<GameBlock>> blocks) {
         this.player = player;
         this.npcs = npcs;
+        this.blocks = blocks;
     }
 
-    public GameLevel(Coords dimensions, GameLevelObject<PlayerCharacter> player, List<GameLevelObject<GameCharacter>> npcs) {
-        this.dimensions = dimensions;
-        this.player = player;
-        this.npcs = npcs;
+    public static Coords getDimensions() {
+        return dimensions;
     }
 
     public GameLevelObject<PlayerCharacter> getPlayer() {
         return player;
     }
-    
-    public void movePlayer(Direction dir){
+
+    public List<GameLevelObject<GameCharacter>> getNpcs() {
+        return npcs;
+    }
+
+    public List<GameLevelObject<GameBlock>> getBlocks() {
+        return blocks;
+    }
+
+    private static Boolean containsCoords(Coords coords) {
+        return coords.greaterThanOrEqualTo(new Coords(0, 0, 0)) && coords.lesserThan(dimensions);
+    }
+
+    public void movePlayer(Direction dir) {
         Coords playerCoords = this.player.getCoords();
         Coords newCoords = playerCoords.sum(dir.getCoords());
-        if(newCoords.greaterThan(new Coords(0,0,0)) && newCoords.lesserThan(dimensions)){
+        if (GameLevel.containsCoords(newCoords)) {
             player.move(dir);
         }
     }
@@ -63,7 +73,16 @@ public class GameLevel {
         //Others characters.
         for (GameLevelObject npc : npcs) {
             Coords npcc = npc.getCoords();
-            levelData[npcc.z][npcc.y][npcc.x] = npc.getTopDownObject();
+            if (GameLevel.containsCoords(npcc)) {
+                levelData[npcc.z][npcc.y][npcc.x] = npc.getTopDownObject();
+            }
+        }
+
+        for (GameLevelObject block : blocks) {
+            Coords blockc = block.getCoords();
+            if (GameLevel.containsCoords(blockc)) {
+                levelData[blockc.z][blockc.y][blockc.x] = block.getTopDownObject();
+            }
         }
         return levelData;
     }
