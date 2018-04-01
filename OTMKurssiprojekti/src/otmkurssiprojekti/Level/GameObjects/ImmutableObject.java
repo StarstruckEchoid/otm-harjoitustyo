@@ -5,6 +5,7 @@
  */
 package otmkurssiprojekti.Level.GameObjects;
 
+import otmkurssiprojekti.Level.GameObjects.Archetypes.ImmutableObjectArchetype;
 import otmkurssiprojekti.Level.GameObjects.Dependencies.Coords;
 import otmkurssiprojekti.Level.GameObjects.Dependencies.Direction;
 
@@ -24,6 +25,14 @@ public class ImmutableObject implements GameObject {
         this.id = id;
         this.transparent = transparent;
         this.solid = solid;
+        this.coords = coords;
+        this.direction = direction;
+    }
+
+    public ImmutableObject(ImmutableObjectArchetype archetype, Coords coords, Direction direction) {
+        this.id = archetype.getId();
+        this.transparent = archetype.isTransparent();
+        this.solid = archetype.isSolid();
         this.coords = coords;
         this.direction = direction;
     }
