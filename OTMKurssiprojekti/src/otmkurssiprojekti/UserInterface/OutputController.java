@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package otmkurssiprojekti;
+package otmkurssiprojekti.UserInterface;
 
+import otmkurssiprojekti.UtilityClasses.FormatConverter;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -12,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import otmkurssiprojekti.GameWindow;
 import otmkurssiprojekti.Level.GameLevel;
 
 /**
@@ -34,11 +36,11 @@ public class OutputController {
         return gamelvl;
     }
 
-    protected GameWindow getWindow() {
+    public GameWindow getWindow() {
         return window;
     }
 
-    protected void setWindow(GameWindow window) {
+    public void setWindow(GameWindow window) {
         this.window = window;
     }
 
@@ -54,7 +56,7 @@ public class OutputController {
         this.setWindow(GameWindow.MAIN_MENU);
     }
 
-    void setDisplayToPauseMenu() {
+    public void setDisplayToPauseMenu() {
         Parent pausemenu = this.getPauseMenu();
         this.scene.setRoot(pausemenu);
         this.setWindow(GameWindow.PAUSE_MENU);
@@ -82,7 +84,7 @@ public class OutputController {
         return hud;
     }
 
-    public Parent getMainMenu() {
+    private Parent getMainMenu() {
         BorderPane main = new BorderPane();
 
         Text t = new Text();

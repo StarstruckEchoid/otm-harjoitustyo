@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 
+import otmkurssiprojekti.Level.GameObjects.Dependencies.Direction;
+import otmkurssiprojekti.Level.GameObjects.Dependencies.Coords;
 import java.util.ArrayList;
 import java.util.Arrays;
 import org.junit.After;
@@ -12,9 +14,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import otmkurssiprojekti.FormatConverter;
+import otmkurssiprojekti.UtilityClasses.FormatConverter;
 import otmkurssiprojekti.Level.*;
-import otmkurssiprojekti.Level.GameObjects.GameCharacters.PlayerCharacter;
+import otmkurssiprojekti.Level.GameObjects.PlayerCharacter;
 import otmkurssiprojekti.Level.GameObjects.GameObject;
 
 /**
@@ -241,11 +243,13 @@ public class FormatConverterTest {
 
     @Test
     public void testLevelDataToMatrix1() {
-        GameLevel glvl = new GameLevel(
-                new GameLevelObject<>(new PlayerCharacter(), new Coords(3, 2, 1), Direction.DOWN),
+        GameLevel glvl = new GameLevel("TestLevel",
+                new PlayerCharacter(new Coords(3, 2, 1), 0, 0, Direction.DOWN, 0),
                 new ArrayList<>(),
-                new ArrayList<>()
-        );
+                new ArrayList<>(),
+                new ArrayList<>(),
+                new ArrayList<>(),
+                new ArrayList<>());
 
         char[][][] matrix = FormatConverter.levelDataToMatrix(glvl.getLevelData());
         assertTrue(matrix[1][2][3] == '@');
@@ -253,8 +257,11 @@ public class FormatConverterTest {
 
     @Test
     public void testLevelDataToMatrix2() {
-        GameLevel glvl = new GameLevel(
-                new GameLevelObject<>(new PlayerCharacter(), new Coords(7, 0, 3), Direction.DOWN),
+        GameLevel glvl = new GameLevel("testLevel",
+                new PlayerCharacter(new Coords(7,0,3), 0, 0, Direction.DOWN, 0),
+                new ArrayList<>(),
+                new ArrayList<>(),
+                new ArrayList<>(),
                 new ArrayList<>(),
                 new ArrayList<>()
         );

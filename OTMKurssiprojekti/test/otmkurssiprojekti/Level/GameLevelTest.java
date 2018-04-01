@@ -5,6 +5,11 @@
  */
 package otmkurssiprojekti.Level;
 
+import otmkurssiprojekti.Level.GameObjects.Dependencies.Direction;
+import otmkurssiprojekti.Level.GameObjects.Dependencies.Coords;
+import otmkurssiprojekti.Level.GameObjects.PlayerCharacter;
+import otmkurssiprojekti.Level.GameObjects.NonPlayerCharacter;
+import otmkurssiprojekti.Level.GameObjects.ImmutableObject;
 import java.util.*;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -12,10 +17,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import otmkurssiprojekti.FormatConverter;
-import otmkurssiprojekti.Level.GameObjects.GameBlocks.*;
-import otmkurssiprojekti.Level.GameObjects.GameCharacters.*;
-import otmkurssiprojekti.Level.GameObjects.GameObject;
+import otmkurssiprojekti.Level.GameObjects.*;
 
 /**
  *
@@ -24,9 +26,13 @@ import otmkurssiprojekti.Level.GameObjects.GameObject;
 public class GameLevelTest {
 
     private GameLevel glvl;
-    private GameLevelObject<PlayerCharacter> player;
-    List<GameLevelObject<GameCharacter>> npcs;
-    List<GameLevelObject<GameBlock>> blocks;
+    private String levelName;
+    private PlayerCharacter player;
+    private List<NonPlayerCharacter> npcs;
+    private List<ImmutableObject> blocks;
+    private List<InteractiveObject> interactives;
+    private List<LinkObject> levelLinks;
+    private List<PointsObject> points;
 
     public GameLevelTest() {
     }
@@ -41,34 +47,20 @@ public class GameLevelTest {
 
     @Before
     public void setUp() {
-        //Player
-        player = new GameLevelObject<>(
-                new PlayerCharacter(1000, 10, 10),
-                new Coords(0, 0, 1),
-                Direction.UP
-        );
+        levelName = "testLevel";
+        player = new PlayerCharacter(new Coords(0, 0, 1), 0, 0, Direction.DOWN, 0);
 
-        //NPCs
         npcs = new ArrayList<>();
-        npcs.add(new GameLevelObject<>(
-                new HostileCharacter('v', 1000, 10, 10),
-                new Coords(10, 10, 4),
-                Direction.LEFT
-        ));
+        npcs.add(new NonPlayerCharacter('v', new Coords(10, 10, 4), true, 0, 0, 0));
 
-        //Blocks
         blocks = new ArrayList<>();
-        for (int x = 0; x < GameLevel.getDimensions().x; x++) {
-            for (int y = 0; y < GameLevel.getDimensions().y; y++) {
-                blocks.add(new GameLevelObject<>(
-                        new InertBlock(','),
-                        new Coords(x, y, 0),
-                        Direction.OUT
-                ));
-            }
-        }
+        blocks.add(new ImmutableObject(',', true, false, new Coords(8, 6, 0), Direction.DOWN));
 
-        glvl = new GameLevel(player, npcs, blocks);
+        interactives = new ArrayList<>();
+        levelLinks = new ArrayList<>();
+        points = new ArrayList<>();
+
+        glvl = new GameLevel(levelName, player, npcs, blocks, interactives, levelLinks, points);
     }
 
     @After
@@ -96,9 +88,8 @@ public class GameLevelTest {
     public void testGetLevelData() {
         GameObject[][][] result = glvl.getLevelData();
 
-        assertTrue(result[1][0][0].equals(player.getTopDownObject()));
-        assertTrue(result[4][10][10].equals(glvl.getNpcs().get(0).getTopDownObject()));
-        assertTrue(result[0][6][8].equals(new InertBlock(',')));
+        assertTrue(result[1][0][0].equals(player));
+        assertTrue(result[4][10][10].getId() == 'v');
+        assertTrue(result[0][6][8].getId() == ',');
     }
-
 }

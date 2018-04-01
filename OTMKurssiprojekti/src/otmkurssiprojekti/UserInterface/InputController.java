@@ -3,11 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package otmkurssiprojekti;
+package otmkurssiprojekti.UserInterface;
 
+import otmkurssiprojekti.UserInterface.OutputController;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import otmkurssiprojekti.Level.Direction;
+import otmkurssiprojekti.GameWindow;
+import otmkurssiprojekti.Level.GameObjects.Dependencies.Direction;
 import otmkurssiprojekti.Level.GameLevel;
 
 /**

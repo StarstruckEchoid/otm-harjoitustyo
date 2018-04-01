@@ -5,10 +5,13 @@
  */
 package otmkurssiprojekti.Level;
 
+import otmkurssiprojekti.Level.GameObjects.Dependencies.Direction;
+import otmkurssiprojekti.Level.GameObjects.Dependencies.Coords;
+import otmkurssiprojekti.Level.GameObjects.PlayerCharacter;
+import otmkurssiprojekti.Level.GameObjects.NonPlayerCharacter;
+import otmkurssiprojekti.Level.GameObjects.ImmutableObject;
 import java.util.*;
 import otmkurssiprojekti.Level.GameObjects.*;
-import otmkurssiprojekti.Level.GameObjects.GameBlocks.*;
-import otmkurssiprojekti.Level.GameObjects.GameCharacters.*;
 
 /**
  *
@@ -16,45 +19,57 @@ import otmkurssiprojekti.Level.GameObjects.GameCharacters.*;
  */
 public class GameLevel {
 
-    private static Coords dimensions = new Coords(16, 16, 8); //The level is a box from origin to dimensions Coords exclusive. Ie. The level has a size 16x16x8.
-    private final GameLevelObject<PlayerCharacter> player;
-    private final List<GameLevelObject<GameCharacter>> npcs;
-    private final List<GameLevelObject<GameBlock>> blocks;
+    public static final Coords DIMENSIONS = new Coords(16, 16, 8); //The level is a box from origin to DIMENSIONS Coords exclusive. Ie. The level has a size 16x16x8.
+    private final String levelName;
+    private final PlayerCharacter player;
+    private final List<NonPlayerCharacter> npcs;
+    private final List<ImmutableObject> blocks;
+    private final List<InteractiveObject> interactives;
+    private final List<LinkObject> levelLinks;
+    private final List<PointsObject> points;
 
-    public GameLevel() {
-        this.player = new GameLevelObject(
-                new PlayerCharacter(10, 10, 10),
-                new Coords(0, 0, 0),
-                Direction.UP
-        );
-        this.npcs = new ArrayList<>();
-        this.blocks = new ArrayList<>();
-    }
-
-    public GameLevel(GameLevelObject<PlayerCharacter> player, List<GameLevelObject<GameCharacter>> npcs, List<GameLevelObject<GameBlock>> blocks) {
+    public GameLevel(String levelName, PlayerCharacter player, List<NonPlayerCharacter> npcs, List<ImmutableObject> blocks, List<InteractiveObject> interactives, List<LinkObject> levelLinks, List<PointsObject> points) {
+        this.levelName = levelName;
         this.player = player;
         this.npcs = npcs;
         this.blocks = blocks;
+        this.interactives = interactives;
+        this.levelLinks = levelLinks;
+        this.points = points;
     }
 
-    public static Coords getDimensions() {
-        return dimensions;
+    //Getters
+    public String getLevelName() {
+        return levelName;
     }
 
-    public GameLevelObject<PlayerCharacter> getPlayer() {
+    public PlayerCharacter getPlayer() {
         return player;
     }
 
-    public List<GameLevelObject<GameCharacter>> getNpcs() {
+    public List<NonPlayerCharacter> getNpcs() {
         return npcs;
     }
 
-    public List<GameLevelObject<GameBlock>> getBlocks() {
+    public List<ImmutableObject> getBlocks() {
         return blocks;
     }
 
+    public List<InteractiveObject> getInteractives() {
+        return interactives;
+    }
+
+    public List<LinkObject> getLevelLinks() {
+        return levelLinks;
+    }
+
+    public List<PointsObject> getPoints() {
+        return points;
+    }
+
+    //Others
     private static Boolean containsCoords(Coords coords) {
-        return coords.greaterThanOrEqualTo(new Coords(0, 0, 0)) && coords.lesserThan(dimensions);
+        return coords.greaterThanOrEqualTo(new Coords(0, 0, 0)) && coords.lesserThan(DIMENSIONS);
     }
 
     public void movePlayer(Direction dir) {
@@ -66,22 +81,20 @@ public class GameLevel {
     }
 
     public GameObject[][][] getLevelData() {
-        GameObject[][][] levelData = new GameObject[8][16][16];
-        //Player.
-        Coords playerCoords = player.getCoords();
-        levelData[playerCoords.z][playerCoords.y][playerCoords.x] = player.getTopDownObject();
-        //Others characters.
-        for (GameLevelObject npc : npcs) {
-            Coords npcc = npc.getCoords();
-            if (GameLevel.containsCoords(npcc)) {
-                levelData[npcc.z][npcc.y][npcc.x] = npc.getTopDownObject();
-            }
-        }
-
-        for (GameLevelObject block : blocks) {
-            Coords blockc = block.getCoords();
-            if (GameLevel.containsCoords(blockc)) {
-                levelData[blockc.z][blockc.y][blockc.x] = block.getTopDownObject();
+        GameObject[][][] levelData = new GameObject[DIMENSIONS.z][DIMENSIONS.y][DIMENSIONS.x];
+        //Everything in one big list.
+        List<GameObject> allObjects = new ArrayList<>();
+        allObjects.add(player);
+        allObjects.addAll(npcs);
+        allObjects.addAll(blocks);
+        allObjects.addAll(interactives);
+        allObjects.addAll(levelLinks);
+        allObjects.addAll(points);
+        //Convert list into matrix.
+        for (GameObject gobj : allObjects) {
+            Coords gobjc = gobj.getCoords();
+            if (GameLevel.containsCoords(gobjc)) {
+                levelData[gobjc.z][gobjc.y][gobjc.x] = gobj;
             }
         }
         return levelData;

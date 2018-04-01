@@ -5,27 +5,20 @@
  */
 package otmkurssiprojekti.Level.GameObjects;
 
+import otmkurssiprojekti.Level.GameObjects.Dependencies.Coords;
+import otmkurssiprojekti.Level.GameObjects.Dependencies.Direction;
+
 /**
  *
  * @author gjuho
  */
-public abstract class GameObject {
+public interface GameObject {
 
-    public abstract char getId();
-
-    public abstract Boolean isDead();
-
-    public abstract int getAttackStrength();
-
-    public abstract void touch(GameObject t);
-
-    public abstract void interact(GameObject t);
-
-    public abstract void takeDamage(int dmg);
-
-    @Override
-    public String toString() {
-        return "" + this.getId();
-    }
-
+    public char getId();
+    public boolean isTransparent();    
+    public boolean isSolid();
+    public Coords getCoords();
+    public Direction getDirection();
+    public void move(Direction dir);
+    public void turn(Direction dir);
 }

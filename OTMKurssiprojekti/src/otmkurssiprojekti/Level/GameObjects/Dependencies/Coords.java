@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package otmkurssiprojekti.Level;
+package otmkurssiprojekti.Level.GameObjects.Dependencies;
 
 /**
  *
@@ -11,9 +11,9 @@ package otmkurssiprojekti.Level;
  */
 public class Coords {
 
-    int x;
-    int y;
-    int z;
+    public int x;
+    public int y;
+    public int z;
 
     public Coords() {
         this.x = 0;
