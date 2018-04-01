@@ -9,7 +9,7 @@
 [InteractiveObject|-activationType:ActivationType;-state:Boolean;-children:List InteractiveObject|+isPressable():Boolean;+setState():void;+getChildren():List InteractiveObject]
 [InteractiveObject]-.-^[GameObject]
 [InteractiveObject]-.->[InteractiveObjectGeneric]
-[InteractiveObject]-.-[ActivationType]
+[InteractiveObject]-.->[ActivationType]
 
 [LinkObject|+getAddress():String]
 [LinkObject]-.-^[GameObject]
@@ -58,35 +58,33 @@
 
 
 
-[GameWindow|+handleKeyEvent():void;+getVisualisation():Parent;+doUpdate():void{bg:plum}]
-[GameWindow]^-.-[MainMenu]
-[GameWindow]^-.-[PauseMenu]
+[Window|+handleKeyEvent():void;+getVisualisation():Parent;+doUpdate():void{bg:plum}]
+[Window]^-.-[MainMenu]
+[Window]^-.-[PauseMenu]
 
-[LevelWindow|-gameLevel:GameLevel;-player:PlayerCharacter]
-[LevelWindow]-.-^[GameWindow]
-[LevelWindow]-->[GameLevel]
+[GameWindow|-game:Game]
+[GameWindow]-.-^[Window]
+[GameWindow]-->[Game]
 
 
 
+
+[DataController|-source:File|+loadUsers():List String;+loadGame():List Game;+loadLevel():GameLevel;+saveUser():void;+saveGame():void]
 
 [InputController|+handleKeyEvent():void;+handleTimerUpdate():TimerTask]
-[InputController]-->[GameWindow]
-[InputController]-.->[Game]
+[InputController]-->[Window]
+[InputController]-.->[DataController]
 
 [OutputController|+refreshStage():void]
-[OutputController]-->[GameWindow]
-[OutputController]-.->[Game]
-
-[DataController|-source:File|+loadLevel():GameLevel;+saveLevel():void]
-[DataController]-.->[Game]
+[OutputController]-->[Window]
+[OutputController]-.->[DataController]
 
 
 
 
 [Game|-user:String;-player:PlayerCharacter;-gameLevel:GameLevel{bg:tomato}]
+[Game]-->[GameLevel]
 
-[Main|-game:Game;-datControl:DataController;-outControl:OutputController;-inControl:InputController]
-[Main]-->[Game]
+[Main|-game:static Game;-outControl:static OutputController;-inControl:static InputController]
 [Main]-->[InputController]
 [Main]-->[OutputController]
-[Main]-->[DataController]
