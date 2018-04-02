@@ -8,6 +8,7 @@ package DataAccessObject;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -22,7 +23,7 @@ import static org.junit.Assert.*;
 public class FileUserDaoTest {
 
     private FileUserDao fudao;
-    private Path file;
+    private Path sub;
     private Path path;
 
     public FileUserDaoTest() {
@@ -39,8 +40,8 @@ public class FileUserDaoTest {
     @Before
     public void setUp() throws IOException {
         path = Files.createTempDirectory("testFolder");
-        file = Files.createTempFile(path,"testFile", ".txt");
-        fudao = new FileUserDao(file);
+        sub = Files.createTempDirectory(path, "testSubfolder");
+        fudao = new FileUserDao(sub);
     }
 
     @After
@@ -51,7 +52,9 @@ public class FileUserDaoTest {
     public void testSaveAndLoad1() {
         String user = "Test Testington";
         fudao.saveUser(user);
-        assertTrue(fudao.loadUsers().contains(user));
+
+        List<String> userList = fudao.loadUsers();
+        assertTrue("Expected list to contain " + user + " but list onlu had " + userList.toString(), userList.contains(user));
     }
 
     @Test

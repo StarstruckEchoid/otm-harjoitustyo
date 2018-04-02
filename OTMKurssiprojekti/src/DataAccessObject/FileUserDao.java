@@ -5,11 +5,11 @@
  */
 package DataAccessObject;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -23,31 +23,27 @@ public class FileUserDao implements UserDao {
 
     private final Path source;
 
+    //The FileUserDao fetches subdirectories, named after users, from a source directory.
     public FileUserDao(Path source) {
+        if (!source.toFile().isDirectory()) {
+            throw new IllegalArgumentException();
+        }
         this.source = source;
     }
 
     @Override
     public List<String> loadUsers() {
         List<String> users = new ArrayList<>();
-        try {
-            Files.lines(source).forEach(l -> users.add(l));
-        } catch (IOException ex) {
-            Logger.getLogger(FileUserDao.class.getName()).log(Level.SEVERE, null, ex);
+        File[] subdirs = source.toFile().listFiles(f -> f.isDirectory());
+        for (File f : subdirs) {
+            users.add(f.getName());
         }
         return users;
     }
 
     @Override
     public void saveUser(String user) {
-        BufferedWriter bw;
-        try {
-            bw = new BufferedWriter(new FileWriter(source.toFile(), true));
-            bw.write(user);
-            bw.newLine();
-            bw.close();
-        } catch (IOException ex) {
-            Logger.getLogger(FileUserDao.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        File userFile = new File(source.toFile(), user);
+        userFile.mkdirs();
     }
 }
