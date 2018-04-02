@@ -17,6 +17,7 @@ import otmkurssiprojekti.Level.GameLevel;
 import otmkurssiprojekti.Level.GameObjects.Dependencies.Coords;
 import otmkurssiprojekti.Level.GameObjects.Dependencies.Direction;
 import otmkurssiprojekti.Level.GameObjects.*;
+import otmkurssiprojekti.Level.GameObjects.Archetypes.ImmutableObjectArchetype;
 
 /**
  *
@@ -41,7 +42,7 @@ public class OTMKurssiprojekti extends Application {
         List<ImmutableObject> blocks = new ArrayList<>();
         for (int x = 0; x < GameLevel.DIMENSIONS.x; x++) {
             for (int y = 0; y < GameLevel.DIMENSIONS.y; y++) {
-                blocks.add(new ImmutableObject(',', false, true, new Coords(x, y, 4), Direction.DOWN));
+                blocks.add(new ImmutableObject(ImmutableObjectArchetype.GRASS, new Coords(x, y, 4), Direction.DOWN));
             }
         }
         List<InteractiveObject> interactives = new ArrayList<>();

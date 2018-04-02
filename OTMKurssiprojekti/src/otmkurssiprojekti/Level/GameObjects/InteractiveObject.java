@@ -18,7 +18,7 @@ import otmkurssiprojekti.Level.GameObjects.Archetypes.ActivationType;
 public class InteractiveObject implements GameObject {
 
     private final char id;
-    private final boolean transparent;
+    private static final boolean TRANSPARENT = true;
     private boolean solid;
     private final Coords coords;
     private Direction direction;
@@ -27,9 +27,8 @@ public class InteractiveObject implements GameObject {
     private final List<InteractiveObject> children;
     private final Consumer<InteractiveObject> action;
 
-    public InteractiveObject(char id, boolean transparent, boolean solid, Coords coords, Direction direction, ActivationType activationType, List<InteractiveObject> children, Consumer<InteractiveObject> action) {
+    public InteractiveObject(char id, boolean solid, Coords coords, Direction direction, ActivationType activationType, List<InteractiveObject> children, Consumer<InteractiveObject> action) {
         this.id = id;
-        this.transparent = transparent;
         this.solid = solid;
         this.coords = coords;
         this.direction = direction;
@@ -46,7 +45,7 @@ public class InteractiveObject implements GameObject {
 
     @Override
     public boolean isTransparent() {
-        return transparent;
+        return TRANSPARENT;
     }
 
     @Override
@@ -66,6 +65,10 @@ public class InteractiveObject implements GameObject {
 
     public List<InteractiveObject> getChildren() {
         return children;
+    }
+
+    public Consumer<InteractiveObject> getAction() {
+        return action;
     }
 
     //Setters

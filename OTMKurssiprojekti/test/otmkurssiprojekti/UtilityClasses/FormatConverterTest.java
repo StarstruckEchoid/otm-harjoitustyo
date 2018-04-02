@@ -17,7 +17,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import otmkurssiprojekti.Level.GameLevel;
-import otmkurssiprojekti.UtilityClasses.FormatConverter;
 import otmkurssiprojekti.Level.GameObjects.PlayerCharacter;
 import otmkurssiprojekti.Level.GameObjects.GameObject;
 
