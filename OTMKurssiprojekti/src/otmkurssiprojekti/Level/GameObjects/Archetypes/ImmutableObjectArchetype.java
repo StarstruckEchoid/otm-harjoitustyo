@@ -9,7 +9,7 @@ package otmkurssiprojekti.Level.GameObjects.Archetypes;
  *
  * @author Juho Gröhn
  */
-public enum ImmutableObjectArchetype {
+public enum ImmutableObjectArchetype implements Archetype{
     AIR(' ', true, false),
     STONE_PATH('.', false, false),
     GRASS(',', false, false),
@@ -26,6 +26,7 @@ public enum ImmutableObjectArchetype {
         this.solid = solid;
     }
 
+    @Override
     public char getId() {
         return id;
     }

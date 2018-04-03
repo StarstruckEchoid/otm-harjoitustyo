@@ -12,21 +12,27 @@ import otmkurssiprojekti.Level.GameObjects.Dependencies.Coords;
  * @author gjuho
  */
 public enum Direction {
-    UP(new Coords(0, 1, 0)),
-    DOWN(new Coords(0, -1, 0)),
-    LEFT(new Coords(-1, 0, 0)),
-    RIGHT(new Coords(1, 0, 0)),
-    IN(new Coords(0, 0, -1)),
-    OUT(new Coords(0, 0, 1));
+    UP(new Coords(0, 1, 0), "UP"),
+    DOWN(new Coords(0, -1, 0), "DOWN"),
+    LEFT(new Coords(-1, 0, 0), "LEFT"),
+    RIGHT(new Coords(1, 0, 0), "RIGHT"),
+    IN(new Coords(0, 0, -1), "IN"),
+    OUT(new Coords(0, 0, 1), "OUT");
 
     private final Coords coords;
+    private final String name;
 
-    private Direction(Coords coords) {
+    private Direction(Coords coords, String name) {
         this.coords = coords;
+        this.name = name;
     }
 
     public Coords getCoords() {
         return coords;
+    }
+
+    public String getName() {
+        return name;
     }
 
 }

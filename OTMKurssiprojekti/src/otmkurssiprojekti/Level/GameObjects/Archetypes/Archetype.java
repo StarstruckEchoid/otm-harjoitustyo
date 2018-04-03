@@ -3,16 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package DataAccessObject;
-
-import java.nio.file.Path;
-import java.util.List;
+package otmkurssiprojekti.Level.GameObjects.Archetypes;
 
 /**
  *
  * @author Juho Gröhn
  */
-public interface UserDao {
-    public List<Path> loadUsers();
-    public void saveUser(String user);
+public interface Archetype {
+    public char getId();
 }

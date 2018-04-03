@@ -7,12 +7,13 @@ package DataAccessObject;
 
 import java.nio.file.Path;
 import java.util.List;
+import otmkurssiprojekti.Level.GameLevel;
 
 /**
  *
  * @author Juho Gröhn
  */
-public interface UserDao {
-    public List<Path> loadUsers();
-    public void saveUser(String user);
+public interface LevelDao {
+    public GameLevel loadLevel(Path user, String levelName);
+    public void saveLevel(GameLevel level);
 }

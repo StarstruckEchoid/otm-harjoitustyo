@@ -8,7 +8,9 @@ package DataAccessObject;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -53,8 +55,10 @@ public class FileUserDaoTest {
         String user = "Test Testington";
         fudao.saveUser(user);
 
-        List<String> userList = fudao.loadUsers();
-        assertTrue("Expected list to contain " + user + " but list onlu had " + userList.toString(), userList.contains(user));
+        List<String> userList = fudao.loadUsers().stream()
+                .map(p -> p.getFileName().toString())
+                .collect(Collectors.toList());
+        assertTrue("Expected list to contain " + Paths.get(user).toString() + " but list onlu had " + userList.toString(), userList.contains(user));
     }
 
     @Test
@@ -65,10 +69,14 @@ public class FileUserDaoTest {
         fudao.saveUser(user0);
         fudao.saveUser(user1);
         fudao.saveUser(user2);
-        assertTrue(fudao.loadUsers().contains(user0));
-        assertTrue(fudao.loadUsers().contains(user2));
-        assertTrue(fudao.loadUsers().contains(user1));
-        assertTrue(fudao.loadUsers().contains(user0));
+        
+        List<String> userList = fudao.loadUsers().stream()
+                .map(p -> p.getFileName().toString())
+                .collect(Collectors.toList());
+        
+        assertTrue(userList.contains(user0));
+        assertTrue(userList.contains(user2));
+        assertTrue(userList.contains(user1));
     }
 
 }

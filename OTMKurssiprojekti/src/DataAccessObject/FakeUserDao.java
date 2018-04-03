@@ -5,6 +5,8 @@
  */
 package DataAccessObject;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,20 +16,21 @@ import java.util.List;
  */
 public class FakeUserDao implements UserDao {
 
-    private static List<String> LIST = new ArrayList<>();
+    private static final List<Path> LIST = new ArrayList<>();
+
     static {
-        LIST.add("foo");
-        LIST.add("bar");
+        LIST.add(Paths.get("foo"));
+        LIST.add(Paths.get("bar"));
     }
 
     @Override
-    public List<String> loadUsers() {
+    public List<Path> loadUsers() {
         return LIST;
     }
 
     @Override
     public void saveUser(String user) {
-        LIST.add(user);
+        LIST.add(Paths.get(user));
     }
 
 }

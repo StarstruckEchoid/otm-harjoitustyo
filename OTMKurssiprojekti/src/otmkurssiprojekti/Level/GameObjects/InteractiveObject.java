@@ -10,6 +10,7 @@ import java.util.function.Consumer;
 import otmkurssiprojekti.Level.GameObjects.Dependencies.Coords;
 import otmkurssiprojekti.Level.GameObjects.Dependencies.Direction;
 import otmkurssiprojekti.Level.GameObjects.Archetypes.ActivationType;
+import otmkurssiprojekti.Level.GameObjects.Archetypes.InteractiveObjectArchetype;
 
 /**
  *
@@ -35,6 +36,16 @@ public class InteractiveObject implements GameObject {
         this.activationType = activationType;
         this.children = children;
         this.action = action;
+    }
+
+    public InteractiveObject(InteractiveObjectArchetype interoa, Coords coords, Direction direction, List<InteractiveObject> children) {
+        this.id = interoa.getId();
+        this.solid = interoa.isSolid();
+        this.coords = coords;
+        this.direction = direction;
+        this.activationType = interoa.getActivationType();
+        this.children = children;
+        this.action = interoa.getAction();
     }
 
     //Getters
@@ -88,6 +99,10 @@ public class InteractiveObject implements GameObject {
     }
 
     //Specials
+    public void addChild(InteractiveObject interactiveObject){
+        this.children.add(interactiveObject);
+    }
+    
     public void reactToTouch() {
         if (activationType.equals(ActivationType.ON_TOUCHED)) {
             action.accept(this);

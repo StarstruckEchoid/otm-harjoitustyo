@@ -10,9 +10,20 @@ package otmkurssiprojekti.Level.GameObjects.Archetypes;
  * @author Juho Gröhn
  */
 public enum Behaviour {
-    PASSIVE,
-    FOLLOW,
-    HUNT,
-    FLEE,
-    PATROL
+    PASSIVE("PASSIVE"),
+    FOLLOW("FOLLOW"),
+    HUNT("HUNT"),
+    FLEE("FLEE"),
+    PATROL("PATROL");
+
+    private final String name;
+
+    private Behaviour(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
 }

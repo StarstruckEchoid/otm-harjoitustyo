@@ -8,6 +8,7 @@ package otmkurssiprojekti.Level.GameObjects;
 import otmkurssiprojekti.Level.GameObjects.Dependencies.Coords;
 import otmkurssiprojekti.Level.GameObjects.Dependencies.Direction;
 import otmkurssiprojekti.Level.GameObjects.Archetypes.Behaviour;
+import otmkurssiprojekti.Level.GameObjects.Archetypes.NonPlayerCharacterArchetype;
 
 /**
  *
@@ -39,6 +40,18 @@ public class NonPlayerCharacter implements GameCharacter, PointsSource {
         this.behaviour = behaviour;
         this.direction = direction;
         this.hp = hp;
+    }
+
+    public NonPlayerCharacter(NonPlayerCharacterArchetype npca, Coords coords, Direction direction) {
+        this.id = npca.getId();
+        this.coords = coords;
+        this.essential = npca.isEssential();
+        this.lvl = npca.getLevel();
+        this.str = npca.getStr();
+        this.end = npca.getEnd();
+        this.behaviour = npca.getBehaviour();
+        this.direction = direction;
+        this.hp = npca.getHp();
     }
 
     public NonPlayerCharacter(char id, Coords coords, boolean essential, int lvl, int str, int end) {

@@ -6,14 +6,9 @@
 package DataAccessObject;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -32,11 +27,11 @@ public class FileUserDao implements UserDao {
     }
 
     @Override
-    public List<String> loadUsers() {
-        List<String> users = new ArrayList<>();
+    public List<Path> loadUsers() {
+        List<Path> users = new ArrayList<>();
         File[] subdirs = source.toFile().listFiles(f -> f.isDirectory());
         for (File f : subdirs) {
-            users.add(f.getName());
+            users.add(f.toPath());
         }
         return users;
     }

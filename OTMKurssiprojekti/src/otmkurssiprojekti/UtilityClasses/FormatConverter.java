@@ -5,7 +5,10 @@
  */
 package otmkurssiprojekti.UtilityClasses;
 
+import otmkurssiprojekti.Level.GameObjects.Dependencies.Coords;
+import otmkurssiprojekti.Level.GameObjects.Dependencies.Direction;
 import otmkurssiprojekti.Level.GameObjects.GameObject;
+import otmkurssiprojekti.Level.GameObjects.PlayerCharacter;
 
 /**
  *
@@ -69,16 +72,17 @@ public class FormatConverter {
         }
         return matrix;
     }
-    
-    public static String projectionToDenseString(char[][] matrix){
+
+    public static String projectionToDenseString(char[][] matrix) {
         StringBuilder sb = new StringBuilder();
-        for(int i=matrix.length; i>0; i--){
-            char[] row = matrix[i-1];
+        for (int i = matrix.length; i > 0; i--) {
+            char[] row = matrix[i - 1];
             sb.append(">");
             sb.append(String.valueOf(row));
             sb.append("<\n");
         }
         return sb.toString();
     }
+
 
 }
