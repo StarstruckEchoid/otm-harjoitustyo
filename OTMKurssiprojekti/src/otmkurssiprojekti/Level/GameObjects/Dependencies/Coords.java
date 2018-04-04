@@ -9,7 +9,7 @@ package otmkurssiprojekti.Level.GameObjects.Dependencies;
  *
  * @author gjuho
  */
-public class Coords {
+public class Coords implements java.io.Serializable {
 
     public int x;
     public int y;

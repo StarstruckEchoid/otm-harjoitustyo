@@ -5,6 +5,7 @@
  */
 package otmkurssiprojekti.Level.GameObjects;
 
+import java.util.Objects;
 import otmkurssiprojekti.Level.GameObjects.Dependencies.Coords;
 import otmkurssiprojekti.Level.GameObjects.Dependencies.Direction;
 import otmkurssiprojekti.Level.GameObjects.Archetypes.Behaviour;
@@ -138,5 +139,44 @@ public class NonPlayerCharacter implements GameCharacter, PointsSource {
         //The points given by an NPC on death is the level of the NPC.
         return lvl;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + this.id;
+        hash = 97 * hash + Objects.hashCode(this.coords);
+        hash = 97 * hash + (this.essential ? 1 : 0);
+        hash = 97 * hash + this.lvl;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final NonPlayerCharacter other = (NonPlayerCharacter) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (this.essential != other.essential) {
+            return false;
+        }
+        if (this.lvl != other.lvl) {
+            return false;
+        }
+        if (!Objects.equals(this.coords, other.coords)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 
 }

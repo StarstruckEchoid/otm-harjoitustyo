@@ -12,7 +12,7 @@ import otmkurssiprojekti.Level.GameObjects.Dependencies.Direction;
  *
  * @author gjuho
  */
-public interface GameObject {
+public interface GameObject extends java.io.Serializable {
 
     public char getId();
     public boolean isTransparent();    

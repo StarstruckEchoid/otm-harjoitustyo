@@ -29,7 +29,7 @@ public class CSVFileLevelDao implements LevelDao {
     }
 
     @Override
-    public void saveLevel(GameLevel level) {
+    public void saveLevel(Path user, GameLevel level) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

@@ -17,7 +17,7 @@ import otmkurssiprojekti.Level.GameObjects.*;
  *
  * @author gjuho
  */
-public class GameLevel {
+public class GameLevel implements java.io.Serializable {
 
     public static final Coords DIMENSIONS = new Coords(16, 16, 8); //The level is a box from origin to DIMENSIONS Coords exclusive. Ie. The level has a size 16x16x8.
     private final String levelName;
@@ -99,5 +99,56 @@ public class GameLevel {
         }
         return levelData;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 53 * hash + Objects.hashCode(this.levelName);
+        hash = 53 * hash + Objects.hashCode(this.player);
+        hash = 53 * hash + Objects.hashCode(this.npcs);
+        hash = 53 * hash + Objects.hashCode(this.blocks);
+        hash = 53 * hash + Objects.hashCode(this.interactives);
+        hash = 53 * hash + Objects.hashCode(this.levelLinks);
+        hash = 53 * hash + Objects.hashCode(this.points);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final GameLevel other = (GameLevel) obj;
+        if (!Objects.equals(this.levelName, other.levelName)) {
+            return false;
+        }
+        if (!Objects.equals(this.player, other.player)) {
+            return false;
+        }
+        if (!Objects.equals(this.npcs, other.npcs)) {
+            return false;
+        }
+        if (!Objects.equals(this.blocks, other.blocks)) {
+            return false;
+        }
+        if (!Objects.equals(this.interactives, other.interactives)) {
+            return false;
+        }
+        if (!Objects.equals(this.levelLinks, other.levelLinks)) {
+            return false;
+        }
+        if (!Objects.equals(this.points, other.points)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 
 }
