@@ -8,3 +8,5 @@
 | 29.3. | 7        | Koodailua. Lisää testejä ja rajapinnoille lisää toteuttavia luokkia. Koko sovelluksen kattava luokkakaavio tehty. |
 | 30.3. | 7        | Luokkakaavio hinkattu tarpeeksi täydelliseksi, että sitä voi käyttää ohjelmiston pohjapiirroksena. |
 | 1.4.  | 10       | Koodin refraktorointia, testien luomista, uusia luokkia. |
+| 2.4.  | 5        | DataAccessObjectien tekeminen aloitettu. |
+| 3.4.  | 7        | Daojen tekeminen jatkuu. |
