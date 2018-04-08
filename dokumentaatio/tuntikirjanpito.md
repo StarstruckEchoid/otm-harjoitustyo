@@ -10,3 +10,5 @@
 | 1.4.  | 10       | Koodin refraktorointia, testien luomista, uusia luokkia. |
 | 2.4.  | 5        | DataAccessObjectien tekeminen aloitettu. |
 | 3.4.  | 7        | Daojen tekeminen jatkuu. |
+| 4.4.  | 3        | ByteFileDao |
+| 8.4.  | 6        | Käyttöliittymälogiikan refraktorointia. Käyttöliittymä osaa käyttää UserDaoja käyttäjien luomiseen ja tuomiseen. |

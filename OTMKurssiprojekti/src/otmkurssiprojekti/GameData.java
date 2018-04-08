@@ -13,12 +13,14 @@ import otmkurssiprojekti.Level.GameLevel;
  */
 public interface GameData {
 
+    //Getters
     public String getUser();
 
     public String getPlayer();
 
     public GameLevel getGameLevel();
 
+    //Setters
     public void setUser(String user);
 
     public void setPlayer(String player);
