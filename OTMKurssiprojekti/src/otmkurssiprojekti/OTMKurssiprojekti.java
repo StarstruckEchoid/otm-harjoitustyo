@@ -35,6 +35,7 @@ public class OTMKurssiprojekti extends Application {
     public static final Path USER_DIR = Paths.get("users");
 
     static {
+        //Create file userDir if it does not yet exist.
         if (USER_DIR.toFile().exists() && USER_DIR.toFile().isDirectory()) {
             //Everything is okay.
         } else {
@@ -50,8 +51,8 @@ public class OTMKurssiprojekti extends Application {
     private static final int TICKS_PERIOD = 1_000; //Controls how often the game updates, eg. how often npcs move.
     private static final int FRAMES_PERIOD = 30; //Controls how often the screen updates. Reciprocal of frames per millisecond.
 
-    private static GameData gameData;
-    private static GameScreen gameScreen;
+    private GameData gameData;
+    private GameScreen gameScreen;
 
     public static void main(String[] args) {
         launch(args);
@@ -60,7 +61,7 @@ public class OTMKurssiprojekti extends Application {
     @Override
     public void init() throws Exception {
 
-        //Make a new placeholder level.
+        //PLACEHOLDER: Makes a new level.
         String levelName = "TestLevel";
         PlayerCharacter player = new PlayerCharacter(new Coords(0, 0, 0), 10, 10, Direction.DOWN, 10);
         List<NonPlayerCharacter> npcs = new ArrayList<>();
@@ -75,8 +76,8 @@ public class OTMKurssiprojekti extends Application {
         List<PointsObject> points = new ArrayList<>();
         GameLevel gamelvl = new GameLevel(levelName, player, npcs, blocks, interactives, levelLinks, points);
 
-        gameData = new SimpleGameData("testUser", "testPlayer", gamelvl);
-        gameScreen = new LevelScreen();
+        this.setGameData(new SimpleGameData(null, null, gamelvl));
+        this.setGameScreen(new LevelScreen(this));
     }
 
     @Override
@@ -113,23 +114,24 @@ public class OTMKurssiprojekti extends Application {
     @Override
     public void stop() throws Exception {
         TIMER.cancel();
-        super.stop(); //To change body of generated methods, choose Tools | Templates.
+        super.stop();
     }
 
-    public static GameData getGameData() {
+    //Getters and setters.
+    public GameData getGameData() {
         return gameData;
     }
 
-    public static GameScreen getGameScreen() {
+    public GameScreen getGameScreen() {
         return gameScreen;
     }
 
-    public static void setGameData(GameData gameData) {
-        OTMKurssiprojekti.gameData = gameData;
+    public void setGameData(GameData gameData) {
+        this.gameData = gameData;
     }
 
-    public static void setGameScreen(GameScreen gameScreen) {
-        OTMKurssiprojekti.gameScreen = gameScreen;
+    public void setGameScreen(GameScreen gameScreen) {
+        this.gameScreen = gameScreen;
     }
 
 }

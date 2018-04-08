@@ -21,10 +21,12 @@ import otmkurssiprojekti.UtilityClasses.FormatConverter;
  */
 public class LevelScreen implements GameScreen {
 
+    private final otmkurssiprojekti.OTMKurssiprojekti main;
     private final GameLevel gameLevel;
 
-    public LevelScreen() {
-        this.gameLevel = otmkurssiprojekti.OTMKurssiprojekti.getGameData().getGameLevel();
+    public LevelScreen(otmkurssiprojekti.OTMKurssiprojekti main) {
+        this.main = main;
+        this.gameLevel = main.getGameData().getGameLevel();
     }
 
     @Override
@@ -39,7 +41,7 @@ public class LevelScreen implements GameScreen {
                 this.movePlayer(e);
                 break;
             case ESCAPE:
-                otmkurssiprojekti.OTMKurssiprojekti.setGameScreen(new PauseScreen());
+                main.setGameScreen(new PauseScreen(main));
                 break;
             default:
                 break;

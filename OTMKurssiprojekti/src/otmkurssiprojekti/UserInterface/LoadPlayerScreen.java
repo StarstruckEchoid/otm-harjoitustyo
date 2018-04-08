@@ -6,7 +6,11 @@
 package otmkurssiprojekti.UserInterface;
 
 import javafx.scene.Parent;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Text;
+import otmkurssiprojekti.OTMKurssiprojekti;
 
 /**
  *
@@ -14,24 +18,31 @@ import javafx.scene.input.KeyEvent;
  */
 public class LoadPlayerScreen implements GameScreen {
 
-    public LoadPlayerScreen() {
+    private final otmkurssiprojekti.OTMKurssiprojekti main;
+
+    public LoadPlayerScreen(OTMKurssiprojekti main) {
+        this.main = main;
     }
 
     @Override
     public void handleKeyEvent(KeyEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        KeyCode kc = e.getCode();
+        switch (kc) {
+            case ESCAPE:
+                main.setGameScreen(new LoadUserScreen(main));
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
     public Parent getVisualisation() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new BorderPane(new Text("WIP"));
     }
 
     @Override
     public void doGameTick() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    
 
 }

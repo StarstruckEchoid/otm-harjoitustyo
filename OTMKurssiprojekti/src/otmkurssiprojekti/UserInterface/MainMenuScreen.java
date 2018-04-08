@@ -12,6 +12,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import otmkurssiprojekti.OTMKurssiprojekti;
 
 /**
  *
@@ -19,7 +20,10 @@ import javafx.scene.text.Text;
  */
 public class MainMenuScreen implements GameScreen {
 
-    public MainMenuScreen() {
+    private final otmkurssiprojekti.OTMKurssiprojekti main;
+
+    public MainMenuScreen(OTMKurssiprojekti main) {
+        this.main = main;
     }
 
     @Override
@@ -27,7 +31,7 @@ public class MainMenuScreen implements GameScreen {
         KeyCode kc = e.getCode();
         switch (kc) {
             case ENTER:
-                otmkurssiprojekti.OTMKurssiprojekti.setGameScreen(new LoadUserScreen());
+                main.setGameScreen(new LoadUserScreen(main));
                 break;
             case Q:
                 System.exit(0);
@@ -39,21 +43,21 @@ public class MainMenuScreen implements GameScreen {
 
     @Override
     public Parent getVisualisation() {
-        BorderPane main = new BorderPane();
+        BorderPane visual = new BorderPane();
 
         Text title = new Text("Main Menu");
         title.setFont(Font.font("MONOSPACED"));
         BorderPane.setAlignment(title, Pos.CENTER);
-        main.setTop(title);
+        visual.setTop(title);
 
         Text opts = new Text(
                 "Press ENTER to start game\n"
                 + "Press Q to quit game");
         opts.setFont(Font.font("MONOSPACED"));
         BorderPane.setAlignment(opts, Pos.CENTER);
-        main.setCenter(opts);
+        visual.setCenter(opts);
 
-        return main;
+        return visual;
     }
 
     @Override

@@ -12,6 +12,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import otmkurssiprojekti.OTMKurssiprojekti;
 
 /**
  *
@@ -19,7 +20,10 @@ import javafx.scene.text.Text;
  */
 public class PauseScreen implements GameScreen {
 
-    public PauseScreen() {
+    private final otmkurssiprojekti.OTMKurssiprojekti main;
+
+    public PauseScreen(OTMKurssiprojekti main) {
+        this.main = main;
     }
 
     @Override
@@ -27,14 +31,14 @@ public class PauseScreen implements GameScreen {
         KeyCode kc = e.getCode();
         switch (kc) {
             case ESCAPE:
-                otmkurssiprojekti.OTMKurssiprojekti.setGameScreen(new LevelScreen());
+                main.setGameScreen(new LevelScreen(main));
                 break;
             case A:
                 break;
             case S:
                 break;
             case Q:
-                otmkurssiprojekti.OTMKurssiprojekti.setGameScreen(new MainMenuScreen());
+                main.setGameScreen(new MainMenuScreen(main));
                 break;
             default:
                 break;
@@ -43,12 +47,12 @@ public class PauseScreen implements GameScreen {
 
     @Override
     public Parent getVisualisation() {
-        BorderPane main = new BorderPane();
+        BorderPane visual = new BorderPane();
 
         Text title = new Text("Paused");
         title.setFont(Font.font("MONOSPACED"));
         BorderPane.setAlignment(title, Pos.CENTER);
-        main.setTop(title);
+        visual.setTop(title);
 
         Text opts = new Text(
                 "Press ESC to return to game\n"
@@ -56,9 +60,9 @@ public class PauseScreen implements GameScreen {
         );
         opts.setFont(Font.font("MONOSPACED"));
         BorderPane.setAlignment(opts, Pos.CENTER);
-        main.setCenter(opts);
+        visual.setCenter(opts);
 
-        return main;
+        return visual;
     }
 
     @Override

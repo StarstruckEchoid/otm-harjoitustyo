@@ -16,6 +16,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import otmkurssiprojekti.DataAccessObject.FileUserDao;
+import otmkurssiprojekti.OTMKurssiprojekti;
 
 /**
  *
@@ -23,13 +24,15 @@ import otmkurssiprojekti.DataAccessObject.FileUserDao;
  */
 public class LoadUserScreen implements GameScreen {
 
+    private final otmkurssiprojekti.OTMKurssiprojekti main;
     private final FileUserDao fudao;
     private final Path[] users;
 
     private int pointer = 0;
 
-    public LoadUserScreen() {
-        fudao = new FileUserDao(otmkurssiprojekti.OTMKurssiprojekti.USER_DIR);
+    public LoadUserScreen(otmkurssiprojekti.OTMKurssiprojekti main) {
+        this.main = main;
+        fudao = new FileUserDao(OTMKurssiprojekti.USER_DIR);
         users = fudao.loadUsers().stream()
                 .toArray(Path[]::new);
     }
@@ -49,14 +52,14 @@ public class LoadUserScreen implements GameScreen {
                 }
                 break;
             case ESCAPE:
-                otmkurssiprojekti.OTMKurssiprojekti.setGameScreen(new MainMenuScreen());
+                main.setGameScreen(new MainMenuScreen(main));
                 break;
             case ENTER:
                 if (pointer == 0) {
-                    otmkurssiprojekti.OTMKurssiprojekti.setGameScreen(new NewUserScreen());
+                    main.setGameScreen(new NewUserScreen(main));
                 } else {
-                    otmkurssiprojekti.OTMKurssiprojekti.getGameData().setUser(users[pointer - 1].getFileName().toString());
-                    otmkurssiprojekti.OTMKurssiprojekti.setGameScreen(new LoadPlayerScreen());
+                    main.getGameData().setUser(users[pointer - 1].getFileName().toString());
+                    main.setGameScreen(new LoadPlayerScreen(main));
                 }
                 break;
             default:
@@ -67,14 +70,13 @@ public class LoadUserScreen implements GameScreen {
 
     @Override
     public Parent getVisualisation() {
-
-        BorderPane main = new BorderPane();
+        BorderPane visual = new BorderPane();
 
         //TITLE
         Text title = new Text("Select User");
         title.setFont(Font.font("MONOSPACED"));
         BorderPane.setAlignment(title, Pos.CENTER);
-        main.setTop(title);
+        visual.setTop(title);
 
         //OPTIONS
         Text opts = new Text();
@@ -98,7 +100,7 @@ public class LoadUserScreen implements GameScreen {
         opts.setText(sb.toString());
         opts.setFont(Font.font("MONOSPACED"));
         BorderPane.setAlignment(opts, Pos.CENTER);
-        main.setCenter(opts);
+        visual.setCenter(opts);
 
         //LEGEND
         Text legend = new Text(
@@ -109,9 +111,9 @@ public class LoadUserScreen implements GameScreen {
         );
         legend.setFont(Font.font("MONOSPACED"));
         BorderPane.setAlignment(legend, Pos.CENTER);
-        main.setBottom(legend);
+        visual.setBottom(legend);
 
-        return main;
+        return visual;
     }
 
     @Override

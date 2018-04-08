@@ -5,9 +5,6 @@
  */
 package otmkurssiprojekti.UserInterface;
 
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.input.KeyCode;
@@ -16,6 +13,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import otmkurssiprojekti.DataAccessObject.FileUserDao;
+import otmkurssiprojekti.OTMKurssiprojekti;
 
 /**
  *
@@ -23,10 +21,14 @@ import otmkurssiprojekti.DataAccessObject.FileUserDao;
  */
 public class NewUserScreen implements GameScreen {
 
-    private static final FileUserDao FUDAO = new FileUserDao(otmkurssiprojekti.OTMKurssiprojekti.USER_DIR);
-    private final StringBuilder username = new StringBuilder();
+    private final otmkurssiprojekti.OTMKurssiprojekti main;
+    private final FileUserDao fudao;
+    private final StringBuilder username;
 
-    public NewUserScreen() {
+    public NewUserScreen(OTMKurssiprojekti main) {
+        this.main = main;
+        this.fudao = new FileUserDao(OTMKurssiprojekti.USER_DIR);
+        this.username = new StringBuilder();
     }
 
     @Override
@@ -34,11 +36,12 @@ public class NewUserScreen implements GameScreen {
         KeyCode kc = e.getCode();
         switch (kc) {
             case ESCAPE:
-                otmkurssiprojekti.OTMKurssiprojekti.setGameScreen(new MainMenuScreen());
+                main.setGameScreen(new MainMenuScreen(main));
                 break;
             case ENTER:
-                FUDAO.saveUser(username.toString());
-                otmkurssiprojekti.OTMKurssiprojekti.setGameScreen(new LoadUserScreen());
+                fudao.saveUser(username.toString());
+                main.getGameData().setUser(username.toString());
+                main.setGameScreen(new LoadPlayerScreen(main));
                 break;
             case BACK_SPACE:
                 username.deleteCharAt(username.length() - 1);
@@ -53,19 +56,19 @@ public class NewUserScreen implements GameScreen {
 
     @Override
     public Parent getVisualisation() {
-        BorderPane main = new BorderPane();
+        BorderPane visual = new BorderPane();
 
         //TITLE
         Text title = new Text("Create new user User");
         title.setFont(Font.font("MONOSPACED"));
         BorderPane.setAlignment(title, Pos.CENTER);
-        main.setTop(title);
+        visual.setTop(title);
 
         //OPTIONS
         Text opts = new Text("Username: " + username.toString());
         opts.setFont(Font.font("MONOSPACED"));
         BorderPane.setAlignment(opts, Pos.CENTER);
-        main.setCenter(opts);
+        visual.setCenter(opts);
 
         //LEGEND
         Text legend = new Text(
@@ -75,9 +78,9 @@ public class NewUserScreen implements GameScreen {
         );
         legend.setFont(Font.font("MONOSPACED"));
         BorderPane.setAlignment(legend, Pos.CENTER);
-        main.setBottom(legend);
+        visual.setBottom(legend);
 
-        return main;
+        return visual;
     }
 
     @Override
