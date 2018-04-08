@@ -25,6 +25,8 @@ import otmkurssiprojekti.UserInterface.LevelScreen;
  * @author gjuho
  */
 public class OTMKurssiprojekti extends Application {
+
+    private static final Timer TIMER = new Timer();
     private static final int TICKS_PERIOD = 1_000; //Controls how often the game updates, eg. how often npcs move.
     private static final int FRAMES_PERIOD = 30; //Controls how often the screen updates. Reciprocal of frames per millisecond.
 
@@ -37,7 +39,7 @@ public class OTMKurssiprojekti extends Application {
 
     @Override
     public void init() throws Exception {
-        
+
         //Make a new placeholder level.
         String levelName = "TestLevel";
         PlayerCharacter player = new PlayerCharacter(new Coords(0, 0, 0), 10, 10, Direction.DOWN, 10);
@@ -53,7 +55,6 @@ public class OTMKurssiprojekti extends Application {
         List<PointsObject> points = new ArrayList<>();
         GameLevel gamelvl = new GameLevel(levelName, player, npcs, blocks, interactives, levelLinks, points);
 
-        
         gameData = new SimpleGameData("testUser", "testPlayer", gamelvl);
         gameScreen = new LevelScreen();
     }
@@ -67,8 +68,7 @@ public class OTMKurssiprojekti extends Application {
         //Keyboard input.
         mainScene.setOnKeyPressed(e -> gameScreen.handleKeyEvent(e));
         //Refresh the game.
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(
+        TIMER.scheduleAtFixedRate(
                 new TimerTask() {
             @Override
             public void run() {
@@ -78,7 +78,7 @@ public class OTMKurssiprojekti extends Application {
                 0, //Delay.
                 TICKS_PERIOD); //Period.
         //Referesh the sreen.
-        timer.scheduleAtFixedRate(
+        TIMER.scheduleAtFixedRate(
                 new TimerTask() {
             @Override
             public void run() {
@@ -87,6 +87,13 @@ public class OTMKurssiprojekti extends Application {
         }, 0, FRAMES_PERIOD);
         primaryStage.setScene(mainScene);
         primaryStage.show();
+
+    }
+
+    @Override
+    public void stop() throws Exception {
+        TIMER.cancel();
+        super.stop(); //To change body of generated methods, choose Tools | Templates.
     }
 
     public static GameData getGameData() {
