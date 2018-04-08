@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package DataAccessObject;
+package otmkurssiprojekti.DataAccessObject;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
