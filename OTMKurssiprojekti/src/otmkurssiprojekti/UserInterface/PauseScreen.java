@@ -5,14 +5,13 @@
  */
 package otmkurssiprojekti.UserInterface;
 
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 
 /**
  *
@@ -34,7 +33,7 @@ public class PauseScreen implements GameScreen {
                 break;
             case S:
                 break;
-            case X:
+            case Q:
                 otmkurssiprojekti.OTMKurssiprojekti.setGameScreen(new MainMenuScreen());
                 break;
             default:
@@ -46,21 +45,18 @@ public class PauseScreen implements GameScreen {
     public Parent getVisualisation() {
         BorderPane main = new BorderPane();
 
-        Text t = new Text();
-        t.setFont(Font.font("MONOSPACED"));
-        t.setTextAlignment(TextAlignment.CENTER);
-        t.setText("Paused");
+        Text title = new Text("Paused");
+        title.setFont(Font.font("MONOSPACED"));
+        BorderPane.setAlignment(title, Pos.CENTER);
+        main.setTop(title);
 
-        VBox options = new VBox();
-        options.getChildren().addAll(
-                new Text("Press ESC to return to game."),
-                new Text("Press S to save game."),
-                new Text("Press A to load game."),
-                new Text("Press X to exit to main menu.")
+        Text opts = new Text(
+                "Press ESC to return to game\n"
+                + "Press Q to exit to main menu"
         );
-
-        main.setTop(t);
-        main.setCenter(options);
+        opts.setFont(Font.font("MONOSPACED"));
+        BorderPane.setAlignment(opts, Pos.CENTER);
+        main.setCenter(opts);
 
         return main;
     }

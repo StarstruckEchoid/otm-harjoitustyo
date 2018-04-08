@@ -5,11 +5,17 @@
  */
 package otmkurssiprojekti;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import otmkurssiprojekti.UserInterface.GameScreen;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -25,6 +31,20 @@ import otmkurssiprojekti.UserInterface.LevelScreen;
  * @author gjuho
  */
 public class OTMKurssiprojekti extends Application {
+
+    public static final Path USER_DIR = Paths.get("users");
+
+    static {
+        if (USER_DIR.toFile().exists() && USER_DIR.toFile().isDirectory()) {
+            //Everything is okay.
+        } else {
+            try {
+                Files.createDirectory(USER_DIR);
+            } catch (IOException ex) {
+                Logger.getLogger(OTMKurssiprojekti.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 
     private static final Timer TIMER = new Timer();
     private static final int TICKS_PERIOD = 1_000; //Controls how often the game updates, eg. how often npcs move.

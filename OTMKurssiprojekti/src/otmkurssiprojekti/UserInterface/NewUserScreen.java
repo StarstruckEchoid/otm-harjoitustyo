@@ -5,6 +5,9 @@
  */
 package otmkurssiprojekti.UserInterface;
 
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.input.KeyCode;
@@ -12,27 +15,38 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import otmkurssiprojekti.DataAccessObject.FileUserDao;
 
 /**
  *
  * @author Juho Gröhn
  */
-public class MainMenuScreen implements GameScreen {
+public class NewUserScreen implements GameScreen {
 
-    public MainMenuScreen() {
+    private static final FileUserDao FUDAO = new FileUserDao(otmkurssiprojekti.OTMKurssiprojekti.USER_DIR);
+    private final StringBuilder username = new StringBuilder();
+
+    public NewUserScreen() {
     }
 
     @Override
     public void handleKeyEvent(KeyEvent e) {
         KeyCode kc = e.getCode();
         switch (kc) {
+            case ESCAPE:
+                otmkurssiprojekti.OTMKurssiprojekti.setGameScreen(new MainMenuScreen());
+                break;
             case ENTER:
+                FUDAO.saveUser(username.toString());
                 otmkurssiprojekti.OTMKurssiprojekti.setGameScreen(new LoadUserScreen());
                 break;
-            case Q:
-                System.exit(0);
+            case BACK_SPACE:
+                username.deleteCharAt(username.length() - 1);
                 break;
             default:
+                if (kc.isLetterKey()) {
+                    username.append(kc.toString());
+                }
                 break;
         }
     }
@@ -41,17 +55,27 @@ public class MainMenuScreen implements GameScreen {
     public Parent getVisualisation() {
         BorderPane main = new BorderPane();
 
-        Text title = new Text("Main Menu");
+        //TITLE
+        Text title = new Text("Create new user User");
         title.setFont(Font.font("MONOSPACED"));
         BorderPane.setAlignment(title, Pos.CENTER);
         main.setTop(title);
 
-        Text opts = new Text(
-                "Press ENTER to start game\n"
-                + "Press Q to quit game");
+        //OPTIONS
+        Text opts = new Text("Username: " + username.toString());
         opts.setFont(Font.font("MONOSPACED"));
         BorderPane.setAlignment(opts, Pos.CENTER);
         main.setCenter(opts);
+
+        //LEGEND
+        Text legend = new Text(
+                "BACKSPACE: backspace\t"
+                + "ESC:back\t"
+                + "ENTER:enter name"
+        );
+        legend.setFont(Font.font("MONOSPACED"));
+        BorderPane.setAlignment(legend, Pos.CENTER);
+        main.setBottom(legend);
 
         return main;
     }
