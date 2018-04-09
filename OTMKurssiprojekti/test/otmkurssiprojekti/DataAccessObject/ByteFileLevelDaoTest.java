@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package DataAccessObject;
+package otmkurssiprojekti.DataAccessObject;
 
 import otmkurssiprojekti.DataAccessObject.ByteFileLevelDao;
 import java.io.IOException;
