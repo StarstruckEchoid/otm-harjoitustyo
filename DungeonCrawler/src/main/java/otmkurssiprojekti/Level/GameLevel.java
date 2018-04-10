@@ -28,6 +28,16 @@ public class GameLevel implements java.io.Serializable {
     private final List<LinkObject> levelLinks;
     private final List<PointsObject> points;
 
+    public GameLevel() {
+        this.levelName = null;
+        this.player = null;
+        this.npcs = null;
+        this.blocks = null;
+        this.interactives = null;
+        this.levelLinks = null;
+        this.points = null;
+    }
+
     public GameLevel(String levelName, PlayerCharacter player, List<NonPlayerCharacter> npcs, List<ImmutableObject> blocks, List<InteractiveObject> interactives, List<LinkObject> levelLinks, List<PointsObject> points) {
         this.levelName = levelName;
         this.player = player;
@@ -148,7 +158,10 @@ public class GameLevel implements java.io.Serializable {
         }
         return true;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return this.levelName;
+    }
 
 }

@@ -18,12 +18,10 @@ import otmkurssiprojekti.DungeonCrawler;
  *
  * @author Juho Gröhn
  */
-public class MainMenuScreen implements GameScreen {
-
-    private final otmkurssiprojekti.DungeonCrawler main;
+public class MainMenuScreen extends SwitchingScreen {
 
     public MainMenuScreen(DungeonCrawler main) {
-        this.main = main;
+        super(main);
     }
 
     @Override
@@ -31,7 +29,7 @@ public class MainMenuScreen implements GameScreen {
         KeyCode kc = e.getCode();
         switch (kc) {
             case ENTER:
-                main.setGameScreen(new LoadUserScreen(main));
+                switchTo(new LoadUserScreen(main));
                 break;
             case Q:
                 System.exit(0);

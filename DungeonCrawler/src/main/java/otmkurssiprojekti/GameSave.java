@@ -11,9 +11,15 @@ import java.util.Date;
  *
  * @author gjuho
  */
-public class GameSave implements java.io.Serializable {
+public class GameSave{
+
     private final Date saveDate;
     private final GameData gameData;
+
+    public GameSave() {
+        this.saveDate = null;
+        this.gameData = null;
+    }
 
     public GameSave(Date saveDate, GameData gameData) {
         this.saveDate = saveDate;
@@ -30,9 +36,7 @@ public class GameSave implements java.io.Serializable {
 
     @Override
     public String toString() {
-        return saveDate.toString()+": "+gameData.toString();
+        return saveDate.toString() + ": " + gameData.toString();
     }
-    
-    
-    
+
 }

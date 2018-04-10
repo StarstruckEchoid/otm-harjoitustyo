@@ -5,6 +5,8 @@
  */
 package otmkurssiprojekti.UserInterface;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.input.KeyCode;
@@ -19,14 +21,12 @@ import otmkurssiprojekti.DungeonCrawler;
  *
  * @author Juho Gröhn
  */
-public class NewUserScreen implements GameScreen {
-
-    private final otmkurssiprojekti.DungeonCrawler main;
+public class NewUserScreen extends SwitchingScreen{
     private final FileUserDao fudao;
     private final StringBuilder username;
 
     public NewUserScreen(DungeonCrawler main) {
-        this.main = main;
+        super(main);
         this.fudao = new FileUserDao(DungeonCrawler.USER_DIR);
         this.username = new StringBuilder();
     }
@@ -36,12 +36,16 @@ public class NewUserScreen implements GameScreen {
         KeyCode kc = e.getCode();
         switch (kc) {
             case ESCAPE:
-                main.setGameScreen(new MainMenuScreen(main));
+                switchTo(new MainMenuScreen(main));
                 break;
             case ENTER:
+                //Save user and continue to player selection.
+                String userString = username.toString();
+                Path userPath = Paths.get(DungeonCrawler.USER_DIR.toString(), userString);
+                
                 fudao.saveUser(username.toString());
                 main.getGameData().setUser(username.toString());
-                main.setGameScreen(new LoadPlayerScreen(main));
+                switchTo(new LoadPlayerScreen(main, userPath));
                 break;
             case BACK_SPACE:
                 username.deleteCharAt(username.length() - 1);

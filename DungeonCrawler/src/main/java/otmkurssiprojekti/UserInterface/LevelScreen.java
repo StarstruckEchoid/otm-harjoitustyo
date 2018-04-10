@@ -11,6 +11,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import otmkurssiprojekti.DungeonCrawler;
 import otmkurssiprojekti.Level.GameLevel;
 import otmkurssiprojekti.Level.GameObjects.Dependencies.Direction;
 import otmkurssiprojekti.UtilityClasses.FormatConverter;
@@ -19,13 +20,12 @@ import otmkurssiprojekti.UtilityClasses.FormatConverter;
  *
  * @author Juho Gröhn
  */
-public class LevelScreen implements GameScreen {
+public class LevelScreen extends SwitchingScreen {
 
-    private final otmkurssiprojekti.DungeonCrawler main;
     private final GameLevel gameLevel;
 
-    public LevelScreen(otmkurssiprojekti.DungeonCrawler main) {
-        this.main = main;
+    public LevelScreen(DungeonCrawler main) {
+        super(main);
         this.gameLevel = main.getGameData().getGameLevel();
     }
 
@@ -41,7 +41,7 @@ public class LevelScreen implements GameScreen {
                 this.movePlayer(e);
                 break;
             case ESCAPE:
-                main.setGameScreen(new PauseScreen(main));
+                switchTo(new PauseScreen(main));
                 break;
             default:
                 break;

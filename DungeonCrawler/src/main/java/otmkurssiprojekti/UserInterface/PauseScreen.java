@@ -18,12 +18,10 @@ import otmkurssiprojekti.DungeonCrawler;
  *
  * @author Juho Gröhn
  */
-public class PauseScreen implements GameScreen {
-
-    private final otmkurssiprojekti.DungeonCrawler main;
+public class PauseScreen extends SwitchingScreen {
 
     public PauseScreen(DungeonCrawler main) {
-        this.main = main;
+        super(main);
     }
 
     @Override
@@ -31,14 +29,14 @@ public class PauseScreen implements GameScreen {
         KeyCode kc = e.getCode();
         switch (kc) {
             case ESCAPE:
-                main.setGameScreen(new LevelScreen(main));
+                switchTo(new LevelScreen(main));
                 break;
             case A:
                 break;
             case S:
                 break;
             case Q:
-                main.setGameScreen(new MainMenuScreen(main));
+                switchTo(new MainMenuScreen(main));
                 break;
             default:
                 break;

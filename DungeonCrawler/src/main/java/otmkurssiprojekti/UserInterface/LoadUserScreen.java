@@ -16,22 +16,22 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import otmkurssiprojekti.DataAccessObject.FileUserDao;
+import otmkurssiprojekti.DataAccessObject.UserDao;
 import otmkurssiprojekti.DungeonCrawler;
 
 /**
  *
  * @author Juho Gröhn
  */
-public class LoadUserScreen implements GameScreen {
+public class LoadUserScreen extends SwitchingScreen {
 
-    private final otmkurssiprojekti.DungeonCrawler main;
-    private final FileUserDao fudao;
+    private final UserDao fudao;
     private final Path[] users;
 
     private int pointer = 0;
 
-    public LoadUserScreen(otmkurssiprojekti.DungeonCrawler main) {
-        this.main = main;
+    public LoadUserScreen(DungeonCrawler main) {
+        super(main);
         fudao = new FileUserDao(DungeonCrawler.USER_DIR);
         users = fudao.loadUsers().stream()
                 .toArray(Path[]::new);
@@ -52,14 +52,15 @@ public class LoadUserScreen implements GameScreen {
                 }
                 break;
             case ESCAPE:
-                main.setGameScreen(new MainMenuScreen(main));
+                switchTo(new MainMenuScreen(main));
                 break;
             case ENTER:
                 if (pointer == 0) {
-                    main.setGameScreen(new NewUserScreen(main));
+                    switchTo(new NewUserScreen(main));
                 } else {
-                    main.getGameData().setUser(users[pointer - 1].getFileName().toString());
-                    main.setGameScreen(new LoadPlayerScreen(main));
+                    Path user = users[pointer - 1];
+                    main.getGameData().setUser(user.getFileName().toString());
+                    switchTo(new LoadPlayerScreen(main, user));
                 }
                 break;
             default:

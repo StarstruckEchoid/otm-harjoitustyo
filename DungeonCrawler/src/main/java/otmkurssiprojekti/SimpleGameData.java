@@ -5,6 +5,7 @@
  */
 package otmkurssiprojekti;
 
+import java.util.Objects;
 import otmkurssiprojekti.Level.GameLevel;
 
 /**
@@ -18,6 +19,9 @@ public class SimpleGameData implements GameData {
     private GameLevel gameLevel;
 
     public SimpleGameData() {
+        this.user = null;
+        this.player = null;
+        this.gameLevel = null;
     }
 
     public SimpleGameData(String user, String player, GameLevel gameLevel) {
@@ -58,7 +62,40 @@ public class SimpleGameData implements GameData {
 
     @Override
     public String toString() {
-        return player+" in "+gameLevel.getLevelName();
+        return player + " in " + gameLevel.getLevelName();
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 71 * hash + Objects.hashCode(this.user);
+        hash = 71 * hash + Objects.hashCode(this.player);
+        hash = 71 * hash + Objects.hashCode(this.gameLevel);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final SimpleGameData other = (SimpleGameData) obj;
+        if (!Objects.equals(this.user, other.user)) {
+            return false;
+        }
+        if (!Objects.equals(this.player, other.player)) {
+            return false;
+        }
+        if (!Objects.equals(this.gameLevel, other.gameLevel)) {
+            return false;
+        }
+        return true;
     }
     
     
