@@ -16,6 +16,7 @@ import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import otmkurssiprojekti.Level.GameLevel;
+import otmkurssiprojekti.UtilityClasses.Serializer;
 
 /**
  *
@@ -58,7 +59,7 @@ public class ByteFileLevelDao implements LevelDao {
 
         try {
             byte[] byteData = Files.readAllBytes(gamePath);
-            GameLevel glvl = deserialize(byteData);
+            GameLevel glvl = (GameLevel) Serializer.deserialize(byteData);
             return glvl;
         } catch (IOException | ClassNotFoundException ex) {
             Logger.getLogger(ByteFileLevelDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -70,7 +71,7 @@ public class ByteFileLevelDao implements LevelDao {
     public void saveLevel(Path user, GameLevel level) {
         try {
             Path gamePath = Paths.get(user.toString(), level.getLevelName());
-            byte[] bytedata = serialize(level);
+            byte[] bytedata = Serializer.serialize(level);
             Files.write(gamePath, bytedata);
         } catch (IOException ex) {
             Logger.getLogger(ByteFileLevelDao.class.getName()).log(Level.SEVERE, null, ex);
