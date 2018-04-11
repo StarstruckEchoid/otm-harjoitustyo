@@ -5,33 +5,27 @@
  */
 package otmkurssiprojekti.UserInterface;
 
-import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
+import java.util.ArrayList;
+import java.util.List;
 import otmkurssiprojekti.DungeonCrawler;
 
 /**
  *
  * @author Juho Gröhn
  */
-public class MainMenuScreen extends SwitchingScreen {
+public class MainMenuScreen extends VerticalMenuScreen {
 
     public MainMenuScreen(DungeonCrawler main) {
         super(main);
     }
 
     @Override
-    public void handleKeyEvent(KeyEvent e) {
-        KeyCode kc = e.getCode();
-        switch (kc) {
-            case ENTER:
+    protected void doEnterAction(int index) {
+        switch (index) {
+            case 0:
                 switchTo(new LoadUserScreen(main));
                 break;
-            case Q:
+            case 1:
                 System.exit(0);
                 break;
             default:
@@ -40,26 +34,21 @@ public class MainMenuScreen extends SwitchingScreen {
     }
 
     @Override
-    public Parent getVisualisation() {
-        BorderPane visual = new BorderPane();
-
-        Text title = new Text("Main Menu");
-        title.setFont(Font.font("MONOSPACED"));
-        BorderPane.setAlignment(title, Pos.CENTER);
-        visual.setTop(title);
-
-        Text opts = new Text(
-                "Press ENTER to start game\n"
-                + "Press Q to quit game");
-        opts.setFont(Font.font("MONOSPACED"));
-        BorderPane.setAlignment(opts, Pos.CENTER);
-        visual.setCenter(opts);
-
-        return visual;
+    protected List<String> getOptsList() {
+        List<String> ret = new ArrayList<>();
+        ret.add("START");
+        ret.add("EXIT");
+        return ret;
     }
 
     @Override
-    public void doGameTick() {
+    protected String getTitleText() {
+        return "DUNGEON CRAWLER";
+    }
+
+    @Override
+    protected GameScreen getReturnScreen() {
+        return new MainMenuScreen(main);
     }
 
 }

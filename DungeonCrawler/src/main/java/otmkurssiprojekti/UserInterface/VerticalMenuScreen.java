@@ -5,8 +5,7 @@
  */
 package otmkurssiprojekti.UserInterface;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.List;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.input.KeyCode;
@@ -14,48 +13,44 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import otmkurssiprojekti.DataAccessObject.FileUserDao;
 import otmkurssiprojekti.DungeonCrawler;
 
 /**
  *
  * @author Juho Gröhn
  */
-public class NewUserScreen extends SwitchingScreen{
-    private final FileUserDao fudao;
-    private final StringBuilder username;
+public abstract class VerticalMenuScreen extends SwitchingScreen {
 
-    public NewUserScreen(DungeonCrawler main) {
+    protected int pointer = 0;
+
+    public VerticalMenuScreen(DungeonCrawler main) {
         super(main);
-        this.fudao = new FileUserDao(DungeonCrawler.USER_DIR);
-        this.username = new StringBuilder();
     }
 
     @Override
     public void handleKeyEvent(KeyEvent e) {
         KeyCode kc = e.getCode();
         switch (kc) {
-            case ESCAPE:
-                switchTo(new MainMenuScreen(main));
-                break;
-            case ENTER:
-                //Save user and continue to player selection.
-                String userString = username.toString();
-                Path userPath = Paths.get(DungeonCrawler.USER_DIR.toString(), userString);
-                
-                fudao.saveUser(username.toString());
-                main.getGameData().setUser(username.toString());
-                switchTo(new LoadPlayerScreen(main));
-                break;
-            case BACK_SPACE:
-                username.deleteCharAt(username.length() - 1);
-                break;
-            default:
-                if (kc.isLetterKey()) {
-                    username.append(kc.toString());
+            case W:
+                if (pointer > 0) {
+                    pointer--;
                 }
                 break;
+            case S:
+                if (pointer + 1 < getOptsList().size()) {
+                    pointer++;
+                }
+                break;
+            case ESCAPE:
+                switchTo(getReturnScreen());
+                break;
+            case ENTER:
+                doEnterAction(pointer);
+                break;
+            default:
+                break;
         }
+
     }
 
     @Override
@@ -63,22 +58,35 @@ public class NewUserScreen extends SwitchingScreen{
         BorderPane visual = new BorderPane();
 
         //TITLE
-        Text title = new Text("Create new user User");
+        Text title = new Text(getTitleText());
         title.setFont(Font.font("MONOSPACED"));
         BorderPane.setAlignment(title, Pos.CENTER);
         visual.setTop(title);
 
         //OPTIONS
-        Text opts = new Text("Username: " + username.toString());
+        Text opts = new Text();
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < getOptsList().size(); i++) {
+            if (i == pointer) {
+                sb.append(">").append(getOptsList().get(i)).append("<");
+            } else {
+                sb.append(getOptsList().get(i));
+            }
+            sb.append("\n");
+        }
+
+        opts.setText(sb.toString());
         opts.setFont(Font.font("MONOSPACED"));
         BorderPane.setAlignment(opts, Pos.CENTER);
         visual.setCenter(opts);
 
         //LEGEND
         Text legend = new Text(
-                "BACKSPACE: backspace\t"
+                "W: up\t"
+                + "S:down\t"
                 + "ESC:back\t"
-                + "ENTER:enter name"
+                + "ENTER:select"
         );
         legend.setFont(Font.font("MONOSPACED"));
         BorderPane.setAlignment(legend, Pos.CENTER);
@@ -89,6 +97,14 @@ public class NewUserScreen extends SwitchingScreen{
 
     @Override
     public void doGameTick() {
+        //Nothing happens while in a menu screen.
     }
 
+    protected abstract void doEnterAction(int index);
+
+    protected abstract List<String> getOptsList();
+
+    protected abstract String getTitleText();
+
+    protected abstract GameScreen getReturnScreen();
 }

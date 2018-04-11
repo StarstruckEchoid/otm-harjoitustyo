@@ -6,6 +6,7 @@
 package otmkurssiprojekti.UserInterface;
 
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Parent;
 import javafx.scene.input.KeyEvent;
@@ -20,34 +21,44 @@ import otmkurssiprojekti.GameSave;
  *
  * @author Juho Gröhn
  */
-public class LoadGameScreen extends SwitchingScreen {
-
+public class LoadGameScreen extends VerticalMenuScreen {
+    
     private final GameSaveDao gsdao;
     private final List<GameSave> saves;
-
+    
     public LoadGameScreen(DungeonCrawler main) {
         super(main);
-        gsdao = new ByteFileGameSaveDao(Paths.get(
+        gsdao = new ByteFileGameSaveDao(Paths.get( //Osoite, josta pelitallennukset katsotaan, on <USER_DIR>/<user>/<player>/
                 DungeonCrawler.USER_DIR.toString(),
                 main.getGameData().getUser(),
                 main.getGameData().getPlayer()
         ));
         saves = gsdao.listGameSaves();
     }
-
+    
     @Override
-    public void handleKeyEvent(KeyEvent e) {
-
+    protected void doEnterAction(int index) {
+        main.getGameData().setGameLevel(saves.get(index).getGameLevel());
+        switchTo(new LevelScreen(main));
     }
-
+    
     @Override
-    public Parent getVisualisation() {
-        return new BorderPane(new Text("WIP"));
+    protected List<String> getOptsList() {
+        List<String> ret = new ArrayList<>();
+        for (GameSave save : saves) {
+            ret.add(save.toString());
+        }
+        return ret;
     }
-
+    
     @Override
-    public void doGameTick() {
-
+    protected String getTitleText() {
+        return "Load game";
     }
-
+    
+    @Override
+    protected GameScreen getReturnScreen() {
+        return new LoadPlayerScreen(main);
+    }
+    
 }

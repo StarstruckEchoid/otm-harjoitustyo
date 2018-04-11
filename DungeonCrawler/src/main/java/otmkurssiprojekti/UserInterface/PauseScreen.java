@@ -5,66 +5,56 @@
  */
 package otmkurssiprojekti.UserInterface;
 
-import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
+import java.util.ArrayList;
+import java.util.List;
 import otmkurssiprojekti.DungeonCrawler;
 
 /**
  *
  * @author Juho Gröhn
  */
-public class PauseScreen extends SwitchingScreen {
+public class PauseScreen extends VerticalMenuScreen {
 
     public PauseScreen(DungeonCrawler main) {
         super(main);
     }
 
     @Override
-    public void handleKeyEvent(KeyEvent e) {
-        KeyCode kc = e.getCode();
-        switch (kc) {
-            case ESCAPE:
+    protected void doEnterAction(int index) {
+        switch (index) {
+            case 0:
                 switchTo(new LevelScreen(main));
                 break;
-            case A:
+            case 1:
                 break;
-            case S:
+            case 2:
+                switchTo(new LoadGameScreen(main));
                 break;
-            case Q:
+            case 3:
                 switchTo(new MainMenuScreen(main));
-                break;
             default:
                 break;
         }
     }
 
     @Override
-    public Parent getVisualisation() {
-        BorderPane visual = new BorderPane();
-
-        Text title = new Text("Paused");
-        title.setFont(Font.font("MONOSPACED"));
-        BorderPane.setAlignment(title, Pos.CENTER);
-        visual.setTop(title);
-
-        Text opts = new Text(
-                "Press ESC to return to game\n"
-                + "Press Q to exit to main menu"
-        );
-        opts.setFont(Font.font("MONOSPACED"));
-        BorderPane.setAlignment(opts, Pos.CENTER);
-        visual.setCenter(opts);
-
-        return visual;
+    protected List<String> getOptsList() {
+        List<String> ret = new ArrayList<>();
+        ret.add("Continue");
+        ret.add("Save Game");
+        ret.add("Load Game");
+        ret.add("Quit Game");
+        return ret;
     }
 
     @Override
-    public void doGameTick() {
+    protected String getTitleText() {
+        return "Paused";
+    }
+
+    @Override
+    protected GameScreen getReturnScreen() {
+        return new LevelScreen(main);
     }
 
 }
