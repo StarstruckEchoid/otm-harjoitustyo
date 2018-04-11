@@ -46,7 +46,7 @@ public class LoadPlayerScreen extends VerticalMenuScreen {
         List<String> optsList = new ArrayList<>();
         optsList.add("<new player>");
         for (File player : players) {
-            optsList.add(player.toString());
+            optsList.add(player.getName());
         }
         return optsList;
     }

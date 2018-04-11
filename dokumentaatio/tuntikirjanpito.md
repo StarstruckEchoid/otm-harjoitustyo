@@ -12,3 +12,6 @@
 | 3.4.  | 7        | Daojen tekeminen jatkuu. |
 | 4.4.  | 3        | ByteFileDao |
 | 8.4.  | 6        | Käyttöliittymälogiikan refraktorointia. Käyttöliittymä osaa käyttää UserDaoja käyttäjien luomiseen ja tuomiseen. |
+| 9.4.  | 1        | Tehtiin pelistä Maven-projekti ja varmistettiin, että peli toimii Linuxilla. Todettiin toimivuus. |
+| 10.4. | 7        | Luotiin Serializer-apuluokka plus testit, sekä abstrakti SwitchingScreen-luokka.
+| 11.4. | 6        | Virtaviivaistettiin luokkia. Uuden pelaajan tekeminen ja vanhan lataaminen toimii. Myös uuden pelin aloittaminen sekä vanhan pelin lataaminen toimii. Pelin manuaalista tallentamista ei vielä implementoitu. |
