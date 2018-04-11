@@ -9,7 +9,11 @@ package otmkurssiprojekti.Level.GameObjects;
  *
  * @author Juho Gröhn
  */
-public interface GameCharacter extends GameObject {
-    public void takeDamage(int dmg);
-    public boolean isDead();
+public interface StatsCharacter extends GameCharacter {
+
+    public void takeDamage(StatsCharacter sc);
+
+    public int getAttackDamage();
+
+    public int getCriticalChance();
 }

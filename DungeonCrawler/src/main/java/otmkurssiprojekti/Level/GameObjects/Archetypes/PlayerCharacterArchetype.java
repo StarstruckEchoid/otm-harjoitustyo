@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package otmkurssiprojekti.Level.GameObjects;
+package otmkurssiprojekti.Level.GameObjects.Archetypes;
 
 /**
  *
  * @author Juho Gröhn
  */
-public interface GameCharacter extends GameObject {
-    public void takeDamage(int dmg);
-    public boolean isDead();
+public enum PlayerCharacterArchetype {
+    
 }

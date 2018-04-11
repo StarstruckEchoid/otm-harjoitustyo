@@ -5,7 +5,6 @@ package otmkurssiprojekti.UtilityClasses;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 import otmkurssiprojekti.Level.GameObjects.Dependencies.Direction;
 import otmkurssiprojekti.Level.GameObjects.Dependencies.Coords;
 import java.util.ArrayList;
@@ -245,7 +244,7 @@ public class FormatConverterTest {
     @Test
     public void testLevelDataToMatrix1() {
         GameLevel glvl = new GameLevel("TestLevel",
-                new PlayerCharacter(new Coords(3, 2, 1), 0, 0, Direction.DOWN, 0),
+                new PlayerCharacter(new Coords(3, 2, 1), 200, 1, 2, 3, 1, Direction.DOWN),
                 new ArrayList<>(),
                 new ArrayList<>(),
                 new ArrayList<>(),
@@ -259,7 +258,7 @@ public class FormatConverterTest {
     @Test
     public void testLevelDataToMatrix2() {
         GameLevel glvl = new GameLevel("testLevel",
-                new PlayerCharacter(new Coords(7,0,3), 0, 0, Direction.DOWN, 0),
+                new PlayerCharacter(new Coords(7, 0, 3), 10, 0, 0, 0, 0, Direction.DOWN),
                 new ArrayList<>(),
                 new ArrayList<>(),
                 new ArrayList<>(),

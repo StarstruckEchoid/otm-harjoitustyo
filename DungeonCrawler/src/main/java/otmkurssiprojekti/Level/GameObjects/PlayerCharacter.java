@@ -6,6 +6,7 @@
 package otmkurssiprojekti.Level.GameObjects;
 
 import java.util.Objects;
+import java.util.Random;
 import otmkurssiprojekti.Level.GameObjects.Dependencies.Coords;
 import otmkurssiprojekti.Level.GameObjects.Dependencies.Direction;
 
@@ -13,40 +14,40 @@ import otmkurssiprojekti.Level.GameObjects.Dependencies.Direction;
  *
  * @author Juho Gröhn
  */
-public class PlayerCharacter implements GameCharacter {
+public class PlayerCharacter implements StatsCharacter {
 
     private static final char ID = '@';
     private static final boolean TRANSPARENT = true;
     private static final boolean SOLID = false;
     private final Coords coords;
 
-    private final int str;
-    private final int end;
-
-    private Direction direction;
     private int hp;
 
-    public PlayerCharacter(Coords coords, int str, int end, Direction direction, int hp) {
+    private int str;
+    private int per;
+    private int end;
+    private int agl;
+
+    private Direction direction;
+
+    public PlayerCharacter(Coords coords) {
         this.coords = coords;
-        this.str = str;
-        this.end = end;
-        this.direction = direction;
+    }
+
+    public PlayerCharacter(Coords coords, int hp, int str, int per, int end, int agl, Direction direction) {
+        this.coords = coords;
         this.hp = hp;
+        this.str = str;
+        this.per = per;
+        this.end = end;
+        this.agl = agl;
+        this.direction = direction;
     }
 
     @Override
     public void takeDamage(int dmg) {
-        //Endurance reduces damage taken.
-        dmg -= end;
-        if (dmg > 0) {
-            hp -= end;
-        }
-    }
-
-    @Override
-    public int getAttackStrength() {
-        //This code might later become more complex if eg. weapons get added to the game.
-        return str;
+        //takeDamage with int variable can not be blocked.
+        hp -= dmg;
     }
 
     @Override
@@ -87,6 +88,36 @@ public class PlayerCharacter implements GameCharacter {
     @Override
     public void turn(Direction direction) {
         this.direction = direction;
+    }
+
+    @Override
+    public void takeDamage(StatsCharacter sc) {
+
+        int baseDam = sc.getAttackDamage();
+
+        //Real Damage is base damage after damage threshold.
+        int realDam = baseDam - end;
+        if (realDam > 0) {
+            hp -= realDam;
+        }
+        //Critical damage is the entire base damage, but occurs randomly and only when opponent perception is higher than player agility.
+        int critChance = sc.getCriticalChance();
+        critChance -= agl;
+        int random = new Random().nextInt(100);
+        if (random < critChance) {
+            hp -= baseDam;
+        }
+
+    }
+
+    @Override
+    public int getAttackDamage() {
+        return str;
+    }
+
+    @Override
+    public int getCriticalChance() {
+        return per;
     }
 
     @Override

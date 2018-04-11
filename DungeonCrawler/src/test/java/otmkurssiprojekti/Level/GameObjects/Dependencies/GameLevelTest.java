@@ -5,8 +5,6 @@
  */
 package otmkurssiprojekti.Level.GameObjects.Dependencies;
 
-import otmkurssiprojekti.Level.GameObjects.Dependencies.Direction;
-import otmkurssiprojekti.Level.GameObjects.Dependencies.Coords;
 import otmkurssiprojekti.Level.GameObjects.PlayerCharacter;
 import otmkurssiprojekti.Level.GameObjects.NonPlayerCharacter;
 import otmkurssiprojekti.Level.GameObjects.ImmutableObject;
@@ -19,6 +17,7 @@ import org.junit.Test;
 import otmkurssiprojekti.Level.GameLevel;
 import static org.junit.Assert.*;
 import otmkurssiprojekti.Level.GameObjects.*;
+import otmkurssiprojekti.Level.GameObjects.Archetypes.NonPlayerCharacterArchetype;
 
 /**
  *
@@ -49,10 +48,10 @@ public class GameLevelTest {
     @Before
     public void setUp() {
         levelName = "testLevel";
-        player = new PlayerCharacter(new Coords(0, 0, 1), 0, 0, Direction.DOWN, 0);
+        player = new PlayerCharacter(new Coords(0, 0, 1), 200, 0, 0, 0, 0, Direction.DOWN);
 
         npcs = new ArrayList<>();
-        npcs.add(new NonPlayerCharacter('v', new Coords(10, 10, 4), true, 0, 0, 0));
+        npcs.add(new NonPlayerCharacter(NonPlayerCharacterArchetype.VILLAGER, new Coords(10, 10, 4), Direction.DOWN));
 
         blocks = new ArrayList<>();
         blocks.add(new ImmutableObject(',', true, false, new Coords(8, 6, 0), Direction.DOWN));
@@ -90,7 +89,7 @@ public class GameLevelTest {
         GameObject[][][] result = glvl.getLevelData();
 
         assertTrue(result[1][0][0].equals(player));
-        assertTrue(result[4][10][10].getId() == 'v');
+        assertTrue(result[4][10][10].getId() == NonPlayerCharacterArchetype.VILLAGER.getId());
         assertTrue(result[0][6][8].getId() == ',');
     }
 }

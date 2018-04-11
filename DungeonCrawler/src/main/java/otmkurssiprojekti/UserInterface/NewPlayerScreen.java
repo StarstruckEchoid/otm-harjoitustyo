@@ -16,9 +16,11 @@ import otmkurssiprojekti.DungeonCrawler;
  * @author Juho Gröhn
  */
 public class NewPlayerScreen extends SwitchingScreen {
+    StringBuilder playerName;
 
     public NewPlayerScreen(DungeonCrawler main) {
         super(main);
+        playerName = new StringBuilder();
     }
 
     @Override

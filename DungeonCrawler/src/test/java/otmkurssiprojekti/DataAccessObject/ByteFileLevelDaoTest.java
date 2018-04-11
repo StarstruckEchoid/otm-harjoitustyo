@@ -58,7 +58,7 @@ public class ByteFileLevelDaoTest {
 
         glvl = new GameLevel(
                 "testLevel",
-                new PlayerCharacter(new Coords(3, 2, 1), 0, 0, Direction.DOWN, 0),
+                new PlayerCharacter(new Coords(3, 2, 1), 200, 0, 0, 0, 0, Direction.DOWN),
                 npcs,
                 new ArrayList<>(),
                 new ArrayList<>(),
