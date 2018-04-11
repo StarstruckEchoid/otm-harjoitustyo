@@ -11,7 +11,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -20,6 +19,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import otmkurssiprojekti.GameSave;
 import otmkurssiprojekti.Level.GameLevel;
+import otmkurssiprojekti.Level.GameObjects.Archetypes.PlayerCharacterArchetype;
 import otmkurssiprojekti.Level.GameObjects.Dependencies.Coords;
 import otmkurssiprojekti.Level.GameObjects.Dependencies.Direction;
 import otmkurssiprojekti.Level.GameObjects.PlayerCharacter;
@@ -53,13 +53,12 @@ public class ByteFileGameSaveDaoTest {
         date = new Date(System.currentTimeMillis());
         glvl = new GameLevel(
                 "dungeon",
-                new PlayerCharacter(new Coords(), 10, 0, 0, 0, 0, Direction.DOWN
-                ),
+                new PlayerCharacter(PlayerCharacterArchetype.THIEF, new Coords(), Direction.DOWN),
                 new ArrayList<>(),
-                 new ArrayList<>(),
-                 new ArrayList<>(),
-                 new ArrayList<>(),
-                 new ArrayList<>()
+                new ArrayList<>(),
+                new ArrayList<>(),
+                new ArrayList<>(),
+                new ArrayList<>()
         );
         gsave = new GameSave(date, glvl);
 

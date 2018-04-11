@@ -68,4 +68,45 @@ public abstract class BasicStatsCharacter extends BasicGameCharacter implements 
         }
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 17 * hash + this.hp;
+        hash = 17 * hash + this.str;
+        hash = 17 * hash + this.per;
+        hash = 17 * hash + this.end;
+        hash = 17 * hash + this.agl;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final BasicStatsCharacter other = (BasicStatsCharacter) obj;
+        if (this.hp != other.hp) {
+            return false;
+        }
+        if (this.str != other.str) {
+            return false;
+        }
+        if (this.per != other.per) {
+            return false;
+        }
+        if (this.end != other.end) {
+            return false;
+        }
+        if (this.agl != other.agl) {
+            return false;
+        }
+        return true;
+    }
+
 }

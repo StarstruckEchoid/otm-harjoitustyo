@@ -18,6 +18,7 @@ import otmkurssiprojekti.Level.GameLevel;
 import static org.junit.Assert.*;
 import otmkurssiprojekti.Level.GameObjects.*;
 import otmkurssiprojekti.Level.GameObjects.Archetypes.NonPlayerCharacterArchetype;
+import otmkurssiprojekti.Level.GameObjects.Archetypes.PlayerCharacterArchetype;
 
 /**
  *
@@ -48,7 +49,7 @@ public class GameLevelTest {
     @Before
     public void setUp() {
         levelName = "testLevel";
-        player = new PlayerCharacter(new Coords(0, 0, 1), 200, 0, 0, 0, 0, Direction.DOWN);
+        player = new PlayerCharacter(PlayerCharacterArchetype.THIEF, new Coords(0, 0, 1), Direction.DOWN);
 
         npcs = new ArrayList<>();
         npcs.add(new NonPlayerCharacter(NonPlayerCharacterArchetype.VILLAGER, new Coords(10, 10, 4), Direction.DOWN));

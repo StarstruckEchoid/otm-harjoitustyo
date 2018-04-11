@@ -10,7 +10,8 @@ package otmkurssiprojekti.Level.GameObjects.Archetypes;
  * @author Juho Gröhn
  */
 public enum NonPlayerCharacterArchetype implements Archetype {
-    VILLAGER('%', 0, 10, 0, 0, 0, 0, Behaviour.PASSIVE);
+    VILLAGER('%', 0, 10, 0, 0, 0, 0, Behaviour.PASSIVE),
+    RAT('r', 1, 3, 1, 0, 0, 1, Behaviour.HUNT);
 
     private final char id;
     private final int level;
@@ -64,6 +65,5 @@ public enum NonPlayerCharacterArchetype implements Archetype {
     public Behaviour getBehaviour() {
         return behaviour;
     }
-
 
 }

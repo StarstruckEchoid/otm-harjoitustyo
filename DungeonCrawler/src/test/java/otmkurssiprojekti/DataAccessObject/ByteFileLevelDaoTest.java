@@ -19,6 +19,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import otmkurssiprojekti.Level.GameLevel;
 import otmkurssiprojekti.Level.GameObjects.Archetypes.NonPlayerCharacterArchetype;
+import otmkurssiprojekti.Level.GameObjects.Archetypes.PlayerCharacterArchetype;
 import otmkurssiprojekti.Level.GameObjects.Dependencies.Coords;
 import otmkurssiprojekti.Level.GameObjects.Dependencies.Direction;
 import otmkurssiprojekti.Level.GameObjects.NonPlayerCharacter;
@@ -58,7 +59,7 @@ public class ByteFileLevelDaoTest {
 
         glvl = new GameLevel(
                 "testLevel",
-                new PlayerCharacter(new Coords(3, 2, 1), 200, 0, 0, 0, 0, Direction.DOWN),
+                new PlayerCharacter(PlayerCharacterArchetype.THIEF, new Coords(), Direction.DOWN),
                 npcs,
                 new ArrayList<>(),
                 new ArrayList<>(),

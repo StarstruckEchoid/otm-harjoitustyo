@@ -63,7 +63,7 @@ public class DungeonCrawler extends Application {
 
         //PLACEHOLDER: Makes a new level.
         String levelName = "TestLevel";
-        PlayerCharacter player = new PlayerCharacter(new Coords(0, 0, 0), 200, 10, 10, 10, 10, Direction.DOWN);
+        PlayerCharacter player = new PlayerCharacter(10, 1, 1, 1, 1, new Coords(3, 3, 3), Direction.DOWN);
         List<NonPlayerCharacter> npcs = new ArrayList<>();
         List<ImmutableObject> blocks = new ArrayList<>();
         for (int x = 0; x < GameLevel.DIMENSIONS.x; x++) {
