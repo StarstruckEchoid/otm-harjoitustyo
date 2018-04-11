@@ -5,11 +5,16 @@
  */
 package otmkurssiprojekti.UserInterface;
 
+import java.nio.file.Paths;
+import java.util.List;
 import javafx.scene.Parent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
+import otmkurssiprojekti.DataAccessObject.ByteFileGameSaveDao;
+import otmkurssiprojekti.DataAccessObject.GameSaveDao;
 import otmkurssiprojekti.DungeonCrawler;
+import otmkurssiprojekti.GameSave;
 
 /**
  *
@@ -17,8 +22,17 @@ import otmkurssiprojekti.DungeonCrawler;
  */
 public class LoadGameScreen extends SwitchingScreen {
 
+    private final GameSaveDao gsdao;
+    private final List<GameSave> saves;
+
     public LoadGameScreen(DungeonCrawler main) {
         super(main);
+        gsdao = new ByteFileGameSaveDao(Paths.get(
+                DungeonCrawler.USER_DIR.toString(),
+                main.getGameData().getUser(),
+                main.getGameData().getPlayer()
+        ));
+        saves = gsdao.listGameSaves();
     }
 
     @Override

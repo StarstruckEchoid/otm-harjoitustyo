@@ -8,6 +8,7 @@ package otmkurssiprojekti.DataAccessObject;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;
@@ -29,7 +30,7 @@ import otmkurssiprojekti.Level.GameObjects.PlayerCharacter;
  */
 public class ByteFileLevelDaoTest {
 
-    private Path source;
+    private Path directory;
     private ByteFileLevelDao bfldao;
     private GameLevel glvl;
 
@@ -49,8 +50,8 @@ public class ByteFileLevelDaoTest {
 
     @Before
     public void setUp() throws IOException {
-        source = Files.createTempDirectory("testDir");
-        bfldao = new ByteFileLevelDao(source);
+        directory = Files.createTempDirectory("testDir");
+        bfldao = new ByteFileLevelDao(directory);
         npcs = new ArrayList<>();
         npc = new NonPlayerCharacter(NonPlayerCharacterArchetype.VILLAGER, new Coords(6, 7, 2), Direction.DOWN);
         npcs.add(npc);
@@ -71,8 +72,19 @@ public class ByteFileLevelDaoTest {
 
     @Test
     public void testSaveLoadLevel() {
-        bfldao.saveLevel(source, glvl);
-        GameLevel glvl2 = bfldao.loadLevel(source, glvl.getLevelName());
+        bfldao.saveLevel(glvl);
+        GameLevel glvl2 = bfldao.loadLevel(Paths.get(directory.toString(), glvl.toString()));
+
+        assertTrue("Player coords not the same!", glvl2.getPlayer().getCoords().equals(glvl.getPlayer().getCoords()));
+        assertTrue("Name is not the same!", glvl2.getLevelName().equals(glvl.getLevelName()));
+        assertTrue("Does not contain the same npcs!", glvl2.getNpcs().contains(npc));
+    }
+
+    @Test
+    public void testSaveLoadWithName() {
+        String newName = "testName";
+        bfldao.saveLevel(glvl, newName);
+        GameLevel glvl2 = bfldao.loadLevel(Paths.get(directory.toString(), newName));
 
         assertTrue("Player coords not the same!", glvl2.getPlayer().getCoords().equals(glvl.getPlayer().getCoords()));
         assertTrue("Name is not the same!", glvl2.getLevelName().equals(glvl.getLevelName()));

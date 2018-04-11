@@ -5,14 +5,13 @@
  */
 package otmkurssiprojekti.DataAccessObject;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import otmkurssiprojekti.Level.GameLevel;
@@ -22,43 +21,27 @@ import otmkurssiprojekti.UtilityClasses.Serializer;
  *
  * @author Juho Gröhn
  */
-public class ByteFileLevelDao implements LevelDao {
+public class ByteFileLevelDao implements GameLevelDao {
 
-    private final Path defaultSource;
-
-    private static byte[] serialize(GameLevel obj) throws IOException {
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        ObjectOutputStream os = new ObjectOutputStream(out);
-        os.writeObject(obj);
-        byte[] value = out.toByteArray();
-        os.close();
-        out.close();
-        return value;
-    }
-
-    private static GameLevel deserialize(byte[] data) throws IOException, ClassNotFoundException {
-        ByteArrayInputStream in = new ByteArrayInputStream(data);
-        ObjectInputStream is = new ObjectInputStream(in);
-        GameLevel value = (GameLevel) is.readObject();
-        is.close();
-        in.close();
-        return value;
-    }
+    private final Path directory;
 
     public ByteFileLevelDao(Path source) {
-        this.defaultSource = source;
+        this.directory = source;
     }
 
     @Override
-    public GameLevel loadLevel(Path user, String levelName) {
-
-        Path gamePath = Paths.get(user.toString(), levelName);
-        if (!Files.exists(gamePath)) {
-            gamePath = Paths.get(defaultSource.toString(), levelName);
+    public List<GameLevel> listGameLevels() {
+        File[] gameLevels = directory.toFile().listFiles();
+        List<GameLevel> levels = new ArrayList<>();
+        for (File f : gameLevels) {
+            levels.add(loadLevel(f.toPath()));
         }
+        return levels;
+    }
 
+    public GameLevel loadLevel(Path levelPath) {
         try {
-            byte[] byteData = Files.readAllBytes(gamePath);
+            byte[] byteData = Files.readAllBytes(levelPath);
             GameLevel glvl = (GameLevel) Serializer.deserialize(byteData);
             return glvl;
         } catch (IOException | ClassNotFoundException ex) {
@@ -68,13 +51,24 @@ public class ByteFileLevelDao implements LevelDao {
     }
 
     @Override
-    public void saveLevel(Path user, GameLevel level) {
+    public void saveLevel(GameLevel level) {
         try {
-            Path gamePath = Paths.get(user.toString(), level.getLevelName());
+            Path levelPath = Paths.get(directory.toString(), level.getLevelName());
             byte[] bytedata = Serializer.serialize(level);
-            Files.write(gamePath, bytedata);
+            Files.write(levelPath, bytedata);
         } catch (IOException ex) {
             Logger.getLogger(ByteFileLevelDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public void saveLevel(GameLevel level, String name) {
+        try {
+            Path levelPath = Paths.get(directory.toString(), name);
+            byte[] bytedata = Serializer.serialize(level);
+            Files.write(levelPath, bytedata);
+        } catch (IOException ex) {
+            Logger.getLogger(ByteFileLevelDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }

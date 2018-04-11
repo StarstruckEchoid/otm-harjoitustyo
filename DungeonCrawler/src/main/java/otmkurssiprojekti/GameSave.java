@@ -6,37 +6,70 @@
 package otmkurssiprojekti;
 
 import java.util.Date;
+import java.util.Objects;
+import otmkurssiprojekti.Level.GameLevel;
 
 /**
  *
  * @author gjuho
  */
-public class GameSave{
+public class GameSave {
 
     private final Date saveDate;
-    private final GameData gameData;
+    private final GameLevel gameLevel;
 
     public GameSave() {
         this.saveDate = null;
-        this.gameData = null;
+        this.gameLevel = null;
     }
 
-    public GameSave(Date saveDate, GameData gameData) {
+    public GameSave(Date saveDate, GameLevel gameLevel) {
         this.saveDate = saveDate;
-        this.gameData = gameData;
+        this.gameLevel = gameLevel;
     }
 
     public Date getSaveDate() {
         return saveDate;
     }
 
-    public GameData getGameData() {
-        return gameData;
+    public GameLevel getGameLevel() {
+        return gameLevel;
     }
 
     @Override
     public String toString() {
-        return saveDate.toString() + ": " + gameData.toString();
+        return saveDate.toString() + " in " + gameLevel.toString();
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 47 * hash + Objects.hashCode(this.saveDate);
+        hash = 47 * hash + Objects.hashCode(this.gameLevel);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final GameSave other = (GameSave) obj;
+        if (!Objects.equals(this.saveDate, other.saveDate)) {
+            return false;
+        }
+        if (!Objects.equals(this.gameLevel, other.gameLevel)) {
+            return false;
+        }
+        return true;
+    }
+    
+   
 
 }

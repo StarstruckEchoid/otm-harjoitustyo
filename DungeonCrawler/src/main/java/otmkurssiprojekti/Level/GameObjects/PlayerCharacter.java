@@ -5,6 +5,7 @@
  */
 package otmkurssiprojekti.Level.GameObjects;
 
+import java.util.Objects;
 import otmkurssiprojekti.Level.GameObjects.Dependencies.Coords;
 import otmkurssiprojekti.Level.GameObjects.Dependencies.Direction;
 
@@ -86,6 +87,47 @@ public class PlayerCharacter implements GameCharacter {
     @Override
     public void turn(Direction direction) {
         this.direction = direction;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 59 * hash + Objects.hashCode(this.coords);
+        hash = 59 * hash + this.str;
+        hash = 59 * hash + this.end;
+        hash = 59 * hash + Objects.hashCode(this.direction);
+        hash = 59 * hash + this.hp;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final PlayerCharacter other = (PlayerCharacter) obj;
+        if (this.str != other.str) {
+            return false;
+        }
+        if (this.end != other.end) {
+            return false;
+        }
+        if (this.hp != other.hp) {
+            return false;
+        }
+        if (!Objects.equals(this.coords, other.coords)) {
+            return false;
+        }
+        if (this.direction != other.direction) {
+            return false;
+        }
+        return true;
     }
 
 }
