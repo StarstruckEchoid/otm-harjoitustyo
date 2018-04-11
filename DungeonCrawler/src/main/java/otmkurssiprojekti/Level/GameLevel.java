@@ -21,7 +21,7 @@ public class GameLevel implements java.io.Serializable {
 
     public static final Coords DIMENSIONS = new Coords(16, 16, 8); //The level is a box from origin to DIMENSIONS Coords exclusive. Ie. The level has a size 16x16x8.
     private final String levelName;
-    private final PlayerCharacter player;
+    private PlayerCharacter player;
     private final List<NonPlayerCharacter> npcs;
     private final List<ImmutableObject> blocks;
     private final List<InteractiveObject> interactives;
@@ -75,6 +75,11 @@ public class GameLevel implements java.io.Serializable {
 
     public List<PointsObject> getPoints() {
         return points;
+    }
+
+    //Setter
+    public void setPlayer(PlayerCharacter player) {
+        this.player = player;
     }
 
     //Others

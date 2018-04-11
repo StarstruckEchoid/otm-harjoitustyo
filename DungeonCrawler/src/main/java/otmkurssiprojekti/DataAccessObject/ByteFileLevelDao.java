@@ -39,6 +39,7 @@ public class ByteFileLevelDao implements GameLevelDao {
         return levels;
     }
 
+    @Override
     public GameLevel loadLevel(Path levelPath) {
         try {
             byte[] byteData = Files.readAllBytes(levelPath);

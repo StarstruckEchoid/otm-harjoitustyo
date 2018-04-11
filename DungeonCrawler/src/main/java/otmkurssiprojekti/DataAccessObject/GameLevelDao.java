@@ -5,6 +5,7 @@
  */
 package otmkurssiprojekti.DataAccessObject;
 
+import java.nio.file.Path;
 import java.util.List;
 import otmkurssiprojekti.Level.GameLevel;
 
@@ -13,6 +14,10 @@ import otmkurssiprojekti.Level.GameLevel;
  * @author Juho Gröhn
  */
 public interface GameLevelDao {
+
     public List<GameLevel> listGameLevels();
+
     public void saveLevel(GameLevel level);
+
+    public GameLevel loadLevel(Path levelPath);
 }

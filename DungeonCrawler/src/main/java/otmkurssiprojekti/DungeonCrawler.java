@@ -19,12 +19,13 @@ import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import otmkurssiprojekti.DataAccessObject.ByteFileLevelDao;
 import otmkurssiprojekti.Level.GameLevel;
 import otmkurssiprojekti.Level.GameObjects.Dependencies.Coords;
 import otmkurssiprojekti.Level.GameObjects.Dependencies.Direction;
 import otmkurssiprojekti.Level.GameObjects.*;
 import otmkurssiprojekti.Level.GameObjects.Archetypes.ImmutableObjectArchetype;
-import otmkurssiprojekti.UserInterface.LevelScreen;
+import otmkurssiprojekti.UserInterface.MainMenuScreen;
 
 /**
  *
@@ -32,10 +33,11 @@ import otmkurssiprojekti.UserInterface.LevelScreen;
  */
 public class DungeonCrawler extends Application {
 
+    //Initialize constants.
     public static final Path USER_DIR = Paths.get("users");
 
     static {
-        //Create file userDir if it does not yet exist.
+        //Create file USER_DIR if it does not yet exist.
         if (USER_DIR.toFile().exists() && USER_DIR.toFile().isDirectory()) {
             //Everything is okay.
         } else {
@@ -46,23 +48,23 @@ public class DungeonCrawler extends Application {
             }
         }
     }
+    public static final String FIRST_LEVEL = "Starting Level";
+    public static final Path LEVEL_DIR = Paths.get("levels");
 
-    private static final Timer TIMER = new Timer();
-    private static final int TICKS_PERIOD = 1_000; //Controls how often the game updates, eg. how often npcs move.
-    private static final int FRAMES_PERIOD = 30; //Controls how often the screen updates. Reciprocal of frames per millisecond.
-
-    private GameData gameData;
-    private GameScreen gameScreen;
-
-    public static void main(String[] args) {
-        launch(args);
-    }
-
-    @Override
-    public void init() throws Exception {
+    static {
+        //Create file LEVEL_DIR if it does not yet exist.
+        if (LEVEL_DIR.toFile().exists() && LEVEL_DIR.toFile().isDirectory()) {
+            //Everything is okay.
+        } else {
+            try {
+                Files.createDirectory(LEVEL_DIR);
+            } catch (IOException ex) {
+                Logger.getLogger(DungeonCrawler.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
 
         //PLACEHOLDER: Makes a new level.
-        String levelName = "TestLevel";
+        String levelName = FIRST_LEVEL;
         PlayerCharacter player = new PlayerCharacter(10, 1, 1, 1, 1, new Coords(3, 3, 3), Direction.DOWN);
         List<NonPlayerCharacter> npcs = new ArrayList<>();
         List<ImmutableObject> blocks = new ArrayList<>();
@@ -76,8 +78,24 @@ public class DungeonCrawler extends Application {
         List<PointsObject> points = new ArrayList<>();
         GameLevel gamelvl = new GameLevel(levelName, player, npcs, blocks, interactives, levelLinks, points);
 
-        this.setGameData(new SimpleGameData(null, null, gamelvl));
-        this.setGameScreen(new LevelScreen(this));
+        //Inserts it into LEVEL_DIR.
+        new ByteFileLevelDao(LEVEL_DIR).saveLevel(gamelvl);
+    }
+    private static final Timer TIMER = new Timer();
+    private static final int TICKS_PERIOD = 1_000; //Controls how often the game updates, eg. how often npcs move.
+    private static final int FRAMES_PERIOD = 30; //Controls how often the screen updates. Reciprocal of frames per millisecond.
+
+    private GameData gameData;
+    private GameScreen gameScreen;
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+    @Override
+    public void init() throws Exception {
+        this.setGameData(new SimpleGameData(null, null, null));
+        this.setGameScreen(new MainMenuScreen(this));
     }
 
     @Override
