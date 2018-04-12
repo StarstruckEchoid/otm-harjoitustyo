@@ -23,9 +23,6 @@ public abstract class BasicGameCharacter implements GameCharacter {
     }
 
     @Override
-    public abstract char getId();
-
-    @Override
     public boolean isTransparent() {
         return true;
     }
@@ -45,6 +42,7 @@ public abstract class BasicGameCharacter implements GameCharacter {
         return this.direction;
     }
 
+    @Override
     public void setCoords(Coords coords) {
         this.coords = coords;
     }
@@ -58,11 +56,5 @@ public abstract class BasicGameCharacter implements GameCharacter {
     public void turn(Direction dir) {
         this.direction = dir;
     }
-
-    @Override
-    public abstract void takeDamage(int dmg);
-
-    @Override
-    public abstract boolean isDead();
 
 }

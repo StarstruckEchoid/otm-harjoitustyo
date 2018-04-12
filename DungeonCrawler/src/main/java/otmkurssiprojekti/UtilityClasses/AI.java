@@ -52,11 +52,11 @@ public class AI {
         }
     }
 
-    public static Stack<Direction> bestRoute(Coords from, Coords to, GameLevel gameLevel) {
+    public static Stack<Coords> bestRoute(Coords from, Coords to, GameLevel gameLevel) {
         //Perform a width-first search
         Queue<Coords> searchQueue = new ArrayDeque();
         Set<Coords> searched = new HashSet<>();
-        Map<Coords, Direction> backTrack = new HashMap<>();
+        Map<Coords, Coords> backTrack = new HashMap<>();
 
         searchQueue.add(from);
 
@@ -71,22 +71,18 @@ public class AI {
                 Coords next = current.sum(d.getCoords());
                 if (!searched.contains(next) && !gameLevel.isOccupied(current)) {
                     searchQueue.add(next);
-                    backTrack.put(next, d);
+                    backTrack.put(next, current);
                 }
             }
         }
 
-        Stack<Direction> ret = new Stack<>();
+        Stack<Coords> ret = new Stack<>();
 
         Coords c = to;
-        while (c != from) {
-            Direction d = backTrack.get(c);
-            ret.push(d);
-            Coords delta = d.getCoords();
-            delta.multiply(-1);
-            c = c.sum(delta);
+        while (!c.equals(from)) {
+            ret.push(c);
+            c = backTrack.getOrDefault(c, from);
         }
-
         return ret;
     }
 

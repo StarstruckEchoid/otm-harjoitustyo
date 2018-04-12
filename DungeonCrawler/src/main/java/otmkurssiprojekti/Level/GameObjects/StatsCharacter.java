@@ -11,8 +11,6 @@ package otmkurssiprojekti.Level.GameObjects;
  */
 public interface StatsCharacter extends GameCharacter {
 
-    public void takeDamage(StatsCharacter sc);
-
     public int getAttackDamage();
 
     public int getCriticalChance();

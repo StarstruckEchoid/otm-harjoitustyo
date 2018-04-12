@@ -43,6 +43,7 @@ public class NonPlayerCharacter extends BasicStatsCharacter implements PointsSou
         this.lvl = npca.getLevel();
     }
 
+    @Override
     public Behaviour getBehaviour() {
         return behaviour;
     }

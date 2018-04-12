@@ -52,7 +52,8 @@ public abstract class BasicStatsCharacter extends BasicGameCharacter implements 
 
     @Override
     public int getSlowness() {
-        int slowness = 100 - agl;
+        int slowness = 100;
+        slowness -= agl;
         slowness /= 10;
         if (slowness <= 0) {
             return 1;

@@ -19,7 +19,7 @@ public interface MobileObject extends GameObject {
     int getSlowness();
 
     public void setCoords(Coords coords);
-    
+
     public void doDamage(GameCharacter gc);
 
 }
