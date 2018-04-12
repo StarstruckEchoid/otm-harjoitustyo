@@ -26,6 +26,7 @@ public class PauseScreen extends VerticalMenuScreen {
                 switchTo(new LevelScreen(main));
                 break;
             case 1:
+                switchTo(new SaveGameScreen(main));
                 break;
             case 2:
                 switchTo(new LoadGameScreen(main));
