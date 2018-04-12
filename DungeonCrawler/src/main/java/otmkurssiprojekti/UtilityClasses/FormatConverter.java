@@ -5,10 +5,7 @@
  */
 package otmkurssiprojekti.UtilityClasses;
 
-import otmkurssiprojekti.Level.GameObjects.Dependencies.Coords;
-import otmkurssiprojekti.Level.GameObjects.Dependencies.Direction;
 import otmkurssiprojekti.Level.GameObjects.GameObject;
-import otmkurssiprojekti.Level.GameObjects.PlayerCharacter;
 
 /**
  *

@@ -20,7 +20,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import otmkurssiprojekti.DataAccessObject.ByteFileLevelDao;
-import otmkurssiprojekti.Level.GameLevel;
+import otmkurssiprojekti.Level.BasicGameLevel;
 import otmkurssiprojekti.Level.GameObjects.Dependencies.Coords;
 import otmkurssiprojekti.Level.GameObjects.Dependencies.Direction;
 import otmkurssiprojekti.Level.GameObjects.*;
@@ -68,15 +68,15 @@ public class DungeonCrawler extends Application {
         PlayerCharacter player = new PlayerCharacter(10, 1, 1, 1, 1, new Coords(3, 3, 3), Direction.DOWN);
         List<NonPlayerCharacter> npcs = new ArrayList<>();
         List<ImmutableObject> blocks = new ArrayList<>();
-        for (int x = 0; x < GameLevel.DIMENSIONS.x; x++) {
-            for (int y = 0; y < GameLevel.DIMENSIONS.y; y++) {
+        for (int x = 0; x < BasicGameLevel.DIMENSIONS.x; x++) {
+            for (int y = 0; y < BasicGameLevel.DIMENSIONS.y; y++) {
                 blocks.add(new ImmutableObject(ImmutableObjectArchetype.GRASS, new Coords(x, y, 4), Direction.DOWN));
             }
         }
         List<InteractiveObject> interactives = new ArrayList<>();
         List<LinkObject> levelLinks = new ArrayList<>();
         List<PointsObject> points = new ArrayList<>();
-        GameLevel gamelvl = new GameLevel(levelName, player, npcs, blocks, interactives, levelLinks, points);
+        BasicGameLevel gamelvl = new BasicGameLevel(levelName, player, npcs, blocks, interactives, levelLinks, points);
 
         //Inserts it into LEVEL_DIR.
         new ByteFileLevelDao(LEVEL_DIR).saveLevel(gamelvl);

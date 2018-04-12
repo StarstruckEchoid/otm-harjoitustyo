@@ -17,6 +17,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import otmkurssiprojekti.Level.BasicGameLevel;
 import otmkurssiprojekti.Level.GameLevel;
 import otmkurssiprojekti.Level.GameObjects.Archetypes.NonPlayerCharacterArchetype;
 import otmkurssiprojekti.Level.GameObjects.Archetypes.PlayerCharacterArchetype;
@@ -33,7 +34,7 @@ public class ByteFileLevelDaoTest {
 
     private Path directory;
     private ByteFileLevelDao bfldao;
-    private GameLevel glvl;
+    private BasicGameLevel glvl;
 
     List<NonPlayerCharacter> npcs;
     NonPlayerCharacter npc;
@@ -57,7 +58,7 @@ public class ByteFileLevelDaoTest {
         npc = new NonPlayerCharacter(NonPlayerCharacterArchetype.VILLAGER, new Coords(6, 7, 2), Direction.DOWN);
         npcs.add(npc);
 
-        glvl = new GameLevel(
+        glvl = new BasicGameLevel(
                 "testLevel",
                 new PlayerCharacter(PlayerCharacterArchetype.THIEF, new Coords(), Direction.DOWN),
                 npcs,
@@ -74,11 +75,9 @@ public class ByteFileLevelDaoTest {
     @Test
     public void testSaveLoadLevel() {
         bfldao.saveLevel(glvl);
-        GameLevel glvl2 = bfldao.loadLevel(Paths.get(directory.toString(), glvl.toString()));
+        BasicGameLevel glvl2 = bfldao.loadLevel(Paths.get(directory.toString(), glvl.toString()));
 
-        assertTrue("Player coords not the same!", glvl2.getPlayer().getCoords().equals(glvl.getPlayer().getCoords()));
-        assertTrue("Name is not the same!", glvl2.getLevelName().equals(glvl.getLevelName()));
-        assertTrue("Does not contain the same npcs!", glvl2.getNpcs().contains(npc));
+        assertTrue("Levels are not equal according to equals().", glvl.equals(glvl2));
     }
 
     @Test
@@ -87,9 +86,8 @@ public class ByteFileLevelDaoTest {
         bfldao.saveLevel(glvl, newName);
         GameLevel glvl2 = bfldao.loadLevel(Paths.get(directory.toString(), newName));
 
-        assertTrue("Player coords not the same!", glvl2.getPlayer().getCoords().equals(glvl.getPlayer().getCoords()));
         assertTrue("Name is not the same!", glvl2.getLevelName().equals(glvl.getLevelName()));
-        assertTrue("Does not contain the same npcs!", glvl2.getNpcs().contains(npc));
+        assertTrue("Levels are not equal according to equals().", glvl.equals(glvl2));
     }
 
 }

@@ -14,7 +14,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import otmkurssiprojekti.Level.GameLevel;
+import otmkurssiprojekti.Level.BasicGameLevel;
 import static org.junit.Assert.*;
 import otmkurssiprojekti.Level.GameObjects.*;
 import otmkurssiprojekti.Level.GameObjects.Archetypes.NonPlayerCharacterArchetype;
@@ -24,9 +24,9 @@ import otmkurssiprojekti.Level.GameObjects.Archetypes.PlayerCharacterArchetype;
  *
  * @author Juho Gröhn
  */
-public class GameLevelTest {
+public class BasicGameLevelTest {
 
-    private GameLevel glvl;
+    private BasicGameLevel glvl;
     private String levelName;
     private PlayerCharacter player;
     private List<NonPlayerCharacter> npcs;
@@ -35,7 +35,7 @@ public class GameLevelTest {
     private List<LinkObject> levelLinks;
     private List<PointsObject> points;
 
-    public GameLevelTest() {
+    public BasicGameLevelTest() {
     }
 
     @BeforeClass
@@ -61,28 +61,11 @@ public class GameLevelTest {
         levelLinks = new ArrayList<>();
         points = new ArrayList<>();
 
-        glvl = new GameLevel(levelName, player, npcs, blocks, interactives, levelLinks, points);
+        glvl = new BasicGameLevel(levelName, player, npcs, blocks, interactives, levelLinks, points);
     }
 
     @After
     public void tearDown() {
-    }
-
-    @Test
-    public void testGetPlayer() {
-        assertTrue(glvl.getPlayer().equals(player));
-    }
-
-    @Test
-    public void testMovePlayer1() {
-        glvl.movePlayer(Direction.UP);
-        assertTrue(glvl.getPlayer().getCoords().equals(new Coords(0, 1, 1)));
-    }
-
-    @Test
-    public void testMovePlayer2() {
-        glvl.movePlayer(Direction.LEFT);
-        assertTrue(glvl.getPlayer().getCoords().equals(new Coords(0, 0, 1)));
     }
 
     @Test

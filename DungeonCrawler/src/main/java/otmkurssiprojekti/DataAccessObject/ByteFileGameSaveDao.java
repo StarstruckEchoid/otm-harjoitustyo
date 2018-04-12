@@ -6,18 +6,13 @@
 package otmkurssiprojekti.DataAccessObject;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import otmkurssiprojekti.GameSave;
+import otmkurssiprojekti.Level.BasicGameLevel;
 import otmkurssiprojekti.Level.GameLevel;
-import otmkurssiprojekti.UtilityClasses.Serializer;
 
 public class ByteFileGameSaveDao implements GameSaveDao {
 
@@ -51,7 +46,7 @@ public class ByteFileGameSaveDao implements GameSaveDao {
         long time = Long.parseLong(name);
         Date date = new Date(time);
         
-        GameLevel gameLevel = bfldao.loadLevel(file.toPath());
+        BasicGameLevel gameLevel = bfldao.loadLevel(file.toPath());
         
         return new GameSave(date, gameLevel);
     }

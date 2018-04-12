@@ -13,7 +13,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import otmkurssiprojekti.Level.GameLevel;
+import otmkurssiprojekti.Level.BasicGameLevel;
 
 /**
  *
@@ -21,7 +21,7 @@ import otmkurssiprojekti.Level.GameLevel;
  */
 public class SerializerTest {
 
-    private GameLevel glvl;
+    private BasicGameLevel glvl;
 
     public SerializerTest() {
     }
@@ -36,7 +36,7 @@ public class SerializerTest {
 
     @Before
     public void setUp() {
-        glvl = new GameLevel("beta", null, new ArrayList<>(), null, null, null, null);
+        glvl = new BasicGameLevel("beta", null, new ArrayList<>(), null, null, null, null);
     }
 
     @After

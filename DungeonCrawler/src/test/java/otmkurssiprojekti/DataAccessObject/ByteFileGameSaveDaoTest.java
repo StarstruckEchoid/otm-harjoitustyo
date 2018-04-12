@@ -18,7 +18,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import otmkurssiprojekti.GameSave;
-import otmkurssiprojekti.Level.GameLevel;
+import otmkurssiprojekti.Level.BasicGameLevel;
 import otmkurssiprojekti.Level.GameObjects.Archetypes.PlayerCharacterArchetype;
 import otmkurssiprojekti.Level.GameObjects.Dependencies.Coords;
 import otmkurssiprojekti.Level.GameObjects.Dependencies.Direction;
@@ -31,7 +31,7 @@ import otmkurssiprojekti.Level.GameObjects.PlayerCharacter;
 public class ByteFileGameSaveDaoTest {
 
     private Date date;
-    private GameLevel glvl;
+    private BasicGameLevel glvl;
     private GameSave gsave;
     private GameSave gsave2;
     private Path temp;
@@ -51,7 +51,7 @@ public class ByteFileGameSaveDaoTest {
     @Before
     public void setUp() throws IOException {
         date = new Date(System.currentTimeMillis());
-        glvl = new GameLevel(
+        glvl = new BasicGameLevel(
                 "dungeon",
                 new PlayerCharacter(PlayerCharacterArchetype.THIEF, new Coords(), Direction.DOWN),
                 new ArrayList<>(),
@@ -81,11 +81,6 @@ public class ByteFileGameSaveDaoTest {
     @Test
     public void testDateIntegrity() {
         assertTrue(gsave.getSaveDate().equals(gsave2.getSaveDate()));
-    }
-
-    @Test
-    public void testPlayerIntegrity() {
-        assertTrue(gsave.getGameLevel().getPlayer().equals(gsave2.getGameLevel().getPlayer()));
     }
 
     @Test
