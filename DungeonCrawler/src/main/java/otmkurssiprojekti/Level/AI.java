@@ -79,13 +79,13 @@ class AI {
         return ret;
     }
 
-    public static Stack<Direction> greedyRoute(Coords from, Coords to, GameLevel gameLevel) {
+    public static Stack<Coords> greedyRoute(Coords from, Coords to, GameLevel gameLevel) {
         //Perform a width-first search
         Queue<Coords> searchQueue = new PriorityQueue<>(
                 (a, b) -> Integer.compare(a.squaredEuclideanDistance(to), b.squaredEuclideanDistance(to))
         );
         Set<Coords> searched = new HashSet<>();
-        Map<Coords, Direction> backTrack = new HashMap<>();
+        Map<Coords, Coords> backTrack = new HashMap<>();
 
         searchQueue.add(from);
 
@@ -100,15 +100,18 @@ class AI {
                 Coords next = current.sum(d.getCoords());
                 if (!searched.contains(next) && !gameLevel.isOccupied(current)) {
                     searchQueue.add(next);
-                    backTrack.put(next, d);
+                    backTrack.put(next, current);
                 }
             }
         }
 
-        Stack<Direction> ret = new Stack<>();
-        
-        ret.push(backTrack.get(to));
+        Stack<Coords> ret = new Stack<>();
 
+        Coords c = to;
+        while (!c.equals(from)) {
+            ret.push(c);
+            c = backTrack.getOrDefault(c, from);
+        }
         return ret;
     }
 
@@ -124,17 +127,17 @@ class AI {
             return;
         }
 
-        Stack<Direction> directions = greedyRoute(npc.getCoords(), pc.getCoords(), gameLevel);
-        if (!directions.empty()) {
-            npc.move(directions.pop());
+        Stack<Coords> stack = greedyRoute(npc.getCoords(), pc.getCoords(), gameLevel);
+        if (!stack.empty()) {
+            npc.setCoords(stack.pop());
         }
     }
 
     private static void hunt(NonPlayerCharacter npc, GameLevel gameLevel) {
         PlayerCharacter pc = gameLevel.getPlayerCharacter();
         //An AI hunts will stop hunting once the distance to player is too much.
-        final int MAX_DISTANCE = 5;
-        if (npc.getCoords().squaredEuclideanDistance(pc.getCoords()) > MAX_DISTANCE * MAX_DISTANCE) {
+        final int MAX_DISTANCE = 8;
+        if (npc.getCoords().squaredEuclideanDistance(pc.getCoords()) >= MAX_DISTANCE * MAX_DISTANCE) {
             return;
         }
         //An AI that hunts will attack the player once in melee range.
@@ -143,9 +146,9 @@ class AI {
             pc.takeDamage(npc);
             return;
         }
-        Stack<Direction> directions = greedyRoute(npc.getCoords(), pc.getCoords(), gameLevel);
-        if (!directions.empty()) {
-            npc.move(directions.pop());
+        Stack<Coords> stack = greedyRoute(npc.getCoords(), pc.getCoords(), gameLevel);
+        if (!stack.empty()) {
+            npc.setCoords(stack.pop());
         }
     }
 

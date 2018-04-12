@@ -14,7 +14,7 @@ import otmkurssiprojekti.Level.GameObjects.Dependencies.Direction;
  */
 public abstract class BasicGameCharacter implements GameCharacter {
 
-    private final Coords coords;
+    private Coords coords;
     private Direction direction;
 
     public BasicGameCharacter(Coords coords, Direction direction) {
@@ -43,6 +43,10 @@ public abstract class BasicGameCharacter implements GameCharacter {
     @Override
     public Direction getDirection() {
         return this.direction;
+    }
+
+    public void setCoords(Coords coords) {
+        this.coords = coords;
     }
 
     @Override
