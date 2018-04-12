@@ -18,10 +18,10 @@ import otmkurssiprojekti.GameSave;
  * @author Juho Gröhn
  */
 public class LoadGameScreen extends VerticalMenuScreen {
-    
+
     private final GameSaveDao gsdao;
     private final List<GameSave> saves;
-    
+
     public LoadGameScreen(DungeonCrawler main) {
         super(main);
         gsdao = new ByteFileGameSaveDao(Paths.get( //The address where game saves are looked up is <USER_DIR>/<user>/<player>/
@@ -31,30 +31,35 @@ public class LoadGameScreen extends VerticalMenuScreen {
         ));
         saves = gsdao.listGameSaves();
     }
-    
+
     @Override
     protected void doEnterAction(int index) {
         main.getGameData().setGameLevel(saves.get(index).getGameLevel());
         switchTo(new LevelScreen(main));
     }
-    
+
     @Override
     protected List<String> getOptsList() {
         List<String> ret = new ArrayList<>();
         saves.forEach((save) -> {
-            ret.add(save.toString());
+            try {
+                ret.add(save.toString());
+            } catch (NullPointerException npe) {
+                ret.add("<corrupted>");
+            }
         });
         return ret;
     }
-    
+
     @Override
+
     protected String getTitleText() {
         return "Load game";
     }
-    
+
     @Override
     protected GameScreen getReturnScreen() {
         return new LoadPlayerScreen(main);
     }
-    
+
 }

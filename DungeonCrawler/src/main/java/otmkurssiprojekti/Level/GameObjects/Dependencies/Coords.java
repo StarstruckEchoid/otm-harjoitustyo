@@ -9,7 +9,7 @@ package otmkurssiprojekti.Level.GameObjects.Dependencies;
  *
  * @author gjuho
  */
-public class Coords implements java.io.Serializable {
+public class Coords implements java.io.Serializable, Comparable<Coords> {
 
     public int x;
     public int y;
@@ -109,6 +109,20 @@ public class Coords implements java.io.Serializable {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public int compareTo(Coords o) {
+        int dz = this.z - o.z;
+        if (dz != 0) {
+            return dz;
+        }
+        int dy = this.y - o.y;
+        if (dy != 0) {
+            return dy;
+        }
+        int dx = this.x - o.x;
+        return dx;
     }
 
 }

@@ -86,11 +86,20 @@ public class GameLevel implements java.io.Serializable {
     private static Boolean containsCoords(Coords coords) {
         return coords.greaterThanOrEqualTo(new Coords(0, 0, 0)) && coords.lesserThan(DIMENSIONS);
     }
+    
+    private Boolean hasSolidBlockAt(Coords coords){
+        List<GameObject> possiblySolidBlocks = new ArrayList<>();
+        possiblySolidBlocks.addAll(blocks);
+        possiblySolidBlocks.addAll(interactives);
+        return possiblySolidBlocks.stream()
+                .filter(b -> b.getCoords().equals(coords))
+                .anyMatch(b -> b.isSolid());
+    }
 
     public void movePlayer(Direction dir) {
         Coords playerCoords = this.player.getCoords();
         Coords newCoords = playerCoords.sum(dir.getCoords());
-        if (GameLevel.containsCoords(newCoords)) {
+        if (GameLevel.containsCoords(newCoords) && !this.hasSolidBlockAt(newCoords)) {
             player.move(dir);
         }
     }
