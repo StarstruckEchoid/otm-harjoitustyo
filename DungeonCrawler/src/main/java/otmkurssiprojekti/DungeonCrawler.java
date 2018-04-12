@@ -68,8 +68,11 @@ public class DungeonCrawler extends Application {
         String levelName = FIRST_LEVEL;
         PlayerCharacter player = new PlayerCharacter(10, 1, 1, 1, 1, new Coords(3, 3, 0), Direction.DOWN);
         List<NonPlayerCharacter> npcs = new ArrayList<>();
-        //Add a follower npc.
+        //Add some npcs.
+        npcs.add(new NonPlayerCharacter(NonPlayerCharacterArchetype.VILLAGER, new Coords(7, 10, 0), Direction.DOWN));
         npcs.add(new NonPlayerCharacter(NonPlayerCharacterArchetype.RAT, new Coords(8, 8, 0), Direction.DOWN));
+        npcs.add(new NonPlayerCharacter(NonPlayerCharacterArchetype.DEER, new Coords(4, 9, 0), Direction.DOWN));
+        npcs.add(new NonPlayerCharacter(NonPlayerCharacterArchetype.FLY, new Coords(1, 1, 0), Direction.DOWN));
         List<ImmutableObject> blocks = new ArrayList<>();
         for (int x = 0; x < BasicGameLevel.DIMENSIONS.getX(); x++) {
             for (int y = 0; y < BasicGameLevel.DIMENSIONS.getY(); y++) {

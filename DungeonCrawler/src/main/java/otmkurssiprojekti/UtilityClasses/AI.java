@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package otmkurssiprojekti.Level;
+package otmkurssiprojekti.UtilityClasses;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import otmkurssiprojekti.Level.GameLevel;
 import otmkurssiprojekti.Level.GameObjects.Dependencies.Coords;
 import otmkurssiprojekti.Level.GameObjects.Dependencies.Direction;
 import otmkurssiprojekti.Level.GameObjects.NonPlayerCharacter;
@@ -16,7 +17,7 @@ import otmkurssiprojekti.Level.GameObjects.PlayerCharacter;
  *
  * @author Juho Gröhn
  */
-class AI {
+public class AI {
 
     public static void move(NonPlayerCharacter npc, GameLevel gameLevel) {
         switch (npc.getBehaviour()) {
@@ -154,18 +155,20 @@ class AI {
 
     private static void flee(NonPlayerCharacter npc, GameLevel gameLevel) {
         Coords pcCoords = gameLevel.getPlayerCharacter().getCoords();
+        Coords npcCoords = npc.getCoords();
         //An AI flees will stop fleeing once the distance to player is sufficient.
-        final int DISTANCE = 5;
-        if (npc.getCoords().squaredEuclideanDistance(pcCoords) < DISTANCE * DISTANCE) {
+        final int DISTANCE = 8;
+        if (npc.getCoords().squaredEuclideanDistance(pcCoords) > DISTANCE * DISTANCE) {
             return;
         }
 
         Direction escapePlan = Arrays.stream(Direction.values())
-                .filter(d -> gameLevel.isOccupied(d.getCoords()))
+                .filter(d -> !d.equals(Direction.IN) && !d.equals(Direction.OUT))
+                .filter(d -> !gameLevel.isOccupied(npcCoords.sum(d.getCoords())))
                 .max((a, b) -> { //Pick the direction that gets the npc as far away from the player as possible.
-                    Coords aCoords = pcCoords.sum(a.getCoords());
-                    Coords bCoords = pcCoords.sum(b.getCoords());
-                    return pcCoords.squaredEuclideanDistance(aCoords) - pcCoords.squaredEuclideanDistance(bCoords);
+                    Coords aCoords = npcCoords.sum(a.getCoords());
+                    Coords bCoords = npcCoords.sum(b.getCoords());
+                    return Integer.compare(pcCoords.squaredEuclideanDistance(aCoords), pcCoords.squaredEuclideanDistance(bCoords));
                 })
                 .orElse(null);
 
@@ -177,7 +180,8 @@ class AI {
 
     private static void patrol(NonPlayerCharacter npc, GameLevel gameLevel) {
         List<Direction> directions = Arrays.stream(Direction.values())
-                .filter(d -> gameLevel.isOccupied(d.getCoords()))
+                .filter(d -> !d.equals(Direction.IN) && !d.equals(Direction.OUT))
+                .filter(d -> !gameLevel.isOccupied(npc.getCoords().sum(d.getCoords())))
                 .collect(Collectors.toList());
         //A patrolling NPC will go to a random direction.
         int idx = new Random().nextInt(directions.size());
