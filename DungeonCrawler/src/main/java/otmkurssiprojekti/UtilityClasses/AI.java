@@ -19,6 +19,43 @@ import otmkurssiprojekti.Level.GameObjects.PlayerCharacter;
  */
 public class AI {
 
+    private static int clock = 0;
+
+    public static void moveAll(List<GameCharacter> characters, GameLevel gameLevel) {
+        for (GameCharacter gc : characters) {
+            switch (gc.getBehaviour()) {
+                case PASSIVE:
+                    passive(gc, gameLevel);
+                    break;
+                case FOLLOW:
+                    if (clock % 5 == 0) {
+                        follow(gc, gameLevel);
+                    }
+                    break;
+                case HUNT:
+                    if (clock % 10 == 0) {
+                        hunt(gc, gameLevel);
+                    }
+                    break;
+                case FLEE:
+                    if (clock % 8 == 0) {
+                        flee(gc, gameLevel);
+                    }
+                    break;
+                case PATROL:
+                    if (clock % 3 == 0) {
+                        patrol(gc, gameLevel);
+                    }
+                    break;
+                default:
+                    throw new AssertionError(gc.getBehaviour().name());
+
+            }
+        }
+        clock++;
+    }
+
+    @Deprecated
     public static void move(GameCharacter gc, GameLevel gameLevel) {
         switch (gc.getBehaviour()) {
             case PASSIVE:

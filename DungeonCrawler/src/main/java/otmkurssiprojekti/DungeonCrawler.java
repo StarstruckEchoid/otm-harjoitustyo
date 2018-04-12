@@ -64,7 +64,7 @@ public class DungeonCrawler extends Application {
             }
         }
 
-        //PLACEHOLDER: Makes a new level.
+        //PLACEHOLDER CODE: Makes a new level.
         String levelName = FIRST_LEVEL;
         PlayerCharacter player = new PlayerCharacter(10, 1, 1, 1, 1, new Coords(3, 3, 0), Direction.DOWN);
         List<NonPlayerCharacter> npcs = new ArrayList<>();
@@ -94,7 +94,7 @@ public class DungeonCrawler extends Application {
         new ByteFileLevelDao(LEVEL_DIR).saveLevel(gamelvl);
     }
     private static final Timer TIMER = new Timer();
-    private static final int TICKS_PERIOD = 1_000; //Controls how often the game updates, eg. how often npcs move.
+    private static final int TICKS_PERIOD = 50; //Controls how often the game updates, eg. how often npcs move.
     private static final int FRAMES_PERIOD = 50; //Controls how often the screen updates. Reciprocal of frames per millisecond.
 
     private GameData gameData;
