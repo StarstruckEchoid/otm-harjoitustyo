@@ -6,6 +6,7 @@
 package otmkurssiprojekti.Level;
 
 import java.io.Serializable;
+import otmkurssiprojekti.Level.GameObjects.Dependencies.Coords;
 import otmkurssiprojekti.Level.GameObjects.Dependencies.Direction;
 import otmkurssiprojekti.Level.GameObjects.GameObject;
 import otmkurssiprojekti.Level.GameObjects.PlayerCharacter;
@@ -17,12 +18,18 @@ import otmkurssiprojekti.Level.GameObjects.PlayerCharacter;
 public interface GameLevel extends Serializable {
 
     String getLevelName();
+    
+    PlayerCharacter getPlayerCharacter();
 
     GameObject[][][] getLevelData();
+    
+    boolean isOccupied(Coords coords);
 
     void setPlayer(PlayerCharacter player);
 
     void movePlayer(Direction dir);
+
+    void doGameTick();
 
     @Override
     String toString();

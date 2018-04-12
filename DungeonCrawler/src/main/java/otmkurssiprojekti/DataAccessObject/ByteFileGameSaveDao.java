@@ -46,7 +46,7 @@ public class ByteFileGameSaveDao implements GameSaveDao {
         long time = Long.parseLong(name);
         Date date = new Date(time);
         
-        BasicGameLevel gameLevel = bfldao.loadLevel(file.toPath());
+        GameLevel gameLevel = bfldao.loadLevel(file.toPath());
         
         return new GameSave(date, gameLevel);
     }

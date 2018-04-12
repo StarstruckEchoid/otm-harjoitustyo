@@ -11,9 +11,9 @@ package otmkurssiprojekti.Level.GameObjects.Dependencies;
  */
 public class Coords implements java.io.Serializable, Comparable<Coords> {
 
-    public int x;
-    public int y;
-    public int z;
+    private int x;
+    private int y;
+    private int z;
 
     public Coords() {
         this.x = 0;
@@ -59,6 +59,27 @@ public class Coords implements java.io.Serializable, Comparable<Coords> {
         return new Coords(x, y, z);
     }
 
+    //Distance functions
+    public int squaredEuclideanDistance(Coords coords) {
+        int dxSq = this.x - coords.x;
+        dxSq *= dxSq;
+        int dySq = this.y - coords.y;
+        dySq *= dySq;
+        int dzSq = this.z - coords.z;
+        dzSq *= dzSq;
+
+        return dxSq + dySq + dzSq;
+    }
+
+    public int manhattanDistance(Coords coords) {
+        int dx = Math.abs(this.x - coords.x);
+        int dy = Math.abs(this.y - coords.y);
+        int dz = Math.abs(this.z - coords.z);
+        
+        return dx + dy + dz;
+    }
+
+    //BOOLEANS
     //This is true if all coords less than c. Good for analysing whether the coords are within a set box boundary.
     public Boolean lesserThan(Coords c) {
         return this.x < c.x
@@ -73,6 +94,7 @@ public class Coords implements java.io.Serializable, Comparable<Coords> {
                 && this.z >= c.z;
     }
 
+    //Boring function:
     @Override
     public String toString() {
         return "(" + x + "," + y + "," + z + ")";

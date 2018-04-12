@@ -47,12 +47,12 @@ public class NewPlayerScreen extends SwitchingScreen {
     @Override
     public void handleKeyEvent(KeyEvent e) {
         switch (e.getCode()) {
-            case W:
+            case UP:
                 if (pointer > 0) {
                     pointer--;
                 }
                 break;
-            case S:
+            case DOWN:
                 if (pointer < 1) {
                     pointer++;
                 }
@@ -109,10 +109,10 @@ public class NewPlayerScreen extends SwitchingScreen {
 
         //LEGEND
         Text legend = new Text(
-                "W: up\t"
-                + "A:left\t"
-                + "S:down\t"
-                + "D:right\t"
+                "UP: up\t"
+                + "LEFT:left\t"
+                + "DOWN:down\t"
+                + "RIGHT:right\t"
                 + "ESC:back\t"
                 + "ENTER:select"
         );
@@ -139,12 +139,12 @@ public class NewPlayerScreen extends SwitchingScreen {
 
     private void handleArchetypeEdit(KeyEvent e) {
         switch (e.getCode()) {
-            case A:
+            case LEFT:
                 if (pcaArrPointer > 0) {
                     pcaArrPointer--;
                 }
                 break;
-            case D:
+            case RIGHT:
                 if (pcaArrPointer < pcaArr.length - 1) {
                     pcaArrPointer++;
                 }
@@ -155,12 +155,15 @@ public class NewPlayerScreen extends SwitchingScreen {
     }
 
     private void initialiseNewGame() {
-        //Create player character.
-        PlayerCharacter playerCharacter = new PlayerCharacter(pcaArr[pcaArrPointer], new Coords(0, 0, 0), Direction.DOWN);
         //Load first level.
         GameLevelDao gameLevelDao = new ByteFileLevelDao(DungeonCrawler.LEVEL_DIR);
         GameLevel startingLevel = gameLevelDao.loadLevel(Paths.get(DungeonCrawler.LEVEL_DIR.toString(), DungeonCrawler.FIRST_LEVEL));
         //Put player in it.
+        PlayerCharacter playerCharacter = new PlayerCharacter(
+                pcaArr[pcaArrPointer],
+                startingLevel.getPlayerCharacter().getCoords(),
+                Direction.DOWN
+        );
         startingLevel.setPlayer(playerCharacter);
 
         //Set player in main to player name.

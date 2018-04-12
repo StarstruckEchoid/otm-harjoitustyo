@@ -5,7 +5,6 @@
  */
 package otmkurssiprojekti.Level.GameObjects.Dependencies;
 
-import otmkurssiprojekti.Level.GameObjects.Dependencies.Coords;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -78,6 +77,30 @@ public class CoordsTest {
         assertTrue(coords.equals(new Coords(0, 5, 10)));
         assertTrue(c.equals(new Coords(1, 0, 4)));
         assertTrue(sum.equals(new Coords(1, 5, 14)));
+    }
+
+    @Test
+    public void testSqEucDist1() {
+        testSquaredEuclideanDistance(coords, coords, 0);
+    }
+
+    @Test
+    public void testSqEucDist2() {
+        testSquaredEuclideanDistance(coords, new Coords(0, 0, 0), 125);
+    }
+
+    @Test
+    public void testSqEucDist3() {
+        testSquaredEuclideanDistance(coords, new Coords(5, 0, 0), 150);
+    }
+
+    public void testSquaredEuclideanDistance(Coords c1, Coords c2, int expected) {
+        Coords c1Copy = new Coords(c1.getX(), c1.getY(), c1.getZ());
+        Coords c2Copy = new Coords(c2.getX(), c2.getY(), c2.getZ());
+        int distance = c1.squaredEuclideanDistance(c2);
+        assertTrue("Expected squared distance to be " + expected + " but insted it was " + distance, distance == expected);
+        assertTrue("Method changed the value of c1!", c1.equals(c1Copy));
+        assertTrue("Method changed the value of c2!", c2.equals(c2Copy));
     }
 
     @Test

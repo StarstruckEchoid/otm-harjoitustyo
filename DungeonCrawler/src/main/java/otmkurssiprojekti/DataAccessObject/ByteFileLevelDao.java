@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import otmkurssiprojekti.Level.BasicGameLevel;
 import otmkurssiprojekti.Level.GameLevel;
 import otmkurssiprojekti.UtilityClasses.Serializer;
 
@@ -41,10 +40,10 @@ public class ByteFileLevelDao implements GameLevelDao {
     }
 
     @Override
-    public BasicGameLevel loadLevel(Path levelPath) {
+    public GameLevel loadLevel(Path levelPath) {
         try {
             byte[] byteData = Files.readAllBytes(levelPath);
-            BasicGameLevel glvl = (BasicGameLevel) Serializer.deserialize(byteData);
+            GameLevel glvl = (GameLevel) Serializer.deserialize(byteData);
             return glvl;
         } catch (IOException | ClassNotFoundException ex) {
             Logger.getLogger(ByteFileLevelDao.class.getName()).log(Level.SEVERE, null, ex);

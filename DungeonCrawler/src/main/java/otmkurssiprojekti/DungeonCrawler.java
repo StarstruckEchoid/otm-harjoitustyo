@@ -25,6 +25,7 @@ import otmkurssiprojekti.Level.GameObjects.Dependencies.Coords;
 import otmkurssiprojekti.Level.GameObjects.Dependencies.Direction;
 import otmkurssiprojekti.Level.GameObjects.*;
 import otmkurssiprojekti.Level.GameObjects.Archetypes.ImmutableObjectArchetype;
+import otmkurssiprojekti.Level.GameObjects.Archetypes.NonPlayerCharacterArchetype;
 import otmkurssiprojekti.UserInterface.MainMenuScreen;
 
 /**
@@ -65,12 +66,20 @@ public class DungeonCrawler extends Application {
 
         //PLACEHOLDER: Makes a new level.
         String levelName = FIRST_LEVEL;
-        PlayerCharacter player = new PlayerCharacter(10, 1, 1, 1, 1, new Coords(3, 3, 3), Direction.DOWN);
+        PlayerCharacter player = new PlayerCharacter(10, 1, 1, 1, 1, new Coords(3, 3, 0), Direction.DOWN);
         List<NonPlayerCharacter> npcs = new ArrayList<>();
+        //Add a follower npc.
+        npcs.add(new NonPlayerCharacter(NonPlayerCharacterArchetype.RAT, new Coords(8, 8, 0), Direction.DOWN));
         List<ImmutableObject> blocks = new ArrayList<>();
-        for (int x = 0; x < BasicGameLevel.DIMENSIONS.x; x++) {
-            for (int y = 0; y < BasicGameLevel.DIMENSIONS.y; y++) {
-                blocks.add(new ImmutableObject(ImmutableObjectArchetype.GRASS, new Coords(x, y, 4), Direction.DOWN));
+        for (int x = 0; x < BasicGameLevel.DIMENSIONS.getX(); x++) {
+            for (int y = 0; y < BasicGameLevel.DIMENSIONS.getY(); y++) {
+                if (x == 0 || x == BasicGameLevel.DIMENSIONS.getX() - 1) {
+                    //Some solid blocks.
+                    blocks.add(new ImmutableObject(ImmutableObjectArchetype.STONE_WALL, new Coords(x, y, 0), Direction.DOWN));
+                } else {
+                    //Non-solid blocks.
+                    blocks.add(new ImmutableObject(ImmutableObjectArchetype.GRASS, new Coords(x, y, 1), Direction.DOWN));
+                }
             }
         }
         List<InteractiveObject> interactives = new ArrayList<>();
@@ -83,7 +92,7 @@ public class DungeonCrawler extends Application {
     }
     private static final Timer TIMER = new Timer();
     private static final int TICKS_PERIOD = 1_000; //Controls how often the game updates, eg. how often npcs move.
-    private static final int FRAMES_PERIOD = 30; //Controls how often the screen updates. Reciprocal of frames per millisecond.
+    private static final int FRAMES_PERIOD = 50; //Controls how often the screen updates. Reciprocal of frames per millisecond.
 
     private GameData gameData;
     private GameScreen gameScreen;
@@ -124,18 +133,27 @@ public class DungeonCrawler extends Application {
                 mainScene.setRoot(gameScreen.getVisualisation());
             }
         }, 0, FRAMES_PERIOD);
+
         primaryStage.setScene(mainScene);
         primaryStage.show();
 
     }
 
     @Override
-    public void stop() throws Exception {
+    public void stop() {
         TIMER.cancel();
-        super.stop();
+        try {
+            super.stop();
+            System.exit(0);
+        } catch (Exception ex) {
+            Logger.getLogger(DungeonCrawler.class.getName()).log(Level.SEVERE, null, ex);
+            System.exit(1);
+        } finally {
+            System.exit(2);
+        }
     }
-
     //Getters and setters.
+
     public GameData getGameData() {
         return gameData;
     }

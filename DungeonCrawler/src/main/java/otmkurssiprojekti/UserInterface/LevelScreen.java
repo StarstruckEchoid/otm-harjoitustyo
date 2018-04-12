@@ -94,7 +94,7 @@ public class LevelScreen extends SwitchingScreen {
 
     @Override
     public void doGameTick() {
-        
+        gameLevel.doGameTick();
     }
 
 }

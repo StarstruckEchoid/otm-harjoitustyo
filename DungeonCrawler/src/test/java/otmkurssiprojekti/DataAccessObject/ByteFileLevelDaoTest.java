@@ -34,7 +34,7 @@ public class ByteFileLevelDaoTest {
 
     private Path directory;
     private ByteFileLevelDao bfldao;
-    private BasicGameLevel glvl;
+    private GameLevel glvl;
 
     List<NonPlayerCharacter> npcs;
     NonPlayerCharacter npc;
@@ -75,7 +75,7 @@ public class ByteFileLevelDaoTest {
     @Test
     public void testSaveLoadLevel() {
         bfldao.saveLevel(glvl);
-        BasicGameLevel glvl2 = bfldao.loadLevel(Paths.get(directory.toString(), glvl.toString()));
+        GameLevel glvl2 = bfldao.loadLevel(Paths.get(directory.toString(), glvl.toString()));
 
         assertTrue("Levels are not equal according to equals().", glvl.equals(glvl2));
     }

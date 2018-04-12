@@ -20,6 +20,7 @@ import otmkurssiprojekti.Level.GameObjects.*;
 public class BasicGameLevel implements GameLevel {
 
     public static final Coords DIMENSIONS = new Coords(16, 16, 8); //The level is a box from origin to DIMENSIONS Coords exclusive. Ie. The level has a size 16x16x8.
+
     private final String levelName;
     private PlayerCharacter player;
     private final List<NonPlayerCharacter> npcs;
@@ -54,6 +55,11 @@ public class BasicGameLevel implements GameLevel {
         return levelName;
     }
 
+    @Override
+    public PlayerCharacter getPlayerCharacter() {
+        return this.player;
+    }
+
     //Setter
     @Override
     public void setPlayer(PlayerCharacter player) {
@@ -61,11 +67,16 @@ public class BasicGameLevel implements GameLevel {
     }
 
     //Others
-    private static Boolean containsCoords(Coords coords) {
+    @Override
+    public boolean isOccupied(Coords coords) {
+        return !BasicGameLevel.hasCoords(coords) || this.hasSolidBlockAt(coords);
+    }
+
+    protected static Boolean hasCoords(Coords coords) {
         return coords.greaterThanOrEqualTo(new Coords(0, 0, 0)) && coords.lesserThan(DIMENSIONS);
     }
-    
-    private Boolean hasSolidBlockAt(Coords coords){
+
+    protected Boolean hasSolidBlockAt(Coords coords) {
         List<GameObject> possiblySolidBlocks = new ArrayList<>();
         possiblySolidBlocks.addAll(blocks);
         possiblySolidBlocks.addAll(interactives);
@@ -78,14 +89,14 @@ public class BasicGameLevel implements GameLevel {
     public void movePlayer(Direction dir) {
         Coords playerCoords = this.player.getCoords();
         Coords newCoords = playerCoords.sum(dir.getCoords());
-        if (BasicGameLevel.containsCoords(newCoords) && !this.hasSolidBlockAt(newCoords)) {
+        if (!this.isOccupied(newCoords)) {
             player.move(dir);
         }
     }
 
     @Override
     public GameObject[][][] getLevelData() {
-        GameObject[][][] levelData = new GameObject[DIMENSIONS.z][DIMENSIONS.y][DIMENSIONS.x];
+        GameObject[][][] levelData = new GameObject[DIMENSIONS.getZ()][DIMENSIONS.getY()][DIMENSIONS.getX()];
         //Everything in one big list.
         List<GameObject> allObjects = new ArrayList<>();
         allObjects.add(player);
@@ -97,8 +108,8 @@ public class BasicGameLevel implements GameLevel {
         //Convert list into matrix.
         for (GameObject gobj : allObjects) {
             Coords gobjc = gobj.getCoords();
-            if (BasicGameLevel.containsCoords(gobjc)) {
-                levelData[gobjc.z][gobjc.y][gobjc.x] = gobj;
+            if (BasicGameLevel.hasCoords(gobjc)) {
+                levelData[gobjc.getZ()][gobjc.getY()][gobjc.getX()] = gobj;
             }
         }
         return levelData;
@@ -156,6 +167,13 @@ public class BasicGameLevel implements GameLevel {
     @Override
     public String toString() {
         return this.levelName;
+    }
+
+    @Override
+    public void doGameTick() {
+        npcs.forEach((npc) -> {
+            AI.move(npc, this);
+        });
     }
 
 }
