@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import otmkurssiprojekti.UserInterface.GameScreen;
+import otmkurssiprojekti.UserInterface.Screen.GameScreen;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -26,7 +26,7 @@ import otmkurssiprojekti.Level.GameObjects.Dependencies.Direction;
 import otmkurssiprojekti.Level.GameObjects.*;
 import otmkurssiprojekti.Level.GameObjects.Archetypes.ImmutableObjectArchetype;
 import otmkurssiprojekti.Level.GameObjects.Archetypes.NonPlayerCharacterArchetype;
-import otmkurssiprojekti.UserInterface.MainMenuScreen;
+import otmkurssiprojekti.UserInterface.Screen.MainMenuScreen;
 
 /**
  *

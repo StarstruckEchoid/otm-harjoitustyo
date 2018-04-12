@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package otmkurssiprojekti.UserInterface;
+package otmkurssiprojekti.UserInterface.Screen;
 
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import otmkurssiprojekti.DataAccessObject.ByteFileGameSaveDao;
 import otmkurssiprojekti.DataAccessObject.GameSaveDao;
@@ -18,12 +17,11 @@ import otmkurssiprojekti.GameSave;
  *
  * @author Juho Gröhn
  */
-public class SaveGameScreen extends VerticalMenuScreen {
-
+public class LoadGameScreen extends VerticalMenuScreen {
     private final GameSaveDao gsdao;
     private final List<GameSave> saves;
 
-    public SaveGameScreen(DungeonCrawler main) {
+    public LoadGameScreen(DungeonCrawler main) {
         super(main);
         gsdao = new ByteFileGameSaveDao(Paths.get( //The address where game saves are looked up is <USER_DIR>/<user>/<player>/
                 DungeonCrawler.USER_DIR.toString(),
@@ -35,31 +33,32 @@ public class SaveGameScreen extends VerticalMenuScreen {
 
     @Override
     protected void doEnterAction(int index) {
-        if (index == 0) {
-            gsdao.saveGame(new GameSave(new Date(System.currentTimeMillis()), main.getGameData().getGameLevel()));
-            switchTo(new LevelScreen(main));
-        }
-
+        main.getGameData().setGameLevel(saves.get(index).getGameLevel());
+        switchTo(new LevelScreen(main));
     }
 
     @Override
     protected List<String> getOptsList() {
         List<String> ret = new ArrayList<>();
-        ret.add("<new save>");
         saves.forEach((save) -> {
-            ret.add(save.toString());
+            try {
+                ret.add(save.toString());
+            } catch (NullPointerException npe) {
+                ret.add("<corrupted>");
+            }
         });
         return ret;
     }
 
     @Override
+
     protected String getTitleText() {
-        return "Save game";
+        return "Load game";
     }
 
     @Override
     protected GameScreen getReturnScreen() {
-        return new PauseScreen(main);
+        return new LoadPlayerScreen(main);
     }
 
 }

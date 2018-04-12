@@ -51,6 +51,15 @@ public abstract class BasicStatsCharacter extends BasicGameCharacter implements 
     }
 
     @Override
+    public void takeDamage(GameCharacter gc) {
+        if (gc instanceof StatsCharacter) {
+            this.takeDamage((StatsCharacter) gc);
+        } else {
+            //Do nothing.
+        }
+    }
+
+    @Override
     public void takeDamage(StatsCharacter sc) {
         int baseDam = sc.getAttackDamage();
 

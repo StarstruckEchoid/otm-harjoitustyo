@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 import otmkurssiprojekti.Level.GameLevel;
 import otmkurssiprojekti.Level.GameObjects.Dependencies.Coords;
 import otmkurssiprojekti.Level.GameObjects.Dependencies.Direction;
-import otmkurssiprojekti.Level.GameObjects.NonPlayerCharacter;
+import otmkurssiprojekti.Level.GameObjects.GameCharacter;
 import otmkurssiprojekti.Level.GameObjects.PlayerCharacter;
 
 /**
@@ -19,26 +19,25 @@ import otmkurssiprojekti.Level.GameObjects.PlayerCharacter;
  */
 public class AI {
 
-    public static void move(NonPlayerCharacter npc, GameLevel gameLevel) {
-        switch (npc.getBehaviour()) {
+    public static void move(GameCharacter gc, GameLevel gameLevel) {
+        switch (gc.getBehaviour()) {
             case PASSIVE:
-                passive(npc, gameLevel);
+                passive(gc, gameLevel);
                 break;
             case FOLLOW:
-                follow(npc, gameLevel);
+                follow(gc, gameLevel);
                 break;
             case HUNT:
-                hunt(npc, gameLevel);
+                hunt(gc, gameLevel);
                 break;
             case FLEE:
-                flee(npc, gameLevel);
+                flee(gc, gameLevel);
                 break;
             case PATROL:
-                patrol(npc, gameLevel);
+                patrol(gc, gameLevel);
                 break;
             default:
-                throw new AssertionError(npc.getBehaviour().name());
-
+                throw new AssertionError(gc.getBehaviour().name());
         }
     }
 
@@ -116,49 +115,49 @@ public class AI {
         return ret;
     }
 
-    private static void passive(NonPlayerCharacter npc, GameLevel gameLevel) {
+    private static void passive(GameCharacter gc, GameLevel gameLevel) {
         //Do nothing.
     }
 
-    private static void follow(NonPlayerCharacter npc, GameLevel gameLevel) {
+    private static void follow(GameCharacter gc, GameLevel gameLevel) {
         PlayerCharacter pc = gameLevel.getPlayerCharacter();
         //An AI that follows will not get too close to player.
         final int DISTANCE = 4;
-        if (npc.getCoords().squaredEuclideanDistance(pc.getCoords()) < DISTANCE * DISTANCE) {
+        if (gc.getCoords().squaredEuclideanDistance(pc.getCoords()) < DISTANCE * DISTANCE) {
             return;
         }
 
-        Stack<Coords> stack = greedyRoute(npc.getCoords(), pc.getCoords(), gameLevel);
+        Stack<Coords> stack = greedyRoute(gc.getCoords(), pc.getCoords(), gameLevel);
         if (!stack.empty()) {
-            npc.setCoords(stack.pop());
+            gc.setCoords(stack.pop());
         }
     }
 
-    private static void hunt(NonPlayerCharacter npc, GameLevel gameLevel) {
+    private static void hunt(GameCharacter gc, GameLevel gameLevel) {
         PlayerCharacter pc = gameLevel.getPlayerCharacter();
         //An AI hunts will stop hunting once the distance to player is too much.
         final int MAX_DISTANCE = 8;
-        if (npc.getCoords().squaredEuclideanDistance(pc.getCoords()) >= MAX_DISTANCE * MAX_DISTANCE) {
+        if (gc.getCoords().squaredEuclideanDistance(pc.getCoords()) >= MAX_DISTANCE * MAX_DISTANCE) {
             return;
         }
         //An AI that hunts will attack the player once in melee range.
         final int ATTACK_DISTANCE = 2;
-        if (npc.getCoords().squaredEuclideanDistance(pc.getCoords()) < ATTACK_DISTANCE * ATTACK_DISTANCE) {
-            pc.takeDamage(npc);
+        if (gc.getCoords().squaredEuclideanDistance(pc.getCoords()) < ATTACK_DISTANCE * ATTACK_DISTANCE) {
+            pc.takeDamage(gc);
             return;
         }
-        Stack<Coords> stack = greedyRoute(npc.getCoords(), pc.getCoords(), gameLevel);
+        Stack<Coords> stack = greedyRoute(gc.getCoords(), pc.getCoords(), gameLevel);
         if (!stack.empty()) {
-            npc.setCoords(stack.pop());
+            gc.setCoords(stack.pop());
         }
     }
 
-    private static void flee(NonPlayerCharacter npc, GameLevel gameLevel) {
+    private static void flee(GameCharacter gc, GameLevel gameLevel) {
         Coords pcCoords = gameLevel.getPlayerCharacter().getCoords();
-        Coords npcCoords = npc.getCoords();
+        Coords npcCoords = gc.getCoords();
         //An AI flees will stop fleeing once the distance to player is sufficient.
         final int DISTANCE = 8;
-        if (npc.getCoords().squaredEuclideanDistance(pcCoords) > DISTANCE * DISTANCE) {
+        if (gc.getCoords().squaredEuclideanDistance(pcCoords) > DISTANCE * DISTANCE) {
             return;
         }
 
@@ -173,20 +172,20 @@ public class AI {
                 .orElse(null);
 
         if (escapePlan != null) {
-            npc.move(escapePlan);
+            gc.move(escapePlan);
         }
 
     }
 
-    private static void patrol(NonPlayerCharacter npc, GameLevel gameLevel) {
+    private static void patrol(GameCharacter gc, GameLevel gameLevel) {
         List<Direction> directions = Arrays.stream(Direction.values())
                 .filter(d -> !d.equals(Direction.IN) && !d.equals(Direction.OUT))
-                .filter(d -> !gameLevel.isOccupied(npc.getCoords().sum(d.getCoords())))
+                .filter(d -> !gameLevel.isOccupied(gc.getCoords().sum(d.getCoords())))
                 .collect(Collectors.toList());
         //A patrolling NPC will go to a random direction.
         int idx = new Random().nextInt(directions.size());
         Direction d = directions.get(idx);
-        npc.move(d);
+        gc.move(d);
     }
 
 }

@@ -5,7 +5,7 @@
  */
 package otmkurssiprojekti.Level.GameObjects;
 
-import java.util.Objects;
+import otmkurssiprojekti.Level.GameObjects.Archetypes.Behaviour;
 import otmkurssiprojekti.Level.GameObjects.Archetypes.PlayerCharacterArchetype;
 import otmkurssiprojekti.Level.GameObjects.Dependencies.Coords;
 import otmkurssiprojekti.Level.GameObjects.Dependencies.Direction;
@@ -37,6 +37,11 @@ public class PlayerCharacter extends BasicStatsCharacter {
     @Override
     public char getId() {
         return ID;
+    }
+
+    @Override
+    public Behaviour getBehaviour() {
+        return Behaviour.PASSIVE;
     }
 
 }

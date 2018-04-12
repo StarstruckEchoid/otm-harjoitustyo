@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package otmkurssiprojekti.UserInterface;
+package otmkurssiprojekti.UserInterface.Screen;
 
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -14,7 +15,8 @@ import javafx.scene.text.Text;
 import otmkurssiprojekti.DungeonCrawler;
 import otmkurssiprojekti.Level.GameLevel;
 import otmkurssiprojekti.Level.GameObjects.Dependencies.Direction;
-import otmkurssiprojekti.UtilityClasses.FormatConverter;
+import otmkurssiprojekti.UserInterface.Renderer.Renderer;
+import otmkurssiprojekti.UserInterface.Renderer.TextRenderer;
 
 /**
  *
@@ -22,6 +24,7 @@ import otmkurssiprojekti.UtilityClasses.FormatConverter;
  */
 public class LevelScreen extends SwitchingScreen {
 
+    private static final Renderer RENDERER = new TextRenderer();
     private final GameLevel gameLevel;
 
     public LevelScreen(DungeonCrawler main) {
@@ -76,18 +79,8 @@ public class LevelScreen extends SwitchingScreen {
         t.setFont(Font.font("MONOSPACED"));
 
         //Kentän data.
-        String display
-                = FormatConverter.projectionToDenseString(
-                        FormatConverter.project(
-                                FormatConverter.levelDataToMatrix(
-                                        gameLevel.getLevelData()
-                                )
-                        )
-                );
-
-        t.setText(display);
-
-        hud.setCenter(t);
+        Node render = RENDERER.getRender(gameLevel);
+        hud.setCenter(render);
 
         return hud;
     }
