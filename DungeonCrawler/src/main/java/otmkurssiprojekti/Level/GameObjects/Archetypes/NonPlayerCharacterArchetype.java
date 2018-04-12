@@ -10,11 +10,12 @@ package otmkurssiprojekti.Level.GameObjects.Archetypes;
  * @author Juho Gröhn
  */
 public enum NonPlayerCharacterArchetype implements Archetype {
-    VILLAGER('%', 0, 10, 0, 0, 0, 0, Behaviour.PASSIVE),
-    RAT('r', 1, 3, 1, 0, 0, 1, Behaviour.HUNT),
-    FOLLOWER('f', 0, 10, 0, 0, 0, 0, Behaviour.FOLLOW),
-    DEER('d', 5, 10, 0, 0, 0, 5, Behaviour.FLEE),
-    FLY('¨', 1, 1, 0, 0, 0, 0, Behaviour.PATROL);
+    //(id,lvl,hp,str,per,end,agl,behaviour)
+    VILLAGER('%', 0, 10, 0, 0, 0, 10, Behaviour.PASSIVE),
+    RAT('r', 1, 3, 1, 0, 0, 20, Behaviour.HUNT),
+    FOLLOWER('f', 0, 10, 0, 0, 0, 80, Behaviour.FOLLOW),
+    DEER('d', 5, 10, 0, 0, 0, 30, Behaviour.FLEE),
+    FLY('¨', 1, 1, 0, 0, 0, 90, Behaviour.PATROL);
 
     private final char id;
 

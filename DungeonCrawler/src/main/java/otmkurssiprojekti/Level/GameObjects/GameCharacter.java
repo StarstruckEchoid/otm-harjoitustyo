@@ -5,22 +5,15 @@
  */
 package otmkurssiprojekti.Level.GameObjects;
 
-import otmkurssiprojekti.Level.GameObjects.Archetypes.Behaviour;
-import otmkurssiprojekti.Level.GameObjects.Dependencies.Coords;
-
 /**
  *
  * @author Juho Gröhn
  */
-public interface GameCharacter extends GameObject {
+public interface GameCharacter extends MobileObject {
 
     public void takeDamage(int dmg);
-    
-    public void takeDamage(GameCharacter gc);
+
+    public void takeDamage(StatsCharacter gc);
 
     public boolean isDead();
-
-    public Behaviour getBehaviour();
-
-    public void setCoords(Coords coords);
 }

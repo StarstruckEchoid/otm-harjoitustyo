@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 import otmkurssiprojekti.Level.GameLevel;
 import otmkurssiprojekti.Level.GameObjects.Dependencies.Coords;
 import otmkurssiprojekti.Level.GameObjects.Dependencies.Direction;
-import otmkurssiprojekti.Level.GameObjects.GameCharacter;
+import otmkurssiprojekti.Level.GameObjects.MobileObject;
 import otmkurssiprojekti.Level.GameObjects.PlayerCharacter;
 
 /**
@@ -21,60 +21,34 @@ public class AI {
 
     private static int clock = 0;
 
-    public static void moveAll(List<GameCharacter> characters, GameLevel gameLevel) {
-        for (GameCharacter gc : characters) {
-            switch (gc.getBehaviour()) {
-                case PASSIVE:
-                    passive(gc, gameLevel);
-                    break;
-                case FOLLOW:
-                    if (clock % 5 == 0) {
-                        follow(gc, gameLevel);
-                    }
-                    break;
-                case HUNT:
-                    if (clock % 10 == 0) {
-                        hunt(gc, gameLevel);
-                    }
-                    break;
-                case FLEE:
-                    if (clock % 8 == 0) {
-                        flee(gc, gameLevel);
-                    }
-                    break;
-                case PATROL:
-                    if (clock % 3 == 0) {
-                        patrol(gc, gameLevel);
-                    }
-                    break;
-                default:
-                    throw new AssertionError(gc.getBehaviour().name());
-
-            }
-        }
+    public static void moveAll(List<MobileObject> mos, GameLevel gameLevel) {
+        mos.stream()
+                .filter((mo) -> !(clock % mo.getSlowness() != 0))
+                .forEachOrdered((mo) -> {
+                    move(mo, gameLevel);
+                });
         clock++;
     }
 
-    @Deprecated
-    public static void move(GameCharacter gc, GameLevel gameLevel) {
-        switch (gc.getBehaviour()) {
+    private static void move(MobileObject mo, GameLevel gameLevel) {
+        switch (mo.getBehaviour()) {
             case PASSIVE:
-                passive(gc, gameLevel);
+                passive(mo, gameLevel);
                 break;
             case FOLLOW:
-                follow(gc, gameLevel);
+                follow(mo, gameLevel);
                 break;
             case HUNT:
-                hunt(gc, gameLevel);
+                hunt(mo, gameLevel);
                 break;
             case FLEE:
-                flee(gc, gameLevel);
+                flee(mo, gameLevel);
                 break;
             case PATROL:
-                patrol(gc, gameLevel);
+                patrol(mo, gameLevel);
                 break;
             default:
-                throw new AssertionError(gc.getBehaviour().name());
+                throw new AssertionError(mo.getBehaviour().name());
         }
     }
 
@@ -152,49 +126,49 @@ public class AI {
         return ret;
     }
 
-    private static void passive(GameCharacter gc, GameLevel gameLevel) {
+    private static void passive(MobileObject mo, GameLevel gameLevel) {
         //Do nothing.
     }
 
-    private static void follow(GameCharacter gc, GameLevel gameLevel) {
+    private static void follow(MobileObject mo, GameLevel gameLevel) {
         PlayerCharacter pc = gameLevel.getPlayerCharacter();
         //An AI that follows will not get too close to player.
         final int DISTANCE = 4;
-        if (gc.getCoords().squaredEuclideanDistance(pc.getCoords()) < DISTANCE * DISTANCE) {
+        if (mo.getCoords().squaredEuclideanDistance(pc.getCoords()) < DISTANCE * DISTANCE) {
             return;
         }
 
-        Stack<Coords> stack = greedyRoute(gc.getCoords(), pc.getCoords(), gameLevel);
+        Stack<Coords> stack = greedyRoute(mo.getCoords(), pc.getCoords(), gameLevel);
         if (!stack.empty()) {
-            gc.setCoords(stack.pop());
+            mo.setCoords(stack.pop());
         }
     }
 
-    private static void hunt(GameCharacter gc, GameLevel gameLevel) {
+    private static void hunt(MobileObject mo, GameLevel gameLevel) {
         PlayerCharacter pc = gameLevel.getPlayerCharacter();
         //An AI hunts will stop hunting once the distance to player is too much.
         final int MAX_DISTANCE = 8;
-        if (gc.getCoords().squaredEuclideanDistance(pc.getCoords()) >= MAX_DISTANCE * MAX_DISTANCE) {
+        if (mo.getCoords().squaredEuclideanDistance(pc.getCoords()) >= MAX_DISTANCE * MAX_DISTANCE) {
             return;
         }
         //An AI that hunts will attack the player once in melee range.
         final int ATTACK_DISTANCE = 2;
-        if (gc.getCoords().squaredEuclideanDistance(pc.getCoords()) < ATTACK_DISTANCE * ATTACK_DISTANCE) {
-            pc.takeDamage(gc);
+        if (mo.getCoords().squaredEuclideanDistance(pc.getCoords()) < ATTACK_DISTANCE * ATTACK_DISTANCE) {
+            mo.doDamage(pc);
             return;
         }
-        Stack<Coords> stack = greedyRoute(gc.getCoords(), pc.getCoords(), gameLevel);
+        Stack<Coords> stack = greedyRoute(mo.getCoords(), pc.getCoords(), gameLevel);
         if (!stack.empty()) {
-            gc.setCoords(stack.pop());
+            mo.setCoords(stack.pop());
         }
     }
 
-    private static void flee(GameCharacter gc, GameLevel gameLevel) {
+    private static void flee(MobileObject mo, GameLevel gameLevel) {
         Coords pcCoords = gameLevel.getPlayerCharacter().getCoords();
-        Coords npcCoords = gc.getCoords();
+        Coords npcCoords = mo.getCoords();
         //An AI flees will stop fleeing once the distance to player is sufficient.
         final int DISTANCE = 8;
-        if (gc.getCoords().squaredEuclideanDistance(pcCoords) > DISTANCE * DISTANCE) {
+        if (mo.getCoords().squaredEuclideanDistance(pcCoords) > DISTANCE * DISTANCE) {
             return;
         }
 
@@ -209,20 +183,20 @@ public class AI {
                 .orElse(null);
 
         if (escapePlan != null) {
-            gc.move(escapePlan);
+            mo.move(escapePlan);
         }
 
     }
 
-    private static void patrol(GameCharacter gc, GameLevel gameLevel) {
+    private static void patrol(MobileObject mo, GameLevel gameLevel) {
         List<Direction> directions = Arrays.stream(Direction.values())
                 .filter(d -> !d.equals(Direction.IN) && !d.equals(Direction.OUT))
-                .filter(d -> !gameLevel.isOccupied(gc.getCoords().sum(d.getCoords())))
+                .filter(d -> !gameLevel.isOccupied(mo.getCoords().sum(d.getCoords())))
                 .collect(Collectors.toList());
         //A patrolling NPC will go to a random direction.
         int idx = new Random().nextInt(directions.size());
         Direction d = directions.get(idx);
-        gc.move(d);
+        mo.move(d);
     }
 
 }

@@ -172,9 +172,9 @@ public class BasicGameLevel implements GameLevel {
     
     @Override
     public void doGameTick() {
-        List<GameCharacter> allgcs = new ArrayList<>();
-        allgcs.addAll(npcs);
-        AI.moveAll(allgcs, this);
+        List<MobileObject> allmos = new ArrayList<>();
+        allmos.addAll(npcs);
+        AI.moveAll(allmos, this);
     }
     
 }

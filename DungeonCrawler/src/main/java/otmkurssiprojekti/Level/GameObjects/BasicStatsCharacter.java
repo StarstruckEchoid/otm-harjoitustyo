@@ -51,9 +51,21 @@ public abstract class BasicStatsCharacter extends BasicGameCharacter implements 
     }
 
     @Override
-    public void takeDamage(GameCharacter gc) {
+    public int getSlowness() {
+        int slowness = 100 - agl;
+        slowness /= 10;
+        if (slowness <= 0) {
+            return 1;
+        } else if (slowness > 10) {
+            return 10;
+        }
+        return slowness;
+    }
+
+    @Override
+    public void doDamage(GameCharacter gc) {
         if (gc instanceof StatsCharacter) {
-            this.takeDamage((StatsCharacter) gc);
+            gc.takeDamage((StatsCharacter) this);
         } else {
             //Do nothing.
         }
