@@ -104,6 +104,25 @@ public class CoordsTest {
     }
 
     @Test
+    public void testManDist1() {
+        testManhattanDistance(coords, coords, 0);
+    }
+
+    @Test
+    public void testManDist2() {
+        testManhattanDistance(new Coords(0, 0, 0), new Coords(8, -3, 2), 13);
+    }
+
+    public void testManhattanDistance(Coords c1, Coords c2, int expected) {
+        Coords c1Copy = new Coords(c1.getX(), c1.getY(), c1.getZ());
+        Coords c2Copy = new Coords(c2.getX(), c2.getY(), c2.getZ());
+        int distance = c1.manhattanDistance(c2);
+        assertTrue("Expected manhattan distance to be " + expected + " but insted it was " + distance, distance == expected);
+        assertTrue("Method changed the value of c1!", c1.equals(c1Copy));
+        assertTrue("Method changed the value of c2!", c2.equals(c2Copy));
+    }
+
+    @Test
     public void testLesserThan() {
         Coords less = new Coords(-1, 4, 9);
         Coords more = new Coords(1, 10, 20);
@@ -128,6 +147,72 @@ public class CoordsTest {
     @Test
     public void testToString() {
         assertEquals("(0,5,10)", coords.toString());
+    }
+
+    @Test
+    public void testEq1() {
+        testEquals(coords, coords, true);
+    }
+
+    @Test
+    public void testEq2() {
+        testEquals(new Coords(1, 1, 1), new Coords(1, 1, 1), true);
+    }
+
+    @Test
+    public void testEq3() {
+        testEquals(coords, new Coords(0, 2, 8), false);
+    }
+
+    @Test
+    public void testEq4() {
+        testEquals(coords, null, false);
+    }
+
+    @Test
+    public void testEq5() {
+        testEquals(new Coords(0, 0, 0), new Coords(0, 0, 1), false);
+    }
+
+    @Test
+    public void testEq6() {
+        testEquals(coords, 4, false);
+    }
+
+    public void testEquals(Coords c1, Object c2, boolean expected) {
+        boolean actual = c1.equals(c2);
+
+        assertTrue(
+                "Expected equals to return " + expected + " with Coords " + c1 + " and " + c2 + " but instead got " + actual,
+                actual == expected);
+    }
+
+    @Test
+    public void testCom1() {
+        testCompareTo(coords, coords, 0);
+    }
+
+    @Test
+    public void testCom2() {
+        testCompareTo(new Coords(1, 0, 0), new Coords(0, 0, 0), 1);
+    }
+
+    @Test
+    public void testCom3() {
+        testCompareTo(new Coords(0, -1, 0), new Coords(0, 0, 0), -1);
+    }
+
+    @Test
+    public void testCom4() {
+        testCompareTo(new Coords(0, 0, 8), new Coords(0, 0, 0), 1);
+    }
+
+    public void testCompareTo(Coords c1, Coords c2, int expected) {
+        int actual = c1.compareTo(c2);
+        boolean assertion = (expected < 0 && actual < 0) || (expected == 0 && actual == 0) || (expected > 0 && actual > 0);
+
+        assertTrue("Expected compareTo to return " + expected + " with coords " + c1 + " and " + c2 + " but returned" + actual + ".",
+                assertion);
     }
 
 }

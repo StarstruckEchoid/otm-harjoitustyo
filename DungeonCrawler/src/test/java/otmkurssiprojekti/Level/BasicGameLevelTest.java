@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package otmkurssiprojekti.Level.GameObjects.Dependencies;
+package otmkurssiprojekti.Level;
 
 import otmkurssiprojekti.Level.GameObjects.PlayerCharacter;
 import otmkurssiprojekti.Level.GameObjects.NonPlayerCharacter;
@@ -19,6 +19,8 @@ import static org.junit.Assert.*;
 import otmkurssiprojekti.Level.GameObjects.*;
 import otmkurssiprojekti.Level.GameObjects.Archetypes.NonPlayerCharacterArchetype;
 import otmkurssiprojekti.Level.GameObjects.Archetypes.PlayerCharacterArchetype;
+import otmkurssiprojekti.Level.GameObjects.Dependencies.Coords;
+import otmkurssiprojekti.Level.GameObjects.Dependencies.Direction;
 
 /**
  *
