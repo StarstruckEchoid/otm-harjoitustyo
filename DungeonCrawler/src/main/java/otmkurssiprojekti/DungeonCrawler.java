@@ -5,11 +5,17 @@
  */
 package otmkurssiprojekti;
 
+import otmkurssiprojekti.level.gameobjects.LinkObject;
+import otmkurssiprojekti.level.gameobjects.PlayerCharacter;
+import otmkurssiprojekti.level.gameobjects.InteractiveObject;
+import otmkurssiprojekti.level.gameobjects.NonPlayerCharacter;
+import otmkurssiprojekti.level.gameobjects.ImmutableObject;
+import otmkurssiprojekti.level.gameobjects.PointsObject;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import otmkurssiprojekti.UserInterface.Screen.GameScreen;
+import otmkurssiprojekti.userinterface.screen.GameScreen;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -19,14 +25,13 @@ import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import otmkurssiprojekti.DataAccessObject.ByteFileLevelDao;
-import otmkurssiprojekti.Level.BasicGameLevel;
-import otmkurssiprojekti.Level.GameObjects.Dependencies.Coords;
-import otmkurssiprojekti.Level.GameObjects.Dependencies.Direction;
-import otmkurssiprojekti.Level.GameObjects.*;
-import otmkurssiprojekti.Level.GameObjects.Archetypes.ImmutableObjectArchetype;
-import otmkurssiprojekti.Level.GameObjects.Archetypes.NonPlayerCharacterArchetype;
-import otmkurssiprojekti.UserInterface.Screen.MainMenuScreen;
+import otmkurssiprojekti.dataaccessobject.ByteFileLevelDao;
+import otmkurssiprojekti.level.BasicGameLevel;
+import otmkurssiprojekti.level.gameobjects.location.Coords;
+import otmkurssiprojekti.level.gameobjects.location.Direction;
+import otmkurssiprojekti.level.gameobjects.archetypes.ImmutableObjectArchetype;
+import otmkurssiprojekti.level.gameobjects.archetypes.NonPlayerCharacterArchetype;
+import otmkurssiprojekti.userinterface.screen.MainMenuScreen;
 
 /**
  *
@@ -39,9 +44,7 @@ public class DungeonCrawler extends Application {
 
     static {
         //Create file USER_DIR if it does not yet exist.
-        if (USER_DIR.toFile().exists() && USER_DIR.toFile().isDirectory()) {
-            //Everything is okay.
-        } else {
+        if (!USER_DIR.toFile().exists() || !USER_DIR.toFile().isDirectory()) {
             try {
                 Files.createDirectory(USER_DIR);
             } catch (IOException ex) {
@@ -54,9 +57,7 @@ public class DungeonCrawler extends Application {
 
     static {
         //Create file LEVEL_DIR if it does not yet exist.
-        if (LEVEL_DIR.toFile().exists() && LEVEL_DIR.toFile().isDirectory()) {
-            //Everything is okay.
-        } else {
+        if (!LEVEL_DIR.toFile().exists() || !LEVEL_DIR.toFile().isDirectory()) {
             try {
                 Files.createDirectory(LEVEL_DIR);
             } catch (IOException ex) {
@@ -119,23 +120,9 @@ public class DungeonCrawler extends Application {
         //Keyboard input.
         mainScene.setOnKeyPressed(e -> gameScreen.handleKeyEvent(e));
         //Refresh the game.
-        TIMER.scheduleAtFixedRate(
-                new TimerTask() {
-            @Override
-            public void run() {
-                gameScreen.doGameTick(); //What to do.
-            }
-        },
-                0, //Delay.
-                TICKS_PERIOD); //Period.
+        initGameTicks();
         //Referesh the sreen.
-        TIMER.scheduleAtFixedRate(
-                new TimerTask() {
-            @Override
-            public void run() {
-                mainScene.setRoot(gameScreen.getVisualisation());
-            }
-        }, 0, FRAMES_PERIOD);
+        initRendering(mainScene);
 
         primaryStage.setScene(mainScene);
         primaryStage.show();
@@ -171,6 +158,25 @@ public class DungeonCrawler extends Application {
 
     public void setGameScreen(GameScreen gameScreen) {
         this.gameScreen = gameScreen;
+    }
+
+    //private methods.
+    private void initRendering(Scene mainScene) {
+        TIMER.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                mainScene.setRoot(gameScreen.getVisualisation());
+            }
+        }, 0, FRAMES_PERIOD);
+    }
+
+    private void initGameTicks() {
+        TIMER.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                gameScreen.doGameTick(); //What to do.
+            }
+        }, 0, TICKS_PERIOD);
     }
 
 }

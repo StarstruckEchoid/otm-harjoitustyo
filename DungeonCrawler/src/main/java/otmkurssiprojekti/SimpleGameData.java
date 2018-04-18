@@ -6,7 +6,7 @@
 package otmkurssiprojekti;
 
 import java.util.Objects;
-import otmkurssiprojekti.Level.GameLevel;
+import otmkurssiprojekti.level.GameLevel;
 
 /**
  *

@@ -5,7 +5,7 @@
  */
 package otmkurssiprojekti;
 
-import otmkurssiprojekti.Level.GameLevel;
+import otmkurssiprojekti.level.GameLevel;
 
 /**
  *
