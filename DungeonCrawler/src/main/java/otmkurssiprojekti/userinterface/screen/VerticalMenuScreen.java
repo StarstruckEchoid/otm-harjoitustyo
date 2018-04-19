@@ -59,12 +59,7 @@ public abstract class VerticalMenuScreen extends SwitchingScreen {
         visual.setCenter(opts);
 
         //LEGEND
-        Text legend = getAsText(
-                "UP: up\t"
-                + "DOWN: down\t"
-                + "ESC: back\t"
-                + "ENTER: select"
-        );
+        Text legend = getAsText(getLegend());
         visual.setBottom(legend);
 
         return visual;
@@ -91,13 +86,14 @@ public abstract class VerticalMenuScreen extends SwitchingScreen {
         return text;
     }
 
-    private String optsToString(List<String> opts) {
+    private String optsToString(List<Object> opts) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < opts.size(); i++) {
+            String opt = opts.get(i).toString();
             if (i == pointer) {
-                sb.append(">").append(opts.get(i)).append("<");
+                sb.append(">").append(opt).append("<");
             } else {
-                sb.append(opts.get(i));
+                sb.append(opt);
             }
             sb.append("\n");
         }
@@ -107,9 +103,16 @@ public abstract class VerticalMenuScreen extends SwitchingScreen {
     //Abstract methods.
     protected abstract void doEnterAction(int index);
 
-    protected abstract List<String> getOptsList();
-
     protected abstract String getTitle();
+
+    protected abstract List<Object> getOptsList();
+
+    protected String getLegend() {
+        return "UP: up\t"
+                + "DOWN: down\t"
+                + "ESC: back\t"
+                + "ENTER: select";
+    }
 
     protected abstract GameScreen getReturnScreen();
 }

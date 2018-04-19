@@ -6,14 +6,11 @@
 package otmkurssiprojekti.userinterface.screen;
 
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Date;
-import javafx.geometry.Pos;
-import javafx.scene.Parent;
+import java.util.List;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import otmkurssiprojekti.dataaccessobject.ByteFileGameSaveDao;
 import otmkurssiprojekti.dataaccessobject.ByteFileLevelDao;
 import otmkurssiprojekti.dataaccessobject.FileUserDao;
@@ -31,11 +28,11 @@ import otmkurssiprojekti.level.gameobjects.gamecharacter.playercharacter.PlayerC
  *
  * @author Juho Gröhn
  */
-public class NewPlayerScreen extends SwitchingScreen {
+public class NewPlayerScreen extends VerticalMenuScreen {
 
-    int pointer = 0;
     StringBuilder playerName;
     PlayerCharacterArchetype[] pcaArr = PlayerCharacterArchetype.values();
+    PlayerCharacterArchetype pca = pcaArr[0];
     int pcaArrPointer = 0;
 
     public NewPlayerScreen(DungeonCrawler main) {
@@ -45,25 +42,7 @@ public class NewPlayerScreen extends SwitchingScreen {
 
     @Override
     public void handleKeyEvent(KeyEvent e) {
-        switch (e.getCode()) {
-            case UP:
-                if (pointer > 0) {
-                    pointer--;
-                }
-                break;
-            case DOWN:
-                if (pointer < 1) {
-                    pointer++;
-                }
-                break;
-            case ENTER:
-                initialiseNewGame();
-                break;
-            case ESCAPE:
-                switchTo(new LoadPlayerScreen(main));
-            default:
-                break;
-        }
+        super.handleKeyEvent(e);
         switch (pointer) {
             case 0:
                 handleNameEdit(e);
@@ -74,55 +53,6 @@ public class NewPlayerScreen extends SwitchingScreen {
             default:
                 break;
         }
-    }
-
-    @Override
-    public Parent getVisualisation() {
-        BorderPane visual = new BorderPane();
-
-        //TITLE
-        Text title = new Text("Create your character");
-        title.setFont(Font.font("MONOSPACED"));
-        BorderPane.setAlignment(title, Pos.CENTER);
-        visual.setTop(title);
-
-        //OPTIONS
-        Text opts = new Text();
-
-        StringBuilder sb = new StringBuilder();
-        if (pointer == 0) {
-            sb.append(">");
-        }
-        sb.append(playerName.toString()).append("\n");
-        if (pointer == 1) {
-            sb.append(">");
-        }
-        sb.append(pcaArr[pcaArrPointer].getName()).append("\n");
-
-        opts.setText(sb.toString());
-        opts.setFont(Font.font("MONOSPACED"));
-        BorderPane.setAlignment(opts, Pos.CENTER);
-        visual.setCenter(opts);
-
-        //LEGEND
-        Text legend = new Text(
-                "UP: up\t"
-                + "LEFT:left\t"
-                + "DOWN:down\t"
-                + "RIGHT:right\t"
-                + "ESC:back\t"
-                + "ENTER:select"
-        );
-        legend.setFont(Font.font("MONOSPACED"));
-        BorderPane.setAlignment(legend, Pos.CENTER);
-        visual.setBottom(legend);
-
-        return visual;
-    }
-
-    @Override
-    public void doGameTick() {
-
     }
 
     private void handleNameEdit(KeyEvent e) {
@@ -149,6 +79,7 @@ public class NewPlayerScreen extends SwitchingScreen {
             default:
                 break;
         }
+        pca = pcaArr[pcaArrPointer];
     }
 
     private void initialiseNewGame() {
@@ -206,6 +137,29 @@ public class NewPlayerScreen extends SwitchingScreen {
                 )
         );
         gameSaveDao.saveGame(new GameSave(new Date(System.currentTimeMillis()), gameLevel));
+    }
+
+    @Override
+    protected void doEnterAction(int index) {
+        initialiseNewGame();
+    }
+
+    @Override
+    protected List<Object> getOptsList() {
+        List<Object> opts = new ArrayList<>();
+        opts.add(playerName);
+        opts.add(pca);
+        return opts;
+    }
+
+    @Override
+    protected String getTitle() {
+        return "Create your character";
+    }
+
+    @Override
+    protected GameScreen getReturnScreen() {
+        return new LoadPlayerScreen(main);
     }
 
 }

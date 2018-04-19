@@ -53,4 +53,9 @@ public enum PlayerCharacterArchetype {
         return agl;
     }
 
+    @Override
+    public String toString() {
+        return this.getName();
+    }
+
 }

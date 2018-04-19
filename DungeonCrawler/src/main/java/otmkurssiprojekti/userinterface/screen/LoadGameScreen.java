@@ -39,8 +39,8 @@ public class LoadGameScreen extends VerticalMenuScreen {
     }
 
     @Override
-    protected List<String> getOptsList() {
-        List<String> ret = new ArrayList<>();
+    protected List<Object> getOptsList() {
+        List<Object> ret = new ArrayList<>();
         saves.forEach((save) -> {
             try {
                 ret.add(save.toString());

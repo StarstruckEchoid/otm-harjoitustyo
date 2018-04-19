@@ -41,8 +41,8 @@ public class LoadUserScreen extends VerticalMenuScreen {
     }
 
     @Override
-    protected List<String> getOptsList() {
-        List<String> optsList = new ArrayList<>();
+    protected List<Object> getOptsList() {
+        List<Object> optsList = new ArrayList<>();
         optsList.add("<new user>");
         for (Path user : users) {
             optsList.add(user.getFileName().toString());

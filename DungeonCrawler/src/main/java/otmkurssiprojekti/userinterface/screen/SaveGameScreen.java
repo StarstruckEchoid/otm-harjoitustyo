@@ -43,8 +43,8 @@ public class SaveGameScreen extends VerticalMenuScreen {
     }
 
     @Override
-    protected List<String> getOptsList() {
-        List<String> ret = new ArrayList<>();
+    protected List<Object> getOptsList() {
+        List<Object> ret = new ArrayList<>();
         ret.add("<new save>");
         saves.forEach((save) -> {
             ret.add(save.toString());
