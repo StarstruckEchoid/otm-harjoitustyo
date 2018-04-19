@@ -9,6 +9,7 @@ package otmkurssiprojekti.level.gameobjects.archetypes;
  *
  * @author Juho Gröhn
  */
+@Deprecated
 public enum Behaviour {
     PASSIVE("PASSIVE"),
     FOLLOW("FOLLOW"),

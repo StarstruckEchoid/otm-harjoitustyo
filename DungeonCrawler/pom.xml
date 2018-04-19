@@ -29,8 +29,8 @@
                 <configuration>
                     <excludes>
                         <exclude>otmkurssiprojekti/DungeonCrawler*</exclude>
-                        <exclude>otmkurssiprojekti/UserInterface/**/*</exclude>
-                        <exclude>otmkurssiprojekti/Level/GameObjects/Archetypes/*</exclude>
+                        <exclude>otmkurssiprojekti/userinterface/**/*</exclude>
+                        <exclude>otmkurssiprojekti/level/gameobjects/archetypes/*</exclude>
                     </excludes>
                 </configuration>
                 <executions>
