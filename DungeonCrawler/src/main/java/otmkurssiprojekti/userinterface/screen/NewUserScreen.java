@@ -21,7 +21,8 @@ import otmkurssiprojekti.DungeonCrawler;
  *
  * @author Juho Gröhn
  */
-public class NewUserScreen extends SwitchingScreen{
+public class NewUserScreen extends SwitchingScreen {
+
     private final FileUserDao fudao;
     private final StringBuilder username;
 
@@ -42,7 +43,7 @@ public class NewUserScreen extends SwitchingScreen{
                 //Save user and continue to player selection.
                 String userString = username.toString();
                 Path userPath = Paths.get(DungeonCrawler.USER_DIR.toString(), userString);
-                
+
                 fudao.saveUser(username.toString());
                 main.getGameData().setUser(username.toString());
                 switchTo(new LoadPlayerScreen(main));

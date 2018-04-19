@@ -153,29 +153,50 @@ public class NewPlayerScreen extends SwitchingScreen {
 
     private void initialiseNewGame() {
         //Load first level.
-        GameLevelDao gameLevelDao = new ByteFileLevelDao(DungeonCrawler.LEVEL_DIR);
-        GameLevel startingLevel = gameLevelDao.loadLevel(Paths.get(DungeonCrawler.LEVEL_DIR.toString(), DungeonCrawler.FIRST_LEVEL));
+        GameLevel startingLevel = initialiseLevel();
         //Put player in it.
-        PlayerCharacter playerCharacter = new PlayerCharacter(
-                pcaArr[pcaArrPointer],
-                startingLevel.getPlayerCharacter().getCoords(),
-                Direction.DOWN
-        );
-        startingLevel.setPlayer(playerCharacter);
-
+        initialisePlayer(startingLevel);
         //Set player in main to player name.
         String player = playerName.toString();
         main.getGameData().setPlayer(player);
+        //Save player by name to disc.
+        savePlayer(player);
+        //Save the game to disc.
+        saveGame(startingLevel);
+        //Set level in main to starting level.
+        main.getGameData().setGameLevel(startingLevel);
+        //Switch the window to LevelScreen.
+        switchTo(new LevelScreen(main));
+    }
 
+    private GameLevel initialiseLevel() {
+        GameLevelDao gameLevelDao = new ByteFileLevelDao(DungeonCrawler.LEVEL_DIR);
+        return gameLevelDao.loadLevel(Paths.get(DungeonCrawler.LEVEL_DIR.toString(), DungeonCrawler.FIRST_LEVEL));
+
+    }
+
+    private void initialisePlayer(GameLevel gameLevel) {
+        PlayerCharacter playerCharacter = new PlayerCharacter(
+                pcaArr[pcaArrPointer],
+                gameLevel.getPlayerCharacter().getCoords(),
+                Direction.DOWN
+        );
+
+        gameLevel.setPlayer(playerCharacter);
+    }
+
+    private void savePlayer(String playerName) {
         //Save player by name in the folder <USER_DIR>/<user>/
-        UserDao playerDao = new FileUserDao( //Using UserDao to save players. A bit hacky, but should get the job done.
+        UserDao playerDao = new FileUserDao(//Using UserDao to save players. A bit hacky, but should get the job done.
                 Paths.get(
                         DungeonCrawler.USER_DIR.toString(),
                         main.getGameData().getUser()
                 )
         );
-        playerDao.saveUser(player);
+        playerDao.saveUser(playerName);
+    }
 
+    private void saveGame(GameLevel gameLevel) {
         //Save the game in the folder <USER_DIR>/<user>/<player>/
         GameSaveDao gameSaveDao = new ByteFileGameSaveDao(
                 Paths.get(
@@ -184,13 +205,7 @@ public class NewPlayerScreen extends SwitchingScreen {
                         main.getGameData().getPlayer()
                 )
         );
-        gameSaveDao.saveGame(new GameSave(new Date(System.currentTimeMillis()), startingLevel));
-
-        //Set level in main to starting level.
-        main.getGameData().setGameLevel(startingLevel);
-
-        //Switch the window to LevelScreen.
-        switchTo(new LevelScreen(main));
+        gameSaveDao.saveGame(new GameSave(new Date(System.currentTimeMillis()), gameLevel));
     }
 
 }
