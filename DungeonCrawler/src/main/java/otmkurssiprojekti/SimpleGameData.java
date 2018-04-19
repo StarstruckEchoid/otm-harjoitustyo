@@ -92,12 +92,7 @@ public class SimpleGameData implements GameData {
         if (!Objects.equals(this.player, other.player)) {
             return false;
         }
-        if (!Objects.equals(this.gameLevel, other.gameLevel)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.gameLevel, other.gameLevel);
     }
-    
-    
 
 }

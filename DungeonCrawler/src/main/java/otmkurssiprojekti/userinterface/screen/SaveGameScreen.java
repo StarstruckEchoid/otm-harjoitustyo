@@ -25,7 +25,7 @@ public class SaveGameScreen extends VerticalMenuScreen {
 
     public SaveGameScreen(DungeonCrawler main) {
         super(main);
-        gsdao = new ByteFileGameSaveDao(Paths.get( //The address where game saves are looked up is <USER_DIR>/<user>/<player>/
+        gsdao = new ByteFileGameSaveDao(Paths.get(//The address where game saves are looked up is <USER_DIR>/<user>/<player>/
                 DungeonCrawler.USER_DIR.toString(),
                 main.getGameData().getUser(),
                 main.getGameData().getPlayer()
@@ -53,7 +53,7 @@ public class SaveGameScreen extends VerticalMenuScreen {
     }
 
     @Override
-    protected String getTitleText() {
+    protected String getTitle() {
         return "Save game";
     }
 

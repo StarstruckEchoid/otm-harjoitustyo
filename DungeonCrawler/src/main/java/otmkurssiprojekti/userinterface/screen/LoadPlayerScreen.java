@@ -52,7 +52,7 @@ public class LoadPlayerScreen extends VerticalMenuScreen {
     }
 
     @Override
-    protected String getTitleText() {
+    protected String getTitle() {
         return "Select player";
     }
 

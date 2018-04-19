@@ -53,73 +53,23 @@ public class AI {
     }
 
     public static Stack<Coords> bestRoute(Coords from, Coords to, GameLevel gameLevel) {
-        //Perform a width-first search
+        //Perform a breadth-first search
         Queue<Coords> searchQueue = new ArrayDeque();
-        Set<Coords> searched = new HashSet<>();
-        Map<Coords, Coords> backTrack = new HashMap<>();
-
         searchQueue.add(from);
 
-        while (!searchQueue.isEmpty()) {
-            Coords current = searchQueue.poll();
-            if (current.equals(to)) {
-                break;
-            }
-            searched.add(current);
-            //Iterate on neighbours.
-            for (Direction d : Direction.values()) {
-                Coords next = current.sum(d.getCoords());
-                if (!searched.contains(next) && !gameLevel.isOccupied(current)) {
-                    searchQueue.add(next);
-                    backTrack.put(next, current);
-                }
-            }
-        }
+        Map<Coords, Coords> backTrack = performSearchOnQueue(gameLevel, searchQueue, to);
 
-        Stack<Coords> ret = new Stack<>();
-
-        Coords c = to;
-        while (!c.equals(from)) {
-            ret.push(c);
-            c = backTrack.getOrDefault(c, from);
-        }
-        return ret;
+        return walkMap(backTrack, to, from);
     }
 
     public static Stack<Coords> greedyRoute(Coords from, Coords to, GameLevel gameLevel) {
-        //Perform a width-first search
-        Queue<Coords> searchQueue = new PriorityQueue<>(
-                (a, b) -> Integer.compare(a.squaredEuclideanDistance(to), b.squaredEuclideanDistance(to))
-        );
-        Set<Coords> searched = new HashSet<>();
-        Map<Coords, Coords> backTrack = new HashMap<>();
-
+        //Perform a best-first search
+        Queue<Coords> searchQueue = new PriorityQueue<>(nearestEuclidean(to));
         searchQueue.add(from);
 
-        while (!searchQueue.isEmpty()) {
-            Coords current = searchQueue.poll();
-            if (current.equals(to)) {
-                break;
-            }
-            searched.add(current);
-            //Iterate on neighbours.
-            for (Direction d : Direction.values()) {
-                Coords next = current.sum(d.getCoords());
-                if (!searched.contains(next) && !gameLevel.isOccupied(current)) {
-                    searchQueue.add(next);
-                    backTrack.put(next, current);
-                }
-            }
-        }
+        Map<Coords, Coords> backTrack = performSearchOnQueue(gameLevel, searchQueue, to);
 
-        Stack<Coords> ret = new Stack<>();
-
-        Coords c = to;
-        while (!c.equals(from)) {
-            ret.push(c);
-            c = backTrack.getOrDefault(c, from);
-        }
-        return ret;
+        return walkMap(backTrack, to, from);
     }
 
     private static void passive(MobileObject mo, GameLevel gameLevel) {
@@ -129,8 +79,8 @@ public class AI {
     private static void follow(MobileObject mo, GameLevel gameLevel) {
         PlayerCharacter pc = gameLevel.getPlayerCharacter();
         //An AI that follows will not get too close to player.
-        final int DISTANCE = 4;
-        if (mo.getCoords().squaredEuclideanDistance(pc.getCoords()) < DISTANCE * DISTANCE) {
+        final int distance = 4;
+        if (mo.getCoords().squaredEuclideanDistance(pc.getCoords()) < distance * distance) {
             return;
         }
 
@@ -143,13 +93,13 @@ public class AI {
     private static void hunt(MobileObject mo, GameLevel gameLevel) {
         PlayerCharacter pc = gameLevel.getPlayerCharacter();
         //An AI hunts will stop hunting once the distance to player is too much.
-        final int MAX_DISTANCE = 8;
-        if (mo.getCoords().squaredEuclideanDistance(pc.getCoords()) >= MAX_DISTANCE * MAX_DISTANCE) {
+        final int maxDistance = 8;
+        if (mo.getCoords().squaredEuclideanDistance(pc.getCoords()) >= maxDistance * maxDistance) {
             return;
         }
         //An AI that hunts will attack the player once in melee range.
-        final int ATTACK_DISTANCE = 2;
-        if (mo.getCoords().squaredEuclideanDistance(pc.getCoords()) < ATTACK_DISTANCE * ATTACK_DISTANCE) {
+        final int attackDistance = 2;
+        if (mo.getCoords().squaredEuclideanDistance(pc.getCoords()) < attackDistance * attackDistance) {
             mo.doDamage(pc);
             return;
         }
@@ -163,8 +113,8 @@ public class AI {
         Coords pcCoords = gameLevel.getPlayerCharacter().getCoords();
         Coords npcCoords = mo.getCoords();
         //An AI flees will stop fleeing once the distance to player is sufficient.
-        final int DISTANCE = 8;
-        if (mo.getCoords().squaredEuclideanDistance(pcCoords) > DISTANCE * DISTANCE) {
+        final int distance = 8;
+        if (mo.getCoords().squaredEuclideanDistance(pcCoords) > distance * distance) {
             return;
         }
 
@@ -193,6 +143,46 @@ public class AI {
         int idx = new Random().nextInt(directions.size());
         Direction d = directions.get(idx);
         mo.move(d);
+    }
+
+    private static Comparator<Coords> nearestEuclidean(Coords to) {
+        return (a, b) -> Integer.compare(a.squaredEuclideanDistance(to), b.squaredEuclideanDistance(to));
+    }
+
+    private static Comparator<Coords> nearestManhattan(Coords to) {
+        return (a, b) -> Integer.compare(a.manhattanDistance(to), b.manhattanDistance(to));
+    }
+
+    private static Map<Coords, Coords> performSearchOnQueue(GameLevel gameLevel, Queue<Coords> searchQueue, Coords to) {
+        Set<Coords> searched = new HashSet<>();
+        Map<Coords, Coords> ret = new HashMap<>();
+        while (!searchQueue.isEmpty()) {
+            Coords current = searchQueue.poll();
+            if (current.equals(to)) {
+                break;
+            }
+            searched.add(current);
+            //Iterate on neighbours.
+            for (Direction d : Direction.values()) {
+                Coords next = current.sum(d.getCoords());
+                if (!searched.contains(next) && !gameLevel.isOccupied(current)) {
+                    searchQueue.add(next);
+                    ret.put(next, current);
+                }
+            }
+        }
+        return ret;
+    }
+
+    private static Stack<Coords> walkMap(Map<Coords, Coords> map, Coords to, Coords from) {
+        Stack<Coords> ret = new Stack<>();
+
+        Coords c = to;
+        while (!c.equals(from)) {
+            ret.push(c);
+            c = map.getOrDefault(c, from);
+        }
+        return ret;
     }
 
 }

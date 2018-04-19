@@ -8,7 +8,6 @@ package otmkurssiprojekti.userinterface.screen;
 import java.util.List;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
@@ -29,17 +28,12 @@ public abstract class VerticalMenuScreen extends SwitchingScreen {
 
     @Override
     public void handleKeyEvent(KeyEvent e) {
-        KeyCode kc = e.getCode();
-        switch (kc) {
-            case W:
-                if (pointer > 0) {
-                    pointer--;
-                }
+        switch (e.getCode()) {
+            case UP:
+                movePointer(-1);
                 break;
-            case S:
-                if (pointer + 1 < getOptsList().size()) {
-                    pointer++;
-                }
+            case DOWN:
+                movePointer(+1);
                 break;
             case ESCAPE:
                 switchTo(getReturnScreen());
@@ -50,7 +44,6 @@ public abstract class VerticalMenuScreen extends SwitchingScreen {
             default:
                 break;
         }
-
     }
 
     @Override
@@ -58,38 +51,20 @@ public abstract class VerticalMenuScreen extends SwitchingScreen {
         BorderPane visual = new BorderPane();
 
         //TITLE
-        Text title = new Text(getTitleText());
-        title.setFont(Font.font("MONOSPACED"));
-        BorderPane.setAlignment(title, Pos.CENTER);
+        Text title = getAsText(getTitle());
         visual.setTop(title);
 
         //OPTIONS
-        Text opts = new Text();
-
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < getOptsList().size(); i++) {
-            if (i == pointer) {
-                sb.append(">").append(getOptsList().get(i)).append("<");
-            } else {
-                sb.append(getOptsList().get(i));
-            }
-            sb.append("\n");
-        }
-
-        opts.setText(sb.toString());
-        opts.setFont(Font.font("MONOSPACED"));
-        BorderPane.setAlignment(opts, Pos.CENTER);
+        Text opts = getAsText(optsToString(getOptsList()));
         visual.setCenter(opts);
 
         //LEGEND
-        Text legend = new Text(
-                "W: up\t"
-                + "S:down\t"
-                + "ESC:back\t"
-                + "ENTER:select"
+        Text legend = getAsText(
+                "UP: up\t"
+                + "DOWN: down\t"
+                + "ESC: back\t"
+                + "ENTER: select"
         );
-        legend.setFont(Font.font("MONOSPACED"));
-        BorderPane.setAlignment(legend, Pos.CENTER);
         visual.setBottom(legend);
 
         return visual;
@@ -100,11 +75,41 @@ public abstract class VerticalMenuScreen extends SwitchingScreen {
         //Nothing happens while in a menu screen.
     }
 
+    //Private helper methods.
+    private void movePointer(int i) {
+        if (i < 0 && pointer > 0) {
+            pointer--;
+        } else if (i > 0 && pointer + 1 < getOptsList().size()) {
+            pointer++;
+        }
+    }
+
+    private Text getAsText(String string) {
+        Text text = new Text(string);
+        text.setFont(Font.font("MONOSPACED"));
+        BorderPane.setAlignment(text, Pos.CENTER);
+        return text;
+    }
+
+    private String optsToString(List<String> opts) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < opts.size(); i++) {
+            if (i == pointer) {
+                sb.append(">").append(opts.get(i)).append("<");
+            } else {
+                sb.append(opts.get(i));
+            }
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
+
+    //Abstract methods.
     protected abstract void doEnterAction(int index);
 
     protected abstract List<String> getOptsList();
 
-    protected abstract String getTitleText();
+    protected abstract String getTitle();
 
     protected abstract GameScreen getReturnScreen();
 }

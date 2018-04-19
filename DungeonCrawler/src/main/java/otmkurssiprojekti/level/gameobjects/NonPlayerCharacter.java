@@ -66,10 +66,8 @@ public class NonPlayerCharacter extends BasicStatsCharacter implements PointsSou
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 41 * hash + Objects.hashCode(this.behaviour);
-        hash = 41 * hash + this.id;
-        hash = 41 * hash + this.lvl;
+        int hash = 3;
+        hash = 31 * hash + this.id;
         return hash;
     }
 
@@ -88,15 +86,7 @@ public class NonPlayerCharacter extends BasicStatsCharacter implements PointsSou
         if (this.id != other.id) {
             return false;
         }
-        if (this.lvl != other.lvl) {
-            return false;
-        }
-        if (this.behaviour != other.behaviour) {
-            return false;
-        }
         return true;
     }
-    
-   
 
 }

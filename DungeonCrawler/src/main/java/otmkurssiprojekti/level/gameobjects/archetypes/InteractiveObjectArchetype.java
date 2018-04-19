@@ -12,7 +12,7 @@ import otmkurssiprojekti.level.gameobjects.InteractiveObject;
  *
  * @author Juho Gröhn
  */
-public enum InteractiveObjectArchetype implements Archetype{
+public enum InteractiveObjectArchetype implements Archetype {
 
     SWITCH('T', false, ActivationType.ON_PRESSED, (i) -> i.getChildren().forEach(c -> c.reactToSignal())),
     IRON_GATE('#', true, ActivationType.SIGNAL_ONLY, (i) -> i.setSolid(false)),

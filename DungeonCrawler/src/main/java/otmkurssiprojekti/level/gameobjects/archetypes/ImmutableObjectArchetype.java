@@ -9,7 +9,7 @@ package otmkurssiprojekti.level.gameobjects.archetypes;
  *
  * @author Juho Gröhn
  */
-public enum ImmutableObjectArchetype implements Archetype{
+public enum ImmutableObjectArchetype implements Archetype {
     AIR(' ', true, false),
     STONE_PATH('.', false, false),
     GRASS(',', false, false),

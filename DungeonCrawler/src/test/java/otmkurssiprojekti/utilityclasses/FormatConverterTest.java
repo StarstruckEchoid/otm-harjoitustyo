@@ -279,7 +279,7 @@ public class FormatConverterTest {
     }
 
     public static void testStringToMatrix(String testable, char[][][] correct) {
-        String testableString = Arrays.deepToString(FormatConverter.StringToMatrix(testable));
+        String testableString = Arrays.deepToString(FormatConverter.stringToMatrix(testable));
         String correctString = Arrays.deepToString(correct);
 
         assertTrue("String was projected to " + testableString + " when what should have been projected was " + correctString + ".", testableString.equals(correctString));

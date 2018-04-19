@@ -18,12 +18,13 @@ import otmkurssiprojekti.GameSave;
  * @author Juho Gröhn
  */
 public class LoadGameScreen extends VerticalMenuScreen {
+
     private final GameSaveDao gsdao;
     private final List<GameSave> saves;
 
     public LoadGameScreen(DungeonCrawler main) {
         super(main);
-        gsdao = new ByteFileGameSaveDao(Paths.get( //The address where game saves are looked up is <USER_DIR>/<user>/<player>/
+        gsdao = new ByteFileGameSaveDao(Paths.get(//The address where game saves are looked up is <USER_DIR>/<user>/<player>/
                 DungeonCrawler.USER_DIR.toString(),
                 main.getGameData().getUser(),
                 main.getGameData().getPlayer()
@@ -52,7 +53,7 @@ public class LoadGameScreen extends VerticalMenuScreen {
 
     @Override
 
-    protected String getTitleText() {
+    protected String getTitle() {
         return "Load game";
     }
 

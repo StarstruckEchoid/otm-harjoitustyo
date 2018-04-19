@@ -49,7 +49,7 @@ public class PauseScreen extends VerticalMenuScreen {
     }
 
     @Override
-    protected String getTitleText() {
+    protected String getTitle() {
         return "Paused";
     }
 

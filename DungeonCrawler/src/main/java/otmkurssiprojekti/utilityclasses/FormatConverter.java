@@ -35,7 +35,7 @@ public class FormatConverter {
         return projection;
     }
 
-    public static char[][][] StringToMatrix(String s) {
+    public static char[][][] stringToMatrix(String s) {
         String[] zLevels = s.split("\n\n");
         int zLim = zLevels.length;
         int yLim = zLevels[0].split("\n").length;

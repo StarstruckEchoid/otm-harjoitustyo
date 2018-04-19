@@ -114,14 +114,10 @@ public class BasicGameLevel implements GameLevel {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 53 * hash + Objects.hashCode(this.levelName);
-        hash = 53 * hash + Objects.hashCode(this.player);
-        hash = 53 * hash + Objects.hashCode(this.npcs);
-        hash = 53 * hash + Objects.hashCode(this.blocks);
-        hash = 53 * hash + Objects.hashCode(this.interactives);
-        hash = 53 * hash + Objects.hashCode(this.levelLinks);
-        hash = 53 * hash + Objects.hashCode(this.points);
+        int hash = 7;
+        hash = 89 * hash + Objects.hashCode(this.levelName);
+        hash = 89 * hash + Objects.hashCode(this.blocks);
+        hash = 89 * hash + Objects.hashCode(this.levelLinks);
         return hash;
     }
 
@@ -140,25 +136,10 @@ public class BasicGameLevel implements GameLevel {
         if (!Objects.equals(this.levelName, other.levelName)) {
             return false;
         }
-        if (!Objects.equals(this.player, other.player)) {
-            return false;
-        }
-        if (!Objects.equals(this.npcs, other.npcs)) {
-            return false;
-        }
         if (!Objects.equals(this.blocks, other.blocks)) {
             return false;
         }
-        if (!Objects.equals(this.interactives, other.interactives)) {
-            return false;
-        }
-        if (!Objects.equals(this.levelLinks, other.levelLinks)) {
-            return false;
-        }
-        if (!Objects.equals(this.points, other.points)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.levelLinks, other.levelLinks);
     }
 
     @Override

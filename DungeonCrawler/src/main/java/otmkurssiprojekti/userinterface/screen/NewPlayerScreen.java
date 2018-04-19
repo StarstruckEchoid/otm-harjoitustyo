@@ -64,9 +64,7 @@ public class NewPlayerScreen extends SwitchingScreen {
                 switchTo(new LoadPlayerScreen(main));
             default:
                 break;
-
         }
-
         switch (pointer) {
             case 0:
                 handleNameEdit(e);

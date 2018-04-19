@@ -75,7 +75,7 @@ public class Coords implements java.io.Serializable, Comparable<Coords> {
         int dx = Math.abs(this.x - coords.x);
         int dy = Math.abs(this.y - coords.y);
         int dz = Math.abs(this.z - coords.z);
-        
+
         return dx + dy + dz;
     }
 
@@ -127,10 +127,7 @@ public class Coords implements java.io.Serializable, Comparable<Coords> {
         if (this.y != other.y) {
             return false;
         }
-        if (this.z != other.z) {
-            return false;
-        }
-        return true;
+        return this.z == other.z;
     }
 
     @Override

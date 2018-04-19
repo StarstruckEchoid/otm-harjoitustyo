@@ -51,7 +51,7 @@ public class LoadUserScreen extends VerticalMenuScreen {
     }
 
     @Override
-    protected String getTitleText() {
+    protected String getTitle() {
         return "Select user";
     }
 

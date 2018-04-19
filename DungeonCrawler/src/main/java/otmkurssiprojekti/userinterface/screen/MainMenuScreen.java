@@ -42,7 +42,7 @@ public class MainMenuScreen extends VerticalMenuScreen {
     }
 
     @Override
-    protected String getTitleText() {
+    protected String getTitle() {
         return "DUNGEON CRAWLER";
     }
 
