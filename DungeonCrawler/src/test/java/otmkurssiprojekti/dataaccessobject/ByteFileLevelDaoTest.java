@@ -24,8 +24,10 @@ import otmkurssiprojekti.level.gameobjects.archetypes.NonPlayerCharacterArchetyp
 import otmkurssiprojekti.level.gameobjects.archetypes.PlayerCharacterArchetype;
 import otmkurssiprojekti.level.gameobjects.location.Coords;
 import otmkurssiprojekti.level.gameobjects.location.Direction;
-import otmkurssiprojekti.level.gameobjects.NonPlayerCharacter;
-import otmkurssiprojekti.level.gameobjects.PlayerCharacter;
+import otmkurssiprojekti.level.gameobjects.gamecharacter.nonplayercharacter.BasicNonPlayerCharacter;
+import otmkurssiprojekti.level.gameobjects.gamecharacter.nonplayercharacter.HostileNonPlayerCharacter;
+import otmkurssiprojekti.level.gameobjects.gamecharacter.playercharacter.PlayerCharacter;
+import otmkurssiprojekti.level.gameobjects.interfaces.NonPlayerCharacter;
 
 /**
  *
@@ -38,7 +40,7 @@ public class ByteFileLevelDaoTest {
     private GameLevel glvl;
 
     List<NonPlayerCharacter> npcs;
-    NonPlayerCharacter npc;
+    BasicNonPlayerCharacter npc;
 
     public ByteFileLevelDaoTest() {
     }
@@ -56,7 +58,7 @@ public class ByteFileLevelDaoTest {
         directory = Files.createTempDirectory("testDir");
         bfldao = new ByteFileLevelDao(directory);
         npcs = new ArrayList<>();
-        npc = new NonPlayerCharacter(NonPlayerCharacterArchetype.VILLAGER, new Coords(6, 7, 2), Direction.DOWN);
+        npc = new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.VILLAGER, new Coords(6, 7, 2), Direction.DOWN);
         npcs.add(npc);
 
         glvl = new BasicGameLevel(

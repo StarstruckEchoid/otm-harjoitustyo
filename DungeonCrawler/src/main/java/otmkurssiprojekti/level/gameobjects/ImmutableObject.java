@@ -5,6 +5,7 @@
  */
 package otmkurssiprojekti.level.gameobjects;
 
+import otmkurssiprojekti.level.gameobjects.interfaces.GameObject;
 import otmkurssiprojekti.level.gameobjects.archetypes.ImmutableObjectArchetype;
 import otmkurssiprojekti.level.gameobjects.location.Coords;
 import otmkurssiprojekti.level.gameobjects.location.Direction;
@@ -61,15 +62,4 @@ public class ImmutableObject implements GameObject {
     public Direction getDirection() {
         return direction;
     }
-
-    @Override
-    public void move(Direction dir) {
-        //Immutable objects never move.
-    }
-
-    @Override
-    public void turn(Direction dir) {
-        //Immutable objects never turn.
-    }
-
 }

@@ -3,17 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package otmkurssiprojekti.level.gameobjects;
+package otmkurssiprojekti.level.gameobjects.interfaces;
 
 /**
  *
  * @author Juho Gröhn
  */
-public interface GameCharacter extends MobileObject {
+public interface Destructible extends GameObject {
 
+    /**
+     * The response of this Destructible upon taking damage.
+     *
+     * @param dmg
+     */
     public void takeDamage(int dmg);
 
-    public void takeDamage(StatsCharacter gc);
+    public void takeDamage(Hurtful ho);
 
     public boolean isDead();
 }

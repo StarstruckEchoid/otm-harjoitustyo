@@ -5,7 +5,6 @@
  */
 package otmkurssiprojekti.utilityclasses;
 
-import otmkurssiprojekti.utilityclasses.AI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -21,9 +20,10 @@ import otmkurssiprojekti.level.gameobjects.archetypes.NonPlayerCharacterArchetyp
 import otmkurssiprojekti.level.gameobjects.archetypes.PlayerCharacterArchetype;
 import otmkurssiprojekti.level.gameobjects.location.Coords;
 import otmkurssiprojekti.level.gameobjects.location.Direction;
-import otmkurssiprojekti.level.gameobjects.MobileObject;
-import otmkurssiprojekti.level.gameobjects.NonPlayerCharacter;
-import otmkurssiprojekti.level.gameobjects.PlayerCharacter;
+import otmkurssiprojekti.level.gameobjects.gamecharacter.nonplayercharacter.BasicNonPlayerCharacter;
+import otmkurssiprojekti.level.gameobjects.gamecharacter.nonplayercharacter.HostileNonPlayerCharacter;
+import otmkurssiprojekti.level.gameobjects.gamecharacter.playercharacter.PlayerCharacter;
+import otmkurssiprojekti.level.gameobjects.interfaces.Mobile;
 
 /**
  *
@@ -31,8 +31,8 @@ import otmkurssiprojekti.level.gameobjects.PlayerCharacter;
  */
 public class AITest {
 
-    private NonPlayerCharacter npc;
-    private List<MobileObject> mobileObjects;
+    private BasicNonPlayerCharacter npc;
+    private List<Mobile> mobileObjects;
     private GameLevel gameLevel;
 
     public AITest() {
@@ -48,7 +48,7 @@ public class AITest {
 
     @Before
     public void setUp() {
-        npc = new NonPlayerCharacter(NonPlayerCharacterArchetype.RAT, new Coords(0, 0, 0), Direction.DOWN);
+        npc = new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.RAT, new Coords(0, 0, 0), Direction.DOWN);
         mobileObjects = new ArrayList<>();
         mobileObjects.add(npc);
 
@@ -61,17 +61,6 @@ public class AITest {
 
     @After
     public void tearDown() {
-    }
-
-    @Test
-    public void testMoveAll() {
-        for (int i = 0; i < npc.getSlowness(); i++) {
-            AI.moveAll(mobileObjects, gameLevel);
-        }
-        Coords expected = new Coords(0, 0, 0);
-        Coords actual = npc.getCoords();
-
-        assertTrue("Expected coords not to be " + expected.toString() + " but they were.", !expected.equals(actual));
     }
 
     @Test(timeout = 50)

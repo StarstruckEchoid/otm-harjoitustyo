@@ -24,9 +24,8 @@ import otmkurssiprojekti.DungeonCrawler;
 import otmkurssiprojekti.GameSave;
 import otmkurssiprojekti.level.GameLevel;
 import otmkurssiprojekti.level.gameobjects.archetypes.PlayerCharacterArchetype;
-import otmkurssiprojekti.level.gameobjects.location.Coords;
 import otmkurssiprojekti.level.gameobjects.location.Direction;
-import otmkurssiprojekti.level.gameobjects.PlayerCharacter;
+import otmkurssiprojekti.level.gameobjects.gamecharacter.playercharacter.PlayerCharacter;
 
 /**
  *

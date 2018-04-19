@@ -3,9 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package otmkurssiprojekti.level.gameobjects;
+package otmkurssiprojekti.level.gameobjects.gamecharacter;
 
+import otmkurssiprojekti.level.gameobjects.interfaces.Destructible;
 import java.util.Random;
+import otmkurssiprojekti.level.gameobjects.interfaces.GameObject;
+import otmkurssiprojekti.level.gameobjects.interfaces.Hurtful;
 import otmkurssiprojekti.level.gameobjects.location.Coords;
 import otmkurssiprojekti.level.gameobjects.location.Direction;
 
@@ -13,7 +16,7 @@ import otmkurssiprojekti.level.gameobjects.location.Direction;
  *
  * @author Juho Gröhn
  */
-public abstract class BasicStatsCharacter extends BasicGameCharacter implements StatsCharacter {
+public abstract class BasicStatsCharacter extends BasicGameCharacter implements GameObject, Destructible, Hurtful {
 
     protected int hp;
     protected int str;
@@ -40,17 +43,17 @@ public abstract class BasicStatsCharacter extends BasicGameCharacter implements 
         hp -= dmg;
     }
 
-    @Override
+    @Deprecated
     public int getAttackDamage() {
         return str;
     }
 
-    @Override
+    @Deprecated
     public int getCriticalChance() {
         return per;
     }
 
-    @Override
+    @Deprecated
     public int getSlowness() {
         int slowness = 100;
         slowness -= agl;
@@ -64,15 +67,8 @@ public abstract class BasicStatsCharacter extends BasicGameCharacter implements 
     }
 
     @Override
-    public void doDamage(GameCharacter gc) {
-        if (gc instanceof StatsCharacter) {
-            gc.takeDamage((StatsCharacter) this);
-        }
-    }
-
-    @Override
-    public void takeDamage(StatsCharacter sc) {
-        int baseDam = sc.getAttackDamage();
+    public void takeDamage(Hurtful ho) {
+        int baseDam = ho.hurt();
 
         //Real Damage is base damage after damage threshold.
         int realDam = baseDam - end;
@@ -80,11 +76,17 @@ public abstract class BasicStatsCharacter extends BasicGameCharacter implements 
             hp -= realDam;
         }
         //Critical damage is the entire base damage, but occurs randomly and only when opponent perception is higher than player agility.
-        int critChance = sc.getCriticalChance();
+        int critChance = 100;
         critChance -= agl;
         int random = new Random().nextInt(100);
         if (random < critChance) {
             hp -= baseDam;
         }
     }
+
+    @Override
+    public int hurt() {
+        return str;
+    }
+
 }

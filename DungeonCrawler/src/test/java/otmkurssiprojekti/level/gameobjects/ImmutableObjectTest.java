@@ -5,7 +5,6 @@
  */
 package otmkurssiprojekti.level.gameobjects;
 
-import otmkurssiprojekti.level.gameobjects.ImmutableObject;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -55,12 +54,12 @@ public class ImmutableObjectTest {
     }
 
     @Test
-    public void testAllArchetypeConstructors(){
-        for(ImmutableObjectArchetype arche : ImmutableObjectArchetype.values()){
+    public void testAllArchetypeConstructors() {
+        for (ImmutableObjectArchetype arche : ImmutableObjectArchetype.values()) {
             testArchetypeConstructor(arche);
         }
     }
-    
+
     public void testArchetypeConstructor(ImmutableObjectArchetype arche) {
         ImmutableObject immarch = new ImmutableObject(arche, new Coords(0, 0, 0), Direction.UP);
         assertTrue("ID should have been " + arche.getId() + " but was " + immarch.getId(), immarch.getId() == arche.getId());
@@ -91,18 +90,6 @@ public class ImmutableObjectTest {
     @Test
     public void testGetDirection() {
         assertTrue(immo.getDirection().equals(direction));
-    }
-
-    @Test
-    public void testMove() {
-        immo.move(Direction.LEFT);
-        assertTrue(immo.getCoords().equals(new Coords(0, 0, 0)));
-    }
-
-    @Test
-    public void testTurn() {
-        immo.turn(Direction.RIGHT);
-        assertTrue(immo.getDirection().equals(Direction.UP));
     }
 
 }

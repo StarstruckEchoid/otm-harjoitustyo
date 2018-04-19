@@ -3,18 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package otmkurssiprojekti.level.gameobjects;
+package otmkurssiprojekti.level.gameobjects.gamecharacter.playercharacter;
 
-import otmkurssiprojekti.level.gameobjects.archetypes.Behaviour;
 import otmkurssiprojekti.level.gameobjects.archetypes.PlayerCharacterArchetype;
+import otmkurssiprojekti.level.gameobjects.gamecharacter.BasicStatsCharacter;
 import otmkurssiprojekti.level.gameobjects.location.Coords;
 import otmkurssiprojekti.level.gameobjects.location.Direction;
+import otmkurssiprojekti.level.gameobjects.interfaces.Mobile;
 
 /**
  *
  * @author Juho Gröhn
  */
-public class PlayerCharacter extends BasicStatsCharacter {
+public class PlayerCharacter extends BasicStatsCharacter implements Mobile {
 
     private static final char ID = '@';
 
@@ -37,11 +38,6 @@ public class PlayerCharacter extends BasicStatsCharacter {
     @Override
     public char getId() {
         return ID;
-    }
-
-    @Override
-    public Behaviour getBehaviour() {
-        return Behaviour.PASSIVE;
     }
 
 }

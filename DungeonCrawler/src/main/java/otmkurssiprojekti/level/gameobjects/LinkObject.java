@@ -5,6 +5,7 @@
  */
 package otmkurssiprojekti.level.gameobjects;
 
+import otmkurssiprojekti.level.gameobjects.interfaces.GameObject;
 import otmkurssiprojekti.level.gameobjects.location.Coords;
 import otmkurssiprojekti.level.gameobjects.location.Direction;
 
@@ -56,16 +57,6 @@ public class LinkObject implements GameObject {
     //Special method.
     public String getLinkAddress() {
         return linkAddress;
-    }
-
-    @Override
-    public void move(Direction dir) {
-        //Level links do not move.
-    }
-
-    @Override
-    public void turn(Direction dir) {
-        //Level links do not turn.
     }
 
 }

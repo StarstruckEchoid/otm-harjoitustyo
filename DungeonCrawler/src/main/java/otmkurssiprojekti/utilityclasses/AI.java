@@ -10,8 +10,9 @@ import java.util.stream.Collectors;
 import otmkurssiprojekti.level.GameLevel;
 import otmkurssiprojekti.level.gameobjects.location.Coords;
 import otmkurssiprojekti.level.gameobjects.location.Direction;
-import otmkurssiprojekti.level.gameobjects.MobileObject;
-import otmkurssiprojekti.level.gameobjects.PlayerCharacter;
+import otmkurssiprojekti.level.gameobjects.gamecharacter.playercharacter.PlayerCharacter;
+import otmkurssiprojekti.level.gameobjects.interfaces.Mobile;
+import otmkurssiprojekti.level.gameobjects.interfaces.NonPlayerCharacter;
 
 /**
  *
@@ -19,64 +20,22 @@ import otmkurssiprojekti.level.gameobjects.PlayerCharacter;
  */
 public class AI {
 
-    private static int clock = 0;
-
-    public static void moveAll(List<MobileObject> mos, GameLevel gameLevel) {
-        mos.stream()
-                .filter((mo) -> !(clock % mo.getSlowness() != 0))
-                .forEachOrdered((mo) -> {
-                    move(mo, gameLevel);
-                });
-        clock++;
-    }
-
-    private static void move(MobileObject mo, GameLevel gameLevel) {
-        switch (mo.getBehaviour()) {
-            case PASSIVE:
-                passive(mo, gameLevel);
-                break;
-            case FOLLOW:
-                follow(mo, gameLevel);
-                break;
-            case HUNT:
-                hunt(mo, gameLevel);
-                break;
-            case FLEE:
-                flee(mo, gameLevel);
-                break;
-            case PATROL:
-                patrol(mo, gameLevel);
-                break;
-            default:
-                throw new AssertionError(mo.getBehaviour().name());
-        }
-    }
-
-    public static Stack<Coords> bestRoute(Coords from, Coords to, GameLevel gameLevel) {
-        //Perform a breadth-first search
-        Queue<Coords> searchQueue = new ArrayDeque();
-        searchQueue.add(from);
-
-        Map<Coords, Coords> backTrack = performSearchOnQueue(gameLevel, searchQueue, to);
-
-        return walkMap(backTrack, to, from);
-    }
-
-    public static Stack<Coords> greedyRoute(Coords from, Coords to, GameLevel gameLevel) {
-        //Perform a best-first search
-        Queue<Coords> searchQueue = new PriorityQueue<>(nearestEuclidean(to));
-        searchQueue.add(from);
-
-        Map<Coords, Coords> backTrack = performSearchOnQueue(gameLevel, searchQueue, to);
-
-        return walkMap(backTrack, to, from);
-    }
-
-    private static void passive(MobileObject mo, GameLevel gameLevel) {
+    /**
+     * Does nothing at all.
+     *
+     */
+    public static void passive() {
         //Do nothing.
     }
 
-    private static void follow(MobileObject mo, GameLevel gameLevel) {
+    /**
+     * Will make this Mobile follow the player in gameLevel. The Mobile will
+     * keep a small distance to the player.
+     *
+     * @param mo
+     * @param gameLevel
+     */
+    public static void follow(Mobile mo, GameLevel gameLevel) {
         PlayerCharacter pc = gameLevel.getPlayerCharacter();
         //An AI that follows will not get too close to player.
         final int distance = 4;
@@ -86,30 +45,45 @@ public class AI {
 
         Stack<Coords> stack = greedyRoute(mo.getCoords(), pc.getCoords(), gameLevel);
         if (!stack.empty()) {
-            mo.setCoords(stack.pop());
+            mo.move(stack.pop());
         }
     }
 
-    private static void hunt(MobileObject mo, GameLevel gameLevel) {
+    /**
+     * Will make this NonPlayerCharacter hunt the playerCharacter in the
+     * gameLevel. The NonPlayerCharacter will deal damage to the player once
+     * close enough.
+     *
+     * @param npc
+     * @param gameLevel
+     */
+    public static void hunt(NonPlayerCharacter npc, GameLevel gameLevel) {
         PlayerCharacter pc = gameLevel.getPlayerCharacter();
         //An AI hunts will stop hunting once the distance to player is too much.
         final int maxDistance = 8;
-        if (mo.getCoords().squaredEuclideanDistance(pc.getCoords()) >= maxDistance * maxDistance) {
+        if (npc.getCoords().squaredEuclideanDistance(pc.getCoords()) >= maxDistance * maxDistance) {
             return;
         }
         //An AI that hunts will attack the player once in melee range.
         final int attackDistance = 2;
-        if (mo.getCoords().squaredEuclideanDistance(pc.getCoords()) < attackDistance * attackDistance) {
-            mo.doDamage(pc);
+        if (npc.getCoords().squaredEuclideanDistance(pc.getCoords()) < attackDistance * attackDistance) {
+            pc.takeDamage(npc);
             return;
         }
-        Stack<Coords> stack = greedyRoute(mo.getCoords(), pc.getCoords(), gameLevel);
+        Stack<Coords> stack = greedyRoute(npc.getCoords(), pc.getCoords(), gameLevel);
         if (!stack.empty()) {
-            mo.setCoords(stack.pop());
+            npc.move(stack.pop());
         }
     }
 
-    private static void flee(MobileObject mo, GameLevel gameLevel) {
+    /**
+     * This Mobile will flee the playerCharacter, always going to the
+     * furthest-away block possible from the player.
+     *
+     * @param mo
+     * @param gameLevel
+     */
+    public static void flee(Mobile mo, GameLevel gameLevel) {
         Coords pcCoords = gameLevel.getPlayerCharacter().getCoords();
         Coords npcCoords = mo.getCoords();
         //An AI flees will stop fleeing once the distance to player is sufficient.
@@ -134,7 +108,14 @@ public class AI {
 
     }
 
-    private static void patrol(MobileObject mo, GameLevel gameLevel) {
+    /**
+     * The Mobile will go to a random direction every time this function is
+     * called.
+     *
+     * @param mo
+     * @param gameLevel
+     */
+    public static void shamble(Mobile mo, GameLevel gameLevel) {
         List<Direction> directions = Arrays.stream(Direction.values())
                 .filter(d -> !d.equals(Direction.IN) && !d.equals(Direction.OUT))
                 .filter(d -> !gameLevel.isOccupied(mo.getCoords().sum(d.getCoords())))
@@ -143,6 +124,48 @@ public class AI {
         int idx = new Random().nextInt(directions.size());
         Direction d = directions.get(idx);
         mo.move(d);
+    }
+
+    //Pathfinding algorithms.
+    /**
+     * Searches for the best route from coordinates from to coordinates to in
+     * the context of gameLevel. bestRoute uses breadth-first search to find the
+     * route. Method returns the path as a stack of coordinates.
+     *
+     * @param from
+     * @param to
+     * @param gameLevel
+     * @return
+     */
+    protected static Stack<Coords> bestRoute(Coords from, Coords to, GameLevel gameLevel) {
+        //Perform a breadth-first search
+        Queue<Coords> searchQueue = new ArrayDeque();
+        searchQueue.add(from);
+
+        Map<Coords, Coords> backTrack = performSearchOnQueue(gameLevel, searchQueue, to);
+
+        return walkMap(backTrack, to, from);
+    }
+
+    /**
+     * Searches for a naive suboptimal route from coordinates from to
+     * coordinates to in the context of gameLevel. greedyRoute uses best-first
+     * search to find the route. Method returns the path as a stack of
+     * coordinates.
+     *
+     * @param from
+     * @param to
+     * @param gameLevel
+     * @return
+     */
+    protected static Stack<Coords> greedyRoute(Coords from, Coords to, GameLevel gameLevel) {
+        //Perform a best-first search
+        Queue<Coords> searchQueue = new PriorityQueue<>(nearestEuclidean(to));
+        searchQueue.add(from);
+
+        Map<Coords, Coords> backTrack = performSearchOnQueue(gameLevel, searchQueue, to);
+
+        return walkMap(backTrack, to, from);
     }
 
     private static Comparator<Coords> nearestEuclidean(Coords to) {

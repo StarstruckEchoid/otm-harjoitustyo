@@ -18,8 +18,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import otmkurssiprojekti.level.BasicGameLevel;
 import otmkurssiprojekti.level.gameobjects.archetypes.PlayerCharacterArchetype;
-import otmkurssiprojekti.level.gameobjects.PlayerCharacter;
-import otmkurssiprojekti.level.gameobjects.GameObject;
+import otmkurssiprojekti.level.gameobjects.gamecharacter.playercharacter.PlayerCharacter;
+import otmkurssiprojekti.level.gameobjects.interfaces.GameObject;
 
 /**
  *

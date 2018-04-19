@@ -5,6 +5,8 @@
  */
 package otmkurssiprojekti.level.gameobjects;
 
+import otmkurssiprojekti.level.gameobjects.interfaces.PointsSource;
+import otmkurssiprojekti.level.gameobjects.interfaces.GameObject;
 import otmkurssiprojekti.level.gameobjects.location.Coords;
 import otmkurssiprojekti.level.gameobjects.location.Direction;
 
@@ -12,7 +14,7 @@ import otmkurssiprojekti.level.gameobjects.location.Direction;
  *
  * @author Juho Gröhn
  */
-public class PointsObject implements GameObject, PointsSource {
+public class PointsBall implements GameObject, PointsSource {
 
     public final char id;
     public static final boolean TRANSPARENT = true; //Points objects don't take an entire block.
@@ -21,7 +23,7 @@ public class PointsObject implements GameObject, PointsSource {
     public static final Direction DIRECTION = Direction.UP; //All points objects point up. This is a stylistic choice.
     public final int points;
 
-    public PointsObject(char id, Coords coords, int points) {
+    public PointsBall(char id, Coords coords, int points) {
         this.id = id;
         this.coords = coords;
         this.points = points;
@@ -50,16 +52,6 @@ public class PointsObject implements GameObject, PointsSource {
     @Override
     public Direction getDirection() {
         return DIRECTION;
-    }
-
-    @Override
-    public void move(Direction dir) {
-        //Points objects don't move.
-    }
-
-    @Override
-    public void turn(Direction dir) {
-        //Points objects don't turn.
     }
 
     @Override

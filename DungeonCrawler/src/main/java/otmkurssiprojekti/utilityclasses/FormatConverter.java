@@ -5,7 +5,7 @@
  */
 package otmkurssiprojekti.utilityclasses;
 
-import otmkurssiprojekti.level.gameobjects.GameObject;
+import otmkurssiprojekti.level.gameobjects.interfaces.GameObject;
 
 /**
  *

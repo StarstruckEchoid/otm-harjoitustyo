@@ -6,11 +6,10 @@
 package otmkurssiprojekti;
 
 import otmkurssiprojekti.level.gameobjects.LinkObject;
-import otmkurssiprojekti.level.gameobjects.PlayerCharacter;
+import otmkurssiprojekti.level.gameobjects.gamecharacter.playercharacter.PlayerCharacter;
 import otmkurssiprojekti.level.gameobjects.InteractiveObject;
-import otmkurssiprojekti.level.gameobjects.NonPlayerCharacter;
 import otmkurssiprojekti.level.gameobjects.ImmutableObject;
-import otmkurssiprojekti.level.gameobjects.PointsObject;
+import otmkurssiprojekti.level.gameobjects.PointsBall;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -31,6 +30,8 @@ import otmkurssiprojekti.level.gameobjects.location.Coords;
 import otmkurssiprojekti.level.gameobjects.location.Direction;
 import otmkurssiprojekti.level.gameobjects.archetypes.ImmutableObjectArchetype;
 import otmkurssiprojekti.level.gameobjects.archetypes.NonPlayerCharacterArchetype;
+import otmkurssiprojekti.level.gameobjects.gamecharacter.nonplayercharacter.HostileNonPlayerCharacter;
+import otmkurssiprojekti.level.gameobjects.interfaces.NonPlayerCharacter;
 import otmkurssiprojekti.userinterface.screen.MainMenuScreen;
 
 /**
@@ -66,14 +67,15 @@ public class DungeonCrawler extends Application {
         }
 
         //PLACEHOLDER CODE: Makes a new level.
+        BasicGameLevel gameLvl;
         String levelName = FIRST_LEVEL;
         PlayerCharacter player = new PlayerCharacter(10, 1, 1, 1, 1, new Coords(3, 3, 0), Direction.DOWN);
         List<NonPlayerCharacter> npcs = new ArrayList<>();
         //Add some npcs.
-        npcs.add(new NonPlayerCharacter(NonPlayerCharacterArchetype.VILLAGER, new Coords(7, 10, 0), Direction.DOWN));
-        npcs.add(new NonPlayerCharacter(NonPlayerCharacterArchetype.RAT, new Coords(8, 8, 0), Direction.DOWN));
-        npcs.add(new NonPlayerCharacter(NonPlayerCharacterArchetype.DEER, new Coords(4, 9, 0), Direction.DOWN));
-        npcs.add(new NonPlayerCharacter(NonPlayerCharacterArchetype.FLY, new Coords(1, 1, 0), Direction.DOWN));
+        npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.VILLAGER, new Coords(7, 10, 0), Direction.DOWN));
+        npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.RAT, new Coords(8, 8, 0), Direction.DOWN));
+        npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.DEER, new Coords(4, 9, 0), Direction.DOWN));
+        npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.FLY, new Coords(1, 1, 0), Direction.DOWN));
         List<ImmutableObject> blocks = new ArrayList<>();
         for (int x = 0; x < BasicGameLevel.DIMENSIONS.getX(); x++) {
             for (int y = 0; y < BasicGameLevel.DIMENSIONS.getY(); y++) {
@@ -88,7 +90,7 @@ public class DungeonCrawler extends Application {
         }
         List<InteractiveObject> interactives = new ArrayList<>();
         List<LinkObject> levelLinks = new ArrayList<>();
-        List<PointsObject> points = new ArrayList<>();
+        List<PointsBall> points = new ArrayList<>();
         BasicGameLevel gamelvl = new BasicGameLevel(levelName, player, npcs, blocks, interactives, levelLinks, points);
 
         //Inserts it into LEVEL_DIR.

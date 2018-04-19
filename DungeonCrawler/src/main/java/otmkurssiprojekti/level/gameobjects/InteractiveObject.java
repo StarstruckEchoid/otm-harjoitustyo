@@ -5,43 +5,41 @@
  */
 package otmkurssiprojekti.level.gameobjects;
 
+import otmkurssiprojekti.level.gameobjects.interfaces.GameObject;
 import java.util.List;
 import java.util.function.Consumer;
 import otmkurssiprojekti.level.gameobjects.location.*;
 import otmkurssiprojekti.level.gameobjects.archetypes.ActivationType;
 import otmkurssiprojekti.level.gameobjects.archetypes.InteractiveObjectArchetype;
+import otmkurssiprojekti.level.gameobjects.interfaces.Mobile;
 
 /**
  *
  * @author Juho Gröhn
  */
-public class InteractiveObject implements GameObject {
+public class InteractiveObject extends BasicMobileObject implements GameObject, Mobile {
 
     private final char id;
     private static final boolean TRANSPARENT = true;
     private boolean solid;
-    private final Coords coords;
-    private Direction direction;
 
     private final ActivationType activationType;
     private final List<InteractiveObject> children;
     private final Consumer<InteractiveObject> action;
 
     public InteractiveObject(char id, boolean solid, Coords coords, Direction direction, ActivationType activationType, List<InteractiveObject> children, Consumer<InteractiveObject> action) {
+        super(coords, direction);
         this.id = id;
         this.solid = solid;
-        this.coords = coords;
-        this.direction = direction;
         this.activationType = activationType;
         this.children = children;
         this.action = action;
     }
 
     public InteractiveObject(InteractiveObjectArchetype interoa, Coords coords, Direction direction, List<InteractiveObject> children) {
+        super(coords, direction);
         this.id = interoa.getId();
         this.solid = interoa.isSolid();
-        this.coords = coords;
-        this.direction = direction;
         this.activationType = interoa.getActivationType();
         this.children = children;
         this.action = interoa.getAction();

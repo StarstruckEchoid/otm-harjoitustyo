@@ -5,12 +5,11 @@
  */
 package otmkurssiprojekti.level;
 
-import otmkurssiprojekti.level.gameobjects.GameObject;
-import otmkurssiprojekti.level.gameobjects.PointsObject;
+import otmkurssiprojekti.level.gameobjects.interfaces.GameObject;
+import otmkurssiprojekti.level.gameobjects.PointsBall;
 import otmkurssiprojekti.level.gameobjects.InteractiveObject;
 import otmkurssiprojekti.level.gameobjects.LinkObject;
-import otmkurssiprojekti.level.gameobjects.PlayerCharacter;
-import otmkurssiprojekti.level.gameobjects.NonPlayerCharacter;
+import otmkurssiprojekti.level.gameobjects.gamecharacter.playercharacter.PlayerCharacter;
 import otmkurssiprojekti.level.gameobjects.ImmutableObject;
 import java.util.*;
 import org.junit.After;
@@ -18,10 +17,11 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import otmkurssiprojekti.level.BasicGameLevel;
 import static org.junit.Assert.*;
 import otmkurssiprojekti.level.gameobjects.archetypes.NonPlayerCharacterArchetype;
 import otmkurssiprojekti.level.gameobjects.archetypes.PlayerCharacterArchetype;
+import otmkurssiprojekti.level.gameobjects.gamecharacter.nonplayercharacter.HostileNonPlayerCharacter;
+import otmkurssiprojekti.level.gameobjects.interfaces.NonPlayerCharacter;
 import otmkurssiprojekti.level.gameobjects.location.Coords;
 import otmkurssiprojekti.level.gameobjects.location.Direction;
 
@@ -38,7 +38,7 @@ public class BasicGameLevelTest {
     private List<ImmutableObject> blocks;
     private List<InteractiveObject> interactives;
     private List<LinkObject> levelLinks;
-    private List<PointsObject> points;
+    private List<PointsBall> points;
 
     public BasicGameLevelTest() {
     }
@@ -57,7 +57,7 @@ public class BasicGameLevelTest {
         player = new PlayerCharacter(PlayerCharacterArchetype.THIEF, new Coords(0, 0, 1), Direction.DOWN);
 
         npcs = new ArrayList<>();
-        npcs.add(new NonPlayerCharacter(NonPlayerCharacterArchetype.VILLAGER, new Coords(10, 10, 4), Direction.DOWN));
+        npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.VILLAGER, new Coords(10, 10, 4), Direction.DOWN));
 
         blocks = new ArrayList<>();
         blocks.add(new ImmutableObject(',', true, false, new Coords(8, 6, 0), Direction.DOWN));

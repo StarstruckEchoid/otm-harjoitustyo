@@ -3,21 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package otmkurssiprojekti.level.gameobjects;
+package otmkurssiprojekti.level.gameobjects.gamecharacter;
 
-import otmkurssiprojekti.level.gameobjects.GameCharacter;
-import otmkurssiprojekti.level.gameobjects.StatsCharacter;
-import otmkurssiprojekti.level.gameobjects.BasicStatsCharacter;
-import otmkurssiprojekti.level.gameobjects.NonPlayerCharacter;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import otmkurssiprojekti.level.gameobjects.archetypes.Behaviour;
+import otmkurssiprojekti.level.gameobjects.gamecharacter.nonplayercharacter.HostileNonPlayerCharacter;
 import otmkurssiprojekti.level.gameobjects.location.Coords;
 import otmkurssiprojekti.level.gameobjects.location.Direction;
+import otmkurssiprojekti.level.gameobjects.interfaces.Destructible;
+import otmkurssiprojekti.level.gameobjects.interfaces.Hurtful;
 
 /**
  *
@@ -45,11 +43,6 @@ public class BasicStatsCharacterTest {
             public char getId() {
                 return 'B';
             }
-
-            @Override
-            public Behaviour getBehaviour() {
-                return Behaviour.PASSIVE;
-            }
         };
     }
 
@@ -74,34 +67,15 @@ public class BasicStatsCharacterTest {
     }
 
     @Test
-    public void testGetAttackDamage() {
-        int attStr = bsc.getAttackDamage();
-        assertTrue(bsc.str == attStr);
-    }
-
-    @Test
-    public void testGetCriticalChance() {
-        int critC = bsc.getCriticalChance();
-        assertTrue(bsc.per == critC);
-    }
-
-    @Test
-    public void testGetSlowness() {
-        int expected = 10;
-        int slow = bsc.getSlowness();
-        assertTrue("Slowness not equal to" + expected + ". Instead was " + slow + ".", slow == expected);
-    }
-
-    @Test
     public void testDoDamage() {
-        GameCharacter gc = new NonPlayerCharacter(Behaviour.PATROL, '_', 10, 0, 0, 0, 0, 0, new Coords(), Direction.DOWN);
-        bsc.doDamage(gc);
+        Destructible gc = new HostileNonPlayerCharacter('_', 10, 0, 0, 0, 0, 0, new Coords(), Direction.DOWN);
+        gc.takeDamage(bsc);
         assertTrue(gc.isDead());
     }
 
     @Test
     public void testTakeDamage_StatsCharacter() {
-        StatsCharacter sc = bsc;
+        Hurtful sc = bsc;
         bsc.takeDamage(sc);
         assertTrue(bsc.isDead());
     }

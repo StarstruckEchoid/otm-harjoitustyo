@@ -11,11 +11,11 @@ package otmkurssiprojekti.level.gameobjects.archetypes;
  */
 public enum NonPlayerCharacterArchetype implements Archetype {
     //(id,lvl,hp,str,per,end,agl,behaviour)
-    VILLAGER('%', 0, 10, 0, 0, 0, 10, Behaviour.PASSIVE),
-    RAT('r', 1, 3, 1, 0, 0, 20, Behaviour.HUNT),
-    FOLLOWER('f', 0, 10, 0, 0, 0, 80, Behaviour.FOLLOW),
-    DEER('d', 5, 10, 0, 0, 0, 30, Behaviour.FLEE),
-    FLY('¨', 1, 1, 0, 0, 0, 90, Behaviour.PATROL);
+    VILLAGER('%', 0, 10, 0, 0, 0, 10),
+    RAT('r', 1, 3, 1, 0, 0, 20),
+    FOLLOWER('f', 0, 10, 0, 0, 0, 80),
+    DEER('d', 5, 10, 0, 0, 0, 30),
+    FLY('¨', 1, 1, 0, 0, 0, 90);
 
     private final char id;
 
@@ -26,9 +26,8 @@ public enum NonPlayerCharacterArchetype implements Archetype {
     private final int per;
     private final int end;
     private final int agl;
-    private final Behaviour behaviour;
 
-    private NonPlayerCharacterArchetype(char id, int level, int hp, int str, int per, int end, int agl, Behaviour behaviour) {
+    private NonPlayerCharacterArchetype(char id, int level, int hp, int str, int per, int end, int agl) {
         this.id = id;
         this.level = level;
         this.hp = hp;
@@ -36,7 +35,6 @@ public enum NonPlayerCharacterArchetype implements Archetype {
         this.per = per;
         this.end = end;
         this.agl = agl;
-        this.behaviour = behaviour;
     }
 
     @Override
@@ -66,10 +64,6 @@ public enum NonPlayerCharacterArchetype implements Archetype {
 
     public int getAgl() {
         return agl;
-    }
-
-    public Behaviour getBehaviour() {
-        return behaviour;
     }
 
 }
