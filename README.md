@@ -12,3 +12,18 @@ Sovellusta voi testata terminaalista komennolla
 Testikattavuusraportin voi luoda komennolla
 
     mvn jacoco:report
+
+Sovelluksen tyylin voi tarkistaa komennolla
+
+    mvn jxr:jxr checkstyle:checkstyle
+
+## Ohjelman generointi ja suoritus
+
+Jarin voi generoida kansiossa DungeonCrawler komennolla
+
+    mvn package
+
+Jarin voi suorittaa komennolla
+
+   java -jar target/DungeonCrawler-1.0-SNAPSHOT.jar 
+
