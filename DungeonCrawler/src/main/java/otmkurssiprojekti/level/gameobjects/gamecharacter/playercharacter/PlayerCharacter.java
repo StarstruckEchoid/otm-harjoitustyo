@@ -44,4 +44,24 @@ public class PlayerCharacter extends BasicStatsCharacter implements Mobile {
         return ID;
     }
 
+    public int getHp() {
+        return hp;
+    }
+
+    public int getStr() {
+        return str;
+    }
+
+    public int getPer() {
+        return per;
+    }
+
+    public int getEnd() {
+        return end;
+    }
+
+    public int getAgl() {
+        return agl;
+    }
+
 }

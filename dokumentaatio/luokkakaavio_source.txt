@@ -1,90 +1,24 @@
-%2F%2F Cool Class Diagram,
+%2F%2F DungeonCrawler Class Diagram,
 
-[GameObject|+getId():char;+isTransparent():Boolean;+isSolid():Boolean;+getCoords:Coords;+getDirection:Direction;+move():void{bg:khaki}]
+[PlayerCharacter]
+[PlayerCharacter]-.-^[GameObject]
 
-[StaticObject]
-[StaticObject]-.-^[GameObject]
-[StaticObject]-.->[StaticObjectGeneric]
-
-[InteractiveObject|-activationType:ActivationType;-state:Boolean;-children:List InteractiveObject|+isPressable():Boolean;+setState():void;+getChildren():List InteractiveObject]
-[InteractiveObject]-.-^[GameObject]
-[InteractiveObject]-.->[InteractiveObjectGeneric]
-[InteractiveObject]-.->[ActivationType]
-
-[LinkObject|+getAddress():String]
-[LinkObject]-.-^[GameObject]
-[LinkObject]-.->[LinkObjectGeneric]
-
-[PointsObject|+getPointsOnCollection():int]
-[PointsObject]-.-^[GameObject]
-[PointsObject]-.->[PointsObjectGeneric]
-
-
-[GameCharacter|-hp:int;-str:int;-end:int|+takeDamage():void;+dealDamage():int;+isDead():Boolean]
-[GameCharacter]-.-^[GameObject]
-
-[PlayerCharacter|-id:static char;-score:int{bg:yellowgreen}]
-[PlayerCharacter]--^[GameCharacter]
-[PlayerCharacter]-.->[PlayerGeneric]
-
-[NonPlayerCharacter|-behaviour:Behaviour;-pointsOnKill:int|+getPointsOnKill():int]
-[NonPlayerCharacter]--^[GameCharacter]
-[NonPlayerCharacter]-.->[NPCGeneric]
-[NonPlayerCharacter]-.->[Behaviour]
-
-
-
-
-[GameLevel|-levelName:String;-player:PlayerCharacter;-npcs:List NonPlayerCharacter;-blocks:List StaticObject;-interactives:List InteractiveObject;-levelLinks:List LinkObject{bg:violet}],
+[GameLevel]
+[GameLevel]-->[GameObject]
 [GameLevel]-->[PlayerCharacter]
-[GameLevel]-->[NonPlayerCharacter]
-[GameLevel]-->[StaticObject]
-[GameLevel]-->[InteractiveObject]
-[GameLevel]-->[PointsObject]
-[GameLevel]-->[LinkObject]
 
-[TextVisualiser]
-[TextVisualiser]-.->[GameLevel]
-[TextVisualiser]-.->[FormatConverter]
+[NonPlayerCharacter]-.-^[GameObject]
 
-[GraphicsVisualiser]
-[GraphicsVisualiser]-.->[GameLevel]
-[GraphicsVisualiser]-.->[FormatConverter]
-[GraphicsVisualiser]<-.-[TextureController|+loadTextureMap(): Map char Image]
+[GameScreen|{bg:blue}]
 
-[AI|+moveNonPlayerCharacters():static void]
-[AI]-.->[GameLevel]
+[LevelScreen]
+[LevelScreen]-.-^[GameScreen]
+[LevelScreen]-->[GameLevel]
+[LevelScreen]-->[Renderer]-->[GameLevel]
 
+[SaveLoadScreen]
+[SaveLoadScreen]-.-^[GameScreen]
+[SaveLoadScreen]-->[DataAccessObject]
 
-
-
-[Window|+handleKeyEvent():void;+getVisualisation():Parent;+doUpdate():void{bg:plum}]
-[Window]^-.-[MainMenu]
-[Window]^-.-[PauseMenu]
-
-[GameWindow|-game:Game]
-[GameWindow]-.-^[Window]
-[GameWindow]-->[Game]
-
-
-
-
-[DataController|-source:File|+loadUsers():List String;+loadGame():List Game;+loadLevel():GameLevel;+saveUser():void;+saveGame():void]
-
-[InputController|+handleKeyEvent():void;+handleTimerUpdate():TimerTask]
-[InputController]-->[Window]
-[InputController]-.->[DataController]
-
-[OutputController|+refreshStage():void]
-[OutputController]-->[Window]
-[OutputController]-.->[DataController]
-
-
-
-
-[Game|-user:String;-player:PlayerCharacter;-gameLevel:GameLevel{bg:tomato}]
-[Game]-->[GameLevel]
-
-[Main|-game:static Game;-outControl:static OutputController;-inControl:static InputController]
-[Main]-->[InputController]
-[Main]-->[OutputController]
+[DungeonCrawler|{bg:red}]
+[DungeonCrawler]<-->[GameScreen]

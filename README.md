@@ -1,8 +1,9 @@
-# Dungeon Crawler
+﻿# Dungeon Crawler
 Dungeon Crawler (nimi saattaa vielä muuttua) on ylhäältäpäin kuvattu seikkailupeli. Pelin ykistyiskohdista voi lukea tarkemmin [vaatimusmäärittelystä](/dokumentaatio/vaatimusmaarittely.md).
 
 ## Dokumentaatio
 * [Vaatimusmäärittely](/dokumentaatio/vaatimusmaarittely.md)
+* [Arkkitehtuuri](/dokumentaatio/arkkitehtuuri.md)
 * [Työaikakirjanpito](/dokumentaatio/tuntikirjanpito.md)
 
 ## Testauksesta

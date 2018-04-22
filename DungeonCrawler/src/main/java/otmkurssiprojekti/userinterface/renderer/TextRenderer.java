@@ -20,14 +20,14 @@ public class TextRenderer implements Renderer {
 
     @Override
     public Node getRender(GameLevel gameLevel) {
-        Text t = new Text(
+        Text levelContents = new Text(
                 FormatConverter.projectionToDenseString(gameLevelToMatrix(gameLevel))
         );
-        t.setFont(Font.font("MONOSPACED"));
-        return t;
+        levelContents.setFont(Font.font("MONOSPACED"));
+        return levelContents;
     }
 
-    public static char[][] gameLevelToMatrix(GameLevel gameLevel) {
+    private static char[][] gameLevelToMatrix(GameLevel gameLevel) {
         char[][] matrix = new char[RENDER_SIZE.getY()][RENDER_SIZE.getX()];
 
         gameLevel.getGameObjects().forEach((go) -> {

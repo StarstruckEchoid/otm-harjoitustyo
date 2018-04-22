@@ -97,7 +97,7 @@ public class DungeonCrawler extends Application {
         new ByteFileLevelDao(LEVEL_DIR).saveLevel(gamelvl);
     }
     private static final Timer TIMER = new Timer();
-    private static final int TICKS_PERIOD = 50; //Controls how often the game updates, eg. how often npcs move.
+    private static final int TICKS_PERIOD = 500; //Controls how often the game updates, eg. how often npcs move.
     private static final int FRAMES_PERIOD = 50; //Controls how often the screen updates. Reciprocal of frames per millisecond.
 
     private GameData gameData;

@@ -7,13 +7,13 @@ package otmkurssiprojekti.userinterface.screen;
 
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import otmkurssiprojekti.DungeonCrawler;
 import otmkurssiprojekti.level.GameLevel;
+import otmkurssiprojekti.level.gameobjects.gamecharacter.playercharacter.PlayerCharacter;
 import otmkurssiprojekti.level.gameobjects.location.Direction;
 import otmkurssiprojekti.userinterface.renderer.Renderer;
 import otmkurssiprojekti.userinterface.renderer.TextRenderer;
@@ -87,12 +87,18 @@ public class LevelScreen extends SwitchingScreen {
     @Override
     public Parent getVisualisation() {
         BorderPane hud = new BorderPane();
-        Text t = new Text();
+        //Kentän nimi.
+        Text t = new Text(gameLevel.getLevelName());
         t.setFont(Font.font("MONOSPACED"));
+        hud.setTop(t);
 
         //Kentän data.
         Node render = RENDERER.getRender(gameLevel);
         hud.setCenter(render);
+
+        //Pelaajan tiedot.
+        Node stats = getPlayerStats();
+        hud.setLeft(stats);
 
         return hud;
     }
@@ -102,6 +108,17 @@ public class LevelScreen extends SwitchingScreen {
         if (gameLevel.doGameTick()) {
             switchTo(new GameOverScreen(main));
         }
+    }
+
+    private Node getPlayerStats() {
+        StringBuilder sb = new StringBuilder();
+        PlayerCharacter pc = gameLevel.getPlayerCharacter();
+        sb.append("HP:\t").append(pc.getHp()).append("\n");
+        sb.append("STR:\t").append(pc.getStr()).append("\n");
+        sb.append("PER:\t").append(pc.getPer()).append("\n");
+        sb.append("END:\t").append(pc.getEnd()).append("\n");
+        sb.append("AGL:\t").append(pc.getAgl()).append("\n");
+        return new Text(sb.toString());
     }
 
 }
