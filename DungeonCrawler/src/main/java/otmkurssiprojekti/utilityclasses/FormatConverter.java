@@ -74,12 +74,9 @@ public class FormatConverter {
         StringBuilder sb = new StringBuilder();
         for (int i = matrix.length; i > 0; i--) {
             char[] row = matrix[i - 1];
-            sb.append(">");
             sb.append(String.valueOf(row));
-            sb.append("<\n");
+            sb.append('\n');
         }
         return sb.toString();
     }
-
-
 }

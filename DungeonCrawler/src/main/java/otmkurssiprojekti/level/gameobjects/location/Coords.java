@@ -9,30 +9,18 @@ package otmkurssiprojekti.level.gameobjects.location;
  *
  * @author gjuho
  */
-public class Coords implements java.io.Serializable, Comparable<Coords> {
+public class Coords extends FlatCoords {
 
-    private int x;
-    private int y;
     private int z;
 
     public Coords() {
-        this.x = 0;
-        this.y = 0;
+        super(0, 0);
         this.z = 0;
     }
 
     public Coords(int x, int y, int z) {
-        this.x = x;
-        this.y = y;
+        super(x, y);
         this.z = z;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
     }
 
     public int getZ() {
@@ -40,58 +28,45 @@ public class Coords implements java.io.Serializable, Comparable<Coords> {
     }
 
     public void add(Coords c) {
-        this.x += c.x;
-        this.y += c.y;
+        super.add(c);
         this.z += c.z;
     }
 
+    @Override
     public void multiply(int s) {
-        this.x *= s;
-        this.y *= s;
+        super.multiply(s);
         this.z *= s;
     }
 
     //Sum is like add, but modifies neither this nor c.
     public Coords sum(Coords c) {
-        int x = this.x + c.x;
-        int y = this.y + c.y;
-        int z = this.z + c.z;
-        return new Coords(x, y, z);
+        int nx = this.x + c.x;
+        int ny = this.y + c.y;
+        int nz = this.z + c.z;
+        return new Coords(nx, ny, nz);
     }
 
     //Distance functions
     public int squaredEuclideanDistance(Coords coords) {
-        int dxSq = this.x - coords.x;
-        dxSq *= dxSq;
-        int dySq = this.y - coords.y;
-        dySq *= dySq;
         int dzSq = this.z - coords.z;
         dzSq *= dzSq;
-
-        return dxSq + dySq + dzSq;
+        return super.squaredEuclideanDistance(coords) + dzSq;
     }
 
     public int manhattanDistance(Coords coords) {
-        int dx = Math.abs(this.x - coords.x);
-        int dy = Math.abs(this.y - coords.y);
         int dz = Math.abs(this.z - coords.z);
-
-        return dx + dy + dz;
+        return super.manhattanDistance(coords) + dz;
     }
 
     //BOOLEANS
     //This is true if all coords less than c. Good for analysing whether the coords are within a set box boundary.
     public Boolean lesserThan(Coords c) {
-        return this.x < c.x
-                && this.y < c.y
-                && this.z < c.z;
+        return super.lesserThan(c) && this.z < c.z;
     }
 
     //Similar, but in reverse.
     public Boolean greaterThanOrEqualTo(Coords c) {
-        return this.x >= c.x
-                && this.y >= c.y
-                && this.z >= c.z;
+        return super.greaterThanOrEqualTo(c) && this.z >= c.z;
     }
 
     //Boring function:
@@ -102,9 +77,7 @@ public class Coords implements java.io.Serializable, Comparable<Coords> {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 29 * hash + this.x;
-        hash = 29 * hash + this.y;
+        int hash = super.hashCode();
         hash = 29 * hash + this.z;
         return hash;
     }
@@ -131,17 +104,24 @@ public class Coords implements java.io.Serializable, Comparable<Coords> {
     }
 
     @Override
+    public int compareTo(FlatCoords o) {
+        if (o instanceof Coords) {
+            return this.compareTo((Coords) o);
+        } else {
+            return super.compareTo(o);
+        }
+    }
+
     public int compareTo(Coords o) {
         int dz = this.z - o.z;
         if (dz != 0) {
             return dz;
         }
-        int dy = this.y - o.y;
-        if (dy != 0) {
-            return dy;
-        }
-        int dx = this.x - o.x;
-        return dx;
+        return super.compareTo(o);
+    }
+
+    public FlatCoords toFlatCoords() {
+        return new FlatCoords(x, y);
     }
 
 }

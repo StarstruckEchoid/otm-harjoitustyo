@@ -5,7 +5,6 @@ package otmkurssiprojekti.utilityclasses;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import otmkurssiprojekti.utilityclasses.FormatConverter;
 import otmkurssiprojekti.level.gameobjects.location.Direction;
 import otmkurssiprojekti.level.gameobjects.location.Coords;
 import java.util.ArrayList;

@@ -30,7 +30,7 @@ public class Serializer {
     public static Object deserialize(byte[] data) throws IOException, ClassNotFoundException {
         ByteArrayInputStream in = new ByteArrayInputStream(data);
         ObjectInputStream is = new ObjectInputStream(in);
-        Object value =  is.readObject();
+        Object value = is.readObject();
         is.close();
         in.close();
         return value;

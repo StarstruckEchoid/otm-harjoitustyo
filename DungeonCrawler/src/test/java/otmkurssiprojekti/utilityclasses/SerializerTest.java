@@ -5,7 +5,6 @@
  */
 package otmkurssiprojekti.utilityclasses;
 
-import otmkurssiprojekti.utilityclasses.Serializer;
 import java.io.IOException;
 import java.util.ArrayList;
 import org.junit.After;

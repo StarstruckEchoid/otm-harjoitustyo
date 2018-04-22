@@ -17,7 +17,7 @@ import otmkurssiprojekti.level.gameobjects.interfaces.NonPlayerCharacter;
  * @author gjuho
  */
 public class BasicGameLevel implements GameLevel {
-    
+
     public static final Coords DIMENSIONS = new Coords(16, 16, 8); //The level is a box from origin to DIMENSIONS Coords exclusive. Ie. The level has a size 16x16x8.
 
     private final String levelName;
@@ -27,7 +27,7 @@ public class BasicGameLevel implements GameLevel {
     private final List<InteractiveObject> interactives;
     private final List<LinkObject> levelLinks;
     private final List<PointsBall> points;
-    
+
     public BasicGameLevel() {
         this.levelName = null;
         this.player = null;
@@ -37,7 +37,7 @@ public class BasicGameLevel implements GameLevel {
         this.levelLinks = null;
         this.points = null;
     }
-    
+
     public BasicGameLevel(String levelName, PlayerCharacter player, List<NonPlayerCharacter> npcs, List<ImmutableObject> blocks, List<InteractiveObject> interactives, List<LinkObject> levelLinks, List<PointsBall> points) {
         this.levelName = levelName;
         this.player = player;
@@ -53,7 +53,7 @@ public class BasicGameLevel implements GameLevel {
     public String getLevelName() {
         return levelName;
     }
-    
+
     @Override
     public PlayerCharacter getPlayerCharacter() {
         return this.player;
@@ -70,11 +70,11 @@ public class BasicGameLevel implements GameLevel {
     public boolean isOccupied(Coords coords) {
         return !BasicGameLevel.hasCoords(coords) || this.hasSolidBlockAt(coords);
     }
-    
+
     protected static Boolean hasCoords(Coords coords) {
         return coords.greaterThanOrEqualTo(new Coords(0, 0, 0)) && coords.lesserThan(DIMENSIONS);
     }
-    
+
     protected Boolean hasSolidBlockAt(Coords coords) {
         List<GameObject> possiblySolidBlocks = new ArrayList<>();
         possiblySolidBlocks.addAll(blocks);
@@ -83,7 +83,7 @@ public class BasicGameLevel implements GameLevel {
                 .filter(b -> b.getCoords().equals(coords))
                 .anyMatch(b -> b.isSolid());
     }
-    
+
     @Override
     public void movePlayer(Direction dir) {
         Coords playerCoords = this.player.getCoords();
@@ -92,7 +92,7 @@ public class BasicGameLevel implements GameLevel {
             player.move(dir);
         }
     }
-    
+
     @Override
     public GameObject[][][] getLevelData() {
         GameObject[][][] levelData = new GameObject[DIMENSIONS.getZ()][DIMENSIONS.getY()][DIMENSIONS.getX()];
@@ -113,7 +113,7 @@ public class BasicGameLevel implements GameLevel {
         }
         return levelData;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 7;
@@ -122,7 +122,7 @@ public class BasicGameLevel implements GameLevel {
         hash = 89 * hash + Objects.hashCode(this.levelLinks);
         return hash;
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -143,15 +143,27 @@ public class BasicGameLevel implements GameLevel {
         }
         return Objects.equals(this.levelLinks, other.levelLinks);
     }
-    
+
     @Override
     public String toString() {
         return this.levelName;
     }
-    
+
     @Override
     public void doGameTick() {
         npcs.forEach(npc -> npc.act(this));
     }
-    
+
+    @Override
+    public List<GameObject> getGameObjects() {
+        List<GameObject> all = new ArrayList<>();
+        all.add(player);
+        all.addAll(blocks);
+        all.addAll(interactives);
+        all.addAll(levelLinks);
+        all.addAll(npcs);
+        all.addAll(points);
+        return all;
+    }
+
 }
