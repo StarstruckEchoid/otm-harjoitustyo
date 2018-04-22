@@ -10,7 +10,7 @@
 | 1.4.  | 10       | Koodin refraktorointia, testien luomista, uusia luokkia. |
 | 2.4.  | 5        | DataAccessObjectien tekeminen aloitettu. |
 | 3.4.  | 7        | Daojen tekeminen jatkuu. |
-| 4.4.  | 3        | ByteFileDao |
+| 4.4.  | 3 (S=52) | ByteFileDao |
 | 8.4.  | 6        | Käyttöliittymälogiikan refraktorointia. Käyttöliittymä osaa käyttää UserDaoja käyttäjien luomiseen ja tuomiseen. |
 | 9.4.  | 1        | Tehtiin pelistä Maven-projekti ja varmistettiin, että peli toimii Linuxilla. Todettiin toimivuus. |
 | 10.4. | 7        | Luotiin Serializer-apuluokka plus testit, sekä abstrakti SwitchingScreen-luokka.
@@ -19,4 +19,7 @@
 | 13.4. | 1        | Lisää testejä. Aloitettiin tyylin huolittelu. |
 | 18.4. | 1        | Lisää testejä. Kansioiden nimet snakecasella. |
 | 19.4. | 5        | Kaikki checkstyle-virheet hävitetty koodista. Luokkien - erityisesti GameObjectien ja tekoälyn - vastuujakoon enemmän järkeä. |
-| 22.4. | 4        | Toteutettiin taistelu: pelaaja ja viholliset ottavat toisiltaan vahinkoa kuten kuuluu. |
+| 22.4. | 6        | Toteutettiin taistelu: pelaaja ja viholliset ottavat toisiltaan vahinkoa kuten kuuluu. Tehtiin arkkitehtuuridokumentaatio. |
+
+
+Työtunteja yhteensä: 95h

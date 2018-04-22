@@ -12,9 +12,7 @@ import otmkurssiprojekti.level.gameobjects.gameinanimates.LinkObject;
 import otmkurssiprojekti.level.gameobjects.gamecharacter.playercharacter.PlayerCharacter;
 import otmkurssiprojekti.level.gameobjects.interfaces.GameObject;
 import otmkurssiprojekti.level.gameobjects.location.*;
-import otmkurssiprojekti.level.gameobjects.*;
 import java.util.*;
-import otmkurssiprojekti.level.gameobjects.interfaces.Destructible;
 import otmkurssiprojekti.level.gameobjects.interfaces.Mobile;
 import otmkurssiprojekti.level.gameobjects.interfaces.NonPlayerCharacter;
 
