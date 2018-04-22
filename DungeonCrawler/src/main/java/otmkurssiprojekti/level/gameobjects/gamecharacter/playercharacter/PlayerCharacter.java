@@ -35,6 +35,10 @@ public class PlayerCharacter extends BasicStatsCharacter implements Mobile {
         );
     }
 
+    public Coords attack(Direction dir) {
+        return coords.sum(dir.getCoords());
+    }
+
     @Override
     public char getId() {
         return ID;

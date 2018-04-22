@@ -94,7 +94,7 @@ public class AI {
 
         Direction escapePlan = Arrays.stream(Direction.values())
                 .filter(d -> !d.equals(Direction.IN) && !d.equals(Direction.OUT))
-                .filter(d -> !gameLevel.isOccupied(npcCoords.sum(d.getCoords())))
+                .filter(d -> !gameLevel.isInaccessible(npcCoords.sum(d.getCoords())))
                 .max((a, b) -> { //Pick the direction that gets the npc as far away from the player as possible.
                     Coords aCoords = npcCoords.sum(a.getCoords());
                     Coords bCoords = npcCoords.sum(b.getCoords());
@@ -118,7 +118,7 @@ public class AI {
     public static void shamble(Mobile mo, GameLevel gameLevel) {
         List<Direction> directions = Arrays.stream(Direction.values())
                 .filter(d -> !d.equals(Direction.IN) && !d.equals(Direction.OUT))
-                .filter(d -> !gameLevel.isOccupied(mo.getCoords().sum(d.getCoords())))
+                .filter(d -> !gameLevel.isInaccessible(mo.getCoords().sum(d.getCoords())))
                 .collect(Collectors.toList());
         //A patrolling NPC will go to a random direction.
         int idx = new Random().nextInt(directions.size());
@@ -188,7 +188,7 @@ public class AI {
             //Iterate on neighbours.
             for (Direction d : Direction.values()) {
                 Coords next = current.sum(d.getCoords());
-                if (!searched.contains(next) && !gameLevel.isOccupied(current)) {
+                if (!searched.contains(next) && !gameLevel.isInaccessible(current)) {
                     searchQueue.add(next);
                     ret.put(next, current);
                 }

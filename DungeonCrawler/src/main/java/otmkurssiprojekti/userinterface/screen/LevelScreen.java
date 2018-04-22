@@ -34,15 +34,9 @@ public class LevelScreen extends SwitchingScreen {
 
     @Override
     public void handleKeyEvent(KeyEvent e) {
-        KeyCode kc = e.getCode();
-        switch (kc) {
-
-            case W:
-            case A:
-            case S:
-            case D:
-                this.movePlayer(e);
-                break;
+        this.movePlayer(e);
+        this.playerAttack(e);
+        switch (e.getCode()) {
             case ESCAPE:
                 switchTo(new PauseScreen(main));
                 break;
@@ -53,8 +47,7 @@ public class LevelScreen extends SwitchingScreen {
     }
 
     private void movePlayer(KeyEvent e) {
-        KeyCode kc = e.getCode();
-        switch (kc) {
+        switch (e.getCode()) {
             case W:
                 gameLevel.movePlayer(Direction.UP);
                 break;
@@ -66,6 +59,25 @@ public class LevelScreen extends SwitchingScreen {
                 break;
             case D:
                 gameLevel.movePlayer(Direction.RIGHT);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void playerAttack(KeyEvent e) {
+        switch (e.getCode()) {
+            case UP:
+                gameLevel.playerAttack(Direction.UP);
+                break;
+            case DOWN:
+                gameLevel.playerAttack(Direction.DOWN);
+                break;
+            case LEFT:
+                gameLevel.playerAttack(Direction.LEFT);
+                break;
+            case RIGHT:
+                gameLevel.playerAttack(Direction.RIGHT);
                 break;
             default:
                 break;
@@ -87,7 +99,9 @@ public class LevelScreen extends SwitchingScreen {
 
     @Override
     public void doGameTick() {
-        gameLevel.doGameTick();
+        if (gameLevel.doGameTick()) {
+            switchTo(new GameOverScreen(main));
+        }
     }
 
 }

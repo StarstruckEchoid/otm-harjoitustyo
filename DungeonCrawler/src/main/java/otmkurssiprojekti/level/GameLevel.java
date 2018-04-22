@@ -11,6 +11,7 @@ import otmkurssiprojekti.level.gameobjects.location.Coords;
 import otmkurssiprojekti.level.gameobjects.location.Direction;
 import otmkurssiprojekti.level.gameobjects.interfaces.GameObject;
 import otmkurssiprojekti.level.gameobjects.gamecharacter.playercharacter.PlayerCharacter;
+import otmkurssiprojekti.level.gameobjects.interfaces.Hurtful;
 
 /**
  *
@@ -22,19 +23,23 @@ public interface GameLevel extends Serializable {
 
     PlayerCharacter getPlayerCharacter();
 
-    @Deprecated
-    GameObject[][][] getLevelData();
-
     List<GameObject> getGameObjects();
-
-    @Deprecated
-    boolean isOccupied(Coords coords);
 
     void setPlayer(PlayerCharacter player);
 
     void movePlayer(Direction dir);
 
-    void doGameTick();
+    void playerAttack(Direction dir);
+
+    /**
+     * doGameTick performs actions in the game level. If at the end of these
+     * actions the player character is dead, return true. Else return false.
+     *
+     * @return
+     */
+    boolean doGameTick();
+
+    boolean isInaccessible(Coords coords);
 
     @Override
     String toString();

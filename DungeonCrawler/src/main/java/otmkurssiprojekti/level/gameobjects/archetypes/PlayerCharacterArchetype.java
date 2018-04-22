@@ -34,7 +34,7 @@ public enum PlayerCharacterArchetype {
     }
 
     public int getHp() {
-        return 1 + end;
+        return 10 * end;
     }
 
     public int getStr() {

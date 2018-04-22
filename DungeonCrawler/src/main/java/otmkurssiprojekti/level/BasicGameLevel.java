@@ -10,6 +10,8 @@ import otmkurssiprojekti.level.gameobjects.interfaces.GameObject;
 import otmkurssiprojekti.level.gameobjects.location.*;
 import otmkurssiprojekti.level.gameobjects.*;
 import java.util.*;
+import otmkurssiprojekti.level.gameobjects.interfaces.Destructible;
+import otmkurssiprojekti.level.gameobjects.interfaces.Mobile;
 import otmkurssiprojekti.level.gameobjects.interfaces.NonPlayerCharacter;
 
 /**
@@ -67,7 +69,7 @@ public class BasicGameLevel implements GameLevel {
 
     //Others
     @Override
-    public boolean isOccupied(Coords coords) {
+    public boolean isInaccessible(Coords coords) {
         return !BasicGameLevel.hasCoords(coords) || this.hasSolidBlockAt(coords);
     }
 
@@ -86,14 +88,18 @@ public class BasicGameLevel implements GameLevel {
 
     @Override
     public void movePlayer(Direction dir) {
-        Coords playerCoords = this.player.getCoords();
-        Coords newCoords = playerCoords.sum(dir.getCoords());
-        if (!this.isOccupied(newCoords)) {
-            player.move(dir);
+        moveMobile(player, dir);
+    }
+
+    public void moveMobile(Mobile mobile, Direction dir) {
+        Coords mobileCoords = mobile.getCoords();
+        Coords newCoords = mobileCoords.sum(dir.getCoords());
+        if (!this.isInaccessible(newCoords)) {
+            mobile.move(dir);
         }
     }
 
-    @Override
+    @Deprecated
     public GameObject[][][] getLevelData() {
         GameObject[][][] levelData = new GameObject[DIMENSIONS.getZ()][DIMENSIONS.getY()][DIMENSIONS.getX()];
         //Everything in one big list.
@@ -150,8 +156,10 @@ public class BasicGameLevel implements GameLevel {
     }
 
     @Override
-    public void doGameTick() {
+    public boolean doGameTick() {
         npcs.forEach(npc -> npc.act(this));
+        npcs.removeIf(i -> i.isDead());
+        return this.player.isDead();
     }
 
     @Override
@@ -164,6 +172,16 @@ public class BasicGameLevel implements GameLevel {
         all.addAll(npcs);
         all.addAll(points);
         return all;
+    }
+
+    @Override
+    public void playerAttack(Direction dir) {
+        Coords coords = this.player
+                .getCoords()
+                .sum(dir.getCoords());
+        this.npcs.stream()
+                .filter(npc -> npc.getCoords().equals(coords))
+                .forEach(npc -> npc.takeDamage(this.player));
     }
 
 }
