@@ -5,7 +5,7 @@
  */
 package otmkurssiprojekti.level.gameobjects.gamecharacter;
 
-import otmkurssiprojekti.level.gameobjects.BasicMobileObject;
+import otmkurssiprojekti.level.gameobjects.gameinanimates.BasicMobileObject;
 import otmkurssiprojekti.level.gameobjects.interfaces.Destructible;
 import otmkurssiprojekti.level.gameobjects.location.Coords;
 import otmkurssiprojekti.level.gameobjects.location.Direction;

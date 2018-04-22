@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package otmkurssiprojekti.level.gameobjects;
+package otmkurssiprojekti.level.gameobjects.gameinanimates;
 
+import otmkurssiprojekti.level.gameobjects.interfaces.PointsSource;
 import otmkurssiprojekti.level.gameobjects.interfaces.GameObject;
 import otmkurssiprojekti.level.gameobjects.location.Coords;
 import otmkurssiprojekti.level.gameobjects.location.Direction;
@@ -13,20 +14,19 @@ import otmkurssiprojekti.level.gameobjects.location.Direction;
  *
  * @author Juho Gröhn
  */
-public class LinkObject implements GameObject {
+public class PointsBall implements GameObject, PointsSource {
 
-    private final char id;
-    private static final boolean TRANSPARENT = true;
-    private static final boolean SOLID = false;
-    private final Coords coords;
-    private static final Direction DIRECTION = Direction.UP;
+    public final char id;
+    public static final boolean TRANSPARENT = true; //Points objects don't take an entire block.
+    public static final boolean SOLID = false; //Points objects can be walked on.
+    public final Coords coords;
+    public static final Direction DIRECTION = Direction.UP; //All points objects point up. This is a stylistic choice.
+    public final int points;
 
-    private final String linkAddress;
-
-    public LinkObject(char id, Coords coords, String linkAddress) {
+    public PointsBall(char id, Coords coords, int points) {
         this.id = id;
         this.coords = coords;
-        this.linkAddress = linkAddress;
+        this.points = points;
     }
 
     @Override
@@ -54,9 +54,9 @@ public class LinkObject implements GameObject {
         return DIRECTION;
     }
 
-    //Special method.
-    public String getLinkAddress() {
-        return linkAddress;
+    @Override
+    public int getPoints() {
+        return points;
     }
 
 }

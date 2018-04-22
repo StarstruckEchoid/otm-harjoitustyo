@@ -5,11 +5,11 @@
  */
 package otmkurssiprojekti;
 
-import otmkurssiprojekti.level.gameobjects.LinkObject;
+import otmkurssiprojekti.level.gameobjects.gameinanimates.LinkObject;
 import otmkurssiprojekti.level.gameobjects.gamecharacter.playercharacter.PlayerCharacter;
-import otmkurssiprojekti.level.gameobjects.InteractiveObject;
-import otmkurssiprojekti.level.gameobjects.ImmutableObject;
-import otmkurssiprojekti.level.gameobjects.PointsBall;
+import otmkurssiprojekti.level.gameobjects.gameinanimates.InteractiveObject;
+import otmkurssiprojekti.level.gameobjects.gameinanimates.ImmutableObject;
+import otmkurssiprojekti.level.gameobjects.gameinanimates.PointsBall;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -81,7 +81,7 @@ public class DungeonCrawler extends Application {
             for (int y = 0; y < BasicGameLevel.DIMENSIONS.getY(); y++) {
                 if (x == 0 || x == BasicGameLevel.DIMENSIONS.getX() - 1) {
                     //Some solid blocks.
-                    blocks.add(new ImmutableObject(ImmutableObjectArchetype.STONE_WALL, new Coords(x, y, 0), Direction.DOWN));
+                    blocks.add(new ImmutableObject(ImmutableObjectArchetype.STONE_WALL, new Coords(x, y, 1), Direction.DOWN));
                 } else {
                     //Non-solid blocks.
                     blocks.add(new ImmutableObject(ImmutableObjectArchetype.GRASS, new Coords(x, y, 1), Direction.DOWN));

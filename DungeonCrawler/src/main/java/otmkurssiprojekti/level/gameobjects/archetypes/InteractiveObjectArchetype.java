@@ -6,7 +6,7 @@
 package otmkurssiprojekti.level.gameobjects.archetypes;
 
 import java.util.function.Consumer;
-import otmkurssiprojekti.level.gameobjects.InteractiveObject;
+import otmkurssiprojekti.level.gameobjects.gameinanimates.InteractiveObject;
 
 /**
  *

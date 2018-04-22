@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package otmkurssiprojekti.level.gameobjects;
+package otmkurssiprojekti.level.gameobjects.gameinanimates;
 
 import otmkurssiprojekti.level.gameobjects.interfaces.GameObject;
 import java.util.List;

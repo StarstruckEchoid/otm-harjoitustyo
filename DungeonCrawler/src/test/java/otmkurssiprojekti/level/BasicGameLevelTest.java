@@ -6,11 +6,11 @@
 package otmkurssiprojekti.level;
 
 import otmkurssiprojekti.level.gameobjects.interfaces.GameObject;
-import otmkurssiprojekti.level.gameobjects.PointsBall;
-import otmkurssiprojekti.level.gameobjects.InteractiveObject;
-import otmkurssiprojekti.level.gameobjects.LinkObject;
+import otmkurssiprojekti.level.gameobjects.gameinanimates.PointsBall;
+import otmkurssiprojekti.level.gameobjects.gameinanimates.InteractiveObject;
+import otmkurssiprojekti.level.gameobjects.gameinanimates.LinkObject;
 import otmkurssiprojekti.level.gameobjects.gamecharacter.playercharacter.PlayerCharacter;
-import otmkurssiprojekti.level.gameobjects.ImmutableObject;
+import otmkurssiprojekti.level.gameobjects.gameinanimates.ImmutableObject;
 import java.util.*;
 import org.junit.After;
 import org.junit.AfterClass;

@@ -5,6 +5,10 @@
  */
 package otmkurssiprojekti.level;
 
+import otmkurssiprojekti.level.gameobjects.gameinanimates.InteractiveObject;
+import otmkurssiprojekti.level.gameobjects.gameinanimates.PointsBall;
+import otmkurssiprojekti.level.gameobjects.gameinanimates.ImmutableObject;
+import otmkurssiprojekti.level.gameobjects.gameinanimates.LinkObject;
 import otmkurssiprojekti.level.gameobjects.gamecharacter.playercharacter.PlayerCharacter;
 import otmkurssiprojekti.level.gameobjects.interfaces.GameObject;
 import otmkurssiprojekti.level.gameobjects.location.*;

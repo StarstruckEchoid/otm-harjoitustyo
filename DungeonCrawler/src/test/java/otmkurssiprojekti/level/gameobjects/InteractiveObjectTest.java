@@ -5,7 +5,7 @@
  */
 package otmkurssiprojekti.level.gameobjects;
 
-import otmkurssiprojekti.level.gameobjects.InteractiveObject;
+import otmkurssiprojekti.level.gameobjects.gameinanimates.InteractiveObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;

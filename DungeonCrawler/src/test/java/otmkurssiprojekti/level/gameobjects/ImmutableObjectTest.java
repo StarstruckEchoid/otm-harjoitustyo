@@ -5,6 +5,7 @@
  */
 package otmkurssiprojekti.level.gameobjects;
 
+import otmkurssiprojekti.level.gameobjects.gameinanimates.ImmutableObject;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

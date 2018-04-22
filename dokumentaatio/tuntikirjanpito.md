@@ -19,3 +19,4 @@
 | 13.4. | 1        | Lisää testejä. Aloitettiin tyylin huolittelu. |
 | 18.4. | 1        | Lisää testejä. Kansioiden nimet snakecasella. |
 | 19.4. | 5        | Kaikki checkstyle-virheet hävitetty koodista. Luokkien - erityisesti GameObjectien ja tekoälyn - vastuujakoon enemmän järkeä. |
+| 22.4. | 4        | Toteutettiin taistelu: pelaaja ja viholliset ottavat toisiltaan vahinkoa kuten kuuluu. |
