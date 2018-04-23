@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import otmkurssiprojekti.level.BasicGameLevel;
 import otmkurssiprojekti.level.GameLevel;
 import otmkurssiprojekti.level.gameobjects.archetypes.ImmutableObjectArchetype;
+import otmkurssiprojekti.level.gameobjects.archetypes.PlayerCharacterArchetype;
 import otmkurssiprojekti.level.gameobjects.gamecharacter.playercharacter.PlayerCharacter;
 import otmkurssiprojekti.level.gameobjects.gameinanimates.ImmutableObject;
 import otmkurssiprojekti.level.gameobjects.gameinanimates.InteractiveObject;
@@ -21,6 +22,8 @@ import otmkurssiprojekti.level.gameobjects.gameinanimates.LinkObject;
 import otmkurssiprojekti.level.gameobjects.gameinanimates.PointsBall;
 import otmkurssiprojekti.level.gameobjects.interfaces.NonPlayerCharacter;
 import otmkurssiprojekti.level.gameobjects.interfaces.PointsSource;
+import otmkurssiprojekti.level.gameobjects.location.Coords;
+import otmkurssiprojekti.level.gameobjects.location.Direction;
 
 /**
  *
@@ -65,7 +68,11 @@ public class TextFileLevelDao extends AbstractLevelDao implements GameLevelDao {
     }
 
     private PlayerCharacter makePlayerCharacter(String field) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String[] attrs = field.split(";");
+        PlayerCharacterArchetype pca = makePCArcheType(attrs[0]);
+        Coords coords = makeCoords(attrs[1]);
+
+        return new PlayerCharacter(pca, coords, Direction.DOWN);
     }
 
     private List<NonPlayerCharacter> makeNPCList(String field) {
@@ -86,6 +93,35 @@ public class TextFileLevelDao extends AbstractLevelDao implements GameLevelDao {
 
     private List<PointsBall> makePointsSourceList(String field) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private <T implements enum> makePCArcheType(T, String attr) {
+        for (T pca : T.values()) {
+            if (pca.getName().equals(attr)) {
+                return pca;
+            }
+        }
+        throw new IllegalArgumentException();
+    }
+
+    /**
+     * Converts string of the form [0-9]+,[0-9]+,[0-9]+ into coords. Example:
+     * "0,9,11" -> new Coords(0, 9, 11). "-1,3,22" -> new Coords(-1, 3, 22)
+     *
+     * @param attr
+     * @return
+     */
+    public Coords makeCoords(String attr) {
+        if (!attr.matches("[0-9]+,[0-9]+,[0-9]+")) {
+            throw new IllegalArgumentException();
+        }
+
+        String[] attrs = attr.split(",");
+        int x = Integer.parseInt(attrs[0]);
+        int y = Integer.parseInt(attrs[1]);
+        int z = Integer.parseInt(attrs[2]);
+
+        return new Coords(x, y, z);
     }
 
 }
