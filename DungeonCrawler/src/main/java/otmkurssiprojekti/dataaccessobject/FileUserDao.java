@@ -18,7 +18,12 @@ public class FileUserDao implements UserDao {
 
     private final Path source;
 
-    //The FileUserDao fetches subdirectories, named after users, from a source directory.
+    /**
+     * The FileUserDao fetches subdirectories, named after users, from a source
+     * directory.
+     *
+     * @param source
+     */
     public FileUserDao(Path source) {
         if (!source.toFile().isDirectory()) {
             throw new IllegalArgumentException();

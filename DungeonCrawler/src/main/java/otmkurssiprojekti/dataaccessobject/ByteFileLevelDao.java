@@ -5,13 +5,10 @@
  */
 package otmkurssiprojekti.dataaccessobject;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import otmkurssiprojekti.level.GameLevel;
@@ -21,22 +18,21 @@ import otmkurssiprojekti.utilityclasses.Serializer;
  *
  * @author Juho Gröhn
  */
-public class ByteFileLevelDao implements GameLevelDao {
+public class ByteFileLevelDao extends AbstractLevelDao implements GameLevelDao {
 
-    private final Path directory;
-
-    public ByteFileLevelDao(Path source) {
-        this.directory = source;
+    public ByteFileLevelDao(Path directory) {
+        super(directory);
     }
 
     @Override
-    public List<GameLevel> listGameLevels() {
-        File[] gameLevels = directory.toFile().listFiles();
-        List<GameLevel> levels = new ArrayList<>();
-        for (File f : gameLevels) {
-            levels.add(loadLevel(f.toPath()));
+    public void saveLevel(GameLevel level) {
+        try {
+            Path levelPath = Paths.get(directory.toString(), level.getLevelName());
+            byte[] bytedata = Serializer.serialize(level);
+            Files.write(levelPath, bytedata);
+        } catch (IOException ex) {
+            Logger.getLogger(ByteFileLevelDao.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return levels;
     }
 
     @Override
@@ -49,17 +45,6 @@ public class ByteFileLevelDao implements GameLevelDao {
             Logger.getLogger(ByteFileLevelDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
-    }
-
-    @Override
-    public void saveLevel(GameLevel level) {
-        try {
-            Path levelPath = Paths.get(directory.toString(), level.getLevelName());
-            byte[] bytedata = Serializer.serialize(level);
-            Files.write(levelPath, bytedata);
-        } catch (IOException ex) {
-            Logger.getLogger(ByteFileLevelDao.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     public void saveLevel(GameLevel level, String name) {
