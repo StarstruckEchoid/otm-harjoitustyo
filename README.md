@@ -26,5 +26,8 @@ Jarin voi generoida kansiossa DungeonCrawler komennolla
 
 Jarin voi suorittaa komennolla
 
-   java -jar target/DungeonCrawler-1.0-SNAPSHOT.jar 
+    java -jar target/DungeonCrawler-1.0-SNAPSHOT.jar 
 
+## Julkaisut
+
+[Pelin ensimmäinen julkaisu, DungeonCrawler 0.0](https://github.com/StarstruckEchoid/otm-harjoitustyo/releases/tag/22.4.2018).
