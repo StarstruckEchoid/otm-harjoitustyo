@@ -189,7 +189,7 @@ public class TextFileGameLevels {
 
     public static String printNPCList(List<NonPlayerCharacter> npcs) {
         StringBuilder sb = new StringBuilder();
-        npcs.forEach(npc -> sb.append(printNonPlayerCharacter(npc)));
+        npcs.forEach(npc -> sb.append(printNonPlayerCharacter(npc)).append("\n"));
         return sb.toString();
     }
 

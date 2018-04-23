@@ -16,6 +16,7 @@ import otmkurssiprojekti.level.BasicGameLevel;
 import otmkurssiprojekti.level.GameLevel;
 import otmkurssiprojekti.level.gameobjects.archetypes.NonPlayerCharacterArchetype;
 import otmkurssiprojekti.level.gameobjects.archetypes.PlayerCharacterArchetype;
+import otmkurssiprojekti.level.gameobjects.gamecharacter.nonplayercharacter.HostileNonPlayerCharacter;
 import otmkurssiprojekti.level.gameobjects.gamecharacter.playercharacter.PlayerCharacter;
 import otmkurssiprojekti.level.gameobjects.gameinanimates.ImmutableObject;
 import otmkurssiprojekti.level.gameobjects.gameinanimates.InteractiveObject;
@@ -23,6 +24,7 @@ import otmkurssiprojekti.level.gameobjects.gameinanimates.LinkObject;
 import otmkurssiprojekti.level.gameobjects.gameinanimates.PointsBall;
 import otmkurssiprojekti.level.gameobjects.interfaces.NonPlayerCharacter;
 import otmkurssiprojekti.level.gameobjects.location.Coords;
+import otmkurssiprojekti.level.gameobjects.location.Direction;
 
 /**
  *
@@ -114,37 +116,66 @@ public class TextFileGameLevelsTest {
         assertTrue(c.equals(expected));
     }
 
-//    @Test
-//    public void testMakePlayerCharacter() {
-//    }
-//    
-//    @Test
-//    public void testPrintPlayerCharacter() {
-//    }
-//    
-//    @Test
-//    public void testMakeNonPlayerCharacter() {
-//    }
-//    
-//    @Test
-//    public void testPrintNonPlayerCharacter() {
-//    }
-//    
-//    @Test
-//    public void testMakeNPCList() {
-//    }
-//    
-//    @Test
-//    public void testPrintNPCList() {
-//    }
-//    
-//    @Test
-//    public void testMakeBlockList() {
-//    }
-//    
-//    @Test
-//    public void testPrintBlockList() {
-//    }
+    @Test
+    public void testMakePlayerCharacter() {
+        PlayerCharacter pc = TextFileGameLevels.makePlayerCharacter("20;0;1;2;3;4,5,6");
+        PlayerCharacter expected = new PlayerCharacter(20, 0, 1, 2, 3, new Coords(4, 5, 6), Direction.DOWN);
+
+        assertTrue("Expected " + expected.toString() + " but got " + pc.toString(), pc.equals(expected));
+    }
+
+    @Test
+    public void testPrintPlayerCharacter() {
+        String pcS = TextFileGameLevels.printPlayerCharacter(new PlayerCharacter(20, 0, 1, 2, 3, new Coords(4, 5, 6), Direction.DOWN));
+        String expected = "20;0;1;2;3;4,5,6";
+
+        assertTrue("Expected " + expected + " but got " + pcS, pcS.equals(expected));
+    }
+
+    @Test
+    public void testMakeNonPlayerCharacter() {
+        NonPlayerCharacterArchetype npca = NonPlayerCharacterArchetype.RAT;
+
+        NonPlayerCharacter npc = TextFileGameLevels.makeNonPlayerCharacter(npca.toString() + ";4,5,6");
+        NonPlayerCharacter expected = new HostileNonPlayerCharacter(npca, new Coords(4, 5, 6), Direction.DOWN);
+
+        assertTrue("Expected " + expected.toString() + " but got " + npc.toString(), npc.equals(expected));
+    }
+
+    @Test
+    public void testPrintNonPlayerCharacter() {
+        NonPlayerCharacterArchetype npca = NonPlayerCharacterArchetype.RAT;
+
+        String npcS = TextFileGameLevels.printNonPlayerCharacter(new HostileNonPlayerCharacter(npca, new Coords(0, 1, 2), Direction.DOWN));
+        String expected = npca.toString() + ";0,1,2";
+
+        assertTrue("Expected " + expected + " but got " + npcS, npcS.equals(expected));
+    }
+
+    @Test
+    public void testMakePrintNPCList() {
+        String dat
+                = "r;0,1,2\n"
+                + "r;2,4,7\n"
+                + "r;3,3,3\n";
+        List<NonPlayerCharacter> npcs = TextFileGameLevels.makeNPCList(dat);
+        String dat2 = TextFileGameLevels.printNPCList(npcs);
+
+        assertTrue(dat + "\ndoes not equal\n" + dat2, dat.equals(dat2));
+
+    }
+
+    @Test
+    public void testPrintNPCList() {
+    }
+
+    @Test
+    public void testMakeBlockList() {
+    }
+
+    @Test
+    public void testPrintBlockList() {
+    }
 //    
 //    @Test
 //    public void testMakeInteractiveObjectList() {
