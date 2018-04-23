@@ -36,7 +36,7 @@ public class AI {
      * @param gameLevel
      */
     public static void follow(Mobile mo, GameLevel gameLevel) {
-        PlayerCharacter pc = gameLevel.getPlayerCharacter();
+        PlayerCharacter pc = gameLevel.getPlayer();
         //An AI that follows will not get too close to player.
         final int distance = 4;
         if (mo.getCoords().squaredEuclideanDistance(pc.getCoords()) < distance * distance) {
@@ -58,7 +58,7 @@ public class AI {
      * @param gameLevel
      */
     public static void hunt(NonPlayerCharacter npc, GameLevel gameLevel) {
-        PlayerCharacter pc = gameLevel.getPlayerCharacter();
+        PlayerCharacter pc = gameLevel.getPlayer();
         //An AI hunts will stop hunting once the distance to player is too much.
         final int maxDistance = 8;
         if (npc.getCoords().squaredEuclideanDistance(pc.getCoords()) >= maxDistance * maxDistance) {
@@ -84,7 +84,7 @@ public class AI {
      * @param gameLevel
      */
     public static void flee(Mobile mo, GameLevel gameLevel) {
-        Coords pcCoords = gameLevel.getPlayerCharacter().getCoords();
+        Coords pcCoords = gameLevel.getPlayer().getCoords();
         Coords npcCoords = mo.getCoords();
         //An AI flees will stop fleeing once the distance to player is sufficient.
         final int distance = 8;

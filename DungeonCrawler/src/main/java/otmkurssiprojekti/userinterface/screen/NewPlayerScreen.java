@@ -109,7 +109,7 @@ public class NewPlayerScreen extends VerticalMenuScreen {
     private void initialisePlayer(GameLevel gameLevel) {
         PlayerCharacter playerCharacter = new PlayerCharacter(
                 pcaArr[pcaArrPointer],
-                gameLevel.getPlayerCharacter().getCoords(),
+                gameLevel.getPlayer().getCoords(),
                 Direction.DOWN
         );
 

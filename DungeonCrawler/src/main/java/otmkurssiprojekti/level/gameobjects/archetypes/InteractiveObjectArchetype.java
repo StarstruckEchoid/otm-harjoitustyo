@@ -48,4 +48,9 @@ public enum InteractiveObjectArchetype implements Archetype {
         return action;
     }
 
+    @Override
+    public String toString() {
+        return Character.toString(getId());
+    }
+
 }

@@ -66,4 +66,9 @@ public enum NonPlayerCharacterArchetype implements Archetype {
         return agl;
     }
 
+    @Override
+    public String toString() {
+        return Character.toString(getId());
+    }
+
 }

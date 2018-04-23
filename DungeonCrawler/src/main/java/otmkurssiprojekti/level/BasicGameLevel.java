@@ -59,8 +59,28 @@ public class BasicGameLevel implements GameLevel {
     }
 
     @Override
-    public PlayerCharacter getPlayerCharacter() {
+    public PlayerCharacter getPlayer() {
         return this.player;
+    }
+
+    public List<NonPlayerCharacter> getNpcs() {
+        return npcs;
+    }
+
+    public List<ImmutableObject> getBlocks() {
+        return blocks;
+    }
+
+    public List<InteractiveObject> getInteractives() {
+        return interactives;
+    }
+
+    public List<LinkObject> getLevelLinks() {
+        return levelLinks;
+    }
+
+    public List<PointsBall> getPoints() {
+        return points;
     }
 
     //Setter

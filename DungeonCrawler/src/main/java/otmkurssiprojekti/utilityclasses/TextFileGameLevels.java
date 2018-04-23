@@ -27,6 +27,30 @@ import otmkurssiprojekti.level.gameobjects.location.Direction;
  */
 public class TextFileGameLevels {
 
+    /**
+     * Makes a game level from a text file. The text file should be something
+     * like the following:
+     * <pre>
+     * Dungeon
+     *
+     * 120;10;4;3;5,3,4,0
+     *
+     * v;10,12,0
+     * r;9,4,1
+     * +;2,0,0
+     *
+     * 0,,0,,,,,0
+     * 0,,,,000,0
+     * 0,,,,0,,,0
+     * 0,0,,0,0,0
+     * 0000000000
+     *
+     * ...
+     * </pre>
+     *
+     * @param string
+     * @return
+     */
     public static GameLevel makeGameLevel(String string) {
         String[] fields = string.split("\n\n");
         String levelName = fields[0];
@@ -38,6 +62,42 @@ public class TextFileGameLevels {
         List<PointsBall> points = makePointsSourceList(fields[6]);
 
         return new BasicGameLevel(levelName, player, npcs, blocks, interactives, levelLinks, points);
+    }
+
+    /**
+     * Does the reverse operation of makeGameLevel. It turns the gameLevel into
+     * a string of the form:
+     * <pre>
+     * Dungeon
+     *
+     * 120;10;4;3;5,3,4,0
+     *
+     * v;10,12,0
+     * r;9,4,1
+     * +;2,0,0
+     *
+     * 0,,0,,,,,0
+     * 0,,,,000,0
+     * 0,,,,0,,,0
+     * 0,0,,0,0,0
+     * 0000000000
+     *
+     * ...
+     * </pre>
+     *
+     * @param gameLevel
+     * @return
+     */
+    public static String printGameLevel(BasicGameLevel gameLevel) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(gameLevel.getLevelName()).append("\n\n");
+        sb.append(printPlayerCharacter(gameLevel.getPlayer())).append("\n\n");
+        sb.append(printNPCList(gameLevel.getNpcs())).append("\n\n");
+        sb.append(printBlockList(gameLevel.getBlocks())).append("\n\n");
+        sb.append(printInteractiveObjectList(gameLevel.getInteractives())).append("\n\n");
+        sb.append(printLevelLinkList(gameLevel.getLevelLinks())).append("\n\n");
+
+        return sb.toString();
     }
 
     /**
@@ -80,7 +140,7 @@ public class TextFileGameLevels {
                 return arch;
             }
         }
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("Expected attr to be a string representation of an enum constant but it was \"" + attr + "\".");
     }
 
     public static <T extends Enum<?>> String printArchetype(T t) {
@@ -105,6 +165,9 @@ public class TextFileGameLevels {
 
     public static NonPlayerCharacter makeNonPlayerCharacter(String field) {
         String[] attrs = field.split(";");
+        if (attrs.length < 2) {
+            throw new IllegalArgumentException("Expected \"" + field + "\" to have at least two attributes.");
+        }
         NonPlayerCharacterArchetype npca = makeArcheType(NonPlayerCharacterArchetype.class, attrs[0]);
         Coords coords = makeCoords(attrs[1]);
 
@@ -124,6 +187,12 @@ public class TextFileGameLevels {
         return npcs;
     }
 
+    public static String printNPCList(List<NonPlayerCharacter> npcs) {
+        StringBuilder sb = new StringBuilder();
+        npcs.forEach(npc -> sb.append(printNonPlayerCharacter(npc)));
+        return sb.toString();
+    }
+
     public static List<ImmutableObject> makeBlockList(String field) {
         List<ImmutableObject> blocks = new ArrayList<>();
         String[] rows = field.split("\n");
@@ -137,16 +206,44 @@ public class TextFileGameLevels {
         return blocks;
     }
 
+    public static String printBlockList(List<ImmutableObject> blocks) {
+        int biggestY = blocks.stream().mapToInt(o -> o.getCoords().getY()).max().orElse(0);
+        int biggestX = blocks.stream().mapToInt(o -> o.getCoords().getX()).max().orElse(0);
+        char[][] matrix = new char[biggestY][biggestX];
+        for (ImmutableObject block : blocks) {
+            Coords blockCoords = block.getCoords();
+            matrix[blockCoords.getY()][blockCoords.getX()] = block.getId();
+        }
+        StringBuilder sb = new StringBuilder();
+        for (char[] line : matrix) {
+            sb.append(String.copyValueOf(line));
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
+
     public static List<InteractiveObject> makeInteractiveObjectList(String field) {
         return new ArrayList<>();
+    }
+
+    public static String printInteractiveObjectList(List<InteractiveObject> interactiveObjects) {
+        return "";
     }
 
     public static List<LinkObject> makeLevelLinkList(String field) {
         return new ArrayList<>();
     }
 
+    public static String printLevelLinkList(List<LinkObject> interactiveObjects) {
+        return "";
+    }
+
     public static List<PointsBall> makePointsSourceList(String field) {
         return new ArrayList<>();
+    }
+
+    public static String printPointsSourceList(List<PointsBall> interactiveObjects) {
+        return "";
     }
 
 }

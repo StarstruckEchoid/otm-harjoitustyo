@@ -38,7 +38,7 @@ public class TextRenderer implements Renderer {
         });
 
         //Player character is always on top, no matter what.
-        PlayerCharacter pc = gameLevel.getPlayerCharacter();
+        PlayerCharacter pc = gameLevel.getPlayer();
         Coords pcCoords = pc.getCoords();
         matrix[pcCoords.getY()][pcCoords.getX()] = pc.getId();
 

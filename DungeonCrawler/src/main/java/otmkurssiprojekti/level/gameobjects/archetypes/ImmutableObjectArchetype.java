@@ -39,4 +39,9 @@ public enum ImmutableObjectArchetype implements Archetype {
         return solid;
     }
 
+    @Override
+    public String toString() {
+        return Character.toString(id);
+    }
+
 }

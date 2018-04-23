@@ -20,7 +20,7 @@ public interface GameLevel extends Serializable {
 
     String getLevelName();
 
-    PlayerCharacter getPlayerCharacter();
+    PlayerCharacter getPlayer();
 
     List<GameObject> getGameObjects();
 
