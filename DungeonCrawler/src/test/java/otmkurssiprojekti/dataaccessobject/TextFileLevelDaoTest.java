@@ -33,6 +33,7 @@ import otmkurssiprojekti.domain.gameobject.interfaces.GameObject;
 import otmkurssiprojekti.domain.gameobject.interfaces.NonPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
 import otmkurssiprojekti.domain.gameobject.location.Direction;
+import otmkurssiprojekti.utilityclasses.TextFileGameLevels;
 
 /**
  *
@@ -100,9 +101,11 @@ public class TextFileLevelDaoTest {
         List<NonPlayerCharacter> npcs = new ArrayList<>();
         npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.RAT, new Coords(2, 2, 0), Direction.DOWN));
 
-        List<ImmutableObject> blocks = new ArrayList<>();
-        blocks.add(new ImmutableObject(ImmutableObjectArchetype.STONE_PATH, new Coords(3, 4, 1), Direction.DOWN));
-        blocks.add(new ImmutableObject(ImmutableObjectArchetype.GRASS, new Coords(1, 5, 1), Direction.DOWN));
+        List<ImmutableObject> blocks = TextFileGameLevels.makeBlockList(
+                "   0 \n"
+                + " ... \n"
+                + "  .  \n"
+        );
 
         BasicGameLevel gl = new BasicGameLevel(
                 "testLevel",
@@ -158,7 +161,7 @@ public class TextFileLevelDaoTest {
         try {
             tfld.saveLevel(gl);
             GameLevel gl2 = tfld.loadLevel(Paths.get(directory.toString(), gl.toString()));
-            testLevelsEqual(gl, gl2);
+            testLevelsEqual(gl2, gl);
         } catch (IllegalArgumentException i) {
             fail(i.getMessage());
         } catch (Exception e) {

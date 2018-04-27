@@ -118,4 +118,9 @@ public abstract class BasicStatsCharacter extends BasicGameCharacter implements 
         return this.hashCode() == obj.hashCode();
     }
 
+    @Override
+    public String toString() {
+        return this.getId() + ": HP: " + this.getHp();
+    }
+
 }

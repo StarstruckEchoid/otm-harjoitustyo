@@ -5,18 +5,11 @@
  */
 package otmkurssiprojekti.userinterface;
 
-import otmkurssiprojekti.domain.gameobject.gameinanimates.LinkObject;
-import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.PlayerCharacter;
-import otmkurssiprojekti.domain.gameobject.gameinanimates.InteractiveObject;
-import otmkurssiprojekti.domain.gameobject.gameinanimates.ImmutableObject;
-import otmkurssiprojekti.domain.gameobject.gameinanimates.PointsBall;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import otmkurssiprojekti.userinterface.screen.GameScreen;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
@@ -27,14 +20,9 @@ import javafx.stage.Stage;
 import otmkurssiprojekti.dataaccessobject.dataobject.GameData;
 import otmkurssiprojekti.dataaccessobject.dataobject.SimpleGameData;
 import otmkurssiprojekti.dataaccessobject.TextFileLevelDao;
-import otmkurssiprojekti.domain.level.BasicGameLevel;
-import otmkurssiprojekti.domain.gameobject.location.Coords;
-import otmkurssiprojekti.domain.gameobject.location.Direction;
-import otmkurssiprojekti.domain.gameobject.archetypes.ImmutableObjectArchetype;
-import otmkurssiprojekti.domain.gameobject.archetypes.NonPlayerCharacterArchetype;
-import otmkurssiprojekti.domain.gameobject.gamecharacter.nonplayercharacter.HostileNonPlayerCharacter;
-import otmkurssiprojekti.domain.gameobject.interfaces.NonPlayerCharacter;
+import otmkurssiprojekti.domain.level.GameLevel;
 import otmkurssiprojekti.userinterface.screen.MainMenuScreen;
+import otmkurssiprojekti.utilityclasses.TextFileGameLevels;
 
 /**
  *
@@ -69,34 +57,42 @@ public class DungeonCrawler extends Application {
         }
 
         //PLACEHOLDER CODE: Makes a new level.
-        BasicGameLevel gameLvl;
-        String levelName = FIRST_LEVEL;
-        PlayerCharacter player = new PlayerCharacter(10, 1, 1, 1, 1, new Coords(3, 3, 0), Direction.DOWN);
-        List<NonPlayerCharacter> npcs = new ArrayList<>();
-        //Add some npcs.
-        npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.VILLAGER, new Coords(7, 10, 0), Direction.DOWN));
-        npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.RAT, new Coords(8, 8, 0), Direction.DOWN));
-        npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.DEER, new Coords(4, 9, 0), Direction.DOWN));
-        npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.FLY, new Coords(1, 1, 0), Direction.DOWN));
-        List<ImmutableObject> blocks = new ArrayList<>();
-        for (int x = 0; x < BasicGameLevel.DIMENSIONS.getX(); x++) {
-            for (int y = 0; y < BasicGameLevel.DIMENSIONS.getY(); y++) {
-                if (x == 0 || x == BasicGameLevel.DIMENSIONS.getX() - 1) {
-                    //Some solid blocks.
-                    blocks.add(new ImmutableObject(ImmutableObjectArchetype.STONE_WALL, new Coords(x, y, 1), Direction.DOWN));
-                } else {
-                    //Non-solid blocks.
-                    blocks.add(new ImmutableObject(ImmutableObjectArchetype.GRASS, new Coords(x, y, 1), Direction.DOWN));
-                }
-            }
-        }
-        List<InteractiveObject> interactives = new ArrayList<>();
-        List<LinkObject> levelLinks = new ArrayList<>();
-        List<PointsBall> points = new ArrayList<>();
-        BasicGameLevel gamelvl = new BasicGameLevel(levelName, player, npcs, blocks, interactives, levelLinks, points);
+        GameLevel gameLvl = TextFileGameLevels.makeGameLevel(
+                "Starting Level\n"
+                + "\n"
+                + "10;1;1;1;1;3,3,0\n"
+                + "\n"
+                + "%;7,10,0\n"
+                + "r;8,8,0\n"
+                + "d;4,9,0\n"
+                + "¨;1,1,0\n"
+                + "\n"
+                + "0,,,,,,,,,,,,,,0\n"
+                + "0,,,,,,,,,,,,,,0\n"
+                + "0,,,,,,,,,,,,,,0\n"
+                + "0,,,,,,,,,,,,,,0\n"
+                + "0,,,,,,,,,,,,,,0\n"
+                + "0,,,,,,,,,,,,,,0\n"
+                + "0,,,,,,,,,,,,,,0\n"
+                + "0,,,,,,,,,,,,,,0\n"
+                + "0,,,,,,,,,,,,,,0\n"
+                + "0,,,,,,,,,,,,,,0\n"
+                + "0,,,,,,,,,,,,,,0\n"
+                + "0,,,,,,,,,,,,,,0\n"
+                + "0,,,,,,,,,,,,,,0\n"
+                + "0,,,,,,,,,,,,,,0\n"
+                + "0,,,,,,,,,,,,,,0\n"
+                + "0,,,,,,,,,,,,,,0\n"
+                + "\n"
+                + "EMPTY\n"
+                + "\n"
+                + "EMPTY\n"
+                + "\n"
+                + "EMPTY"
+        );
 
         //Inserts it into LEVEL_DIR.
-        new TextFileLevelDao(LEVEL_DIR).saveLevel(gamelvl);
+        new TextFileLevelDao(LEVEL_DIR).saveLevel(gameLvl);
     }
     private static final Timer TIMER = new Timer();
     private static final int TICKS_PERIOD = 500; //Controls how often the game updates, eg. how often npcs move.
