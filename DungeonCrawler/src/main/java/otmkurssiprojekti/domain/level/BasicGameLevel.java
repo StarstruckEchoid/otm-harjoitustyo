@@ -105,7 +105,7 @@ public class BasicGameLevel implements GameLevel {
         possiblySolidBlocks.addAll(blocks);
         possiblySolidBlocks.addAll(interactives);
         return possiblySolidBlocks.stream()
-                .filter(b -> b.getCoords().equals(coords))
+                .filter(b -> b.getCoords().toFlatCoords().equals(coords.toFlatCoords()))
                 .anyMatch(b -> b.isSolid());
     }
 

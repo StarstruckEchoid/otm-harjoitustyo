@@ -24,6 +24,7 @@ public class AI {
      * Does nothing at all.
      *
      */
+    @Deprecated
     public static void passive() {
         //Do nothing.
     }
@@ -35,6 +36,7 @@ public class AI {
      * @param mo
      * @param gameLevel
      */
+    @Deprecated
     public static void follow(Mobile mo, GameLevel gameLevel) {
         PlayerCharacter pc = gameLevel.getPlayer();
         //An AI that follows will not get too close to player.
@@ -57,6 +59,7 @@ public class AI {
      * @param npc
      * @param gameLevel
      */
+    @Deprecated
     public static void hunt(NonPlayerCharacter npc, GameLevel gameLevel) {
         PlayerCharacter pc = gameLevel.getPlayer();
         //An AI hunts will stop hunting once the distance to player is too much.
@@ -83,6 +86,7 @@ public class AI {
      * @param mo
      * @param gameLevel
      */
+    @Deprecated
     public static void flee(Mobile mo, GameLevel gameLevel) {
         Coords pcCoords = gameLevel.getPlayer().getCoords();
         Coords npcCoords = mo.getCoords();
@@ -115,6 +119,7 @@ public class AI {
      * @param mo
      * @param gameLevel
      */
+    @Deprecated
     public static void shamble(Mobile mo, GameLevel gameLevel) {
         List<Direction> directions = Arrays.stream(Direction.values())
                 .filter(d -> !d.equals(Direction.IN) && !d.equals(Direction.OUT))
@@ -137,7 +142,7 @@ public class AI {
      * @param gameLevel
      * @return
      */
-    protected static Stack<Coords> bestRoute(Coords from, Coords to, GameLevel gameLevel) {
+    public static Stack<Coords> bestRoute(Coords from, Coords to, GameLevel gameLevel) {
         //Perform a breadth-first search
         Queue<Coords> searchQueue = new ArrayDeque();
         searchQueue.add(from);
@@ -158,7 +163,7 @@ public class AI {
      * @param gameLevel
      * @return
      */
-    protected static Stack<Coords> greedyRoute(Coords from, Coords to, GameLevel gameLevel) {
+    public static Stack<Coords> greedyRoute(Coords from, Coords to, GameLevel gameLevel) {
         //Perform a best-first search
         Queue<Coords> searchQueue = new PriorityQueue<>(nearestEuclidean(to));
         searchQueue.add(from);
