@@ -148,7 +148,7 @@ public class TextFileGameLevelsTest {
 
         PlayerCharacterArchetype pca = PlayerCharacterArchetype.ASSASSIN;
 
-        PlayerCharacterArchetype c = TextFileGameLevels.makeArcheType(PlayerCharacterArchetype.class, pca.toString());
+        PlayerCharacterArchetype c = TextFileGameLevels.makeArcheType(PlayerCharacterArchetype.class, pca.toString()).get();
         PlayerCharacterArchetype expected = pca;
 
         assertTrue(c.equals(expected));
@@ -159,7 +159,7 @@ public class TextFileGameLevelsTest {
 
         NonPlayerCharacterArchetype npca = NonPlayerCharacterArchetype.RAT;
 
-        NonPlayerCharacterArchetype c = TextFileGameLevels.makeArcheType(NonPlayerCharacterArchetype.class, npca.toString());
+        NonPlayerCharacterArchetype c = TextFileGameLevels.makeArcheType(NonPlayerCharacterArchetype.class, npca.toString()).get();
         NonPlayerCharacterArchetype expected = npca;
 
         assertTrue(c.equals(expected));
@@ -193,7 +193,7 @@ public class TextFileGameLevelsTest {
     public void testMakeNonPlayerCharacter() {
         NonPlayerCharacterArchetype npca = NonPlayerCharacterArchetype.RAT;
 
-        NonPlayerCharacter npc = TextFileGameLevels.makeNonPlayerCharacter(npca.toString() + ";4,5,6");
+        NonPlayerCharacter npc = TextFileGameLevels.makeNonPlayerCharacter(npca.toString() + ";4,5,6").get();
         NonPlayerCharacter expected = new HostileNonPlayerCharacter(npca, new Coords(4, 5, 6), Direction.DOWN);
 
         assertTrue("Expected " + expected.toString() + " but got " + npc.toString(), npc.equals(expected));

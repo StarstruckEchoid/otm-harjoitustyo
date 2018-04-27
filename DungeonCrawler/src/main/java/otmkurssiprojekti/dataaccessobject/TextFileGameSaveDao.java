@@ -7,10 +7,10 @@ package otmkurssiprojekti.dataaccessobject;
 
 import java.nio.file.Path;
 
-public class ByteFileGameSaveDao extends AbstractGameSaveDao implements GameSaveDao {
-
-    public ByteFileGameSaveDao(Path directory) {
-        super(directory, new ByteFileLevelDao(directory));
+public class TextFileGameSaveDao extends AbstractGameSaveDao {
+    
+    public TextFileGameSaveDao(Path directory) {
+        super(directory, new TextFileLevelDao(directory));
     }
-
+    
 }

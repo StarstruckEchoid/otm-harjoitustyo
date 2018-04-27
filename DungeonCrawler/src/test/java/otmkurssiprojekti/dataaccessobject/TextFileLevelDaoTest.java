@@ -18,12 +18,17 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import otmkurssiprojekti.domain.gameobject.archetypes.ImmutableObjectArchetype;
 import otmkurssiprojekti.domain.level.BasicGameLevel;
 import otmkurssiprojekti.domain.level.GameLevel;
 import otmkurssiprojekti.domain.gameobject.archetypes.NonPlayerCharacterArchetype;
 import otmkurssiprojekti.domain.gameobject.archetypes.PlayerCharacterArchetype;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.nonplayercharacter.HostileNonPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.PlayerCharacter;
+import otmkurssiprojekti.domain.gameobject.gameinanimates.ImmutableObject;
+import otmkurssiprojekti.domain.gameobject.gameinanimates.InteractiveObject;
+import otmkurssiprojekti.domain.gameobject.gameinanimates.LinkObject;
+import otmkurssiprojekti.domain.gameobject.gameinanimates.PointsBall;
 import otmkurssiprojekti.domain.gameobject.interfaces.GameObject;
 import otmkurssiprojekti.domain.gameobject.interfaces.NonPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
@@ -88,6 +93,65 @@ public class TextFileLevelDaoTest {
                 new ArrayList<>()
         );
         testSaveLoadLevel(gl);
+    }
+
+    @Test
+    public void testSLL2() {
+        List<NonPlayerCharacter> npcs = new ArrayList<>();
+        npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.RAT, new Coords(2, 2, 0), Direction.DOWN));
+
+        List<ImmutableObject> blocks = new ArrayList<>();
+        blocks.add(new ImmutableObject(ImmutableObjectArchetype.STONE_PATH, new Coords(3, 4, 1), Direction.DOWN));
+        blocks.add(new ImmutableObject(ImmutableObjectArchetype.GRASS, new Coords(1, 5, 1), Direction.DOWN));
+
+        BasicGameLevel gl = new BasicGameLevel(
+                "testLevel",
+                new PlayerCharacter(PlayerCharacterArchetype.THIEF, new Coords(0, 0, 0), Direction.DOWN),
+                npcs,
+                blocks,
+                new ArrayList<>(),
+                new ArrayList<>(),
+                new ArrayList<>()
+        );
+        testSaveLoadLevel(gl);
+    }
+
+    //If this looks familiar, it's because it's the default starting level from the main class.
+    public void testSLL3() {
+        String levelName = "Test Level";
+        PlayerCharacter player = new PlayerCharacter(10, 1, 1, 1, 1, new Coords(3, 3, 0), Direction.DOWN);
+        List<NonPlayerCharacter> npcs = new ArrayList<>();
+        //Add some npcs.
+        npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.VILLAGER, new Coords(7, 10, 0), Direction.DOWN));
+        npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.RAT, new Coords(8, 8, 0), Direction.DOWN));
+        npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.DEER, new Coords(4, 9, 0), Direction.DOWN));
+        npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.FLY, new Coords(1, 1, 0), Direction.DOWN));
+        List<ImmutableObject> blocks = new ArrayList<>();
+        for (int x = 0; x < BasicGameLevel.DIMENSIONS.getX(); x++) {
+            for (int y = 0; y < BasicGameLevel.DIMENSIONS.getY(); y++) {
+                if (x == 0 || x == BasicGameLevel.DIMENSIONS.getX() - 1) {
+                    //Some solid blocks.
+                    blocks.add(new ImmutableObject(ImmutableObjectArchetype.STONE_WALL, new Coords(x, y, 1), Direction.DOWN));
+                } else {
+                    //Non-solid blocks.
+                    blocks.add(new ImmutableObject(ImmutableObjectArchetype.GRASS, new Coords(x, y, 1), Direction.DOWN));
+                }
+            }
+        }
+        List<InteractiveObject> interactives = new ArrayList<>();
+        List<LinkObject> levelLinks = new ArrayList<>();
+        List<PointsBall> points = new ArrayList<>();
+        BasicGameLevel gamelvl = new BasicGameLevel(
+                levelName,
+                player,
+                npcs,
+                blocks,
+                interactives,
+                levelLinks,
+                points
+        );
+
+        testSaveLoadLevel(gamelvl);
     }
 
     public void testSaveLoadLevel(GameLevel gl) {

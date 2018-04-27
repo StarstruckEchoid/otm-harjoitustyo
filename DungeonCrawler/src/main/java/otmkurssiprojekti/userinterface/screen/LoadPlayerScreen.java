@@ -5,6 +5,9 @@
  */
 package otmkurssiprojekti.userinterface.screen;
 
+import otmkurssiprojekti.userinterface.screen.daousers.NewPlayerScreen;
+import otmkurssiprojekti.userinterface.screen.daousers.LoadUserScreen;
+import otmkurssiprojekti.userinterface.screen.daousers.LoadGameScreen;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;

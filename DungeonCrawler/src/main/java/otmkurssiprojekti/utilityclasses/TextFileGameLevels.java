@@ -7,6 +7,7 @@ package otmkurssiprojekti.utilityclasses;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import otmkurssiprojekti.domain.level.BasicGameLevel;
 import otmkurssiprojekti.domain.level.GameLevel;
 import otmkurssiprojekti.domain.gameobject.archetypes.ImmutableObjectArchetype;
@@ -138,13 +139,13 @@ public class TextFileGameLevels {
      * @param attr
      * @return
      */
-    public static <T extends Enum<?>> T makeArcheType(Class<T> t, String attr) {
+    public static <T extends Enum<?>> Optional<T> makeArcheType(Class<T> t, String attr) {
         for (T arch : t.getEnumConstants()) {
             if (arch.toString().equals(attr)) {
-                return arch;
+                return Optional.of(arch);
             }
         }
-        throw new IllegalArgumentException("Expected attr to be a string representation of an enum constant but it was \"" + attr + "\".");
+        return Optional.empty();
     }
 
     public static <T extends Enum<?>> String printArchetype(T t) {
@@ -167,15 +168,19 @@ public class TextFileGameLevels {
         return pc.getHp() + ";" + pc.getStr() + ";" + pc.getPer() + ";" + pc.getEnd() + ";" + pc.getAgl() + ";" + printCoords(pc.getCoords());
     }
 
-    public static NonPlayerCharacter makeNonPlayerCharacter(String field) {
+    public static Optional<NonPlayerCharacter> makeNonPlayerCharacter(String field) {
         String[] attrs = field.split(";");
         if (attrs.length < 2) {
             throw new IllegalArgumentException("Expected \"" + field + "\" to have at least two attributes.");
         }
-        NonPlayerCharacterArchetype npca = makeArcheType(NonPlayerCharacterArchetype.class, attrs[0]);
+        Optional<NonPlayerCharacterArchetype> npca = makeArcheType(NonPlayerCharacterArchetype.class, attrs[0]);
         Coords coords = makeCoords(attrs[1]);
 
-        return new HostileNonPlayerCharacter(npca, coords, Direction.DOWN);
+        if (npca.isPresent()) {
+            return Optional.of(new HostileNonPlayerCharacter(npca.get(), coords, Direction.DOWN));
+        } else {
+            return Optional.empty();
+        }
     }
 
     public static String printNonPlayerCharacter(NonPlayerCharacter npc) {
@@ -189,7 +194,7 @@ public class TextFileGameLevels {
         List<NonPlayerCharacter> npcs = new ArrayList<>();
         String[] npcDats = field.split("\n");
         for (String npcDat : npcDats) {
-            npcs.add(makeNonPlayerCharacter(npcDat));
+            makeNonPlayerCharacter(npcDat).ifPresent(i -> npcs.add(i));
         }
         return npcs;
     }
@@ -213,7 +218,11 @@ public class TextFileGameLevels {
             String row = rows[y];
             for (int x = 0; x < row.length(); x++) {
                 String id = Character.toString(row.charAt(x));
-                blocks.add(new ImmutableObject(makeArcheType(ImmutableObjectArchetype.class, id), new Coords(x, y, BLOCKS_LEVEL), Direction.DOWN));
+                blocks.add(
+                        new ImmutableObject(makeArcheType(ImmutableObjectArchetype.class, id).orElse(ImmutableObjectArchetype.AIR),
+                                new Coords(x, y, BLOCKS_LEVEL),
+                                Direction.DOWN)
+                );
             }
         }
         return blocks;

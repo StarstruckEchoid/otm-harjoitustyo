@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package otmkurssiprojekti.userinterface.screen;
+package otmkurssiprojekti.userinterface.screen.daousers;
 
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -11,11 +11,11 @@ import java.util.Date;
 import java.util.List;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import otmkurssiprojekti.dataaccessobject.ByteFileGameSaveDao;
-import otmkurssiprojekti.dataaccessobject.ByteFileLevelDao;
 import otmkurssiprojekti.dataaccessobject.FileUserDao;
 import otmkurssiprojekti.dataaccessobject.GameLevelDao;
 import otmkurssiprojekti.dataaccessobject.GameSaveDao;
+import otmkurssiprojekti.dataaccessobject.TextFileGameSaveDao;
+import otmkurssiprojekti.dataaccessobject.TextFileLevelDao;
 import otmkurssiprojekti.dataaccessobject.UserDao;
 import otmkurssiprojekti.userinterface.DungeonCrawler;
 import otmkurssiprojekti.dataaccessobject.dataobject.GameSave;
@@ -23,6 +23,10 @@ import otmkurssiprojekti.domain.level.GameLevel;
 import otmkurssiprojekti.domain.gameobject.archetypes.PlayerCharacterArchetype;
 import otmkurssiprojekti.domain.gameobject.location.Direction;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.PlayerCharacter;
+import otmkurssiprojekti.userinterface.screen.GameScreen;
+import otmkurssiprojekti.userinterface.screen.LevelScreen;
+import otmkurssiprojekti.userinterface.screen.LoadPlayerScreen;
+import otmkurssiprojekti.userinterface.screen.VerticalMenuScreen;
 
 /**
  *
@@ -101,7 +105,7 @@ public class NewPlayerScreen extends VerticalMenuScreen {
     }
 
     private GameLevel initialiseLevel() {
-        GameLevelDao gameLevelDao = new ByteFileLevelDao(DungeonCrawler.LEVEL_DIR);
+        GameLevelDao gameLevelDao = new TextFileLevelDao(DungeonCrawler.LEVEL_DIR);
         return gameLevelDao.loadLevel(Paths.get(DungeonCrawler.LEVEL_DIR.toString(), DungeonCrawler.FIRST_LEVEL));
 
     }
@@ -129,7 +133,7 @@ public class NewPlayerScreen extends VerticalMenuScreen {
 
     private void saveGame(GameLevel gameLevel) {
         //Save the game in the folder <USER_DIR>/<user>/<player>/
-        GameSaveDao gameSaveDao = new ByteFileGameSaveDao(
+        GameSaveDao gameSaveDao = new TextFileGameSaveDao(
                 Paths.get(
                         DungeonCrawler.USER_DIR.toString(),
                         main.getGameData().getUser(),

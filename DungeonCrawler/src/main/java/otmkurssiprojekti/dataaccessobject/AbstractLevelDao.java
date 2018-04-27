@@ -32,4 +32,10 @@ public abstract class AbstractLevelDao implements GameLevelDao {
         }
         return levels;
     }
+
+    @Override
+    public void saveLevel(GameLevel level) {
+        this.saveLevel(level, level.getLevelName());
+    }
+
 }

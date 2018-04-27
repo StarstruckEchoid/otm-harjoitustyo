@@ -3,28 +3,33 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package otmkurssiprojekti.userinterface.screen;
+package otmkurssiprojekti.userinterface.screen.daousers;
 
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import otmkurssiprojekti.dataaccessobject.ByteFileGameSaveDao;
 import otmkurssiprojekti.dataaccessobject.GameSaveDao;
+import otmkurssiprojekti.dataaccessobject.TextFileGameSaveDao;
 import otmkurssiprojekti.userinterface.DungeonCrawler;
 import otmkurssiprojekti.dataaccessobject.dataobject.GameSave;
+import otmkurssiprojekti.userinterface.screen.GameScreen;
+import otmkurssiprojekti.userinterface.screen.LevelScreen;
+import otmkurssiprojekti.userinterface.screen.PauseScreen;
+import otmkurssiprojekti.userinterface.screen.VerticalMenuScreen;
 
 /**
  *
  * @author Juho Gröhn
  */
-public class LoadGameScreen extends VerticalMenuScreen {
+public class SaveGameScreen extends VerticalMenuScreen {
 
     private final GameSaveDao gsdao;
     private final List<GameSave> saves;
 
-    public LoadGameScreen(DungeonCrawler main) {
+    public SaveGameScreen(DungeonCrawler main) {
         super(main);
-        gsdao = new ByteFileGameSaveDao(Paths.get(//The address where game saves are looked up is <USER_DIR>/<user>/<player>/
+        gsdao = new TextFileGameSaveDao(Paths.get(//The address where game saves are looked up is <USER_DIR>/<user>/<player>/
                 DungeonCrawler.USER_DIR.toString(),
                 main.getGameData().getUser(),
                 main.getGameData().getPlayer()
@@ -34,32 +39,31 @@ public class LoadGameScreen extends VerticalMenuScreen {
 
     @Override
     protected void doEnterAction(int index) {
-        main.getGameData().setGameLevel(saves.get(index).getGameLevel());
-        switchTo(new LevelScreen(main));
+        if (index == 0) {
+            gsdao.saveGame(new GameSave(new Date(System.currentTimeMillis()), main.getGameData().getGameLevel()));
+            switchTo(new LevelScreen(main));
+        }
+
     }
 
     @Override
     protected List<Object> getOptsList() {
         List<Object> ret = new ArrayList<>();
+        ret.add("<new save>");
         saves.forEach((save) -> {
-            try {
-                ret.add(save.toString());
-            } catch (NullPointerException npe) {
-                ret.add("<corrupted>");
-            }
+            ret.add(save.toString());
         });
         return ret;
     }
 
     @Override
-
     protected String getTitle() {
-        return "Load game";
+        return "Save game";
     }
 
     @Override
     protected GameScreen getReturnScreen() {
-        return new LoadPlayerScreen(main);
+        return new PauseScreen(main);
     }
 
 }

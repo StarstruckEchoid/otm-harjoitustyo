@@ -19,5 +19,7 @@ public interface GameLevelDao {
 
     public void saveLevel(GameLevel level);
 
+    public void saveLevel(GameLevel level, String name);
+
     public GameLevel loadLevel(Path levelPath);
 }

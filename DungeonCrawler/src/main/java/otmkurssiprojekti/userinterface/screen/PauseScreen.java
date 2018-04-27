@@ -5,6 +5,8 @@
  */
 package otmkurssiprojekti.userinterface.screen;
 
+import otmkurssiprojekti.userinterface.screen.daousers.SaveGameScreen;
+import otmkurssiprojekti.userinterface.screen.daousers.LoadGameScreen;
 import java.util.ArrayList;
 import java.util.List;
 import otmkurssiprojekti.userinterface.DungeonCrawler;

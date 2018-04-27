@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package otmkurssiprojekti.userinterface.screen;
+package otmkurssiprojekti.userinterface.screen.daousers;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -11,6 +11,10 @@ import java.util.List;
 import otmkurssiprojekti.dataaccessobject.FileUserDao;
 import otmkurssiprojekti.dataaccessobject.UserDao;
 import otmkurssiprojekti.userinterface.DungeonCrawler;
+import otmkurssiprojekti.userinterface.screen.GameScreen;
+import otmkurssiprojekti.userinterface.screen.LoadPlayerScreen;
+import otmkurssiprojekti.userinterface.screen.MainMenuScreen;
+import otmkurssiprojekti.userinterface.screen.VerticalMenuScreen;
 
 /**
  *

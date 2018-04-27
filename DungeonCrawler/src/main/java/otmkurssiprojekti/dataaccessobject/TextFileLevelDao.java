@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import otmkurssiprojekti.domain.level.BasicGameLevel;
@@ -26,12 +28,15 @@ public class TextFileLevelDao extends AbstractLevelDao implements GameLevelDao {
     }
 
     @Override
-    public void saveLevel(GameLevel level) {
+    public void saveLevel(GameLevel level, String name) {
         try {
-            Path levelPath = Paths.get(directory.toString(), level.getLevelName());
+            Path levelPath = Paths.get(directory.toString(), name);
             if (level instanceof BasicGameLevel) {
-                String textData = TextFileGameLevels.printGameLevel((BasicGameLevel) level);
-                Files.write(levelPath, textData.getBytes());
+                List<String> textData = Arrays.asList(
+                        TextFileGameLevels.printGameLevel((BasicGameLevel) level)
+                                .split("\n")
+                );
+                Files.write(levelPath, textData);
             } else {
                 throw new IllegalArgumentException();
             }

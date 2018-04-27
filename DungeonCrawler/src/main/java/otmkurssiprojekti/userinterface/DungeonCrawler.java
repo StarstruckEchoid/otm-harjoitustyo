@@ -26,7 +26,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import otmkurssiprojekti.dataaccessobject.dataobject.GameData;
 import otmkurssiprojekti.dataaccessobject.dataobject.SimpleGameData;
-import otmkurssiprojekti.dataaccessobject.ByteFileLevelDao;
+import otmkurssiprojekti.dataaccessobject.TextFileLevelDao;
 import otmkurssiprojekti.domain.level.BasicGameLevel;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
 import otmkurssiprojekti.domain.gameobject.location.Direction;
@@ -96,7 +96,7 @@ public class DungeonCrawler extends Application {
         BasicGameLevel gamelvl = new BasicGameLevel(levelName, player, npcs, blocks, interactives, levelLinks, points);
 
         //Inserts it into LEVEL_DIR.
-        new ByteFileLevelDao(LEVEL_DIR).saveLevel(gamelvl);
+        new TextFileLevelDao(LEVEL_DIR).saveLevel(gamelvl);
     }
     private static final Timer TIMER = new Timer();
     private static final int TICKS_PERIOD = 500; //Controls how often the game updates, eg. how often npcs move.
