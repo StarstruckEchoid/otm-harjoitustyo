@@ -165,7 +165,7 @@ public class AI {
      */
     public static Stack<Coords> greedyRoute(Coords from, Coords to, GameLevel gameLevel) {
         //Perform a best-first search
-        Queue<Coords> searchQueue = new PriorityQueue<>(nearestEuclidean(to));
+        Queue<Coords> searchQueue = new PriorityQueue<>(nearestManhattan(to));
         searchQueue.add(from);
 
         Map<Coords, Coords> backTrack = performSearchOnQueue(gameLevel, searchQueue, to);

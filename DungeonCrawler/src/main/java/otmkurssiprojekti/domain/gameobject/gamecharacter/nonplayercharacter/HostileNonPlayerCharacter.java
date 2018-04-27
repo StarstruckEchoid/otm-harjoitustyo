@@ -26,8 +26,15 @@ public class HostileNonPlayerCharacter extends BasicNonPlayerCharacter {
 
     @Override
     public void act(GameLevel gameLevel) {
+        final int maxDetectionRange = 5;
+        Coords npcCoords = this.coords;
+        Coords pcCoords = gameLevel.getPlayer().getCoords();
+        //If distance to player is more than 10, don't bother.
+        if (npcCoords.manhattanDistance(pcCoords) >= maxDetectionRange) {
+            return;
+        }
         if (plan.size() < 5) {
-            plan = AI.greedyRoute(this.getCoords(), gameLevel.getPlayer().getCoords(), gameLevel);
+            plan = AI.greedyRoute(npcCoords, pcCoords, gameLevel);
         }
         if (!plan.empty()) {
             this.move(plan.pop());

@@ -72,7 +72,7 @@ public class AITest {
         testBestRoute(c1, c2, expected);
     }
 
-    @Test(timeout = 500)
+    @Test(timeout = 100)
     public void testBR2() {
         Coords c1 = new Coords(0, 0, 0);
         Coords c2 = new Coords(1, 0, 0);
@@ -82,7 +82,7 @@ public class AITest {
         testBestRoute(c1, c2, expected);
     }
 
-    @Test(timeout = 5000)
+    @Test(timeout = 200)
     public void testBR3() {
         int n = 10;
         Coords c1 = new Coords(0, 0, 0);
@@ -110,7 +110,7 @@ public class AITest {
         testGreedyRoute(c1, c2, expected);
     }
 
-    @Test(timeout = 500)
+    @Test(timeout = 50)
     public void testGR2() {
         Coords c1 = new Coords(0, 0, 0);
         Coords c2 = new Coords(1, 0, 0);
@@ -120,7 +120,7 @@ public class AITest {
         testGreedyRoute(c1, c2, expected);
     }
 
-    @Test(timeout = 5000)
+    @Test(timeout = 50)
     public void testGR3() {
         int n = 10;
         Coords c1 = new Coords(0, 0, 0);
