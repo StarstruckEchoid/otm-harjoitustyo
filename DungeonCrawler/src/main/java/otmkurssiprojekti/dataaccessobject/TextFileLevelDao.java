@@ -11,8 +11,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import otmkurssiprojekti.level.BasicGameLevel;
-import otmkurssiprojekti.level.GameLevel;
+import otmkurssiprojekti.domain.level.BasicGameLevel;
+import otmkurssiprojekti.domain.level.GameLevel;
 import otmkurssiprojekti.utilityclasses.TextFileGameLevels;
 
 /**

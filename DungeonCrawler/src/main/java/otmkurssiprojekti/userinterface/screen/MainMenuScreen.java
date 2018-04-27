@@ -7,7 +7,7 @@ package otmkurssiprojekti.userinterface.screen;
 
 import java.util.ArrayList;
 import java.util.List;
-import otmkurssiprojekti.DungeonCrawler;
+import otmkurssiprojekti.userinterface.DungeonCrawler;
 
 /**
  *

@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import otmkurssiprojekti.dataaccessobject.ByteFileGameSaveDao;
 import otmkurssiprojekti.dataaccessobject.GameSaveDao;
-import otmkurssiprojekti.DungeonCrawler;
-import otmkurssiprojekti.GameSave;
+import otmkurssiprojekti.userinterface.DungeonCrawler;
+import otmkurssiprojekti.dataaccessobject.dataobject.GameSave;
 
 /**
  *

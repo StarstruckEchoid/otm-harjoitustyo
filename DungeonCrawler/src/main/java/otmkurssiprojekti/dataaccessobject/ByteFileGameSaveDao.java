@@ -10,9 +10,9 @@ import java.nio.file.Path;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-import otmkurssiprojekti.GameSave;
-import otmkurssiprojekti.level.BasicGameLevel;
-import otmkurssiprojekti.level.GameLevel;
+import otmkurssiprojekti.dataaccessobject.dataobject.GameSave;
+import otmkurssiprojekti.domain.level.BasicGameLevel;
+import otmkurssiprojekti.domain.level.GameLevel;
 
 public class ByteFileGameSaveDao implements GameSaveDao {
 

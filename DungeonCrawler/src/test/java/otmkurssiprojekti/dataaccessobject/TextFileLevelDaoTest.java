@@ -17,15 +17,15 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import otmkurssiprojekti.level.BasicGameLevel;
-import otmkurssiprojekti.level.GameLevel;
-import otmkurssiprojekti.level.gameobjects.archetypes.NonPlayerCharacterArchetype;
-import otmkurssiprojekti.level.gameobjects.archetypes.PlayerCharacterArchetype;
-import otmkurssiprojekti.level.gameobjects.gamecharacter.nonplayercharacter.HostileNonPlayerCharacter;
-import otmkurssiprojekti.level.gameobjects.gamecharacter.playercharacter.PlayerCharacter;
-import otmkurssiprojekti.level.gameobjects.interfaces.NonPlayerCharacter;
-import otmkurssiprojekti.level.gameobjects.location.Coords;
-import otmkurssiprojekti.level.gameobjects.location.Direction;
+import otmkurssiprojekti.domain.level.BasicGameLevel;
+import otmkurssiprojekti.domain.level.GameLevel;
+import otmkurssiprojekti.domain.gameobject.archetypes.NonPlayerCharacterArchetype;
+import otmkurssiprojekti.domain.gameobject.archetypes.PlayerCharacterArchetype;
+import otmkurssiprojekti.domain.gameobject.gamecharacter.nonplayercharacter.HostileNonPlayerCharacter;
+import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.PlayerCharacter;
+import otmkurssiprojekti.domain.gameobject.interfaces.NonPlayerCharacter;
+import otmkurssiprojekti.domain.gameobject.location.Coords;
+import otmkurssiprojekti.domain.gameobject.location.Direction;
 
 /**
  *
@@ -89,10 +89,15 @@ public class TextFileLevelDaoTest {
     }
 
     public void testSaveLoadLevel(GameLevel gl) {
-        tfld.saveLevel(gl);
-        GameLevel gl2 = tfld.loadLevel(Paths.get(directory.toString(), gl.toString()));
-
-        assertTrue("Expected " + gl.toString() + " to be equal with " + gl2.toString(), gl.equals(gl2));
+        try {
+            tfld.saveLevel(gl);
+            GameLevel gl2 = tfld.loadLevel(Paths.get(directory.toString(), gl.toString()));
+            assertTrue("Expected " + gl.toString() + " to be equal with " + gl2.toString(), gl.equals(gl2));
+        } catch (IllegalArgumentException i) {
+            fail(i.getMessage());
+        } catch (Exception e) {
+            fail("An exception that is not an illegal argument exception got thrown: " + e.getMessage());
+        }
     }
 
 }

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import otmkurssiprojekti.dataaccessobject.FileUserDao;
 import otmkurssiprojekti.dataaccessobject.UserDao;
-import otmkurssiprojekti.DungeonCrawler;
+import otmkurssiprojekti.userinterface.DungeonCrawler;
 
 /**
  *

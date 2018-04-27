@@ -17,12 +17,12 @@ import otmkurssiprojekti.dataaccessobject.FileUserDao;
 import otmkurssiprojekti.dataaccessobject.GameLevelDao;
 import otmkurssiprojekti.dataaccessobject.GameSaveDao;
 import otmkurssiprojekti.dataaccessobject.UserDao;
-import otmkurssiprojekti.DungeonCrawler;
-import otmkurssiprojekti.GameSave;
-import otmkurssiprojekti.level.GameLevel;
-import otmkurssiprojekti.level.gameobjects.archetypes.PlayerCharacterArchetype;
-import otmkurssiprojekti.level.gameobjects.location.Direction;
-import otmkurssiprojekti.level.gameobjects.gamecharacter.playercharacter.PlayerCharacter;
+import otmkurssiprojekti.userinterface.DungeonCrawler;
+import otmkurssiprojekti.dataaccessobject.dataobject.GameSave;
+import otmkurssiprojekti.domain.level.GameLevel;
+import otmkurssiprojekti.domain.gameobject.archetypes.PlayerCharacterArchetype;
+import otmkurssiprojekti.domain.gameobject.location.Direction;
+import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.PlayerCharacter;
 
 /**
  *

@@ -11,10 +11,10 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import otmkurssiprojekti.DungeonCrawler;
-import otmkurssiprojekti.level.GameLevel;
-import otmkurssiprojekti.level.gameobjects.gamecharacter.playercharacter.PlayerCharacter;
-import otmkurssiprojekti.level.gameobjects.location.Direction;
+import otmkurssiprojekti.userinterface.DungeonCrawler;
+import otmkurssiprojekti.domain.level.GameLevel;
+import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.PlayerCharacter;
+import otmkurssiprojekti.domain.gameobject.location.Direction;
 import otmkurssiprojekti.userinterface.renderer.Renderer;
 import otmkurssiprojekti.userinterface.renderer.TextRenderer;
 

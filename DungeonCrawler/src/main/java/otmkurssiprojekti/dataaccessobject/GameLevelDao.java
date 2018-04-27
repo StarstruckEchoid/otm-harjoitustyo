@@ -7,7 +7,7 @@ package otmkurssiprojekti.dataaccessobject;
 
 import java.nio.file.Path;
 import java.util.List;
-import otmkurssiprojekti.level.GameLevel;
+import otmkurssiprojekti.domain.level.GameLevel;
 
 /**
  *

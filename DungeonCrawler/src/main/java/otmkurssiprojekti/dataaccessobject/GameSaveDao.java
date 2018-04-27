@@ -6,7 +6,7 @@
 package otmkurssiprojekti.dataaccessobject;
 
 import java.util.List;
-import otmkurssiprojekti.GameSave;
+import otmkurssiprojekti.dataaccessobject.dataobject.GameSave;
 
 /**
  *

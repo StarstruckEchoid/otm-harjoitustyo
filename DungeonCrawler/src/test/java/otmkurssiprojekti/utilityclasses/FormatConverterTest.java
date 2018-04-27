@@ -5,8 +5,8 @@ package otmkurssiprojekti.utilityclasses;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import otmkurssiprojekti.level.gameobjects.location.Direction;
-import otmkurssiprojekti.level.gameobjects.location.Coords;
+import otmkurssiprojekti.domain.gameobject.location.Direction;
+import otmkurssiprojekti.domain.gameobject.location.Coords;
 import java.util.ArrayList;
 import java.util.Arrays;
 import org.junit.After;
@@ -15,10 +15,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import otmkurssiprojekti.level.BasicGameLevel;
-import otmkurssiprojekti.level.gameobjects.archetypes.PlayerCharacterArchetype;
-import otmkurssiprojekti.level.gameobjects.gamecharacter.playercharacter.PlayerCharacter;
-import otmkurssiprojekti.level.gameobjects.interfaces.GameObject;
+import otmkurssiprojekti.domain.level.BasicGameLevel;
+import otmkurssiprojekti.domain.gameobject.archetypes.PlayerCharacterArchetype;
+import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.PlayerCharacter;
+import otmkurssiprojekti.domain.gameobject.interfaces.GameObject;
 
 /**
  *

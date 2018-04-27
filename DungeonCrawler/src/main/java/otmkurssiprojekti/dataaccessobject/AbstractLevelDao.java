@@ -9,7 +9,7 @@ import java.io.File;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import otmkurssiprojekti.level.GameLevel;
+import otmkurssiprojekti.domain.level.GameLevel;
 
 /**
  *

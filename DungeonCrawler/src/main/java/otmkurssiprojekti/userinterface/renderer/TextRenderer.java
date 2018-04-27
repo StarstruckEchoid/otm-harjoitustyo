@@ -8,10 +8,10 @@ package otmkurssiprojekti.userinterface.renderer;
 import javafx.scene.Node;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import otmkurssiprojekti.level.GameLevel;
-import otmkurssiprojekti.level.gameobjects.gamecharacter.playercharacter.PlayerCharacter;
-import otmkurssiprojekti.level.gameobjects.location.Coords;
-import otmkurssiprojekti.level.gameobjects.location.FlatCoords;
+import otmkurssiprojekti.domain.level.GameLevel;
+import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.PlayerCharacter;
+import otmkurssiprojekti.domain.gameobject.location.Coords;
+import otmkurssiprojekti.domain.gameobject.location.FlatCoords;
 import otmkurssiprojekti.utilityclasses.FormatConverter;
 
 public class TextRenderer implements Renderer {

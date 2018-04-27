@@ -10,7 +10,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import otmkurssiprojekti.DungeonCrawler;
+import otmkurssiprojekti.userinterface.DungeonCrawler;
 
 /**
  *

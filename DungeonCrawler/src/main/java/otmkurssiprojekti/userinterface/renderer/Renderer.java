@@ -6,7 +6,7 @@
 package otmkurssiprojekti.userinterface.renderer;
 
 import javafx.scene.Node;
-import otmkurssiprojekti.level.GameLevel;
+import otmkurssiprojekti.domain.level.GameLevel;
 
 /**
  *

@@ -5,7 +5,7 @@
  */
 package otmkurssiprojekti.userinterface.screen;
 
-import otmkurssiprojekti.DungeonCrawler;
+import otmkurssiprojekti.userinterface.DungeonCrawler;
 
 /**
  *

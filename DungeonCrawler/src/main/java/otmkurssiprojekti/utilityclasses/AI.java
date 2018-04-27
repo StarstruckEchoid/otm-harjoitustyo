@@ -7,12 +7,12 @@ package otmkurssiprojekti.utilityclasses;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import otmkurssiprojekti.level.GameLevel;
-import otmkurssiprojekti.level.gameobjects.location.Coords;
-import otmkurssiprojekti.level.gameobjects.location.Direction;
-import otmkurssiprojekti.level.gameobjects.gamecharacter.playercharacter.PlayerCharacter;
-import otmkurssiprojekti.level.gameobjects.interfaces.Mobile;
-import otmkurssiprojekti.level.gameobjects.interfaces.NonPlayerCharacter;
+import otmkurssiprojekti.domain.level.GameLevel;
+import otmkurssiprojekti.domain.gameobject.location.Coords;
+import otmkurssiprojekti.domain.gameobject.location.Direction;
+import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.PlayerCharacter;
+import otmkurssiprojekti.domain.gameobject.interfaces.Mobile;
+import otmkurssiprojekti.domain.gameobject.interfaces.NonPlayerCharacter;
 
 /**
  *

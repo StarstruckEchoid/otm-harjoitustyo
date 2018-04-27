@@ -13,7 +13,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import otmkurssiprojekti.level.BasicGameLevel;
+import otmkurssiprojekti.domain.level.BasicGameLevel;
 
 /**
  *

@@ -18,12 +18,12 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import otmkurssiprojekti.GameSave;
-import otmkurssiprojekti.level.BasicGameLevel;
-import otmkurssiprojekti.level.gameobjects.archetypes.PlayerCharacterArchetype;
-import otmkurssiprojekti.level.gameobjects.location.Coords;
-import otmkurssiprojekti.level.gameobjects.location.Direction;
-import otmkurssiprojekti.level.gameobjects.gamecharacter.playercharacter.PlayerCharacter;
+import otmkurssiprojekti.dataaccessobject.dataobject.GameSave;
+import otmkurssiprojekti.domain.level.BasicGameLevel;
+import otmkurssiprojekti.domain.gameobject.archetypes.PlayerCharacterArchetype;
+import otmkurssiprojekti.domain.gameobject.location.Coords;
+import otmkurssiprojekti.domain.gameobject.location.Direction;
+import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.PlayerCharacter;
 
 /**
  *

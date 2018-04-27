@@ -10,7 +10,7 @@ import java.util.List;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import otmkurssiprojekti.dataaccessobject.FileUserDao;
-import otmkurssiprojekti.DungeonCrawler;
+import otmkurssiprojekti.userinterface.DungeonCrawler;
 
 /**
  *
