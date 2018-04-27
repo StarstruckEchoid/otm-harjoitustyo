@@ -5,6 +5,7 @@
  */
 package otmkurssiprojekti.domain.gameobject.gameinanimates;
 
+import java.util.Objects;
 import otmkurssiprojekti.domain.gameobject.interfaces.GameObject;
 import otmkurssiprojekti.domain.gameobject.archetypes.ImmutableObjectArchetype;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
@@ -62,4 +63,44 @@ public class ImmutableObject implements GameObject {
     public Direction getDirection() {
         return direction;
     }
+
+    @Override
+    public String toString() {
+        return this.id + ": " + this.coords.toString();
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 17 * hash + this.id;
+        hash = 17 * hash + (this.transparent ? 1 : 0);
+        hash = 17 * hash + (this.solid ? 1 : 0);
+        hash = 17 * hash + Objects.hashCode(this.coords);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final ImmutableObject other = (ImmutableObject) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (this.transparent != other.transparent) {
+            return false;
+        }
+        if (this.solid != other.solid) {
+            return false;
+        }
+        return Objects.equals(this.coords, other.coords);
+    }
+
 }

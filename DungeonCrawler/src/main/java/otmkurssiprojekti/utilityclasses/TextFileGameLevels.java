@@ -26,6 +26,9 @@ import otmkurssiprojekti.domain.gameobject.location.Direction;
  * @author gjuho
  */
 public class TextFileGameLevels {
+    
+    public static int BLOCKS_LEVEL = 1;
+    public static final String EMPTY_IDENTIFIER = "EMPTY";
 
     /**
      * Makes a game level from a text file. The text file should be something
@@ -60,7 +63,7 @@ public class TextFileGameLevels {
         List<InteractiveObject> interactives = makeInteractiveObjectList(fields[4]);
         List<LinkObject> levelLinks = makeLevelLinkList(fields[5]);
         List<PointsBall> points = makePointsSourceList(fields[6]);
-
+        
         return new BasicGameLevel(levelName, player, npcs, blocks, interactives, levelLinks, points);
     }
 
@@ -92,11 +95,12 @@ public class TextFileGameLevels {
         StringBuilder sb = new StringBuilder();
         sb.append(gameLevel.getLevelName()).append("\n\n");
         sb.append(printPlayerCharacter(gameLevel.getPlayer())).append("\n\n");
-        sb.append(printNPCList(gameLevel.getNpcs())).append("\n\n");
-        sb.append(printBlockList(gameLevel.getBlocks())).append("\n\n");
-        sb.append(printInteractiveObjectList(gameLevel.getInteractives())).append("\n\n");
-        sb.append(printLevelLinkList(gameLevel.getLevelLinks())).append("\n\n");
-
+        sb.append(printNPCList(gameLevel.getNpcs())).append("\n");
+        sb.append(printBlockList(gameLevel.getBlocks())).append("\n");
+        sb.append(printInteractiveObjectList(gameLevel.getInteractives())).append("\n");
+        sb.append(printLevelLinkList(gameLevel.getLevelLinks())).append("\n");
+        sb.append(printPointsSourceList(gameLevel.getPoints())).append("\n");
+        
         return sb.toString();
     }
 
@@ -111,15 +115,15 @@ public class TextFileGameLevels {
         if (!attr.matches("[0-9]+,[0-9]+,[0-9]+")) {
             throw new IllegalArgumentException();
         }
-
+        
         String[] attrs = attr.split(",");
         int x = Integer.parseInt(attrs[0]);
         int y = Integer.parseInt(attrs[1]);
         int z = Integer.parseInt(attrs[2]);
-
+        
         return new Coords(x, y, z);
     }
-
+    
     public static String printCoords(Coords coords) {
         return coords.getX() + "," + coords.getY() + "," + coords.getZ();
     }
@@ -142,11 +146,11 @@ public class TextFileGameLevels {
         }
         throw new IllegalArgumentException("Expected attr to be a string representation of an enum constant but it was \"" + attr + "\".");
     }
-
+    
     public static <T extends Enum<?>> String printArchetype(T t) {
         return t.toString();
     }
-
+    
     public static PlayerCharacter makePlayerCharacter(String field) {
         String[] attrs = field.split(";");
         int hp = Integer.parseInt(attrs[0]);
@@ -155,14 +159,14 @@ public class TextFileGameLevels {
         int end = Integer.parseInt(attrs[3]);
         int agl = Integer.parseInt(attrs[4]);
         Coords coords = makeCoords(attrs[5]);
-
+        
         return new PlayerCharacter(hp, str, per, end, agl, coords, Direction.DOWN);
     }
-
+    
     public static String printPlayerCharacter(PlayerCharacter pc) {
         return pc.getHp() + ";" + pc.getStr() + ";" + pc.getPer() + ";" + pc.getEnd() + ";" + pc.getAgl() + ";" + printCoords(pc.getCoords());
     }
-
+    
     public static NonPlayerCharacter makeNonPlayerCharacter(String field) {
         String[] attrs = field.split(";");
         if (attrs.length < 2) {
@@ -170,15 +174,18 @@ public class TextFileGameLevels {
         }
         NonPlayerCharacterArchetype npca = makeArcheType(NonPlayerCharacterArchetype.class, attrs[0]);
         Coords coords = makeCoords(attrs[1]);
-
+        
         return new HostileNonPlayerCharacter(npca, coords, Direction.DOWN);
     }
-
+    
     public static String printNonPlayerCharacter(NonPlayerCharacter npc) {
         return npc.getId() + ";" + printCoords(npc.getCoords());
     }
-
+    
     public static List<NonPlayerCharacter> makeNPCList(String field) {
+        if (field.equals(EMPTY_IDENTIFIER)) {
+            return null;
+        }
         List<NonPlayerCharacter> npcs = new ArrayList<>();
         String[] npcDats = field.split("\n");
         for (String npcDat : npcDats) {
@@ -186,30 +193,36 @@ public class TextFileGameLevels {
         }
         return npcs;
     }
-
+    
     public static String printNPCList(List<NonPlayerCharacter> npcs) {
+        if (npcs.isEmpty()) {
+            return EMPTY_IDENTIFIER + "\n";
+        }
         StringBuilder sb = new StringBuilder();
         npcs.forEach(npc -> sb.append(printNonPlayerCharacter(npc)).append("\n"));
         return sb.toString();
     }
-
+    
     public static List<ImmutableObject> makeBlockList(String field) {
+        if (field.equals(EMPTY_IDENTIFIER)) {
+            return new ArrayList<>();
+        }
         List<ImmutableObject> blocks = new ArrayList<>();
         String[] rows = field.split("\n");
         for (int y = 0; y < rows.length; y++) {
             String row = rows[y];
             for (int x = 0; x < row.length(); x++) {
                 String id = Character.toString(row.charAt(x));
-                blocks.add(new ImmutableObject(makeArcheType(ImmutableObjectArchetype.class, id), new Coords(x, y, 1), Direction.DOWN));
+                blocks.add(new ImmutableObject(makeArcheType(ImmutableObjectArchetype.class, id), new Coords(x, y, BLOCKS_LEVEL), Direction.DOWN));
             }
         }
         return blocks;
     }
-
+    
     public static String printBlockList(List<ImmutableObject> blocks) {
         int biggestY = blocks.stream().mapToInt(o -> o.getCoords().getY()).max().orElse(0);
         int biggestX = blocks.stream().mapToInt(o -> o.getCoords().getX()).max().orElse(0);
-        char[][] matrix = new char[biggestY][biggestX];
+        char[][] matrix = new char[biggestY + 1][biggestX + 1];
         for (ImmutableObject block : blocks) {
             Coords blockCoords = block.getCoords();
             matrix[blockCoords.getY()][blockCoords.getX()] = block.getId();
@@ -221,29 +234,38 @@ public class TextFileGameLevels {
         }
         return sb.toString();
     }
-
+    
     public static List<InteractiveObject> makeInteractiveObjectList(String field) {
+        if (field.equals(EMPTY_IDENTIFIER)) {
+            return new ArrayList<>();
+        }
         return new ArrayList<>();
     }
-
+    
     public static String printInteractiveObjectList(List<InteractiveObject> interactiveObjects) {
-        return "";
+        return EMPTY_IDENTIFIER + "\n";
     }
-
+    
     public static List<LinkObject> makeLevelLinkList(String field) {
+        if (field.equals(EMPTY_IDENTIFIER)) {
+            return new ArrayList<>();
+        }
         return new ArrayList<>();
     }
-
+    
     public static String printLevelLinkList(List<LinkObject> interactiveObjects) {
-        return "";
+        return EMPTY_IDENTIFIER + "\n";
     }
-
+    
     public static List<PointsBall> makePointsSourceList(String field) {
+        if (field.equals(EMPTY_IDENTIFIER)) {
+            return new ArrayList<>();
+        }
         return new ArrayList<>();
     }
-
+    
     public static String printPointsSourceList(List<PointsBall> interactiveObjects) {
-        return "";
+        return EMPTY_IDENTIFIER + "\n";
     }
-
+    
 }

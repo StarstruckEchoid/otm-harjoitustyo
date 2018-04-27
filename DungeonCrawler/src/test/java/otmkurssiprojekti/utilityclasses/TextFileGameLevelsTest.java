@@ -5,6 +5,7 @@
  */
 package otmkurssiprojekti.utilityclasses;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -12,6 +13,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import otmkurssiprojekti.domain.gameobject.archetypes.ImmutableObjectArchetype;
 import otmkurssiprojekti.domain.level.BasicGameLevel;
 import otmkurssiprojekti.domain.level.GameLevel;
 import otmkurssiprojekti.domain.gameobject.archetypes.NonPlayerCharacterArchetype;
@@ -32,6 +34,19 @@ import otmkurssiprojekti.domain.gameobject.location.Direction;
  */
 public class TextFileGameLevelsTest {
 
+    private String pcString;
+    private PlayerCharacter pc;
+
+    private String npcsString;
+    private List<NonPlayerCharacter> npcs;
+
+    private String blocksString;
+    private List<ImmutableObject> blocks;
+
+    private final String levelName = "testLevel";
+    private String gameLevelString;
+    private GameLevel gameLevel;
+
     public TextFileGameLevelsTest() {
     }
 
@@ -45,31 +60,75 @@ public class TextFileGameLevelsTest {
 
     @Before
     public void setUp() {
+        pcString = "20;0;1;2;3;4,5,6";
+        pc = new PlayerCharacter(20, 0, 1, 2, 3, new Coords(4, 5, 6), Direction.DOWN);
+
+        npcsString
+                = "r;0,1,2\n"
+                + "r;2,4,7\n"
+                + "r;3,3,3\n";
+
+        npcs = new ArrayList<>();
+        npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.RAT, new Coords(0, 1, 2), Direction.DOWN));
+        npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.RAT, new Coords(2, 4, 7), Direction.DOWN));
+        npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.RAT, new Coords(3, 3, 3), Direction.DOWN));
+
+        blocksString
+                = "00000\n"
+                + "0...0\n"
+                + "0.,.0\n"
+                + "0...0\n"
+                + "00000\n";
+        blocks = new ArrayList<>();
+        for (int y = 0; y < 5; y++) {
+            for (int x = 0; x < 5; x++) {
+                Coords coords = new Coords(x, y, TextFileGameLevels.BLOCKS_LEVEL);
+                if (x == 0 || x == 4 || y == 0 || y == 4) {
+                    blocks.add(new ImmutableObject(ImmutableObjectArchetype.STONE_WALL, coords, Direction.DOWN));
+                } else if (x == 2 && y == 2) {
+                    blocks.add(new ImmutableObject(ImmutableObjectArchetype.GRASS, coords, Direction.DOWN));
+                } else {
+                    blocks.add(new ImmutableObject(ImmutableObjectArchetype.STONE_PATH, coords, Direction.DOWN));
+                }
+            }
+        }
+
+        gameLevelString
+                = levelName + "\n"
+                + "\n"
+                + pcString + "\n"
+                + "\n"
+                + npcsString
+                + "\n"
+                + blocksString + "\n"
+                + "EMPTY\n"
+                + "\n"
+                + "EMPTY\n"
+                + "\n"
+                + "EMPTY\n"
+                + "\n";
+
+        gameLevel = new BasicGameLevel(levelName, pc, npcs, blocks, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
     }
 
     @After
     public void tearDown() {
     }
 
-//    @Test
-//    public void testMakeGameLevel() {
-//        System.out.println("makeGameLevel");
-//        String string = "";
-//        GameLevel expResult = null;
-//        GameLevel result = TextFileGameLevels.makeGameLevel(string);
-//        assertEquals(expResult, result);
-//        fail("The test case is a prototype.");
-//    }
-//
-//    @Test
-//    public void testPrintGameLevel() {
-//        System.out.println("printGameLevel");
-//        BasicGameLevel gameLevel = null;
-//        String expResult = "";
-//        String result = TextFileGameLevels.printGameLevel(gameLevel);
-//        assertEquals(expResult, result);
-//        fail("The test case is a prototype.");
-//    }
+    @Test
+    public void testMakeGameLevel() {
+        GameLevel madeGameLevel = TextFileGameLevels.makeGameLevel(gameLevelString);
+
+        assertTrue("Expected " + gameLevel.toString() + " but got " + madeGameLevel.toString(), madeGameLevel.equals(gameLevel));
+    }
+
+    @Test
+    public void testPrintGameLevel() {
+        String printedGameLevel = TextFileGameLevels.printGameLevel((BasicGameLevel) gameLevel);
+
+        assertTrue("Expected\n" + gameLevelString + "\nbut got\n" + printedGameLevel, printedGameLevel.equals(gameLevelString));
+    }
+
     @Test
     public void testMakeCoords() {
         Coords c = TextFileGameLevels.makeCoords("0,1,7");
@@ -118,18 +177,16 @@ public class TextFileGameLevelsTest {
 
     @Test
     public void testMakePlayerCharacter() {
-        PlayerCharacter pc = TextFileGameLevels.makePlayerCharacter("20;0;1;2;3;4,5,6");
-        PlayerCharacter expected = new PlayerCharacter(20, 0, 1, 2, 3, new Coords(4, 5, 6), Direction.DOWN);
+        PlayerCharacter madePc = TextFileGameLevels.makePlayerCharacter(pcString);
 
-        assertTrue("Expected " + expected.toString() + " but got " + pc.toString(), pc.equals(expected));
+        assertTrue("Expected " + pc.toString() + " but got " + madePc.toString(), madePc.equals(pc));
     }
 
     @Test
     public void testPrintPlayerCharacter() {
-        String pcS = TextFileGameLevels.printPlayerCharacter(new PlayerCharacter(20, 0, 1, 2, 3, new Coords(4, 5, 6), Direction.DOWN));
-        String expected = "20;0;1;2;3;4,5,6";
+        String printedPc = TextFileGameLevels.printPlayerCharacter(pc);
 
-        assertTrue("Expected " + expected + " but got " + pcS, pcS.equals(expected));
+        assertTrue("Expected " + pcString + " but got " + printedPc, printedPc.equals(pcString));
     }
 
     @Test
@@ -153,28 +210,31 @@ public class TextFileGameLevelsTest {
     }
 
     @Test
-    public void testMakePrintNPCList() {
-        String dat
-                = "r;0,1,2\n"
-                + "r;2,4,7\n"
-                + "r;3,3,3\n";
-        List<NonPlayerCharacter> npcs = TextFileGameLevels.makeNPCList(dat);
-        String dat2 = TextFileGameLevels.printNPCList(npcs);
+    public void testMakeNPCList() {
+        List<NonPlayerCharacter> madeNpcs = TextFileGameLevels.makeNPCList(npcsString);
 
-        assertTrue(dat + "\ndoes not equal\n" + dat2, dat.equals(dat2));
-
+        assertTrue("Expected " + npcs.toString() + " but got " + madeNpcs.toString(), madeNpcs.equals(npcs));
     }
 
     @Test
     public void testPrintNPCList() {
+        String printedNpcs = TextFileGameLevels.printNPCList(npcs);
+
+        assertTrue("Expected\n" + npcsString + "\nbut got\n" + printedNpcs, printedNpcs.equals(npcsString));
     }
 
     @Test
     public void testMakeBlockList() {
+        List<ImmutableObject> madeBlocks = TextFileGameLevels.makeBlockList(blocksString);
+
+        assertTrue("Expected\n" + blocks.toString() + "\nbut got\n" + madeBlocks.toString(), madeBlocks.containsAll(blocks));
     }
 
     @Test
     public void testPrintBlockList() {
+        String printedBlocks = TextFileGameLevels.printBlockList(blocks);
+
+        assertTrue(printedBlocks.equals(blocksString));
     }
 //    
 //    @Test

@@ -6,6 +6,7 @@
 package otmkurssiprojekti.domain.gameobject.archetypes;
 
 /**
+ * Has an identity as a char, transparency and solidity.
  *
  * @author Juho Gröhn
  */
@@ -26,6 +27,11 @@ public enum ImmutableObjectArchetype implements Archetype {
         this.solid = solid;
     }
 
+    /**
+     * Returns the id, which is a unique char.
+     *
+     * @return id
+     */
     @Override
     public char getId() {
         return id;
