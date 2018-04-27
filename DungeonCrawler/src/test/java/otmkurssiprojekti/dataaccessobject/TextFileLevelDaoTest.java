@@ -11,6 +11,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import static org.hamcrest.CoreMatchers.is;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -23,6 +24,7 @@ import otmkurssiprojekti.domain.gameobject.archetypes.NonPlayerCharacterArchetyp
 import otmkurssiprojekti.domain.gameobject.archetypes.PlayerCharacterArchetype;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.nonplayercharacter.HostileNonPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.PlayerCharacter;
+import otmkurssiprojekti.domain.gameobject.interfaces.GameObject;
 import otmkurssiprojekti.domain.gameobject.interfaces.NonPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
 import otmkurssiprojekti.domain.gameobject.location.Direction;
@@ -59,7 +61,7 @@ public class TextFileLevelDaoTest {
 
     @Test
     public void testSLL0() {
-        GameLevel gl = new BasicGameLevel(
+        BasicGameLevel gl = new BasicGameLevel(
                 "testLevel",
                 new PlayerCharacter(PlayerCharacterArchetype.THIEF, new Coords(0, 0, 0), Direction.DOWN),
                 new ArrayList<>(),
@@ -76,7 +78,7 @@ public class TextFileLevelDaoTest {
         List<NonPlayerCharacter> npcs = new ArrayList<>();
         npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.RAT, new Coords(), Direction.DOWN));
 
-        GameLevel gl = new BasicGameLevel(
+        BasicGameLevel gl = new BasicGameLevel(
                 "testLevel",
                 new PlayerCharacter(PlayerCharacterArchetype.THIEF, new Coords(0, 0, 0), Direction.DOWN),
                 npcs,
@@ -92,12 +94,21 @@ public class TextFileLevelDaoTest {
         try {
             tfld.saveLevel(gl);
             GameLevel gl2 = tfld.loadLevel(Paths.get(directory.toString(), gl.toString()));
-            assertTrue("Expected " + gl.toString() + " to be equal with " + gl2.toString(), gl.equals(gl2));
+            testLevelsEqual(gl, gl2);
         } catch (IllegalArgumentException i) {
             fail(i.getMessage());
         } catch (Exception e) {
-            fail("An exception that is not an illegal argument exception got thrown: " + e.getMessage());
+            fail("An exception that is not an illegal argument exception got thrown: " + e.getClass().getCanonicalName() + ": " + e.getMessage());
         }
+    }
+
+    public void testLevelsEqual(GameLevel g1, GameLevel g2) {
+        String g1Name = g1.getLevelName();
+        String g2Name = g2.getLevelName();
+        assertThat(g1Name, is(g2Name));
+        List<GameObject> g1objs = g1.getGameObjects();
+        List<GameObject> g2objs = g2.getGameObjects();
+        assertThat(g1objs, is(g2objs));
     }
 
 }

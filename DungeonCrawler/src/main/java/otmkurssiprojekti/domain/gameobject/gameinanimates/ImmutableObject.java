@@ -71,11 +71,9 @@ public class ImmutableObject implements GameObject {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 17 * hash + this.id;
-        hash = 17 * hash + (this.transparent ? 1 : 0);
-        hash = 17 * hash + (this.solid ? 1 : 0);
-        hash = 17 * hash + Objects.hashCode(this.coords);
+        int hash = 3;
+        hash = 67 * hash + this.id;
+        hash = 67 * hash + Objects.hashCode(this.coords);
         return hash;
     }
 
@@ -94,13 +92,10 @@ public class ImmutableObject implements GameObject {
         if (this.id != other.id) {
             return false;
         }
-        if (this.transparent != other.transparent) {
+        if (!Objects.equals(this.coords, other.coords)) {
             return false;
         }
-        if (this.solid != other.solid) {
-            return false;
-        }
-        return Objects.equals(this.coords, other.coords);
+        return true;
     }
 
 }

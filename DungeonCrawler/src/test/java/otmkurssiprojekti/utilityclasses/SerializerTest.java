@@ -13,6 +13,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import otmkurssiprojekti.domain.gameobject.archetypes.PlayerCharacterArchetype;
+import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.PlayerCharacter;
+import otmkurssiprojekti.domain.gameobject.location.Coords;
+import otmkurssiprojekti.domain.gameobject.location.Direction;
 import otmkurssiprojekti.domain.level.BasicGameLevel;
 
 /**
@@ -36,7 +40,14 @@ public class SerializerTest {
 
     @Before
     public void setUp() {
-        glvl = new BasicGameLevel("beta", null, new ArrayList<>(), null, null, null, null);
+        glvl = new BasicGameLevel(
+                "beta",
+                new PlayerCharacter(PlayerCharacterArchetype.THIEF, new Coords(), Direction.DOWN),
+                new ArrayList<>(),
+                new ArrayList<>(),
+                new ArrayList<>(),
+                new ArrayList<>(),
+                new ArrayList<>());
     }
 
     @After

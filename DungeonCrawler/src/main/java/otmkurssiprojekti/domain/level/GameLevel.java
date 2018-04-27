@@ -44,6 +44,6 @@ public interface GameLevel extends Serializable {
     String toString();
 
     @Override
-    boolean equals(Object obj);
+    public boolean equals(Object obj);
 
 }
