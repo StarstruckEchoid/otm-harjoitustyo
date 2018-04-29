@@ -28,9 +28,8 @@
                 <version>0.8.0</version>
                 <configuration>
                     <excludes>
-                        <exclude>otmkurssiprojekti/DungeonCrawler*</exclude>
                         <exclude>otmkurssiprojekti/userinterface/**/*</exclude>
-                        <exclude>otmkurssiprojekti/level/gameobjects/archetypes/*</exclude>
+                        <exclude>otmkurssiprojekti/domain/gameobjects/archetypes/*</exclude>
                     </excludes>
                 </configuration>
                 <executions>
@@ -71,7 +70,7 @@
                         <configuration>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>otmkurssiprojekti.DungeonCrawler</mainClass>
+                                    <mainClass>otmkurssiprojekti.userinterface.DungeonCrawler</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>

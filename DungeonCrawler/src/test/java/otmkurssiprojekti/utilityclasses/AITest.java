@@ -82,7 +82,7 @@ public class AITest {
         testBestRoute(c1, c2, expected);
     }
 
-    @Test(timeout = 200)
+    @Test(timeout = 1000)
     public void testBR3() {
         int n = 10;
         Coords c1 = new Coords(0, 0, 0);
