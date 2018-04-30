@@ -19,10 +19,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import otmkurssiprojekti.dataaccessobject.dataobject.GameData;
 import otmkurssiprojekti.dataaccessobject.dataobject.SimpleGameData;
-import otmkurssiprojekti.dataaccessobject.TextFileLevelDao;
-import otmkurssiprojekti.domain.level.GameLevel;
 import otmkurssiprojekti.userinterface.screen.MainMenuScreen;
-import otmkurssiprojekti.utilityclasses.TextFileGameLevels;
 
 /**
  *
@@ -43,7 +40,7 @@ public class DungeonCrawler extends Application {
             }
         }
     }
-    public static final String FIRST_LEVEL = "Starting Level";
+    public static final String FIRST_LEVEL = "Starting_Level.txt";
     public static final Path LEVEL_DIR = Paths.get("levels");
 
 //    static {
