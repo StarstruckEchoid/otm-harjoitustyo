@@ -8,6 +8,8 @@ package otmkurssiprojekti.dataaccessobject.dataobject;
 import otmkurssiprojekti.domain.level.GameLevel;
 
 /**
+ * A GameData contains knowledge of three things: the user, the player, and the
+ * GameLevel.
  *
  * @author Juho Gröhn
  */

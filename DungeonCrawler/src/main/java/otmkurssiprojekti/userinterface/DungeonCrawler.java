@@ -46,54 +46,54 @@ public class DungeonCrawler extends Application {
     public static final String FIRST_LEVEL = "Starting Level";
     public static final Path LEVEL_DIR = Paths.get("levels");
 
-    static {
-        //Create file LEVEL_DIR if it does not yet exist.
-        if (!LEVEL_DIR.toFile().exists() || !LEVEL_DIR.toFile().isDirectory()) {
-            try {
-                Files.createDirectory(LEVEL_DIR);
-            } catch (IOException ex) {
-                Logger.getLogger(DungeonCrawler.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-
-        //PLACEHOLDER CODE: Makes a new level.
-        GameLevel gameLvl = TextFileGameLevels.makeGameLevel(
-                "Starting Level\n"
-                + "\n"
-                + "10;1;1;1;1;3,3,0;0\n"
-                + "\n"
-                + "%;7,10,0\n"
-                + "r;8,8,0\n"
-                + "d;4,9,0\n"
-                + "¨;1,1,0\n"
-                + "\n"
-                + "0,,,,,,,,,,,,,,0\n"
-                + "0,,,,,,,,,,,,,,0\n"
-                + "0,,,000000000000\n"
-                + "0,,,,,,,,,,,,,,0\n"
-                + "0,,,,,,,,,,,,,,0\n"
-                + "0,,000,,000,,,00\n"
-                + "0,,0,,,,0,,,,,,0\n"
-                + "0,,0,,,,0,,,,,,0\n"
-                + "000000000,,,,,,0\n"
-                + "0,,,,,,,0,,,,,,0\n"
-                + "0,,,0,,,0,,,,,,0\n"
-                + "0,,,0,,,0,,,,,,0\n"
-                + "0,,,00000,,,,,,0\n"
-                + "0,,,,,,,,,,,,,,0\n"
-                + "0,,,,,,,,,,,,,,0\n"
-                + "000000000000,,,0\n"
-                + "\n"
-                + "EMPTY\n"
-                + "\n"
-                + "EMPTY\n"
-                + "\n"
-                + "EMPTY"
-        );
-
-        //Inserts it into LEVEL_DIR.
-        new TextFileLevelDao(LEVEL_DIR).saveLevel(gameLvl);
-    }
+//    static {
+//        //Create file LEVEL_DIR if it does not yet exist.
+//        if (!LEVEL_DIR.toFile().exists() || !LEVEL_DIR.toFile().isDirectory()) {
+//            try {
+//                Files.createDirectory(LEVEL_DIR);
+//            } catch (IOException ex) {
+//                Logger.getLogger(DungeonCrawler.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
+//
+//        //PLACEHOLDER CODE: Makes a new level.
+//        GameLevel gameLvl = TextFileGameLevels.makeGameLevel(
+//                "Starting Level\n"
+//                + "\n"
+//                + "10;1;1;1;1;3,3,0;0\n"
+//                + "\n"
+//                + "%;7,10,0\n"
+//                + "r;8,8,0\n"
+//                + "d;4,9,0\n"
+//                + "¨;1,1,0\n"
+//                + "\n"
+//                + "0,,,,,,,,,,,,,,0\n"
+//                + "0,,,,,,,,,,,,,,0\n"
+//                + "0,,,000000000000\n"
+//                + "0,,,,,,,,,,,,,,0\n"
+//                + "0,,,,,,,,,,,,,,0\n"
+//                + "0,,000,,000,,,00\n"
+//                + "0,,0,,,,0,,,,,,0\n"
+//                + "0,,0,,,,0,,,,,,0\n"
+//                + "000000000,,,,,,0\n"
+//                + "0,,,,,,,0,,,,,,0\n"
+//                + "0,,,0,,,0,,,,,,0\n"
+//                + "0,,,0,,,0,,,,,,0\n"
+//                + "0,,,00000,,,,,,0\n"
+//                + "0,,,,,,,,,,,,,,0\n"
+//                + "0,,,,,,,,,,,,,,0\n"
+//                + "000000000000,,,0\n"
+//                + "\n"
+//                + "EMPTY\n"
+//                + "\n"
+//                + "EMPTY\n"
+//                + "\n"
+//                + "EMPTY"
+//        );
+//
+//        //Inserts it into LEVEL_DIR.
+//        new TextFileLevelDao(LEVEL_DIR).saveLevel(gameLvl);
+//    }
     private static final Timer TIMER = new Timer();
     private static final int TICKS_PERIOD = 500; //Controls how often the game updates, eg. how often npcs move.
     private static final int FRAMES_PERIOD = 50; //Controls how often the screen updates. Reciprocal of frames per millisecond.
@@ -144,18 +144,43 @@ public class DungeonCrawler extends Application {
     }
     //Getters and setters.
 
+    /**
+     * Gets GameData.
+     *
+     * @return The current GameData of DungeonCrawler.
+     * @see GameData
+     */
     public GameData getGameData() {
         return gameData;
     }
 
+    /**
+     * Gets GameScreen.
+     *
+     * @return The current GameScreen of DungeonCrawler.
+     * @see GameScreen
+     */
     public GameScreen getGameScreen() {
         return gameScreen;
     }
 
+    /**
+     * Sets the GameData. GameData is used by UI classes, especially dao users,
+     * to determine which data to display.
+     *
+     * @param gameData The overwriting GameData.
+     * @see GameData
+     */
     public void setGameData(GameData gameData) {
         this.gameData = gameData;
     }
 
+    /**
+     * Sets the game screen. This method allows any UI class that knows main to
+     * change the game screen displayed. Mostly used by other GameScreens.
+     *
+     * @param gameScreen The GameScreen to be changed into.
+     */
     public void setGameScreen(GameScreen gameScreen) {
         this.gameScreen = gameScreen;
     }
