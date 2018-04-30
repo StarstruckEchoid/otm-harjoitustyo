@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package otmkurssiprojekti.domain.gameobjects.location;
+package otmkurssiprojekti.domain.gameobject.location;
 
 import otmkurssiprojekti.domain.gameobject.location.Coords;
 import org.junit.After;

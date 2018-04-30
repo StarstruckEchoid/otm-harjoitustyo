@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package otmkurssiprojekti.domain.gameobjects.gamecharacter;
+package otmkurssiprojekti.domain.gameobject.gamecharacter;
 
 import otmkurssiprojekti.domain.gameobject.gamecharacter.BasicStatsCharacter;
 import org.junit.After;

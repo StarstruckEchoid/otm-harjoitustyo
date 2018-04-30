@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package otmkurssiprojekti.domain.gameobjects;
+package otmkurssiprojekti.domain.gameobject;
 
 import otmkurssiprojekti.domain.gameobject.gameinanimates.ImmutableObject;
 import org.junit.After;
