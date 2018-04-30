@@ -24,18 +24,20 @@ import otmkurssiprojekti.domain.gameobject.location.Coords;
 import otmkurssiprojekti.domain.gameobject.location.Direction;
 
 /**
+ * An utility class whose purpose is to convert GameLevels into Strings and
+ * Strings into GameLevels.
  *
  * @author gjuho
  */
 public class TextFileGameLevels {
 
     /**
-     *
+     * The z coordinate on which ImmutableObjects are assumed to reside in.
      */
     public static final int BLOCKS_LEVEL = 1;
 
     /**
-     *
+     * The string that identifies that the given field contains no values.
      */
     public static final String EMPTY_IDENTIFIER = "EMPTY";
 
@@ -98,7 +100,8 @@ public class TextFileGameLevels {
 
     /**
      * Converts string of the form [0-9]+,[0-9]+,[0-9]+ into coords. Example:
-     * "0,9,11" becomes new Coords(0, 9, 11). "-1,3,22" becomes new Coords(-1, 3, 22)
+     * "0,9,11" becomes new Coords(0, 9, 11). "-1,3,22" becomes new Coords(-1,
+     * 3, 22)
      *
      * @param attr The coords as a string.
      * @return The converted coords.
@@ -129,8 +132,8 @@ public class TextFileGameLevels {
 
     /**
      * Creates an archetype based on the enumerator class as well as the string
-     * identity given. Example: (PlayercharacterArchetype.class, "ASSASSIN") becomes
-     * PlayerCharacterArchetype.ASSASSIN
+     * identity given. Example: (PlayercharacterArchetype.class, "ASSASSIN")
+     * becomes PlayerCharacterArchetype.ASSASSIN
      *
      * @param <T> An enumerator class.
      * @param t The enumerator class from which the object is to be obtained.
@@ -261,9 +264,22 @@ public class TextFileGameLevels {
     }
 
     /**
+     * Makes a list of ImmutableObjects based on the string input given. The
+     * string input, exceptionally, is a matrix of characters, for example:
+     * <pre>
+     * 0...0000..0
+     * 00..0..0..0
+     * .00.00.00.0
+     * .....0..0.0
+     * 00.0.00...0
+     * .0...0..000
+     * ...0...00..
+     * </pre> would make a valid block list consisting of immutable objects with
+     * the identities '.' and '0'.
      *
-     * @param field
-     * @return
+     * @param field Input string.
+     * @return List of ImmutableObjects.
+     * @see ImmutableObject
      */
     public static List<ImmutableObject> makeBlockList(String field) {
         if (field.equals(EMPTY_IDENTIFIER)) {
@@ -286,9 +302,11 @@ public class TextFileGameLevels {
     }
 
     /**
+     * Inverse operation of
+     * makeBlockList:{@link #makeBlockList(java.lang.String)}.
      *
-     * @param blocks
-     * @return
+     * @param blocks List of ImmutableObjects.
+     * @return TextFileGameLevels compatible string representation.
      */
     public static String printBlockList(List<ImmutableObject> blocks) {
         if (blocks.isEmpty()) {
@@ -309,11 +327,6 @@ public class TextFileGameLevels {
         return sb.toString();
     }
 
-    /**
-     *
-     * @param field
-     * @return
-     */
     public static List<InteractiveObject> makeInteractiveObjectList(String field) {
         if (field.equals(EMPTY_IDENTIFIER)) {
             return new ArrayList<>();
@@ -321,20 +334,10 @@ public class TextFileGameLevels {
         return new ArrayList<>();
     }
 
-    /**
-     *
-     * @param interactiveObjects
-     * @return
-     */
     public static String printInteractiveObjectList(List<InteractiveObject> interactiveObjects) {
         return EMPTY_IDENTIFIER + "\n";
     }
 
-    /**
-     *
-     * @param field
-     * @return
-     */
     public static List<LinkObject> makeLevelLinkList(String field) {
         if (field.equals(EMPTY_IDENTIFIER)) {
             return new ArrayList<>();
@@ -342,20 +345,10 @@ public class TextFileGameLevels {
         return new ArrayList<>();
     }
 
-    /**
-     *
-     * @param interactiveObjects
-     * @return
-     */
     public static String printLevelLinkList(List<LinkObject> interactiveObjects) {
         return EMPTY_IDENTIFIER + "\n";
     }
 
-    /**
-     *
-     * @param field
-     * @return
-     */
     public static List<PointsBall> makePointsSourceList(String field) {
         if (field.equals(EMPTY_IDENTIFIER)) {
             return new ArrayList<>();
@@ -363,11 +356,6 @@ public class TextFileGameLevels {
         return new ArrayList<>();
     }
 
-    /**
-     *
-     * @param interactiveObjects
-     * @return
-     */
     public static String printPointsSourceList(List<PointsBall> interactiveObjects) {
         return EMPTY_IDENTIFIER + "\n";
     }

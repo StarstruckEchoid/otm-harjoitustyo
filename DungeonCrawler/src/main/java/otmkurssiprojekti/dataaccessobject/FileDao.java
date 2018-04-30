@@ -9,10 +9,14 @@ import java.nio.file.Path;
 import java.util.List;
 
 /**
+ * A data access object interface for saving and loading files in (presumably) a
+ * folder.
  *
  * @author Juho Gröhn
  */
-public interface UserDao {
-    public List<Path> loadUsers();
-    public void saveUser(String user);
+public interface FileDao {
+
+    public List<Path> loadFiles();
+
+    public void saveFile(String user);
 }

@@ -24,7 +24,7 @@ import static org.junit.Assert.*;
  */
 public class FileUserDaoTest {
 
-    private FileUserDao fudao;
+    private BasicFileDao fudao;
     private Path sub;
     private Path path;
 
@@ -43,7 +43,7 @@ public class FileUserDaoTest {
     public void setUp() throws IOException {
         path = Files.createTempDirectory("testFolder");
         sub = Files.createTempDirectory(path, "testSubfolder");
-        fudao = new FileUserDao(sub);
+        fudao = new BasicFileDao(sub);
     }
 
     @After
@@ -53,9 +53,9 @@ public class FileUserDaoTest {
     @Test
     public void testSaveAndLoad1() {
         String user = "Test Testington";
-        fudao.saveUser(user);
+        fudao.saveFile(user);
 
-        List<String> userList = fudao.loadUsers().stream()
+        List<String> userList = fudao.loadFiles().stream()
                 .map(p -> p.getFileName().toString())
                 .collect(Collectors.toList());
         assertTrue("Expected list to contain " + Paths.get(user).toString() + " but list onlu had " + userList.toString(), userList.contains(user));
@@ -66,11 +66,11 @@ public class FileUserDaoTest {
         String user0 = "Alice";
         String user1 = "Bob";
         String user2 = "Caroline";
-        fudao.saveUser(user0);
-        fudao.saveUser(user1);
-        fudao.saveUser(user2);
+        fudao.saveFile(user0);
+        fudao.saveFile(user1);
+        fudao.saveFile(user2);
 
-        List<String> userList = fudao.loadUsers().stream()
+        List<String> userList = fudao.loadFiles().stream()
                 .map(p -> p.getFileName().toString())
                 .collect(Collectors.toList());
 
@@ -84,7 +84,7 @@ public class FileUserDaoTest {
         Path broke = Files.createTempFile("broke", "txt");
 
         try {
-            UserDao brokeDao = new FileUserDao(broke);
+            FileDao brokeDao = new BasicFileDao(broke);
             assertTrue("FileUserDao accepts invalid path" + broke.toString() + "in constructor.", false);
         } catch (IllegalArgumentException iae) {
             assertTrue(true);

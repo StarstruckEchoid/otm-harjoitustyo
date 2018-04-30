@@ -11,12 +11,11 @@ import java.util.Date;
 import java.util.List;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import otmkurssiprojekti.dataaccessobject.FileUserDao;
+import otmkurssiprojekti.dataaccessobject.BasicFileDao;
 import otmkurssiprojekti.dataaccessobject.GameLevelDao;
 import otmkurssiprojekti.dataaccessobject.GameSaveDao;
 import otmkurssiprojekti.dataaccessobject.TextFileGameSaveDao;
 import otmkurssiprojekti.dataaccessobject.TextFileLevelDao;
-import otmkurssiprojekti.dataaccessobject.UserDao;
 import otmkurssiprojekti.userinterface.DungeonCrawler;
 import otmkurssiprojekti.dataaccessobject.dataobject.GameSave;
 import otmkurssiprojekti.domain.level.GameLevel;
@@ -27,6 +26,7 @@ import otmkurssiprojekti.userinterface.screen.GameScreen;
 import otmkurssiprojekti.userinterface.screen.LevelScreen;
 import otmkurssiprojekti.userinterface.screen.LoadPlayerScreen;
 import otmkurssiprojekti.userinterface.screen.VerticalMenuScreen;
+import otmkurssiprojekti.dataaccessobject.FileDao;
 
 /**
  *
@@ -122,13 +122,13 @@ public class NewPlayerScreen extends VerticalMenuScreen {
 
     private void savePlayer(String playerName) {
         //Save player by name in the folder <USER_DIR>/<user>/
-        UserDao playerDao = new FileUserDao(//Using UserDao to save players. A bit hacky, but should get the job done.
+        FileDao playerDao = new BasicFileDao(//Using FileDao to save players. A bit hacky, but should get the job done.
                 Paths.get(
                         DungeonCrawler.USER_DIR.toString(),
                         main.getGameData().getUser()
                 )
         );
-        playerDao.saveUser(playerName);
+        playerDao.saveFile(playerName);
     }
 
     private void saveGame(GameLevel gameLevel) {

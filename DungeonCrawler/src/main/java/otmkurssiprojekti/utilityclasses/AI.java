@@ -6,11 +6,16 @@
 package otmkurssiprojekti.utilityclasses;
 
 import java.util.*;
+import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.NonPlayerCharacter;
 import otmkurssiprojekti.domain.level.GameLevel;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
 import otmkurssiprojekti.domain.gameobject.location.Direction;
 
 /**
+ * An utility class that implements path finding algorithms to be used by Mobile
+ * Actors, most notably NonPlayerCharacters.
+ *
+ * @see NonPlayerCharacter
  *
  * @author Juho Gröhn
  */

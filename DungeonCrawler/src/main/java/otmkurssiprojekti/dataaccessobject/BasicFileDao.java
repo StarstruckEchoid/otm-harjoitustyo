@@ -14,7 +14,7 @@ import java.util.List;
  *
  * @author Juho Gröhn
  */
-public class FileUserDao implements UserDao {
+public class BasicFileDao implements FileDao {
 
     private final Path source;
 
@@ -25,7 +25,7 @@ public class FileUserDao implements UserDao {
      * @param source The source directory. Most likely something like
      * "../DungeonCrawler/users".
      */
-    public FileUserDao(Path source) {
+    public BasicFileDao(Path source) {
         if (!source.toFile().isDirectory()) {
             throw new IllegalArgumentException();
         }
@@ -33,7 +33,7 @@ public class FileUserDao implements UserDao {
     }
 
     @Override
-    public List<Path> loadUsers() {
+    public List<Path> loadFiles() {
         List<Path> users = new ArrayList<>();
         File[] subdirs = source.toFile().listFiles(f -> f.isDirectory());
         for (File f : subdirs) {
@@ -43,7 +43,7 @@ public class FileUserDao implements UserDao {
     }
 
     @Override
-    public void saveUser(String user) {
+    public void saveFile(String user) {
         File userFile = new File(source.toFile(), user);
         userFile.mkdirs();
     }

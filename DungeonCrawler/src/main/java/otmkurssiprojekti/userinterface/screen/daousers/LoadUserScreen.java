@@ -8,13 +8,13 @@ package otmkurssiprojekti.userinterface.screen.daousers;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import otmkurssiprojekti.dataaccessobject.FileUserDao;
-import otmkurssiprojekti.dataaccessobject.UserDao;
+import otmkurssiprojekti.dataaccessobject.BasicFileDao;
 import otmkurssiprojekti.userinterface.DungeonCrawler;
 import otmkurssiprojekti.userinterface.screen.GameScreen;
 import otmkurssiprojekti.userinterface.screen.LoadPlayerScreen;
 import otmkurssiprojekti.userinterface.screen.MainMenuScreen;
 import otmkurssiprojekti.userinterface.screen.VerticalMenuScreen;
+import otmkurssiprojekti.dataaccessobject.FileDao;
 
 /**
  *
@@ -22,14 +22,14 @@ import otmkurssiprojekti.userinterface.screen.VerticalMenuScreen;
  */
 public class LoadUserScreen extends VerticalMenuScreen {
 
-    private final UserDao fudao;
+    private final FileDao fudao;
     private final Path[] users;
 
 //    private int pointer = 0;
     public LoadUserScreen(DungeonCrawler main) {
         super(main);
-        fudao = new FileUserDao(DungeonCrawler.USER_DIR);
-        users = fudao.loadUsers().stream()
+        fudao = new BasicFileDao(DungeonCrawler.USER_DIR);
+        users = fudao.loadFiles().stream()
                 .toArray(Path[]::new);
     }
 
