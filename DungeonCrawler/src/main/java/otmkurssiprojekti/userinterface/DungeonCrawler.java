@@ -60,7 +60,7 @@ public class DungeonCrawler extends Application {
         GameLevel gameLvl = TextFileGameLevels.makeGameLevel(
                 "Starting Level\n"
                 + "\n"
-                + "10;1;1;1;1;3,3,0\n"
+                + "10;1;1;1;1;3,3,0;0\n"
                 + "\n"
                 + "%;7,10,0\n"
                 + "r;8,8,0\n"

@@ -16,7 +16,17 @@ import java.util.List;
  */
 public interface FileDao {
 
+    /**
+     *
+     * @return Returns a list of paths to files. Presumably these paths are all
+     * children of a given root.
+     */
     public List<Path> loadFiles();
 
-    public void saveFile(String user);
+    /**
+     *
+     * @param name The name of the path to be saved. Presumably it will be saved
+     * as the child of some given root.
+     */
+    public void saveFile(String name);
 }

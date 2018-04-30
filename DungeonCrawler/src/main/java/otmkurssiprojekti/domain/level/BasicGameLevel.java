@@ -18,12 +18,17 @@ import otmkurssiprojekti.domain.gameobject.interfaces.Mobile;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.NonPlayerCharacter;
 
 /**
+ * The most basic implementation of a GameLevel.
  *
  * @author gjuho
  */
 public class BasicGameLevel implements GameLevel {
 
-    public static final Coords DIMENSIONS = new Coords(16, 16, 8); //The level is a box from origin to DIMENSIONS Coords exclusive. Ie. The level has a size 16x16x8.
+    /**
+     * The level is a box from origin to DIMENSIONS Coords exclusive. Ie. The
+     * level has a size 16x16x8.
+     */
+    public static final Coords DIMENSIONS = new Coords(16, 16, 8);
 
     private final String levelName;
     private BasicPlayerCharacter player;
@@ -122,27 +127,6 @@ public class BasicGameLevel implements GameLevel {
         }
     }
 
-    @Deprecated
-    public GameObject[][][] getLevelData() {
-        GameObject[][][] levelData = new GameObject[DIMENSIONS.getZ()][DIMENSIONS.getY()][DIMENSIONS.getX()];
-        //Everything in one big list.
-        List<GameObject> allObjects = new ArrayList<>();
-        allObjects.add(player);
-        allObjects.addAll(npcs);
-        allObjects.addAll(blocks);
-        allObjects.addAll(interactives);
-        allObjects.addAll(levelLinks);
-        allObjects.addAll(points);
-        //Convert list into matrix.
-        for (GameObject gobj : allObjects) {
-            Coords gobjc = gobj.getCoords();
-            if (BasicGameLevel.hasCoords(gobjc)) {
-                levelData[gobjc.getZ()][gobjc.getY()][gobjc.getX()] = gobj;
-            }
-        }
-        return levelData;
-    }
-
     @Override
     public int hashCode() {
         int hash = 7;
@@ -195,12 +179,10 @@ public class BasicGameLevel implements GameLevel {
 
     @Override
     public void playerAttack(Direction dir) {
-        Coords coords = this.player
-                .getCoords()
-                .sum(dir.getCoords());
+        Coords coords = this.player.coordsAt(dir);
         this.npcs.stream()
                 .filter(npc -> npc.getCoords().equals(coords))
-                .forEach(npc -> npc.takeDamage(this.player));
+                .forEach(npc -> this.player.hurt(npc));
     }
 
 }

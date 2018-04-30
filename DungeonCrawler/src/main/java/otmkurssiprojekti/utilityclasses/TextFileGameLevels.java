@@ -178,8 +178,9 @@ public class TextFileGameLevels {
         int end = Integer.parseInt(attrs[3]);
         int agl = Integer.parseInt(attrs[4]);
         Coords coords = makeCoords(attrs[5]);
+        int points = Integer.parseInt(attrs[6]);
 
-        return new BasicPlayerCharacter(hp, str, per, end, agl, coords, Direction.DOWN);
+        return new BasicPlayerCharacter(hp, str, per, end, agl, coords, Direction.DOWN, points);
     }
 
     /**
@@ -190,7 +191,7 @@ public class TextFileGameLevels {
      * @return The TextFileGameLevels compatible string representation of pc.
      */
     public static String printPlayerCharacter(BasicPlayerCharacter pc) {
-        return pc.getHp() + ";" + pc.getStr() + ";" + pc.getPer() + ";" + pc.getEnd() + ";" + pc.getAgl() + ";" + printCoords(pc.getCoords());
+        return pc.getHp() + ";" + pc.getStr() + ";" + pc.getPer() + ";" + pc.getEnd() + ";" + pc.getAgl() + ";" + printCoords(pc.getCoords()) + ";" + pc.getPoints();
     }
 
     /**

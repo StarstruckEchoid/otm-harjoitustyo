@@ -5,9 +5,6 @@ package otmkurssiprojekti.utilityclasses;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import otmkurssiprojekti.domain.gameobject.location.Direction;
-import otmkurssiprojekti.domain.gameobject.location.Coords;
-import java.util.ArrayList;
 import java.util.Arrays;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -15,9 +12,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import otmkurssiprojekti.domain.level.BasicGameLevel;
-import otmkurssiprojekti.domain.gameobject.archetypes.PlayerCharacterArchetype;
-import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.BasicPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.interfaces.GameObject;
 
 /**
@@ -240,35 +234,6 @@ public class FormatConverterTest {
         };
 
         testStringToMatrix(testable, correct);
-    }
-
-    @Test
-    public void testLevelDataToMatrix1() {
-        BasicGameLevel glvl = new BasicGameLevel("TestLevel",
-                new BasicPlayerCharacter(PlayerCharacterArchetype.THIEF, new Coords(3, 2, 1), Direction.DOWN),
-                new ArrayList<>(),
-                new ArrayList<>(),
-                new ArrayList<>(),
-                new ArrayList<>(),
-                new ArrayList<>());
-
-        char[][][] matrix = FormatConverter.levelDataToMatrix(glvl.getLevelData());
-        assertTrue(matrix[1][2][3] == '@');
-    }
-
-    @Test
-    public void testLevelDataToMatrix2() {
-        BasicGameLevel glvl = new BasicGameLevel("testLevel",
-                new BasicPlayerCharacter(PlayerCharacterArchetype.THIEF, new Coords(7, 0, 3), Direction.DOWN),
-                new ArrayList<>(),
-                new ArrayList<>(),
-                new ArrayList<>(),
-                new ArrayList<>(),
-                new ArrayList<>()
-        );
-
-        char[][][] matrix = FormatConverter.levelDataToMatrix(glvl.getLevelData());
-        assertTrue(matrix[3][0][7] == '@');
     }
 
     public static void testLevelDataToMatrix(GameObject[][][] levelData, char[][][] matrix) {

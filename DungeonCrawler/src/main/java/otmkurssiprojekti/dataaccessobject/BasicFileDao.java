@@ -43,8 +43,8 @@ public class BasicFileDao implements FileDao {
     }
 
     @Override
-    public void saveFile(String user) {
-        File userFile = new File(source.toFile(), user);
+    public void saveFile(String name) {
+        File userFile = new File(source.toFile(), name);
         userFile.mkdirs();
     }
 }

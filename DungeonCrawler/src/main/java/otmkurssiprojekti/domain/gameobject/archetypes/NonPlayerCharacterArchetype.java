@@ -11,7 +11,7 @@ package otmkurssiprojekti.domain.gameobject.archetypes;
  */
 public enum NonPlayerCharacterArchetype implements Archetype {
     //(id,lvl,hp,str,per,end,agl,behaviour)
-    VILLAGER('%', 0, 10, 0, 0, 0, 10),
+    VILLAGER('%', 1, 10, 0, 0, 0, 10),
     RAT('r', 1, 3, 1, 0, 0, 20),
     FOLLOWER('f', 0, 10, 0, 0, 0, 80),
     DEER('d', 5, 10, 0, 0, 0, 30),

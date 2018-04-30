@@ -9,10 +9,14 @@ import java.util.List;
 import otmkurssiprojekti.dataaccessobject.dataobject.GameSave;
 
 /**
+ * A data access object interface for saving and loading GameSaves.
  *
  * @author gjuho
+ * @see GameSave
  */
 public interface GameSaveDao {
+
     public List<GameSave> listGameSaves();
+
     public void saveGame(GameSave gameSave);
 }

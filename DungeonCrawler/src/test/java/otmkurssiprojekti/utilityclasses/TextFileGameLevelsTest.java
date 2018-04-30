@@ -60,8 +60,8 @@ public class TextFileGameLevelsTest {
 
     @Before
     public void setUp() {
-        pcString = "20;0;1;2;3;4,5,6";
-        pc = new BasicPlayerCharacter(20, 0, 1, 2, 3, new Coords(4, 5, 6), Direction.DOWN);
+        pcString = "20;0;1;2;3;4,5,6;240000";
+        pc = new BasicPlayerCharacter(20, 0, 1, 2, 3, new Coords(4, 5, 6), Direction.DOWN, 240_000);
 
         npcsString
                 = "r;0,1,2\n"

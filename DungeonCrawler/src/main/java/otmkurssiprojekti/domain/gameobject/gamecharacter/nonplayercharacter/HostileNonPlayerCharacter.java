@@ -8,6 +8,7 @@ package otmkurssiprojekti.domain.gameobject.gamecharacter.nonplayercharacter;
 import java.util.Stack;
 import otmkurssiprojekti.domain.level.GameLevel;
 import otmkurssiprojekti.domain.gameobject.archetypes.NonPlayerCharacterArchetype;
+import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.PlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
 import otmkurssiprojekti.domain.gameobject.location.Direction;
 import otmkurssiprojekti.utilityclasses.AI;
@@ -26,6 +27,14 @@ public class HostileNonPlayerCharacter extends BasicNonPlayerCharacter {
 
     @Override
     public void act(GameLevel gameLevel) {
+        huntPlayer(gameLevel);
+        PlayerCharacter pc = gameLevel.getPlayer();
+        if (this.getCoords().manhattanDistance(pc.getCoords()) < 2) {
+            this.hurt(pc);
+        }
+    }
+
+    private void huntPlayer(GameLevel gameLevel) {
         final int maxDetectionRange = 5;
         Coords npcCoords = this.coords;
         Coords pcCoords = gameLevel.getPlayer().getCoords();

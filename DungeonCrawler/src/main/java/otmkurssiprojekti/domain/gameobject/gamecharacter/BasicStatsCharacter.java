@@ -14,6 +14,9 @@ import otmkurssiprojekti.domain.gameobject.location.Coords;
 import otmkurssiprojekti.domain.gameobject.location.Direction;
 
 /**
+ * A BasicStatsCharacter is a fancier version of a BasicGameCharacter. A
+ * BasicStatsCharacter has, as the name suggests, attributes such as strength,
+ * perception, endurance and agility, which affect combat.
  *
  * @author Juho Gröhn
  */
@@ -56,55 +59,54 @@ public abstract class BasicStatsCharacter extends BasicGameCharacter implements 
         return hp;
     }
 
+    public int getStr() {
+        return str;
+    }
+
+    public int getPer() {
+        return per;
+    }
+
+    public int getEnd() {
+        return end;
+    }
+
+    public int getAgl() {
+        return agl;
+    }
+
     @Override
     public void takeDamage(int dmg) {
         hp -= dmg;
     }
 
-    @Deprecated
-    public int getAttackDamage() {
-        return str;
-    }
-
-    @Deprecated
-    public int getCriticalChance() {
-        return per;
-    }
-
-    @Deprecated
-    public int getSlowness() {
-        int slowness = 100;
-        slowness -= agl;
-        slowness /= 10;
-        if (slowness <= 0) {
-            return 1;
-        } else if (slowness > 10) {
-            return 10;
-        }
-        return slowness;
-    }
-
     @Override
     public void takeDamage(Hurtful ho) {
-        int baseDam = ho.hurt();
-
-        //Real Damage is base damage after damage threshold.
-        int realDam = baseDam - end;
-        if (realDam > 0) {
-            hp -= realDam;
+        int dmg = ho.hurt();
+        //A StatsCharacter dodges, on average, half of their agility worth of damage on every blow.
+        if (agl > 0) {
+            int dodged = new Random().nextInt(this.agl);
+            dmg -= dodged;
         }
-        //Critical damage is the entire base damage, but occurs randomly and only when opponent perception is higher than player agility.
-        int critChance = 100;
-        critChance -= agl;
-        int random = new Random().nextInt(100);
-        if (random < critChance) {
-            hp -= baseDam;
+        if (dmg > 0) {
+            hp -= dmg;
         }
     }
 
     @Override
     public int hurt() {
-        return str;
+        int dmg = str;
+        //High perception increases damage dealt.
+        if (per > 0) {
+            int critBonus = new Random().nextInt(this.per);
+            dmg += critBonus;
+        }
+        return dmg;
+    }
+
+    @Override
+    public void hurt(Destructible d) {
+        d.takeDamage(this);
     }
 
     @Override
@@ -139,7 +141,7 @@ public abstract class BasicStatsCharacter extends BasicGameCharacter implements 
 
     @Override
     public int getPoints() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return agl + end + per + str;
     }
 
 }

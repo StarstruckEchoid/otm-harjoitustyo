@@ -74,12 +74,4 @@ public class BasicGameLevelTest {
     public void tearDown() {
     }
 
-    @Test
-    public void testGetLevelData() {
-        GameObject[][][] result = glvl.getLevelData();
-
-        assertTrue(result[1][0][0].equals(player));
-        assertTrue(result[4][10][10].getId() == NonPlayerCharacterArchetype.VILLAGER.getId());
-        assertTrue(result[0][6][8].getId() == ',');
-    }
 }

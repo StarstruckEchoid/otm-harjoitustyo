@@ -113,6 +113,7 @@ public class LevelScreen extends SwitchingScreen {
     private Node getPlayerStats() {
         StringBuilder sb = new StringBuilder();
         BasicPlayerCharacter pc = gameLevel.getPlayer();
+        sb.append("XP:\t").append(pc.getPoints()).append("\n");
         sb.append("HP:\t").append(pc.getHp()).append("\n");
         sb.append("STR:\t").append(pc.getStr()).append("\n");
         sb.append("PER:\t").append(pc.getPer()).append("\n");

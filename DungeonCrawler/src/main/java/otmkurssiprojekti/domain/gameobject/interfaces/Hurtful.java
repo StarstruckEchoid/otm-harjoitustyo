@@ -17,4 +17,11 @@ public interface Hurtful {
      * @return The damage as an integer.
      */
     public int hurt();
+
+    /**
+     * Deals damage to a destructible object.
+     *
+     * @param d The destructible to be hurt.
+     */
+    public void hurt(Destructible d);
 }
