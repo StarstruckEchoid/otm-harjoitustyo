@@ -23,7 +23,7 @@ import otmkurssiprojekti.domain.level.BasicGameLevel;
 import otmkurssiprojekti.domain.gameobject.archetypes.PlayerCharacterArchetype;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
 import otmkurssiprojekti.domain.gameobject.location.Direction;
-import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.PlayerCharacter;
+import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.BasicPlayerCharacter;
 
 /**
  *
@@ -54,7 +54,7 @@ public class ByteFileGameSaveDaoTest {
         date = new Date(System.currentTimeMillis());
         glvl = new BasicGameLevel(
                 "dungeon",
-                new PlayerCharacter(PlayerCharacterArchetype.THIEF, new Coords(), Direction.DOWN),
+                new BasicPlayerCharacter(PlayerCharacterArchetype.THIEF, new Coords(), Direction.DOWN),
                 new ArrayList<>(),
                 new ArrayList<>(),
                 new ArrayList<>(),

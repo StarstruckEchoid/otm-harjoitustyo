@@ -13,5 +13,11 @@ import otmkurssiprojekti.domain.level.GameLevel;
  */
 public interface Actor extends GameObject {
 
+    /**
+     * Act in the context of a GameLevel.
+     *
+     * @param gameLevel The GameLevel in which actions are being performed.
+     * @see GameLevel
+     */
     public void act(GameLevel gameLevel);
 }

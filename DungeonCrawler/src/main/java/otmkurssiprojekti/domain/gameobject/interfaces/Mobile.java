@@ -17,21 +17,21 @@ public interface Mobile extends GameObject {
     /**
      * Moves Mobile to these coordinates.
      *
-     * @param c
+     * @param c The coords in which to move.
      */
     public void move(Coords c);
 
     /**
      * Moves Mobile one block in this direction.
      *
-     * @param d
+     * @param d The direction in which to move. Typically by one block.
      */
     public void move(Direction d);
 
     /**
      * Makes Mobile face this direction.
      *
-     * @param d
+     * @param d The direction in which to turn.
      */
     public void turn(Direction d);
 }

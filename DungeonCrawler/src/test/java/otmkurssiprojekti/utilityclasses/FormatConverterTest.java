@@ -17,7 +17,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import otmkurssiprojekti.domain.level.BasicGameLevel;
 import otmkurssiprojekti.domain.gameobject.archetypes.PlayerCharacterArchetype;
-import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.PlayerCharacter;
+import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.BasicPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.interfaces.GameObject;
 
 /**
@@ -245,7 +245,7 @@ public class FormatConverterTest {
     @Test
     public void testLevelDataToMatrix1() {
         BasicGameLevel glvl = new BasicGameLevel("TestLevel",
-                new PlayerCharacter(PlayerCharacterArchetype.THIEF, new Coords(3, 2, 1), Direction.DOWN),
+                new BasicPlayerCharacter(PlayerCharacterArchetype.THIEF, new Coords(3, 2, 1), Direction.DOWN),
                 new ArrayList<>(),
                 new ArrayList<>(),
                 new ArrayList<>(),
@@ -259,7 +259,7 @@ public class FormatConverterTest {
     @Test
     public void testLevelDataToMatrix2() {
         BasicGameLevel glvl = new BasicGameLevel("testLevel",
-                new PlayerCharacter(PlayerCharacterArchetype.THIEF, new Coords(7, 0, 3), Direction.DOWN),
+                new BasicPlayerCharacter(PlayerCharacterArchetype.THIEF, new Coords(7, 0, 3), Direction.DOWN),
                 new ArrayList<>(),
                 new ArrayList<>(),
                 new ArrayList<>(),

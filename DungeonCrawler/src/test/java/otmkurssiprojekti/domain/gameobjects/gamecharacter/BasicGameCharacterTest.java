@@ -5,7 +5,7 @@
  */
 package otmkurssiprojekti.domain.gameobjects.gamecharacter;
 
-import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.PlayerCharacter;
+import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.BasicPlayerCharacter;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -40,7 +40,7 @@ public class BasicGameCharacterTest {
 
     @Before
     public void setUp() {
-        bgc = new PlayerCharacter(PlayerCharacterArchetype.THIEF, TEST_COORDS, TEST_DIRECTION);
+        bgc = new BasicPlayerCharacter(PlayerCharacterArchetype.THIEF, TEST_COORDS, TEST_DIRECTION);
     }
 
     @After

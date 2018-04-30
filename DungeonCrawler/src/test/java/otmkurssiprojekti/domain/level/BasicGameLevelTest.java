@@ -10,7 +10,7 @@ import otmkurssiprojekti.domain.gameobject.interfaces.GameObject;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.PointsBall;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.InteractiveObject;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.LinkObject;
-import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.PlayerCharacter;
+import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.BasicPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.ImmutableObject;
 import java.util.*;
 import org.junit.After;
@@ -22,7 +22,7 @@ import static org.junit.Assert.*;
 import otmkurssiprojekti.domain.gameobject.archetypes.NonPlayerCharacterArchetype;
 import otmkurssiprojekti.domain.gameobject.archetypes.PlayerCharacterArchetype;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.nonplayercharacter.HostileNonPlayerCharacter;
-import otmkurssiprojekti.domain.gameobject.interfaces.NonPlayerCharacter;
+import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.NonPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
 import otmkurssiprojekti.domain.gameobject.location.Direction;
 
@@ -34,7 +34,7 @@ public class BasicGameLevelTest {
 
     private BasicGameLevel glvl;
     private String levelName;
-    private PlayerCharacter player;
+    private BasicPlayerCharacter player;
     private List<NonPlayerCharacter> npcs;
     private List<ImmutableObject> blocks;
     private List<InteractiveObject> interactives;
@@ -55,7 +55,7 @@ public class BasicGameLevelTest {
     @Before
     public void setUp() {
         levelName = "testLevel";
-        player = new PlayerCharacter(PlayerCharacterArchetype.THIEF, new Coords(0, 0, 1), Direction.DOWN);
+        player = new BasicPlayerCharacter(PlayerCharacterArchetype.THIEF, new Coords(0, 0, 1), Direction.DOWN);
 
         npcs = new ArrayList<>();
         npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.VILLAGER, new Coords(10, 10, 4), Direction.DOWN));

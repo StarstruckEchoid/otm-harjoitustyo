@@ -9,6 +9,8 @@ import otmkurssiprojekti.domain.gameobject.location.Coords;
 import otmkurssiprojekti.domain.gameobject.location.Direction;
 
 /**
+ * The most fundamental building block of a GameLevel. Everything in a GameLevel
+ * except the name is a GameObject of some kind.
  *
  * @author gjuho
  */
@@ -18,7 +20,7 @@ public interface GameObject extends java.io.Serializable {
      * Returns the char associated with this GameObject. Can function as a means
      * to tell types of GameObjects apart in a memory efficient way.
      *
-     * @return
+     * @return The identity as a single character.
      */
     public char getId();
 
@@ -26,7 +28,7 @@ public interface GameObject extends java.io.Serializable {
      * Returns whether this GameObject is transparent or not. Some rendering
      * classes may draw GameObjects that are under transparent GameObjects.
      *
-     * @return
+     * @return Returns transparency. True for transparent; false for opaque.
      */
     public boolean isTransparent();
 
@@ -34,21 +36,21 @@ public interface GameObject extends java.io.Serializable {
      * Returns whether this GameObject is solid or not. Most GameObjects can not
      * move through solid objects.
      *
-     * @return
+     * @return Returns solidity. True for solid.
      */
     public boolean isSolid();
 
     /**
      * Return the coordinates of this GameObject.
      *
-     * @return
+     * @return Returns the coordinates of this object.
      */
     public Coords getCoords();
 
     /**
      * Returns the direction this GameObject is facing.
      *
-     * @return
+     * @return Returns the direction this object is facing.
      */
     public Direction getDirection();
 }

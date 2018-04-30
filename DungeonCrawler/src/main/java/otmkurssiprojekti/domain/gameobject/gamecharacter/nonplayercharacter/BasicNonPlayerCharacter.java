@@ -8,7 +8,7 @@ package otmkurssiprojekti.domain.gameobject.gamecharacter.nonplayercharacter;
 import otmkurssiprojekti.domain.gameobject.archetypes.Behaviour;
 import otmkurssiprojekti.domain.gameobject.archetypes.NonPlayerCharacterArchetype;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.BasicStatsCharacter;
-import otmkurssiprojekti.domain.gameobject.interfaces.NonPlayerCharacter;
+import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.NonPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
 import otmkurssiprojekti.domain.gameobject.location.Direction;
 

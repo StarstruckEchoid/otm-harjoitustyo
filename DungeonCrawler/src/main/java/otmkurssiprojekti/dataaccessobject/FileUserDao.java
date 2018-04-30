@@ -22,7 +22,8 @@ public class FileUserDao implements UserDao {
      * The FileUserDao fetches subdirectories, named after users, from a source
      * directory.
      *
-     * @param source
+     * @param source The source directory. Most likely something like
+     * "../DungeonCrawler/users".
      */
     public FileUserDao(Path source) {
         if (!source.toFile().isDirectory()) {

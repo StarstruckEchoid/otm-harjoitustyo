@@ -10,7 +10,7 @@ import java.util.List;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
 import otmkurssiprojekti.domain.gameobject.location.Direction;
 import otmkurssiprojekti.domain.gameobject.interfaces.GameObject;
-import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.PlayerCharacter;
+import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.BasicPlayerCharacter;
 
 /**
  *
@@ -20,21 +20,21 @@ public interface GameLevel extends Serializable {
 
     String getLevelName();
 
-    PlayerCharacter getPlayer();
+    BasicPlayerCharacter getPlayer();
 
     List<GameObject> getGameObjects();
 
-    void setPlayer(PlayerCharacter player);
+    void setPlayer(BasicPlayerCharacter player);
 
     void movePlayer(Direction dir);
 
     void playerAttack(Direction dir);
 
     /**
-     * doGameTick performs actions in the game level. If at the end of these
-     * actions the player character is dead, return true. Else return false.
+     * doGameTick performs actions in the game level.
      *
-     * @return
+     * @return If at the end of these actions the player character is dead,
+     * return true. Else return false.
      */
     boolean doGameTick();
 

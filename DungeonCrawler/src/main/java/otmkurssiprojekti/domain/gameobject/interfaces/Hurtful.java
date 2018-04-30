@@ -14,7 +14,7 @@ public interface Hurtful {
     /**
      * Gives the damage this Hurtful will do.
      *
-     * @return
+     * @return The damage as an integer.
      */
     public int hurt();
 }

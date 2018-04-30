@@ -9,6 +9,7 @@ import otmkurssiprojekti.domain.gameobject.interfaces.Destructible;
 import java.util.Random;
 import otmkurssiprojekti.domain.gameobject.interfaces.GameObject;
 import otmkurssiprojekti.domain.gameobject.interfaces.Hurtful;
+import otmkurssiprojekti.domain.gameobject.interfaces.PointsSource;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
 import otmkurssiprojekti.domain.gameobject.location.Direction;
 
@@ -16,7 +17,7 @@ import otmkurssiprojekti.domain.gameobject.location.Direction;
  *
  * @author Juho Gröhn
  */
-public abstract class BasicStatsCharacter extends BasicGameCharacter implements GameObject, Destructible, Hurtful {
+public abstract class BasicStatsCharacter extends BasicGameCharacter implements GameObject, Destructible, Hurtful, PointsSource {
 
     protected int hp;
     protected int str;
@@ -24,6 +25,19 @@ public abstract class BasicStatsCharacter extends BasicGameCharacter implements 
     protected int end;
     protected int agl;
 
+    /**
+     *
+     * @param hp The health points of a statsCharacter. Typically greater than
+     * zero.
+     * @param str Strength. Defines the damage dealt by an attack.
+     * @param per Perception. In some implementations this increases chance of
+     * scoring extra damage.
+     * @param end Endurance. Defines how tough a statsCharacter is to kill.
+     * @param agl Agility. In some implementations allows the statsCharacter to
+     * avoid taking damage.
+     * @param coords Coords. Where the statsCharacter is.
+     * @param direction Direction. Where it is facing.
+     */
     public BasicStatsCharacter(int hp, int str, int per, int end, int agl, Coords coords, Direction direction) {
         super(coords, direction);
         this.hp = hp;
@@ -121,6 +135,11 @@ public abstract class BasicStatsCharacter extends BasicGameCharacter implements 
     @Override
     public String toString() {
         return this.getId() + ": HP: " + this.getHp();
+    }
+
+    @Override
+    public int getPoints() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

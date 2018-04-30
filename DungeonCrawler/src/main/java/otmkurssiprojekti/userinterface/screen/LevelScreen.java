@@ -13,7 +13,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import otmkurssiprojekti.userinterface.DungeonCrawler;
 import otmkurssiprojekti.domain.level.GameLevel;
-import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.PlayerCharacter;
+import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.BasicPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.location.Direction;
 import otmkurssiprojekti.userinterface.renderer.Renderer;
 import otmkurssiprojekti.userinterface.renderer.TextRenderer;
@@ -112,7 +112,7 @@ public class LevelScreen extends SwitchingScreen {
 
     private Node getPlayerStats() {
         StringBuilder sb = new StringBuilder();
-        PlayerCharacter pc = gameLevel.getPlayer();
+        BasicPlayerCharacter pc = gameLevel.getPlayer();
         sb.append("HP:\t").append(pc.getHp()).append("\n");
         sb.append("STR:\t").append(pc.getStr()).append("\n");
         sb.append("PER:\t").append(pc.getPer()).append("\n");

@@ -21,10 +21,12 @@ public class AI {
      * the context of gameLevel. bestRoute uses breadth-first search to find the
      * route. Method returns the path as a stack of coordinates.
      *
-     * @param from
-     * @param to
-     * @param gameLevel
-     * @return
+     * @param from The coords from which path generation begins.
+     * @param to The coords to which we want to find the path.
+     * @param gameLevel The GameLevel in the context of which the path is being
+     * found.
+     * @return Returns the path as a a stack of coordinates. The first step to
+     * take is on the top of the stack. The last step is on the bottom.
      */
     public static Stack<Coords> bestRoute(Coords from, Coords to, GameLevel gameLevel) {
         //Perform a breadth-first search
@@ -42,10 +44,12 @@ public class AI {
      * search to find the route. Method returns the path as a stack of
      * coordinates.
      *
-     * @param from
-     * @param to
-     * @param gameLevel
-     * @return
+     * @param from The coords from which path generation begins.
+     * @param to The coords to which we want to find the path.
+     * @param gameLevel The GameLevel in the context of which the path is being
+     * found.
+     * @return Returns the path as a a stack of coordinates. The first step to
+     * take is on the top of the stack. The last step is on the bottom.
      */
     public static Stack<Coords> greedyRoute(Coords from, Coords to, GameLevel gameLevel) {
         //Perform a best-first search

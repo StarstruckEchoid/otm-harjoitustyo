@@ -11,11 +11,11 @@ import otmkurssiprojekti.domain.gameobject.gameinanimates.InteractiveObject;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.PointsBall;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.ImmutableObject;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.LinkObject;
-import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.PlayerCharacter;
+import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.BasicPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.interfaces.GameObject;
 import java.util.*;
 import otmkurssiprojekti.domain.gameobject.interfaces.Mobile;
-import otmkurssiprojekti.domain.gameobject.interfaces.NonPlayerCharacter;
+import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.NonPlayerCharacter;
 
 /**
  *
@@ -26,7 +26,7 @@ public class BasicGameLevel implements GameLevel {
     public static final Coords DIMENSIONS = new Coords(16, 16, 8); //The level is a box from origin to DIMENSIONS Coords exclusive. Ie. The level has a size 16x16x8.
 
     private final String levelName;
-    private PlayerCharacter player;
+    private BasicPlayerCharacter player;
     private final List<NonPlayerCharacter> npcs;
     private final List<ImmutableObject> blocks;
     private final List<InteractiveObject> interactives;
@@ -43,7 +43,7 @@ public class BasicGameLevel implements GameLevel {
         this.points = null;
     }
 
-    public BasicGameLevel(String levelName, PlayerCharacter player, List<NonPlayerCharacter> npcs, List<ImmutableObject> blocks, List<InteractiveObject> interactives, List<LinkObject> levelLinks, List<PointsBall> points) {
+    public BasicGameLevel(String levelName, BasicPlayerCharacter player, List<NonPlayerCharacter> npcs, List<ImmutableObject> blocks, List<InteractiveObject> interactives, List<LinkObject> levelLinks, List<PointsBall> points) {
         this.levelName = levelName;
         this.player = player;
         this.npcs = npcs;
@@ -60,7 +60,7 @@ public class BasicGameLevel implements GameLevel {
     }
 
     @Override
-    public PlayerCharacter getPlayer() {
+    public BasicPlayerCharacter getPlayer() {
         return this.player;
     }
 
@@ -86,7 +86,7 @@ public class BasicGameLevel implements GameLevel {
 
     //Setter
     @Override
-    public void setPlayer(PlayerCharacter player) {
+    public void setPlayer(BasicPlayerCharacter player) {
         this.player = player;
     }
 

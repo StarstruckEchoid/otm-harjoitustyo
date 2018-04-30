@@ -26,8 +26,8 @@ import otmkurssiprojekti.domain.gameobject.location.Coords;
 import otmkurssiprojekti.domain.gameobject.location.Direction;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.nonplayercharacter.BasicNonPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.nonplayercharacter.HostileNonPlayerCharacter;
-import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.PlayerCharacter;
-import otmkurssiprojekti.domain.gameobject.interfaces.NonPlayerCharacter;
+import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.BasicPlayerCharacter;
+import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.NonPlayerCharacter;
 
 /**
  *
@@ -63,7 +63,7 @@ public class ByteFileLevelDaoTest {
 
         glvl = new BasicGameLevel(
                 "testLevel",
-                new PlayerCharacter(PlayerCharacterArchetype.THIEF, new Coords(), Direction.DOWN),
+                new BasicPlayerCharacter(PlayerCharacterArchetype.THIEF, new Coords(), Direction.DOWN),
                 npcs,
                 new ArrayList<>(),
                 new ArrayList<>(),

@@ -19,12 +19,12 @@ import otmkurssiprojekti.domain.level.GameLevel;
 import otmkurssiprojekti.domain.gameobject.archetypes.NonPlayerCharacterArchetype;
 import otmkurssiprojekti.domain.gameobject.archetypes.PlayerCharacterArchetype;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.nonplayercharacter.HostileNonPlayerCharacter;
-import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.PlayerCharacter;
+import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.BasicPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.ImmutableObject;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.InteractiveObject;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.LinkObject;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.PointsBall;
-import otmkurssiprojekti.domain.gameobject.interfaces.NonPlayerCharacter;
+import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.NonPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
 import otmkurssiprojekti.domain.gameobject.location.Direction;
 
@@ -35,7 +35,7 @@ import otmkurssiprojekti.domain.gameobject.location.Direction;
 public class TextFileGameLevelsTest {
 
     private String pcString;
-    private PlayerCharacter pc;
+    private BasicPlayerCharacter pc;
 
     private String npcsString;
     private List<NonPlayerCharacter> npcs;
@@ -61,7 +61,7 @@ public class TextFileGameLevelsTest {
     @Before
     public void setUp() {
         pcString = "20;0;1;2;3;4,5,6";
-        pc = new PlayerCharacter(20, 0, 1, 2, 3, new Coords(4, 5, 6), Direction.DOWN);
+        pc = new BasicPlayerCharacter(20, 0, 1, 2, 3, new Coords(4, 5, 6), Direction.DOWN);
 
         npcsString
                 = "r;0,1,2\n"
@@ -177,7 +177,7 @@ public class TextFileGameLevelsTest {
 
     @Test
     public void testMakePlayerCharacter() {
-        PlayerCharacter madePc = TextFileGameLevels.makePlayerCharacter(pcString);
+        BasicPlayerCharacter madePc = TextFileGameLevels.makePlayerCharacter(pcString);
 
         assertTrue("Expected " + pc.toString() + " but got " + madePc.toString(), madePc.equals(pc));
     }

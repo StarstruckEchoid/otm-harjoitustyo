@@ -22,7 +22,7 @@ import otmkurssiprojekti.domain.gameobject.location.Coords;
 import otmkurssiprojekti.domain.gameobject.location.Direction;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.nonplayercharacter.BasicNonPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.nonplayercharacter.HostileNonPlayerCharacter;
-import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.PlayerCharacter;
+import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.BasicPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.interfaces.Mobile;
 
 /**
@@ -54,7 +54,7 @@ public class AITest {
 
         gameLevel = new BasicGameLevel(
                 "test",
-                new PlayerCharacter(PlayerCharacterArchetype.THIEF, new Coords(3, 3, 0), Direction.DOWN),
+                new BasicPlayerCharacter(PlayerCharacterArchetype.THIEF, new Coords(3, 3, 0), Direction.DOWN),
                 new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>()
         );
     }

@@ -9,7 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import otmkurssiprojekti.domain.level.GameLevel;
-import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.PlayerCharacter;
+import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.BasicPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
 import otmkurssiprojekti.domain.gameobject.location.FlatCoords;
 import otmkurssiprojekti.utilityclasses.FormatConverter;
@@ -38,7 +38,7 @@ public class TextRenderer implements Renderer {
         });
 
         //Player character is always on top, no matter what.
-        PlayerCharacter pc = gameLevel.getPlayer();
+        BasicPlayerCharacter pc = gameLevel.getPlayer();
         Coords pcCoords = pc.getCoords();
         matrix[pcCoords.getY()][pcCoords.getX()] = pc.getId();
 

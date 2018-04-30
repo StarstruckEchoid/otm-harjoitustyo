@@ -10,5 +10,10 @@ package otmkurssiprojekti.domain.gameobject.interfaces;
  * @author Juho Gröhn
  */
 public interface PointsSource {
+
+    /**
+     *
+     * @return Returns the amount of points this PointsSource is worth.
+     */
     public int getPoints();
 }
