@@ -23,5 +23,7 @@
 | 23.4. | 5        | Aloitettiin TextFileLevelDaon ja sitä myötä TextFileGameLevelsin tekeminen. |
 | 24.4. | 0        | Linkki julkaisuun DungeonCrawler 0.1 |
 | 27.4. | 6        | Pakkausrakenteesta nätimpi. Sovellus käyttää TextFileLevelDao ja sen johdannaista TextFileGameSaveDaoa pelitietojen latailuun ja tallenteluun. Tekoälyyn pieniä parannuksia. |
+| 29.4. | 0        | Tehtiin uusi julkaisu, DungeonCrawler 0.2. |
+| 30.4. | 4        | Implementoitiin pisteiden kerryttäminen. Tehtiin suuri määrä javadocceja. Luotiin julkaisu DungeonCrawler 0.3. |
 
-Työtunteja yhteensä: 106h
+Työtunteja yhteensä: 110h
