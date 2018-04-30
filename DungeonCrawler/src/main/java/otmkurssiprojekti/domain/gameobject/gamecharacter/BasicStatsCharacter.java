@@ -84,12 +84,12 @@ public abstract class BasicStatsCharacter extends BasicGameCharacter implements 
     public void takeDamage(Hurtful ho) {
         int dmg = ho.hurt();
         //A StatsCharacter dodges, on average, half of their agility worth of damage on every blow.
-        if (agl > 0) {
+        if (this.agl > 0) {
             int dodged = new Random().nextInt(this.agl);
             dmg -= dodged;
         }
         if (dmg > 0) {
-            hp -= dmg;
+            this.hp -= dmg;
         }
     }
 
