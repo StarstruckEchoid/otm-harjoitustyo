@@ -20,10 +20,12 @@
 | 18.4. | 1        | Lisää testejä. Kansioiden nimet snakecasella. |
 | 19.4. | 5        | Kaikki checkstyle-virheet hävitetty koodista. Luokkien - erityisesti GameObjectien ja tekoälyn - vastuujakoon enemmän järkeä. |
 | 22.4. | 6        | Toteutettiin taistelu: pelaaja ja viholliset ottavat toisiltaan vahinkoa kuten kuuluu. Tehtiin arkkitehtuuridokumentaatio. |
-| 23.4. | 5        | Aloitettiin TextFileLevelDaon ja sitä myötä TextFileGameLevelsin tekeminen. |
+| 23.4. | 5 (S=100)| Aloitettiin TextFileLevelDaon ja sitä myötä TextFileGameLevelsin tekeminen. |
 | 24.4. | 0        | Linkki julkaisuun DungeonCrawler 0.1 |
 | 27.4. | 6        | Pakkausrakenteesta nätimpi. Sovellus käyttää TextFileLevelDao ja sen johdannaista TextFileGameSaveDaoa pelitietojen latailuun ja tallenteluun. Tekoälyyn pieniä parannuksia. |
 | 29.4. | 0        | Tehtiin uusi julkaisu, DungeonCrawler 0.2. |
 | 30.4. | 6        | Implementoitiin pisteiden kerryttäminen. Tehtiin suuri määrä javadocceja. Luotiin julkaisu DungeonCrawler 0.3. Tehtiin pakkauskaavio. |
+|  1.5. | 5        | Tehtiin DataService luokka, jotta käyttöliittymän ei tarvitsisi koskea daoihin. Poistettiin turhaksi jäänyttä koodia. |
 
-Työtunteja yhteensä: 112h
+
+Työtunteja yhteensä: 117h
