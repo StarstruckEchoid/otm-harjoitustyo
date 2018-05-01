@@ -15,7 +15,7 @@
 | 9.4.  | 1        | Tehtiin pelistä Maven-projekti ja varmistettiin, että peli toimii Linuxilla. Todettiin toimivuus. |
 | 10.4. | 7        | Luotiin Serializer-apuluokka plus testit, sekä abstrakti SwitchingScreen-luokka.
 | 11.4. | 6        | Virtaviivaistettiin luokkia. Uuden pelaajan tekeminen ja vanhan lataaminen toimii. Myös uuden pelin aloittaminen sekä vanhan pelin lataaminen toimii. Pelin manuaalista tallentamista ei vielä implementoitu. |
-| 12.4. | 10       | Luotiin tekoäly ja sille metodeja pelaajan seuraamiseksi. Testattiin tekoäly. |
+| 12.4. | 10       | Luotiin tekoäly ja sille metodeja pelaajan seuraamiseksi. Testattiin tekoäly. Implementoitiin pelin tallentaminen. |
 | 13.4. | 1        | Lisää testejä. Aloitettiin tyylin huolittelu. |
 | 18.4. | 1        | Lisää testejä. Kansioiden nimet snakecasella. |
 | 19.4. | 5        | Kaikki checkstyle-virheet hävitetty koodista. Luokkien - erityisesti GameObjectien ja tekoälyn - vastuujakoon enemmän järkeä. |
