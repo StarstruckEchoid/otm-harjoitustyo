@@ -13,8 +13,6 @@ import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import otmkurssiprojekti.dataaccessobject.dataobject.GameData;
-import otmkurssiprojekti.dataaccessobject.dataobject.SimpleGameData;
 import otmkurssiprojekti.domain.dataservice.DataService;
 import otmkurssiprojekti.domain.dataservice.TextFileDataService;
 import otmkurssiprojekti.userinterface.screen.MainMenuScreen;
@@ -38,8 +36,6 @@ public class DungeonCrawler extends Application {
     private static final Timer TIMER = new Timer();
     private static final int TICKS_PERIOD = 500; //Controls how often the game updates, eg. how often npcs move.
     private static final int FRAMES_PERIOD = 50; //Controls how often the screen updates. Reciprocal of frames per millisecond.
-
-    private GameData gameData;
     private GameScreen gameScreen;
 
     public static void main(String[] args) {
@@ -48,7 +44,6 @@ public class DungeonCrawler extends Application {
 
     @Override
     public void init() throws Exception {
-        this.setGameData(new SimpleGameData(null, null, null));
         this.setGameScreen(new MainMenuScreen(this));
     }
 
@@ -89,18 +84,6 @@ public class DungeonCrawler extends Application {
         return DATA_SERVICE;
     }
 
-    @Deprecated
-    /**
-     * Gets GameData.
-     *
-     * @return The current GameData of DungeonCrawler.
-     * @see GameData
-     */
-    public GameData getGameData() {
-        return gameData;
-    }
-
-    @Deprecated
     /**
      * Gets GameScreen.
      *
@@ -111,19 +94,6 @@ public class DungeonCrawler extends Application {
         return gameScreen;
     }
 
-    @Deprecated
-    /**
-     * Sets the GameData. GameData is used by UI classes, especially dao users,
-     * to determine which data to display.
-     *
-     * @param gameData The overwriting GameData.
-     * @see GameData
-     */
-    public void setGameData(GameData gameData) {
-        this.gameData = gameData;
-    }
-
-    @Deprecated
     /**
      * Sets the game screen. This method allows any UI class that knows main to
      * change the game screen displayed. Mostly used by other GameScreens.

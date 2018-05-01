@@ -38,7 +38,7 @@ public class TextFileLevelDao extends AbstractLevelDao implements GameLevelDao {
                 );
                 Files.write(levelPath, textData);
             } else {
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException(level.getClass().getName() + " is not BasicGameLevel.");
             }
         } catch (IOException ex) {
             Logger.getLogger(ByteFileLevelDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -48,7 +48,7 @@ public class TextFileLevelDao extends AbstractLevelDao implements GameLevelDao {
     @Override
     public GameLevel loadLevel(String levelName) {
         try {
-            String lines = Files.readAllLines(Paths.get(directory.toString(),levelName))
+            String lines = Files.readAllLines(Paths.get(directory.toString(), levelName))
                     .stream()
                     .reduce("", (a, b) -> a + b + "\n");
             GameLevel gameLevel = TextFileGameLevels.makeGameLevel(lines);

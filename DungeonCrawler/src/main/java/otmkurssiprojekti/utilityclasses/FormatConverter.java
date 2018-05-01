@@ -5,9 +5,8 @@
  */
 package otmkurssiprojekti.utilityclasses;
 
-import otmkurssiprojekti.domain.gameobject.interfaces.GameObject;
-
 /**
+ * Converts between char matrices and strings.
  *
  * @author gjuho
  */
@@ -45,26 +44,6 @@ public class FormatConverter {
         for (int z = 0; z < zLim; z++) {
             for (int y = 0; y < yLim; y++) {
                 matrix[z][y] = zLevels[z].split("\n")[y].toCharArray();
-            }
-        }
-        return matrix;
-    }
-
-    public static char[][][] levelDataToMatrix(GameObject[][][] levelData) {
-        int xLim = levelData[0][0].length;
-        int yLim = levelData[0].length;
-        int zLim = levelData.length;
-        char[][][] matrix = new char[zLim][yLim][xLim];
-        for (int z = 0; z < zLim; z++) {
-            for (int y = 0; y < yLim; y++) {
-                for (int x = 0; x < xLim; x++) {
-                    GameObject go = levelData[z][y][x];
-                    if (go == null) {
-                        matrix[z][y][x] = ' ';
-                    } else {
-                        matrix[z][y][x] = go.getId();
-                    }
-                }
             }
         }
         return matrix;

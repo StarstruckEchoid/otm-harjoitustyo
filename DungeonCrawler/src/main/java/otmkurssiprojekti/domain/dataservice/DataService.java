@@ -22,15 +22,16 @@ public interface DataService {
      * Fetch a game level by name. Note that levelsDir has to be set beforehand.
      *
      * @param levelName Name of the level to be fetched.
-     * @return
+     * @return Returns the GameLevel by this name.
      */
     public GameLevel fetchGameLevel(String levelName);
 
     /**
      * Fetch a particular game save.
      *
-     * @param saveName The name of the game save.
-     * @return
+     * @param saveName The name of the game save. NB! name of the file, not
+     * toString()!
+     * @return Returns the GameSave by this name.
      */
     GameSave fetchGameSave(String saveName);
 

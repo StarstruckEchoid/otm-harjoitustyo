@@ -16,7 +16,6 @@ import otmkurssiprojekti.domain.gameobject.location.Direction;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.BasicPlayerCharacter;
 import otmkurssiprojekti.userinterface.screen.GameScreen;
 import otmkurssiprojekti.userinterface.screen.LevelScreen;
-import otmkurssiprojekti.userinterface.screen.LoadPlayerScreen;
 import otmkurssiprojekti.userinterface.screen.VerticalMenuScreen;
 
 /**

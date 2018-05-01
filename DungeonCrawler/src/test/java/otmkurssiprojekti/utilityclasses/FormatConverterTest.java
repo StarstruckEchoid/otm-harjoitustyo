@@ -12,7 +12,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import otmkurssiprojekti.domain.gameobject.interfaces.GameObject;
 
 /**
  *
@@ -234,12 +233,6 @@ public class FormatConverterTest {
         };
 
         testStringToMatrix(testable, correct);
-    }
-
-    public static void testLevelDataToMatrix(GameObject[][][] levelData, char[][][] matrix) {
-        char[][][] conversion = FormatConverter.levelDataToMatrix(levelData);
-
-        assertTrue(Arrays.deepEquals(conversion, matrix));
     }
 
     public static void testStringToMatrix(String testable, char[][][] correct) {

@@ -23,29 +23,30 @@ import otmkurssiprojekti.userinterface.renderer.TextRenderer;
  * @author Juho Gröhn
  */
 public class LevelScreen extends SwitchingScreen {
-
+    
     private static final Renderer RENDERER = new TextRenderer();
     private final GameLevel gameLevel;
-
+    
     public LevelScreen(DungeonCrawler main) {
         super(main);
         this.gameLevel = main.getDataService().fetchGameSave().getGameLevel();
     }
-
+    
     @Override
     public void handleKeyEvent(KeyEvent e) {
         this.movePlayer(e);
         this.playerAttack(e);
         switch (e.getCode()) {
             case ESCAPE:
+                main.getDataService().setGameLevel(gameLevel);
                 switchTo(new PauseScreen(main));
                 break;
             default:
                 break;
-
+            
         }
     }
-
+    
     private void movePlayer(KeyEvent e) {
         switch (e.getCode()) {
             case W:
@@ -64,7 +65,7 @@ public class LevelScreen extends SwitchingScreen {
                 break;
         }
     }
-
+    
     private void playerAttack(KeyEvent e) {
         switch (e.getCode()) {
             case UP:
@@ -83,7 +84,7 @@ public class LevelScreen extends SwitchingScreen {
                 break;
         }
     }
-
+    
     @Override
     public Parent getVisualisation() {
         BorderPane hud = new BorderPane();
@@ -99,17 +100,17 @@ public class LevelScreen extends SwitchingScreen {
         //Pelaajan tiedot.
         Node stats = getPlayerStats();
         hud.setLeft(stats);
-
+        
         return hud;
     }
-
+    
     @Override
     public void doGameTick() {
         if (gameLevel.doGameTick()) {
             switchTo(new GameOverScreen(main));
         }
     }
-
+    
     private Node getPlayerStats() {
         StringBuilder sb = new StringBuilder();
         BasicPlayerCharacter pc = gameLevel.getPlayer();
@@ -121,5 +122,5 @@ public class LevelScreen extends SwitchingScreen {
         sb.append("AGL:\t").append(pc.getAgl()).append("\n");
         return new Text(sb.toString());
     }
-
+    
 }

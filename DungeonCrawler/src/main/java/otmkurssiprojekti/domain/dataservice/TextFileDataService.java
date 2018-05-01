@@ -24,95 +24,96 @@ import otmkurssiprojekti.domain.level.GameLevel;
  * @author Juho Gröhn
  */
 public class TextFileDataService implements DataService {
-
+    
     private Path usersDir;
     private Path levelsDir;
     private Path userDir;
     private Path playerDir;
     private String gameSaveName;
     private GameLevel gameLevel;
-
+    
     public TextFileDataService() {
     }
-
+    
     @Override
     public void setLevelsDir(String levelsDir) {
         Path path = Paths.get(levelsDir);
         createDirectoryIfAbsent(path);
         this.levelsDir = path;
     }
-
+    
     @Override
     public void setUsersDir(String usersDir) {
         Path path = Paths.get(usersDir);
         createDirectoryIfAbsent(path);
         this.usersDir = path;
     }
-
+    
     @Override
     public void setUser(String userName) {
         Path path = Paths.get(this.usersDir.toString(), userName);
         createDirectoryIfAbsent(path);
         this.userDir = path;
     }
-
+    
     @Override
     public void setPlayer(String playerName) {
         Path path = Paths.get(this.userDir.toString(), playerName);
         createDirectoryIfAbsent(path);
         this.playerDir = path;
     }
-
+    
     @Override
     public void setGameSave(String saveName) {
         this.gameSaveName = saveName;
     }
-
+    
     @Override
     public void setGameLevel(GameLevel gameLevel) {
         this.gameLevel = gameLevel;
     }
-
+    
     @Override
     public GameLevel fetchGameLevel(String levelName) {
         return new TextFileLevelDao(levelsDir).loadLevel(levelName);
     }
-
+    
     @Override
     public List<GameSave> fetchGameSaves() {
         return new TextFileGameSaveDao(playerDir).listGameSaves();
     }
-
+    
     @Override
     public GameSave fetchGameSave(String saveName) {
         return new TextFileGameSaveDao(playerDir).loadSave(saveName);
     }
-
+    
     @Override
     public GameSave fetchGameSave() {
         return fetchGameSave(gameSaveName);
     }
-
+    
     public void saveGame(GameSave gameSave) {
         new TextFileGameSaveDao(playerDir).saveGame(gameSave);
         this.setGameSave(Long.toString(gameSave.getSaveDate().getTime()));
     }
-
+    
     @Override
     public void saveGame() {
-        saveGame(new GameSave(new Date(System.currentTimeMillis()), gameLevel));
+        GameSave gameSave = new GameSave(new Date(System.currentTimeMillis()), gameLevel);
+        saveGame(gameSave);
     }
-
+    
     @Override
     public List<String> fetchPlayers() {
         return new BasicFileDao(userDir).loadFiles();
     }
-
+    
     @Override
     public List<String> fetchUsers() {
         return new BasicFileDao(usersDir).loadFiles();
     }
-
+    
     private void createDirectoryIfAbsent(Path path) {
         if (!Files.exists(path)) {
             try {
@@ -122,5 +123,5 @@ public class TextFileDataService implements DataService {
             }
         }
     }
-
+    
 }

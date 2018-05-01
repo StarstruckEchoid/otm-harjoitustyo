@@ -3,17 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package otmkurssiprojekti.userinterface.screen;
+package otmkurssiprojekti.userinterface.screen.daousers;
 
-import otmkurssiprojekti.userinterface.screen.daousers.NewPlayerScreen;
-import otmkurssiprojekti.userinterface.screen.daousers.LoadUserScreen;
-import otmkurssiprojekti.userinterface.screen.daousers.LoadGameScreen;
-import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import otmkurssiprojekti.userinterface.DungeonCrawler;
+import otmkurssiprojekti.userinterface.screen.GameScreen;
+import otmkurssiprojekti.userinterface.screen.VerticalMenuScreen;
 
 /**
  *
