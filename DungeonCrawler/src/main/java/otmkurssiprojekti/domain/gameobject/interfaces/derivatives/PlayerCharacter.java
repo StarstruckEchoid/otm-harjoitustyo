@@ -8,11 +8,14 @@ package otmkurssiprojekti.domain.gameobject.interfaces.derivatives;
 import otmkurssiprojekti.domain.gameobject.interfaces.Destructible;
 import otmkurssiprojekti.domain.gameobject.interfaces.Hurtful;
 import otmkurssiprojekti.domain.gameobject.interfaces.Mobile;
+import otmkurssiprojekti.domain.gameobject.interfaces.PointsSource;
+import otmkurssiprojekti.domain.gameobject.interfaces.StatsObject;
 
 /**
  *
  * @author gjuho
  */
-public interface PlayerCharacter extends Mobile, Destructible, Hurtful {
+public interface PlayerCharacter extends Mobile, Destructible, Hurtful, PointsSource, StatsObject {
+
 
 }

@@ -9,11 +9,12 @@ import otmkurssiprojekti.domain.gameobject.interfaces.Destructible;
 import otmkurssiprojekti.domain.gameobject.interfaces.GameObject;
 import otmkurssiprojekti.domain.gameobject.interfaces.Hurtful;
 import otmkurssiprojekti.domain.gameobject.interfaces.Mobile;
+import otmkurssiprojekti.domain.gameobject.interfaces.StatsObject;
 
 /**
  *
  * @author Juho Gröhn
  */
-public interface StatsCharacter extends GameObject, Destructible, Hurtful, Mobile {
+public interface StatsCharacter extends GameObject, Destructible, Hurtful, Mobile, StatsObject {
 
 }

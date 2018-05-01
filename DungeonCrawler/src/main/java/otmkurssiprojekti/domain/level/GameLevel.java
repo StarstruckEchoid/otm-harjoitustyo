@@ -7,10 +7,15 @@ package otmkurssiprojekti.domain.level;
 
 import java.io.Serializable;
 import java.util.List;
+import otmkurssiprojekti.domain.gameobject.gameinanimates.ImmutableObject;
+import otmkurssiprojekti.domain.gameobject.gameinanimates.InteractiveObject;
+import otmkurssiprojekti.domain.gameobject.gameinanimates.LinkObject;
+import otmkurssiprojekti.domain.gameobject.gameinanimates.PointsBall;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
 import otmkurssiprojekti.domain.gameobject.location.Direction;
 import otmkurssiprojekti.domain.gameobject.interfaces.GameObject;
-import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.BasicPlayerCharacter;
+import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.NonPlayerCharacter;
+import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.PlayerCharacter;
 
 /**
  *
@@ -18,16 +23,46 @@ import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.BasicPl
  */
 public interface GameLevel extends Serializable {
 
+    /**
+     * Returns the name of this level. NB! not necessarily the same as
+     * toString().
+     *
+     * @return Name of the level.
+     */
     String getLevelName();
 
-    BasicPlayerCharacter getPlayer();
+    /**
+     *
+     * @return The player in this level.
+     */
+    PlayerCharacter getPlayer();
 
+    /**
+     *
+     * @return The list of all GameObjects in the entire level.
+     */
     List<GameObject> getGameObjects();
 
-    void setPlayer(BasicPlayerCharacter player);
+    /**
+     * Sets player.
+     *
+     * @param player The player to overwrite current player value.
+     */
+    void setPlayer(PlayerCharacter player);
 
+    /**
+     * Moves the player in the given direction by one block.
+     *
+     * @param dir The direction in which to move.
+     */
     void movePlayer(Direction dir);
 
+    /**
+     * Makes the player attack in a given direction, dealing damage to any
+     * destructible in that direction.
+     *
+     * @param dir The direction in which the player will attack.
+     */
     void playerAttack(Direction dir);
 
     /**
@@ -38,6 +73,13 @@ public interface GameLevel extends Serializable {
      */
     boolean doGameTick();
 
+    /**
+     * Tells whether it's possible to move to these coordinates.
+     *
+     * @param coords The coordinates to be checked.
+     * @return Return true if it's NOT possible to go here and false if it is
+     * possible.
+     */
     boolean isInaccessible(Coords coords);
 
     @Override
@@ -45,5 +87,15 @@ public interface GameLevel extends Serializable {
 
     @Override
     public boolean equals(Object obj);
+
+    public List<NonPlayerCharacter> getNpcs();
+
+    public List<ImmutableObject> getBlocks();
+
+    public List<InteractiveObject> getInteractives();
+
+    public List<LinkObject> getLevelLinks();
+
+    public List<PointsBall> getPoints();
 
 }

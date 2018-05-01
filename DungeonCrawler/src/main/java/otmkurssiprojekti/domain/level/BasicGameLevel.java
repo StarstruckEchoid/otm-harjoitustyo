@@ -16,6 +16,7 @@ import otmkurssiprojekti.domain.gameobject.interfaces.GameObject;
 import java.util.*;
 import otmkurssiprojekti.domain.gameobject.interfaces.Mobile;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.NonPlayerCharacter;
+import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.PlayerCharacter;
 
 /**
  * The most basic implementation of a GameLevel.
@@ -31,7 +32,7 @@ public class BasicGameLevel implements GameLevel {
     public static final Coords DIMENSIONS = new Coords(16, 16, 8);
 
     private final String levelName;
-    private BasicPlayerCharacter player;
+    private PlayerCharacter player;
     private final List<NonPlayerCharacter> npcs;
     private final List<ImmutableObject> blocks;
     private final List<InteractiveObject> interactives;
@@ -48,7 +49,7 @@ public class BasicGameLevel implements GameLevel {
         this.points = null;
     }
 
-    public BasicGameLevel(String levelName, BasicPlayerCharacter player, List<NonPlayerCharacter> npcs, List<ImmutableObject> blocks, List<InteractiveObject> interactives, List<LinkObject> levelLinks, List<PointsBall> points) {
+    public BasicGameLevel(String levelName, PlayerCharacter player, List<NonPlayerCharacter> npcs, List<ImmutableObject> blocks, List<InteractiveObject> interactives, List<LinkObject> levelLinks, List<PointsBall> points) {
         this.levelName = levelName;
         this.player = player;
         this.npcs = npcs;
@@ -65,7 +66,7 @@ public class BasicGameLevel implements GameLevel {
     }
 
     @Override
-    public BasicPlayerCharacter getPlayer() {
+    public PlayerCharacter getPlayer() {
         return this.player;
     }
 
@@ -91,7 +92,7 @@ public class BasicGameLevel implements GameLevel {
 
     //Setter
     @Override
-    public void setPlayer(BasicPlayerCharacter player) {
+    public void setPlayer(PlayerCharacter player) {
         this.player = player;
     }
 
@@ -180,7 +181,7 @@ public class BasicGameLevel implements GameLevel {
     @Override
     public void playerAttack(Direction dir) {
         Coords pcCoords = this.player.getCoords();
-        Coords coords = this.player.coordsAt(dir);
+        Coords coords = this.player.getCoords().sum(dir.getCoords());
         this.npcs.stream()
                 .filter(npc -> npc.getCoords().equals(pcCoords) || npc.getCoords().equals(coords))
                 .forEach(npc -> this.player.hurt(npc));

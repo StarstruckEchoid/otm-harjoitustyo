@@ -68,7 +68,7 @@ public class TextFileGameLevels {
     public static GameLevel makeGameLevel(String string) {
         String[] fields = string.split("\n\n");
         String levelName = fields[0];
-        BasicPlayerCharacter player = makePlayerCharacter(fields[1]);
+        PlayerCharacter player = makePlayerCharacter(fields[1]);
         List<NonPlayerCharacter> npcs = makeNPCList(fields[2]);
         List<ImmutableObject> blocks = makeBlockList(fields[3]);
         List<InteractiveObject> interactives = makeInteractiveObjectList(fields[4]);
@@ -85,7 +85,7 @@ public class TextFileGameLevels {
      * @param gameLevel The GameLevel to be converted.
      * @return Returns the string representation of the level data.
      */
-    public static String printGameLevel(BasicGameLevel gameLevel) {
+    public static String printGameLevel(GameLevel gameLevel) {
         StringBuilder sb = new StringBuilder();
         sb.append(gameLevel.getLevelName()).append("\n\n");
         sb.append(printPlayerCharacter(gameLevel.getPlayer())).append("\n\n");
@@ -170,7 +170,7 @@ public class TextFileGameLevels {
      * @see PlayerCharacter
      * @see BasicPlayerCharacter
      */
-    public static BasicPlayerCharacter makePlayerCharacter(String field) {
+    public static PlayerCharacter makePlayerCharacter(String field) {
         String[] attrs = field.split(";");
         int hp = Integer.parseInt(attrs[0]);
         int str = Integer.parseInt(attrs[1]);
@@ -190,7 +190,7 @@ public class TextFileGameLevels {
      * @param pc The PlayerCharacter.
      * @return The TextFileGameLevels compatible string representation of pc.
      */
-    public static String printPlayerCharacter(BasicPlayerCharacter pc) {
+    public static String printPlayerCharacter(PlayerCharacter pc) {
         return pc.getHp() + ";" + pc.getStr() + ";" + pc.getPer() + ";" + pc.getEnd() + ";" + pc.getAgl() + ";" + printCoords(pc.getCoords()) + ";" + pc.getPoints();
     }
 

@@ -25,6 +25,7 @@ import otmkurssiprojekti.domain.gameobject.gameinanimates.InteractiveObject;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.LinkObject;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.PointsBall;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.NonPlayerCharacter;
+import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.PlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
 import otmkurssiprojekti.domain.gameobject.location.Direction;
 
@@ -35,7 +36,7 @@ import otmkurssiprojekti.domain.gameobject.location.Direction;
 public class TextFileGameLevelsTest {
 
     private String pcString;
-    private BasicPlayerCharacter pc;
+    private PlayerCharacter pc;
 
     private String npcsString;
     private List<NonPlayerCharacter> npcs;
@@ -177,7 +178,7 @@ public class TextFileGameLevelsTest {
 
     @Test
     public void testMakePlayerCharacter() {
-        BasicPlayerCharacter madePc = TextFileGameLevels.makePlayerCharacter(pcString);
+        PlayerCharacter madePc = TextFileGameLevels.makePlayerCharacter(pcString);
 
         assertTrue("Expected " + pc.toString() + " but got " + madePc.toString(), madePc.equals(pc));
     }
