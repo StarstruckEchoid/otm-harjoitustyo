@@ -5,6 +5,7 @@
  */
 package otmkurssiprojekti.dataaccessobject;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -160,7 +161,7 @@ public class TextFileLevelDaoTest {
     public void testSaveLoadLevel(GameLevel gl) {
         try {
             tfld.saveLevel(gl);
-            GameLevel gl2 = tfld.loadLevel(Paths.get(directory.toString(), gl.toString()));
+            GameLevel gl2 = tfld.loadLevel(gl.toString());
             testLevelsEqual(gl2, gl);
         } catch (IllegalArgumentException i) {
             fail(i.getMessage());

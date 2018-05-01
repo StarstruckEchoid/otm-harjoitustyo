@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import otmkurssiprojekti.dataaccessobject.BasicFileDao;
 import otmkurssiprojekti.userinterface.DungeonCrawler;
 import otmkurssiprojekti.userinterface.screen.GameScreen;
 import otmkurssiprojekti.userinterface.screen.LoadPlayerScreen;
@@ -21,13 +20,10 @@ import otmkurssiprojekti.userinterface.screen.VerticalMenuScreen;
  * @author Juho Gröhn
  */
 public class NewUserScreen extends VerticalMenuScreen {
-
-    private final BasicFileDao fudao;
     private final StringBuilder username;
 
     public NewUserScreen(DungeonCrawler main) {
         super(main);
-        this.fudao = new BasicFileDao(DungeonCrawler.USER_DIR);
         this.username = new StringBuilder();
     }
 
@@ -50,8 +46,7 @@ public class NewUserScreen extends VerticalMenuScreen {
     @Override
     protected void doEnterAction(int index) {
         //Save user and continue to player selection.
-        fudao.saveFile(username.toString());
-        main.getGameData().setUser(username.toString());
+        main.getDataService().setUser(username.toString());
         switchTo(new LoadPlayerScreen(main));
     }
 

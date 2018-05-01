@@ -32,7 +32,7 @@ public abstract class AbstractGameSaveDao implements GameSaveDao {
         File[] gameSaves = directory.toFile().listFiles();
         List<GameSave> saves = new ArrayList<>();
         for (File f : gameSaves) {
-            saves.add(loadSave(f));
+            saves.add(loadSave(f.getName()));
         }
         return saves;
     }
@@ -44,13 +44,11 @@ public abstract class AbstractGameSaveDao implements GameSaveDao {
         levelDao.saveLevel(gameLevel, name);
     }
 
-    public GameSave loadSave(File file) { //A gamesave is constructed so that the date is the name of the file and the gamelevel is the contents.
-        String name = file.getName();
+    @Override
+    public GameSave loadSave(String name) { //A gamesave is constructed so that the date is the name of the file and the gamelevel is the contents.
         long time = Long.parseLong(name);
         Date date = new Date(time);
-
-        GameLevel gameLevel = levelDao.loadLevel(file.toPath());
-
+        GameLevel gameLevel = levelDao.loadLevel(name);
         return new GameSave(date, gameLevel);
     }
 

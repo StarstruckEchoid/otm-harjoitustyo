@@ -5,10 +5,6 @@
  */
 package otmkurssiprojekti.userinterface;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import otmkurssiprojekti.userinterface.screen.GameScreen;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -19,6 +15,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import otmkurssiprojekti.dataaccessobject.dataobject.GameData;
 import otmkurssiprojekti.dataaccessobject.dataobject.SimpleGameData;
+import otmkurssiprojekti.domain.dataservice.DataService;
+import otmkurssiprojekti.domain.dataservice.TextFileDataService;
 import otmkurssiprojekti.userinterface.screen.MainMenuScreen;
 
 /**
@@ -28,69 +26,15 @@ import otmkurssiprojekti.userinterface.screen.MainMenuScreen;
 public class DungeonCrawler extends Application {
 
     //Initialize constants.
-    public static final Path USER_DIR = Paths.get("users");
+    public static final String USERS_DIR = "users";
+    public static final String FIRST_LEVEL = "Starting_Level.txt";
+    public static final String LEVELS_DIR = "levels";
+    private static final DataService DATA_SERVICE = new TextFileDataService();
 
     static {
-        //Create file USER_DIR if it does not yet exist.
-        if (!USER_DIR.toFile().exists() || !USER_DIR.toFile().isDirectory()) {
-            try {
-                Files.createDirectory(USER_DIR);
-            } catch (IOException ex) {
-                Logger.getLogger(DungeonCrawler.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        DATA_SERVICE.setUsersDir(USERS_DIR);
+        DATA_SERVICE.setLevelsDir(LEVELS_DIR);
     }
-    public static final String FIRST_LEVEL = "Starting_Level.txt";
-    public static final Path LEVEL_DIR = Paths.get("levels");
-
-//    static {
-//        //Create file LEVEL_DIR if it does not yet exist.
-//        if (!LEVEL_DIR.toFile().exists() || !LEVEL_DIR.toFile().isDirectory()) {
-//            try {
-//                Files.createDirectory(LEVEL_DIR);
-//            } catch (IOException ex) {
-//                Logger.getLogger(DungeonCrawler.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//
-//        //PLACEHOLDER CODE: Makes a new level.
-//        GameLevel gameLvl = TextFileGameLevels.makeGameLevel(
-//                "Starting Level\n"
-//                + "\n"
-//                + "10;1;1;1;1;3,3,0;0\n"
-//                + "\n"
-//                + "%;7,10,0\n"
-//                + "r;8,8,0\n"
-//                + "d;4,9,0\n"
-//                + "¨;1,1,0\n"
-//                + "\n"
-//                + "0,,,,,,,,,,,,,,0\n"
-//                + "0,,,,,,,,,,,,,,0\n"
-//                + "0,,,000000000000\n"
-//                + "0,,,,,,,,,,,,,,0\n"
-//                + "0,,,,,,,,,,,,,,0\n"
-//                + "0,,000,,000,,,00\n"
-//                + "0,,0,,,,0,,,,,,0\n"
-//                + "0,,0,,,,0,,,,,,0\n"
-//                + "000000000,,,,,,0\n"
-//                + "0,,,,,,,0,,,,,,0\n"
-//                + "0,,,0,,,0,,,,,,0\n"
-//                + "0,,,0,,,0,,,,,,0\n"
-//                + "0,,,00000,,,,,,0\n"
-//                + "0,,,,,,,,,,,,,,0\n"
-//                + "0,,,,,,,,,,,,,,0\n"
-//                + "000000000000,,,0\n"
-//                + "\n"
-//                + "EMPTY\n"
-//                + "\n"
-//                + "EMPTY\n"
-//                + "\n"
-//                + "EMPTY"
-//        );
-//
-//        //Inserts it into LEVEL_DIR.
-//        new TextFileLevelDao(LEVEL_DIR).saveLevel(gameLvl);
-//    }
     private static final Timer TIMER = new Timer();
     private static final int TICKS_PERIOD = 500; //Controls how often the game updates, eg. how often npcs move.
     private static final int FRAMES_PERIOD = 50; //Controls how often the screen updates. Reciprocal of frames per millisecond.
@@ -141,6 +85,11 @@ public class DungeonCrawler extends Application {
     }
     //Getters and setters.
 
+    public DataService getDataService() {
+        return DATA_SERVICE;
+    }
+
+    @Deprecated
     /**
      * Gets GameData.
      *
@@ -151,6 +100,7 @@ public class DungeonCrawler extends Application {
         return gameData;
     }
 
+    @Deprecated
     /**
      * Gets GameScreen.
      *
@@ -161,6 +111,7 @@ public class DungeonCrawler extends Application {
         return gameScreen;
     }
 
+    @Deprecated
     /**
      * Sets the GameData. GameData is used by UI classes, especially dao users,
      * to determine which data to display.
@@ -172,6 +123,7 @@ public class DungeonCrawler extends Application {
         this.gameData = gameData;
     }
 
+    @Deprecated
     /**
      * Sets the game screen. This method allows any UI class that knows main to
      * change the game screen displayed. Mostly used by other GameScreens.

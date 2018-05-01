@@ -18,10 +18,10 @@ public interface FileDao {
 
     /**
      *
-     * @return Returns a list of paths to files. Presumably these paths are all
+     * @return Returns a list of filenames. Presumably these paths are all
      * children of a given root.
      */
-    public List<Path> loadFiles();
+    public List<String> loadFiles();
 
     /**
      *

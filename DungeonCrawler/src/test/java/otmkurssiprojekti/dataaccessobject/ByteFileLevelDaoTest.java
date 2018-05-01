@@ -5,7 +5,7 @@
  */
 package otmkurssiprojekti.dataaccessobject;
 
-import otmkurssiprojekti.dataaccessobject.ByteFileLevelDao;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -78,7 +78,7 @@ public class ByteFileLevelDaoTest {
     @Test
     public void testSaveLoadLevel() {
         bfldao.saveLevel(glvl);
-        GameLevel glvl2 = bfldao.loadLevel(Paths.get(directory.toString(), glvl.toString()));
+        GameLevel glvl2 = bfldao.loadLevel(glvl.toString());
 
         assertTrue("Levels are not equal according to equals().", glvl.equals(glvl2));
     }
@@ -87,7 +87,7 @@ public class ByteFileLevelDaoTest {
     public void testSaveLoadWithName() {
         String newName = "testName";
         bfldao.saveLevel(glvl, newName);
-        GameLevel glvl2 = bfldao.loadLevel(Paths.get(directory.toString(), newName));
+        GameLevel glvl2 = bfldao.loadLevel(newName);
 
         assertTrue("Name is not the same!", glvl2.getLevelName().equals(glvl.getLevelName()));
         assertTrue("Levels are not equal according to equals().", glvl.equals(glvl2));

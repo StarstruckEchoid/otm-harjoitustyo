@@ -5,16 +5,13 @@
  */
 package otmkurssiprojekti.userinterface.screen.daousers;
 
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import otmkurssiprojekti.dataaccessobject.BasicFileDao;
 import otmkurssiprojekti.userinterface.DungeonCrawler;
 import otmkurssiprojekti.userinterface.screen.GameScreen;
 import otmkurssiprojekti.userinterface.screen.LoadPlayerScreen;
 import otmkurssiprojekti.userinterface.screen.MainMenuScreen;
 import otmkurssiprojekti.userinterface.screen.VerticalMenuScreen;
-import otmkurssiprojekti.dataaccessobject.FileDao;
 
 /**
  *
@@ -22,15 +19,12 @@ import otmkurssiprojekti.dataaccessobject.FileDao;
  */
 public class LoadUserScreen extends VerticalMenuScreen {
 
-    private final FileDao fudao;
-    private final Path[] users;
+    private final List<String> userNames;
 
 //    private int pointer = 0;
     public LoadUserScreen(DungeonCrawler main) {
         super(main);
-        fudao = new BasicFileDao(DungeonCrawler.USER_DIR);
-        users = fudao.loadFiles().stream()
-                .toArray(Path[]::new);
+        userNames = main.getDataService().fetchUsers();
     }
 
     @Override
@@ -38,8 +32,8 @@ public class LoadUserScreen extends VerticalMenuScreen {
         if (index == 0) {
             switchTo(new NewUserScreen(main));
         } else {
-            Path user = users[index - 1];
-            main.getGameData().setUser(user.getFileName().toString());
+            String userName = userNames.get(index - 1);
+            main.getDataService().setUser(userName);
             switchTo(new LoadPlayerScreen(main));
         }
     }
@@ -48,9 +42,7 @@ public class LoadUserScreen extends VerticalMenuScreen {
     protected List<Object> getOptsList() {
         List<Object> optsList = new ArrayList<>();
         optsList.add("<new user>");
-        for (Path user : users) {
-            optsList.add(user.getFileName().toString());
-        }
+        optsList.addAll(userNames);
         return optsList;
     }
 

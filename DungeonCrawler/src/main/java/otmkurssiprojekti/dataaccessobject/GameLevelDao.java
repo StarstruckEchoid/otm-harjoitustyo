@@ -5,7 +5,6 @@
  */
 package otmkurssiprojekti.dataaccessobject;
 
-import java.nio.file.Path;
 import java.util.List;
 import otmkurssiprojekti.domain.level.GameLevel;
 
@@ -17,9 +16,26 @@ public interface GameLevelDao {
 
     public List<GameLevel> listGameLevels();
 
+    /**
+     * Saves a GameLevel by its default name.
+     *
+     * @param level The GameLevel to be saved.
+     */
     public void saveLevel(GameLevel level);
 
+    /**
+     * Saves a GameLevel by a specific name.
+     *
+     * @param level The level to be saved.
+     * @param name The name by which it is saved.
+     */
     public void saveLevel(GameLevel level, String name);
 
-    public GameLevel loadLevel(Path levelPath);
+    /**
+     *
+     * @param levelName The name of the level to be loaded, as determined by its
+     * file name.
+     * @return Returns the GameLevel stored in the file by this name.
+     */
+    public GameLevel loadLevel(String levelName);
 }

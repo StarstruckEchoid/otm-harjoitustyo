@@ -23,22 +23,16 @@ import otmkurssiprojekti.userinterface.screen.VerticalMenuScreen;
  */
 public class LoadGameScreen extends VerticalMenuScreen {
 
-    private final GameSaveDao gsdao;
     private final List<GameSave> saves;
 
     public LoadGameScreen(DungeonCrawler main) {
         super(main);
-        gsdao = new TextFileGameSaveDao(Paths.get(//The address where game saves are looked up is <USER_DIR>/<user>/<player>/
-                DungeonCrawler.USER_DIR.toString(),
-                main.getGameData().getUser(),
-                main.getGameData().getPlayer()
-        ));
-        saves = gsdao.listGameSaves();
+        saves = main.getDataService().fetchGameSaves();
     }
 
     @Override
     protected void doEnterAction(int index) {
-        main.getGameData().setGameLevel(saves.get(index).getGameLevel());
+        main.getDataService().setGameSave(Long.toString(saves.get(index).getSaveDate().getTime()));
         switchTo(new LevelScreen(main));
     }
 

@@ -72,7 +72,7 @@ public class ByteFileGameSaveDaoTest {
                 temp.toString(),
                 Long.toString(date.getTime())
         );
-        gsave2 = bfgsdao.loadSave(path.toFile());
+        gsave2 = bfgsdao.loadSave(path.toFile().getName());
     }
 
     @After

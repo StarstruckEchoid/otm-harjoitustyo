@@ -33,11 +33,11 @@ public class BasicFileDao implements FileDao {
     }
 
     @Override
-    public List<Path> loadFiles() {
-        List<Path> users = new ArrayList<>();
+    public List<String> loadFiles() {
+        List<String> users = new ArrayList<>();
         File[] subdirs = source.toFile().listFiles(f -> f.isDirectory());
         for (File f : subdirs) {
-            users.add(f.toPath());
+            users.add(f.getName());
         }
         return users;
     }

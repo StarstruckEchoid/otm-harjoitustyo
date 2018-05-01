@@ -28,7 +28,7 @@ public abstract class AbstractLevelDao implements GameLevelDao {
         File[] gameLevels = directory.toFile().listFiles();
         List<GameLevel> levels = new ArrayList<>();
         for (File f : gameLevels) {
-            levels.add(loadLevel(f.toPath()));
+            levels.add(loadLevel(f.getName()));
         }
         return levels;
     }

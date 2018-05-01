@@ -25,20 +25,9 @@ public class ByteFileLevelDao extends AbstractLevelDao implements GameLevelDao {
     }
 
     @Override
-    public void saveLevel(GameLevel level) {
+    public GameLevel loadLevel(String levelName) {
         try {
-            Path levelPath = Paths.get(directory.toString(), level.getLevelName());
-            byte[] bytedata = Serializer.serialize(level);
-            Files.write(levelPath, bytedata);
-        } catch (IOException ex) {
-            Logger.getLogger(ByteFileLevelDao.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    @Override
-    public GameLevel loadLevel(Path levelPath) {
-        try {
-            byte[] byteData = Files.readAllBytes(levelPath);
+            byte[] byteData = Files.readAllBytes(Paths.get(this.directory.toString(), levelName));
             GameLevel glvl = (GameLevel) Serializer.deserialize(byteData);
             return glvl;
         } catch (IOException | ClassNotFoundException ex) {
@@ -47,6 +36,7 @@ public class ByteFileLevelDao extends AbstractLevelDao implements GameLevelDao {
         return null;
     }
 
+    @Override
     public void saveLevel(GameLevel level, String name) {
         try {
             Path levelPath = Paths.get(directory.toString(), name);

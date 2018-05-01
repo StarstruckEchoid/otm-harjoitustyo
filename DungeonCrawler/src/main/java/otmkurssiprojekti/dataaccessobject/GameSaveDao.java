@@ -19,4 +19,6 @@ public interface GameSaveDao {
     public List<GameSave> listGameSaves();
 
     public void saveGame(GameSave gameSave);
+
+    public GameSave loadSave(String name);
 }

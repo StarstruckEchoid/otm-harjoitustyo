@@ -55,9 +55,7 @@ public class FileUserDaoTest {
         String user = "Test Testington";
         fudao.saveFile(user);
 
-        List<String> userList = fudao.loadFiles().stream()
-                .map(p -> p.getFileName().toString())
-                .collect(Collectors.toList());
+        List<String> userList = fudao.loadFiles();
         assertTrue("Expected list to contain " + Paths.get(user).toString() + " but list onlu had " + userList.toString(), userList.contains(user));
     }
 
@@ -70,9 +68,7 @@ public class FileUserDaoTest {
         fudao.saveFile(user1);
         fudao.saveFile(user2);
 
-        List<String> userList = fudao.loadFiles().stream()
-                .map(p -> p.getFileName().toString())
-                .collect(Collectors.toList());
+        List<String> userList = fudao.loadFiles();
 
         assertTrue(userList.contains(user0));
         assertTrue(userList.contains(user2));

@@ -46,9 +46,9 @@ public class TextFileLevelDao extends AbstractLevelDao implements GameLevelDao {
     }
 
     @Override
-    public GameLevel loadLevel(Path levelPath) {
+    public GameLevel loadLevel(String levelName) {
         try {
-            String lines = Files.readAllLines(levelPath)
+            String lines = Files.readAllLines(Paths.get(directory.toString(),levelName))
                     .stream()
                     .reduce("", (a, b) -> a + b + "\n");
             GameLevel gameLevel = TextFileGameLevels.makeGameLevel(lines);

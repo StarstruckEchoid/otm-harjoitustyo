@@ -29,7 +29,7 @@ public class LevelScreen extends SwitchingScreen {
 
     public LevelScreen(DungeonCrawler main) {
         super(main);
-        this.gameLevel = main.getGameData().getGameLevel();
+        this.gameLevel = main.getDataService().fetchGameSave().getGameLevel();
     }
 
     @Override

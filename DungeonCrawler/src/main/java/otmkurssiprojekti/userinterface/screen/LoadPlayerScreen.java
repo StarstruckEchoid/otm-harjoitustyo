@@ -21,16 +21,12 @@ import otmkurssiprojekti.userinterface.DungeonCrawler;
  */
 public class LoadPlayerScreen extends VerticalMenuScreen {
 
-    private final Path user;
-    private final File[] players;
+    private final List<String> players;
 
     public LoadPlayerScreen(DungeonCrawler main) {
         super(main);
-        this.user = Paths.get(
-                DungeonCrawler.USER_DIR.toString(),
-                main.getGameData().getUser()
-        );
-        this.players = user.toFile().listFiles();
+
+        this.players = main.getDataService().fetchPlayers();
     }
 
     @Override
@@ -38,8 +34,8 @@ public class LoadPlayerScreen extends VerticalMenuScreen {
         if (index == 0) {
             switchTo(new NewPlayerScreen(main));
         } else {
-            File player = players[index - 1];
-            main.getGameData().setPlayer(player.getName());
+            String player = players.get(index - 1);
+            main.getDataService().setPlayer(player);
             switchTo(new LoadGameScreen(main));
         }
     }
@@ -48,9 +44,7 @@ public class LoadPlayerScreen extends VerticalMenuScreen {
     protected List<Object> getOptsList() {
         List<Object> optsList = new ArrayList<>();
         optsList.add("<new player>");
-        for (File player : players) {
-            optsList.add(player.getName());
-        }
+        optsList.addAll(players);
         return optsList;
     }
 
