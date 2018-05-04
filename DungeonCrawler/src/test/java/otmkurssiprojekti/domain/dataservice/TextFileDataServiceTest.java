@@ -81,6 +81,7 @@ public class TextFileDataServiceTest {
     @Test
     public void testSetLevelsDir() {
         dataService.setLevelsDir(levelsDirName);
+
         assertThat(dataService.levelsDir.toString(), is(levelsDirName));
     }
 
@@ -99,6 +100,7 @@ public class TextFileDataServiceTest {
     @Test
     public void testSetUsersDir() {
         dataService.setUsersDir(usersDirName);
+
         assertThat(dataService.usersDir.toString(), is(usersDirName));
     }
 
@@ -118,6 +120,7 @@ public class TextFileDataServiceTest {
     public void testSetUser() {
         testSetUsersDir();
         dataService.setUser(user);
+
         assertThat(dataService.userDir.toString(), is(usersDirName + File.separator + user));
     }
 
@@ -214,6 +217,7 @@ public class TextFileDataServiceTest {
     public void testFetchPlayers() {
         testSetPlayer();
         List<String> players = dataService.fetchPlayers();
+
         assertTrue(players.contains(player));
     }
 
@@ -224,6 +228,7 @@ public class TextFileDataServiceTest {
     public void testFetchUsers() {
         testSetUser();
         List<String> users = dataService.fetchUsers();
+
         assertTrue(users.contains(user));
     }
 
@@ -234,6 +239,7 @@ public class TextFileDataServiceTest {
     public void testLoadLevel() {
         testSetLevelsDir();
         dataService.loadLevel(levelName);
+
         assertThat(dataService.fetchGameLevel().getLevelName(), is(levelName));
     }
 
@@ -255,6 +261,7 @@ public class TextFileDataServiceTest {
     public void testFetchGameLevel_String() {
         testSetLevelsDir();
         GameLevel gl = dataService.fetchGameLevel(levelName);
+
         assertThat(gl, is(gameLevel));
     }
 
@@ -276,7 +283,10 @@ public class TextFileDataServiceTest {
     public void testFetchGameSave() {
         testSaveGame_GameSave();
         GameSave gs = dataService.fetchGameSave(saveName);
+
         assertTrue(gs != null);
+        assertThat(gs.getSaveDate().getTime(), is(Long.parseLong(saveName)));
+        assertThat(gs.getGameLevel(), is(gameLevel));
     }
 
     /**
@@ -287,6 +297,8 @@ public class TextFileDataServiceTest {
         testSetPlayer();
         testLoadLevel();
         dataService.saveGame();
+
+        assertThat(dataService.fetchGameSaves().size(), is(1));
     }
 
     @Test
