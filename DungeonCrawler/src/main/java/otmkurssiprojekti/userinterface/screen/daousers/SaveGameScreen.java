@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import otmkurssiprojekti.userinterface.DungeonCrawler;
 import otmkurssiprojekti.dataaccessobject.dataobject.GameSave;
+import otmkurssiprojekti.domain.level.GameLevel;
 import otmkurssiprojekti.userinterface.screen.GameScreen;
 import otmkurssiprojekti.userinterface.screen.LevelScreen;
 import otmkurssiprojekti.userinterface.screen.PauseScreen;
@@ -30,7 +31,8 @@ public class SaveGameScreen extends VerticalMenuScreen {
     @Override
     protected void doEnterAction(int index) {
         if (index == 0) {
-            main.getDataService().saveGame();
+            GameLevel gameLevel = main.getDataService().fetchGameLevel();
+            main.getDataService().saveGame(gameLevel);
             switchTo(new LevelScreen(main));
         }
 

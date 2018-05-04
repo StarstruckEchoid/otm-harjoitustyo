@@ -112,15 +112,16 @@ public class TextFileGameLevelsTest {
                 + "\n"
                 + npcsString
                 + "\n"
-                + blocksString + "\n"
-                + "EMPTY\n"
+                + blocksString
                 + "\n"
                 + "EMPTY\n"
+                + "\n"
+                + linksString
                 + "\n"
                 + "EMPTY\n"
                 + "\n";
 
-        gameLevel = new BasicGameLevel(levelName, pc, npcs, blocks, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+        gameLevel = new BasicGameLevel(levelName, pc, npcs, blocks, new ArrayList<>(), links, new ArrayList<>());
     }
 
     @After

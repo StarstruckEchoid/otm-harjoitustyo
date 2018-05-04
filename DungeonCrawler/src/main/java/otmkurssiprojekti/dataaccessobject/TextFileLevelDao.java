@@ -13,7 +13,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import otmkurssiprojekti.domain.level.BasicGameLevel;
 import otmkurssiprojekti.domain.level.GameLevel;
 import otmkurssiprojekti.utilityclasses.TextFileGameLevels;
 
@@ -31,17 +30,14 @@ public class TextFileLevelDao extends AbstractLevelDao implements GameLevelDao {
     public void saveLevel(GameLevel level, String name) {
         try {
             Path levelPath = Paths.get(directory.toString(), name);
-            if (level instanceof BasicGameLevel) {
-                List<String> textData = Arrays.asList(
-                        TextFileGameLevels.printGameLevel((BasicGameLevel) level)
-                                .split("\n")
-                );
-                Files.write(levelPath, textData);
-            } else {
-                throw new IllegalArgumentException(level.getClass().getName() + " is not BasicGameLevel.");
-            }
+            List<String> textData = Arrays.asList(
+                    TextFileGameLevels.printGameLevel(level)
+                            .split("\n")
+            );
+            Files.write(levelPath, textData);
+
         } catch (IOException ex) {
-            Logger.getLogger(ByteFileLevelDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TextFileLevelDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

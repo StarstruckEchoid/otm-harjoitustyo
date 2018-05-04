@@ -77,11 +77,10 @@ public class NewPlayerScreen extends VerticalMenuScreen {
     }
 
     private void initialiseNewGame() {
-        GameLevel startingLevel = main.getDataService().fetchGameLevel(DungeonCrawler.FIRST_LEVEL);
+        GameLevel startingLevel = main.getDataService().fetchGameLevel();
         main.getDataService().setPlayer(playerName.toString());
-        main.getDataService().setGameLevel(startingLevel);
         initialisePlayer(startingLevel);
-        main.getDataService().saveGame();
+        main.getDataService().saveGame(startingLevel);
         switchTo(new LevelScreen(main));
     }
 

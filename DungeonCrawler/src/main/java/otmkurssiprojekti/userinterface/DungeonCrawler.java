@@ -32,10 +32,12 @@ public class DungeonCrawler extends Application {
     static {
         DATA_SERVICE.setUsersDir(USERS_DIR);
         DATA_SERVICE.setLevelsDir(LEVELS_DIR);
+        DATA_SERVICE.loadLevel(FIRST_LEVEL);
     }
     private static final Timer TIMER = new Timer();
     private static final int TICKS_PERIOD = 500; //Controls how often the game updates, eg. how often npcs move.
     private static final int FRAMES_PERIOD = 50; //Controls how often the screen updates. Reciprocal of frames per millisecond.
+    private static final int DEBUG_PERIOD = 2000; //Controls how often debug actions are performed.
     private GameScreen gameScreen;
 
     public static void main(String[] args) {
@@ -45,6 +47,10 @@ public class DungeonCrawler extends Application {
     @Override
     public void init() throws Exception {
         this.setGameScreen(new MainMenuScreen(this));
+        //Debug
+        if (this.getParameters().getRaw().contains("debug")) {
+            initDebug();
+        }
     }
 
     @Override
@@ -121,6 +127,15 @@ public class DungeonCrawler extends Application {
                 gameScreen.doGameTick(); //What to do.
             }
         }, 0, TICKS_PERIOD);
+    }
+
+    private void initDebug() {
+        TIMER.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println(DATA_SERVICE.toString());
+            }
+        }, 0, DEBUG_PERIOD);
     }
 
 }

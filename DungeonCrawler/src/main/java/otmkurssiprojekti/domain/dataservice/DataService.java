@@ -26,6 +26,8 @@ public interface DataService {
      */
     public GameLevel fetchGameLevel(String levelName);
 
+    public GameLevel fetchGameLevel();
+
     /**
      * Fetch a particular game save.
      *
@@ -36,18 +38,12 @@ public interface DataService {
     GameSave fetchGameSave(String saveName);
 
     /**
-     * Fetch the GameSave that is currently loaded.
-     *
-     * @return Current game save.
-     */
-    GameSave fetchGameSave();
-
-    /**
      * Saves the game of the player. Note that player as well as game level has
      * to be set beforehand.
      *
+     * @param gameLevel The GameLevel to be saved in the GameSave.
      */
-    void saveGame();
+    void saveGame(GameLevel gameLevel);
 
     /**
      * Returns the list of game saves for the player. Note that player name has
@@ -74,19 +70,11 @@ public interface DataService {
     List<String> fetchUsers();
 
     /**
-     * Sets the currently loaded game save. Note that player name has to be set
-     * beforehand.
-     *
-     * @param saveName The name of the GameSave.
-     */
-    void setGameSave(String saveName);
-
-    /**
      * Set the currently loaded game level.
      *
-     * @param gameLevel The name of the GameLevel.
+     * @param levelName The name of the GameLevel.
      */
-    void setGameLevel(GameLevel gameLevel);
+    void loadLevel(String levelName);
 
     /**
      * Sets the default directory for game levels.

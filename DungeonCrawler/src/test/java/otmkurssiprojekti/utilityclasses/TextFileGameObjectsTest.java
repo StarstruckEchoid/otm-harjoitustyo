@@ -5,7 +5,6 @@
  */
 package otmkurssiprojekti.utilityclasses;
 
-import java.util.Optional;
 import static org.hamcrest.CoreMatchers.is;
 import org.junit.After;
 import org.junit.AfterClass;

@@ -37,9 +37,10 @@ public class TextFileDataServiceTest {
     private String usersDirName;
     private final String user = "testUser";
     private final String player = "testPlayer";
-    private final String gameSave = "24000330022";
+    private final String saveName = "24000330022";
+    private final String levelName = "test.txt";
     private final GameLevel gameLevel = new BasicGameLevel(
-            "test",
+            levelName,
             new BasicPlayerCharacter(PlayerCharacterArchetype.THIEF, new Coords(), Direction.DOWN),
             new ArrayList<>(),
             new ArrayList<>(),
@@ -108,26 +109,12 @@ public class TextFileDataServiceTest {
     }
 
     /**
-     * Test of setGameSave method, of class TextFileDataService.
-     */
-    @Test
-    public void testSetGameSave1() {
-        testSetPlayer();
-        dataService.setGameSave(gameSave);
-    }
-
-    @Test
-    public void testSetGameSave2() {
-        testSetPlayer();
-        dataService.setGameSave("axxr");
-    }
-
-    /**
      * Test of setGameLevel method, of class TextFileDataService.
      */
     @Test
     public void testSetGameLevel() {
-        dataService.setGameLevel(gameLevel);
+        testSetLevelsDir();
+        dataService.loadLevel(gameLevel.getLevelName());
     }
 
     /**
@@ -158,19 +145,8 @@ public class TextFileDataServiceTest {
     @Test
     public void testFetchGameSave_String() {
         testSaveGame_GameSave();
-        GameSave gameSave1 = dataService.fetchGameSave(gameSave);
-        assertEquals(gameSave1, new GameSave(new Date(Long.parseLong(gameSave)), gameLevel));
-    }
-
-    /**
-     * Test of fetchGameSave method, of class TextFileDataService.
-     */
-    @Test
-    public void testFetchGameSave_0args() {
-        testSaveGame_GameSave();
-        GameSave gameSave1 = dataService.fetchGameSave();
-
-        assertEquals(gameSave1, new GameSave(new Date(Long.parseLong(gameSave)), gameLevel));
+        GameSave gameSave1 = dataService.fetchGameSave(saveName);
+        assertEquals(gameSave1, new GameSave(new Date(Long.parseLong(saveName)), gameLevel));
     }
 
     /**
@@ -179,17 +155,17 @@ public class TextFileDataServiceTest {
     @Test
     public void testSaveGame_GameSave() {
         testSetPlayer();
-        dataService.saveGame(new GameSave(new Date(Long.parseLong(gameSave)), gameLevel));
+        dataService.saveGame(new GameSave(new Date(Long.parseLong(saveName)), gameLevel));
     }
 
     /**
      * Test of saveGame method, of class TextFileDataService.
      */
     @Test
-    public void testSaveGame_0args() {
+    public void testSaveGame_GameLevel() {
         testSetGameLevel();
         testSetPlayer();
-        dataService.saveGame();
+        dataService.saveGame(gameLevel);
     }
 
     /**
@@ -210,6 +186,65 @@ public class TextFileDataServiceTest {
         testSetUser();
         List<String> users = dataService.fetchUsers();
         assertTrue(users.contains(user));
+    }
+
+    /**
+     * Test of loadLevel method, of class TextFileDataService.
+     */
+    @Test
+    public void testLoadLevel() {
+        testSetLevelsDir();
+        dataService.loadLevel(levelName);
+    }
+
+    /**
+     * Test of loadSave method, of class TextFileDataService.
+     */
+    @Test
+    public void testLoadSave() {
+        testSaveGame_GameSave();
+        dataService.loadSave(saveName);
+    }
+
+    /**
+     * Test of fetchGameLevel method, of class TextFileDataService.
+     */
+    @Test
+    public void testFetchGameLevel_String() {
+        testSetLevelsDir();
+        GameLevel gl = dataService.fetchGameLevel(levelName);
+        assertThat(gl, is(gameLevel));
+    }
+
+    /**
+     * Test of fetchGameLevel method, of class TextFileDataService.
+     */
+    @Test
+    public void testFetchGameLevel_0args() {
+        testSetGameLevel();
+        GameLevel gl = dataService.fetchGameLevel();
+
+        assertThat(gl, is(gameLevel));
+    }
+
+    /**
+     * Test of fetchGameSave method, of class TextFileDataService.
+     */
+    @Test
+    public void testFetchGameSave() {
+        testSaveGame_GameSave();
+        GameSave gs = dataService.fetchGameSave(saveName);
+        assertTrue(gs != null);
+    }
+
+    /**
+     * Test of saveGame method, of class TextFileDataService.
+     */
+    @Test
+    public void testSaveGame_0args() {
+        testSetPlayer();
+        testLoadLevel();
+        dataService.saveGame();
     }
 
 }
