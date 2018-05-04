@@ -5,6 +5,7 @@
  */
 package otmkurssiprojekti.domain.dataservice;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -35,10 +36,10 @@ public class TextFileDataServiceTest {
 
     private String levelsDirName;
     private String usersDirName;
-    private final String user = "testUser";
-    private final String player = "testPlayer";
+    private final String user = "TestUser";
+    private final String player = "TestPlayer";
     private final String saveName = "24000330022";
-    private final String levelName = "test.txt";
+    private final String levelName = "Test_Level.txt";
     private final GameLevel gameLevel = new BasicGameLevel(
             levelName,
             new BasicPlayerCharacter(PlayerCharacterArchetype.THIEF, new Coords(), Direction.DOWN),
@@ -80,6 +81,16 @@ public class TextFileDataServiceTest {
     @Test
     public void testSetLevelsDir() {
         dataService.setLevelsDir(levelsDirName);
+        assertThat(dataService.levelsDir.toString(), is(levelsDirName));
+    }
+
+    @Test
+    public void testSetLevelsDir_invalid() {
+        try {
+            dataService.setLevelsDir(null);
+            fail();
+        } catch (NullPointerException e) {
+        }
     }
 
     /**
@@ -88,6 +99,16 @@ public class TextFileDataServiceTest {
     @Test
     public void testSetUsersDir() {
         dataService.setUsersDir(usersDirName);
+        assertThat(dataService.usersDir.toString(), is(usersDirName));
+    }
+
+    @Test
+    public void testSetUsersDir_invalid() {
+        try {
+            dataService.setUsersDir(null);
+            fail();
+        } catch (NullPointerException e) {
+        }
     }
 
     /**
@@ -97,6 +118,16 @@ public class TextFileDataServiceTest {
     public void testSetUser() {
         testSetUsersDir();
         dataService.setUser(user);
+        assertThat(dataService.userDir.toString(), is(usersDirName + File.separator + user));
+    }
+
+    @Test
+    public void testSetUser_invalid() {
+        try {
+            dataService.setUser(user);
+            fail();
+        } catch (Exception e) {
+        }
     }
 
     /**
@@ -106,6 +137,8 @@ public class TextFileDataServiceTest {
     public void testSetPlayer() {
         testSetUser();
         dataService.setPlayer(player);
+
+        assertThat(dataService.playerDir.toString(), is(usersDirName + File.separator + user + File.separator + player));
     }
 
     /**
@@ -115,6 +148,8 @@ public class TextFileDataServiceTest {
     public void testSetGameLevel() {
         testSetLevelsDir();
         dataService.loadLevel(gameLevel.getLevelName());
+
+        assertThat(dataService.currentLevel, is(gameLevel));
     }
 
     /**
@@ -146,6 +181,7 @@ public class TextFileDataServiceTest {
     public void testFetchGameSave_String() {
         testSaveGame_GameSave();
         GameSave gameSave1 = dataService.fetchGameSave(saveName);
+
         assertEquals(gameSave1, new GameSave(new Date(Long.parseLong(saveName)), gameLevel));
     }
 
@@ -156,6 +192,8 @@ public class TextFileDataServiceTest {
     public void testSaveGame_GameSave() {
         testSetPlayer();
         dataService.saveGame(new GameSave(new Date(Long.parseLong(saveName)), gameLevel));
+
+        assertThat(dataService.currentLevel, is(gameLevel));
     }
 
     /**
@@ -163,9 +201,10 @@ public class TextFileDataServiceTest {
      */
     @Test
     public void testSaveGame_GameLevel() {
-        testSetGameLevel();
         testSetPlayer();
         dataService.saveGame(gameLevel);
+
+        assertThat(dataService.currentLevel, is(gameLevel));
     }
 
     /**
@@ -195,6 +234,7 @@ public class TextFileDataServiceTest {
     public void testLoadLevel() {
         testSetLevelsDir();
         dataService.loadLevel(levelName);
+        assertThat(dataService.fetchGameLevel().getLevelName(), is(levelName));
     }
 
     /**
@@ -204,6 +244,8 @@ public class TextFileDataServiceTest {
     public void testLoadSave() {
         testSaveGame_GameSave();
         dataService.loadSave(saveName);
+
+        assertThat(dataService.fetchGameLevel(), is(gameLevel));
     }
 
     /**
@@ -245,6 +287,21 @@ public class TextFileDataServiceTest {
         testSetPlayer();
         testLoadLevel();
         dataService.saveGame();
+    }
+
+    @Test
+    public void testToString() {
+        testSetLevelsDir();
+        testSaveGame_GameSave();
+        String actual = dataService.toString();
+        String expected
+                = "levelsDir: " + levelsDirName + "\n"
+                + "usersDir: " + usersDirName + "\n"
+                + "userDir: " + usersDirName + File.separator + user + "\n"
+                + "playerDir: " + usersDirName + File.separator + user + File.separator + player + "\n"
+                + "currentLevel: " + levelName;
+
+        assertThat(actual, is(expected));
     }
 
 }

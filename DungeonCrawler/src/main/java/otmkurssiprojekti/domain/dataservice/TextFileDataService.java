@@ -25,11 +25,11 @@ import otmkurssiprojekti.domain.level.GameLevel;
  */
 public class TextFileDataService implements DataService {
 
-    private Path usersDir;
-    private Path levelsDir;
-    private Path userDir;
-    private Path playerDir;
-    private GameLevel currentLevel;
+    protected Path usersDir;
+    protected Path levelsDir;
+    protected Path userDir;
+    protected Path playerDir;
+    protected GameLevel currentLevel;
 
     public TextFileDataService() {
     }
@@ -93,6 +93,7 @@ public class TextFileDataService implements DataService {
 
     public void saveGame(GameSave gameSave) {
         new TextFileGameSaveDao(playerDir).saveGame(gameSave);
+        this.currentLevel = gameSave.getGameLevel();
     }
 
     @Override
