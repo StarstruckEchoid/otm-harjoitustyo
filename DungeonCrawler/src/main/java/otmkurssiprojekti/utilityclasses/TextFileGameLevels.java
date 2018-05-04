@@ -7,13 +7,9 @@ package otmkurssiprojekti.utilityclasses;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import otmkurssiprojekti.domain.level.BasicGameLevel;
 import otmkurssiprojekti.domain.level.GameLevel;
 import otmkurssiprojekti.domain.gameobject.archetypes.ImmutableObjectArchetype;
-import otmkurssiprojekti.domain.gameobject.archetypes.NonPlayerCharacterArchetype;
-import otmkurssiprojekti.domain.gameobject.gamecharacter.nonplayercharacter.HostileNonPlayerCharacter;
-import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.BasicPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.ImmutableObject;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.InteractiveObject;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.LinkObject;
@@ -68,7 +64,7 @@ public class TextFileGameLevels {
     public static GameLevel makeGameLevel(String string) {
         String[] fields = string.split("\n\n");
         String levelName = fields[0];
-        PlayerCharacter player = makePlayerCharacter(fields[1]);
+        PlayerCharacter player = TextFileGameObjects.makePlayerCharacter(fields[1]);
         List<NonPlayerCharacter> npcs = makeNPCList(fields[2]);
         List<ImmutableObject> blocks = makeBlockList(fields[3]);
         List<InteractiveObject> interactives = makeInteractiveObjectList(fields[4]);
@@ -88,7 +84,7 @@ public class TextFileGameLevels {
     public static String printGameLevel(GameLevel gameLevel) {
         StringBuilder sb = new StringBuilder();
         sb.append(gameLevel.getLevelName()).append("\n\n");
-        sb.append(printPlayerCharacter(gameLevel.getPlayer())).append("\n\n");
+        sb.append(TextFileGameObjects.printPlayerCharacter(gameLevel.getPlayer())).append("\n\n");
         sb.append(printNPCList(gameLevel.getNpcs())).append("\n");
         sb.append(printBlockList(gameLevel.getBlocks())).append("\n");
         sb.append(printInteractiveObjectList(gameLevel.getInteractives())).append("\n");
@@ -96,137 +92,6 @@ public class TextFileGameLevels {
         sb.append(printPointsSourceList(gameLevel.getPoints())).append("\n");
 
         return sb.toString();
-    }
-
-    /**
-     * Converts string of the form [0-9]+,[0-9]+,[0-9]+ into coords. Example:
-     * "0,9,11" becomes new Coords(0, 9, 11). "-1,3,22" becomes new Coords(-1,
-     * 3, 22)
-     *
-     * @param attr The coords as a string.
-     * @return The converted coords.
-     */
-    public static Coords makeCoords(String attr) {
-        if (!attr.matches("[0-9]+,[0-9]+,[0-9]+")) {
-            throw new IllegalArgumentException();
-        }
-
-        String[] attrs = attr.split(",");
-        int x = Integer.parseInt(attrs[0]);
-        int y = Integer.parseInt(attrs[1]);
-        int z = Integer.parseInt(attrs[2]);
-
-        return new Coords(x, y, z);
-    }
-
-    /**
-     * Inverse operation of makeCoords():{@link #makeCoords(java.lang.String)}.
-     *
-     * @param coords Coords.
-     * @return The TextFileGameLevels compatible string representation of the
-     * given coords.
-     */
-    public static String printCoords(Coords coords) {
-        return coords.getX() + "," + coords.getY() + "," + coords.getZ();
-    }
-
-    /**
-     * Creates an archetype based on the enumerator class as well as the string
-     * identity given. Example: (PlayercharacterArchetype.class, "ASSASSIN")
-     * becomes PlayerCharacterArchetype.ASSASSIN
-     *
-     * @param <T> An enumerator class.
-     * @param t The enumerator class from which the object is to be obtained.
-     * @param attr The string by which the enumerator object is identified.
-     * @return Returns the enumerator that matches the string, if one exists.
-     */
-    public static <T extends Enum<?>> Optional<T> makeArcheType(Class<T> t, String attr) {
-        for (T arch : t.getEnumConstants()) {
-            if (arch.toString().equals(attr)) {
-                return Optional.of(arch);
-            }
-        }
-        return Optional.empty();
-    }
-
-    /**
-     * Inverse operation of makeArchetype():
-     * {@link #makeArcheType(java.lang.Class, java.lang.String)}.
-     *
-     * @param <T> An enumerator class.
-     * @param t An enumerator object.
-     * @return The string representation of t.
-     */
-    public static <T extends Enum<?>> String printArchetype(T t) {
-        return t.toString();
-    }
-
-    /**
-     * Makes a PlayerCharacter. Example usage: "10;9;8;7;6;0,1,2" becomes new
-     * PlayerCharacter(10,9,8,7,6, new Coords(0,1,2).
-     *
-     * @param field The string representation of the PlayerCharacter.
-     * @return The parsed PlayerCharacter.
-     * @see PlayerCharacter
-     * @see BasicPlayerCharacter
-     */
-    public static PlayerCharacter makePlayerCharacter(String field) {
-        String[] attrs = field.split(";");
-        int hp = Integer.parseInt(attrs[0]);
-        int str = Integer.parseInt(attrs[1]);
-        int per = Integer.parseInt(attrs[2]);
-        int end = Integer.parseInt(attrs[3]);
-        int agl = Integer.parseInt(attrs[4]);
-        Coords coords = makeCoords(attrs[5]);
-        int points = Integer.parseInt(attrs[6]);
-
-        return new BasicPlayerCharacter(hp, str, per, end, agl, coords, Direction.DOWN, points);
-    }
-
-    /**
-     * The inverse operation of makePlayerCharacter:
-     * {@link #makePlayerCharacter(java.lang.String)}.
-     *
-     * @param pc The PlayerCharacter.
-     * @return The TextFileGameLevels compatible string representation of pc.
-     */
-    public static String printPlayerCharacter(PlayerCharacter pc) {
-        return pc.getHp() + ";" + pc.getStr() + ";" + pc.getPer() + ";" + pc.getEnd() + ";" + pc.getAgl() + ";" + printCoords(pc.getCoords()) + ";" + pc.getPoints();
-    }
-
-    /**
-     * Accepts strings of the form (id);(coords) to generate a
-     * NonPlayerCharacter.
-     *
-     * @param field The string based on which the NonPlayerCharacter is
-     * generated.
-     * @return Returns a NonPlayerCharacter, if one can be parsed from the given
-     * string. Else returns empty.
-     * @see NonPlayerCharacter
-     */
-    public static Optional<NonPlayerCharacter> makeNonPlayerCharacter(String field) {
-        String[] attrs = field.split(";");
-        if (attrs.length < 2) {
-            return Optional.empty();
-        }
-        Optional<NonPlayerCharacterArchetype> npca = makeArcheType(NonPlayerCharacterArchetype.class, attrs[0]);
-        Coords coords = makeCoords(attrs[1]);
-
-        if (npca.isPresent()) {
-            return Optional.of(new HostileNonPlayerCharacter(npca.get(), coords, Direction.DOWN));
-        }
-        return Optional.empty();
-    }
-
-    /**
-     * The inverse operation of makeNonPlayerCharacter:
-     * {@link #makeNonPlayerCharacter(java.lang.String)}.
-     *
-     * @param npc NonPlayerCharacter to be converted.
-     * @return Returns TextFileGameLevels compatible string representation.
-     */
-    public static String printNonPlayerCharacter(NonPlayerCharacter npc) {
-        return npc.getId() + ";" + printCoords(npc.getCoords());
     }
 
     /**
@@ -244,7 +109,7 @@ public class TextFileGameLevels {
         List<NonPlayerCharacter> npcs = new ArrayList<>();
         String[] npcDats = field.split("\n");
         for (String npcDat : npcDats) {
-            makeNonPlayerCharacter(npcDat).ifPresent(i -> npcs.add(i));
+            TextFileGameObjects.makeNonPlayerCharacter(npcDat).ifPresent(i -> npcs.add(i));
         }
         return npcs;
     }
@@ -260,7 +125,7 @@ public class TextFileGameLevels {
             return EMPTY_IDENTIFIER + "\n";
         }
         StringBuilder sb = new StringBuilder();
-        npcs.forEach(npc -> sb.append(printNonPlayerCharacter(npc)).append("\n"));
+        npcs.forEach(npc -> sb.append(TextFileGameObjects.printNonPlayerCharacter(npc)).append("\n"));
         return sb.toString();
     }
 
@@ -293,7 +158,7 @@ public class TextFileGameLevels {
             for (int x = 0; x < row.length(); x++) {
                 String id = Character.toString(row.charAt(x));
                 blocks.add(
-                        new ImmutableObject(makeArcheType(ImmutableObjectArchetype.class, id).orElse(ImmutableObjectArchetype.AIR),
+                        new ImmutableObject(TextFileGameObjects.makeArcheType(ImmutableObjectArchetype.class, id).orElse(ImmutableObjectArchetype.AIR),
                                 new Coords(x, y, BLOCKS_LEVEL),
                                 Direction.DOWN)
                 );
@@ -316,10 +181,10 @@ public class TextFileGameLevels {
         int biggestY = blocks.stream().mapToInt(o -> o.getCoords().getY()).max().orElse(0);
         int biggestX = blocks.stream().mapToInt(o -> o.getCoords().getX()).max().orElse(0);
         char[][] matrix = new char[biggestY + 1][biggestX + 1];
-        for (ImmutableObject block : blocks) {
+        blocks.forEach((block) -> {
             Coords blockCoords = block.getCoords();
             matrix[blockCoords.getY()][blockCoords.getX()] = block.getId();
-        }
+        });
         StringBuilder sb = new StringBuilder();
         for (char[] line : matrix) {
             sb.append(String.copyValueOf(line));
@@ -343,11 +208,21 @@ public class TextFileGameLevels {
         if (field.equals(EMPTY_IDENTIFIER)) {
             return new ArrayList<>();
         }
-        return new ArrayList<>();
+        List<LinkObject> links = new ArrayList<>();
+        String[] linkDats = field.split("\n");
+        for (String linkDat : linkDats) {
+            TextFileGameObjects.makeLinkObject(linkDat).ifPresent(i -> links.add(i));
+        }
+        return links;
     }
 
-    public static String printLevelLinkList(List<LinkObject> interactiveObjects) {
-        return EMPTY_IDENTIFIER + "\n";
+    public static String printLevelLinkList(List<LinkObject> linkObjects) {
+        if (linkObjects.isEmpty()) {
+            return EMPTY_IDENTIFIER + "\n";
+        }
+        StringBuilder sb = new StringBuilder();
+        linkObjects.forEach(link -> sb.append(TextFileGameObjects.printLinkObject(link)).append("\n"));
+        return sb.toString();
     }
 
     public static List<PointsBall> makePointsSourceList(String field) {

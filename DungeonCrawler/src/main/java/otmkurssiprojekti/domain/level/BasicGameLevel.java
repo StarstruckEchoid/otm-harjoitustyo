@@ -11,7 +11,6 @@ import otmkurssiprojekti.domain.gameobject.gameinanimates.InteractiveObject;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.PointsBall;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.ImmutableObject;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.LinkObject;
-import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.BasicPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.interfaces.GameObject;
 import java.util.*;
 import otmkurssiprojekti.domain.gameobject.interfaces.Mobile;
@@ -30,7 +29,7 @@ public class BasicGameLevel implements GameLevel {
      * level has a size 16x16x8.
      */
     public static final Coords DIMENSIONS = new Coords(16, 16, 8);
-
+    
     private final String levelName;
     private PlayerCharacter player;
     private final List<NonPlayerCharacter> npcs;
@@ -38,7 +37,7 @@ public class BasicGameLevel implements GameLevel {
     private final List<InteractiveObject> interactives;
     private final List<LinkObject> levelLinks;
     private final List<PointsBall> points;
-
+    
     public BasicGameLevel() {
         this.levelName = null;
         this.player = null;
@@ -48,7 +47,7 @@ public class BasicGameLevel implements GameLevel {
         this.levelLinks = null;
         this.points = null;
     }
-
+    
     public BasicGameLevel(String levelName, PlayerCharacter player, List<NonPlayerCharacter> npcs, List<ImmutableObject> blocks, List<InteractiveObject> interactives, List<LinkObject> levelLinks, List<PointsBall> points) {
         this.levelName = levelName;
         this.player = player;
@@ -64,28 +63,33 @@ public class BasicGameLevel implements GameLevel {
     public String getLevelName() {
         return levelName;
     }
-
+    
     @Override
     public PlayerCharacter getPlayer() {
         return this.player;
     }
-
+    
+    @Override
     public List<NonPlayerCharacter> getNpcs() {
         return npcs;
     }
-
+    
+    @Override
     public List<ImmutableObject> getBlocks() {
         return blocks;
     }
-
+    
+    @Override
     public List<InteractiveObject> getInteractives() {
         return interactives;
     }
-
+    
+    @Override
     public List<LinkObject> getLevelLinks() {
         return levelLinks;
     }
-
+    
+    @Override
     public List<PointsBall> getPoints() {
         return points;
     }
@@ -101,11 +105,11 @@ public class BasicGameLevel implements GameLevel {
     public boolean isInaccessible(Coords coords) {
         return !BasicGameLevel.hasCoords(coords) || this.hasSolidBlockAt(coords);
     }
-
+    
     protected static Boolean hasCoords(Coords coords) {
         return coords.greaterThanOrEqualTo(new Coords(0, 0, 0)) && coords.lesserThan(DIMENSIONS);
     }
-
+    
     protected Boolean hasSolidBlockAt(Coords coords) {
         List<GameObject> possiblySolidBlocks = new ArrayList<>();
         possiblySolidBlocks.addAll(blocks);
@@ -114,12 +118,12 @@ public class BasicGameLevel implements GameLevel {
                 .filter(b -> b.getCoords().toFlatCoords().equals(coords.toFlatCoords()))
                 .anyMatch(b -> b.isSolid());
     }
-
+    
     @Override
     public void movePlayer(Direction dir) {
         moveMobile(player, dir);
     }
-
+    
     public void moveMobile(Mobile mobile, Direction dir) {
         Coords mobileCoords = mobile.getCoords();
         Coords newCoords = mobileCoords.sum(dir.getCoords());
@@ -127,7 +131,7 @@ public class BasicGameLevel implements GameLevel {
             mobile.move(dir);
         }
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 7;
@@ -136,7 +140,7 @@ public class BasicGameLevel implements GameLevel {
         hash = 37 * hash + Objects.hashCode(this.blocks);
         return hash;
     }
-
+    
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -148,24 +152,24 @@ public class BasicGameLevel implements GameLevel {
         if (obj instanceof GameLevel) {
             return ((GameLevel) obj).getLevelName().equals(this.getLevelName())
                     && ((GameLevel) obj).getGameObjects().containsAll(this.getGameObjects());
-
+            
         } else {
             return false;
         }
     }
-
+    
     @Override
     public String toString() {
         return this.levelName;
     }
-
+    
     @Override
     public boolean doGameTick() {
         npcs.forEach(npc -> npc.act(this));
         npcs.removeIf(npc -> npc.isDead());
         return this.player.isDead();
     }
-
+    
     @Override
     public List<GameObject> getGameObjects() {
         List<GameObject> all = new ArrayList<>();
@@ -177,7 +181,7 @@ public class BasicGameLevel implements GameLevel {
         all.addAll(points);
         return all;
     }
-
+    
     @Override
     public void playerAttack(Direction dir) {
         Coords pcCoords = this.player.getCoords();
@@ -187,5 +191,17 @@ public class BasicGameLevel implements GameLevel {
                 .forEach(npc -> this.player.hurt(npc));
         this.npcs.removeIf(npc -> npc.isDead());
     }
-
+    
+    @Override
+    public Optional<String> playerInteract() {
+        Coords pcCoords = this.player.getCoords();
+        this.interactives.stream()
+                .filter(i -> i.getCoords().equals(pcCoords))
+                .forEach(i -> i.reactToPress());
+        return this.levelLinks.stream()
+                .filter(link -> link.getCoords().toFlatCoords().equals(pcCoords.toFlatCoords()))
+                .map(link -> link.getLinkAddress())
+                .findFirst();
+    }
+    
 }

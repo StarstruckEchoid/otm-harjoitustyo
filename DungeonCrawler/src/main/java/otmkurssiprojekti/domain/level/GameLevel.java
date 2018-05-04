@@ -7,6 +7,7 @@ package otmkurssiprojekti.domain.level;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.ImmutableObject;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.InteractiveObject;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.LinkObject;
@@ -64,6 +65,15 @@ public interface GameLevel extends Serializable {
      * @param dir The direction in which the player will attack.
      */
     void playerAttack(Direction dir);
+
+    /**
+     * Makes the player interact with whatever interactive objects are at his
+     * current coordinates.
+     *
+     * @return If the interaction leads to a level change request, return the
+     * name of the level as a string. Else return empty.
+     */
+    Optional<String> playerInteract();
 
     /**
      * doGameTick performs actions in the game level.

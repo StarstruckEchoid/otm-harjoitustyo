@@ -5,6 +5,7 @@
  */
 package otmkurssiprojekti.domain.gameobject.gameinanimates;
 
+import java.util.Objects;
 import otmkurssiprojekti.domain.gameobject.interfaces.GameObject;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
 import otmkurssiprojekti.domain.gameobject.location.Direction;
@@ -57,6 +58,36 @@ public class LinkObject implements GameObject {
     //Special method.
     public String getLinkAddress() {
         return linkAddress;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 89 * hash + this.id;
+        hash = 89 * hash + Objects.hashCode(this.coords);
+        hash = 89 * hash + Objects.hashCode(this.linkAddress);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final LinkObject other = (LinkObject) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (!Objects.equals(this.linkAddress, other.linkAddress)) {
+            return false;
+        }
+        return Objects.equals(this.coords, other.coords);
     }
 
 }
