@@ -6,11 +6,13 @@
 package otmkurssiprojekti.dataaccessobject;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import otmkurssiprojekti.domain.level.GameLevel;
@@ -21,6 +23,8 @@ import otmkurssiprojekti.utilityclasses.TextFileGameLevels;
  * @author gjuho
  */
 public class TextFileLevelDao extends AbstractLevelDao implements GameLevelDao {
+
+    private static final Charset CHARSET = Charset.forName("UTF-8");
 
     public TextFileLevelDao(Path directory) {
         super(directory);
@@ -34,7 +38,7 @@ public class TextFileLevelDao extends AbstractLevelDao implements GameLevelDao {
                     TextFileGameLevels.printGameLevel(level)
                             .split("\n")
             );
-            Files.write(levelPath, textData);
+            Files.write(levelPath, textData, CHARSET);
 
         } catch (IOException ex) {
             Logger.getLogger(TextFileLevelDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -44,13 +48,24 @@ public class TextFileLevelDao extends AbstractLevelDao implements GameLevelDao {
     @Override
     public GameLevel loadLevel(String levelName) {
         try {
-            String lines = Files.readAllLines(Paths.get(directory.toString(), levelName))
-                    .stream()
-                    .reduce("", (a, b) -> a + b + "\n");
-            GameLevel gameLevel = TextFileGameLevels.makeGameLevel(lines);
+            StringBuilder lines = new StringBuilder();
+            Scanner lineScanner = new Scanner(Paths.get(directory.toString(), levelName), CHARSET.name());
+            while (lineScanner.hasNextLine()) {
+                lines.append(lineScanner.nextLine()).append("\n");
+            }
+//            String lines = Files.readAllLines(Paths.get(directory.toString(), levelName), CHARSET)
+//                    .stream()
+//                    .reduce("", (a, b) -> a + b + "\n");
+            GameLevel gameLevel = TextFileGameLevels.makeGameLevel(lines.toString());
             return gameLevel;
         } catch (IOException ex) {
             Logger.getLogger(TextFileLevelDao.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NullPointerException npe) {
+            throw npe;
+        } catch (IllegalArgumentException iae) {
+            throw iae;
+        } catch (Exception e) {
+            throw e;
         }
         return null;
     }

@@ -158,16 +158,59 @@ public class TextFileLevelDaoTest {
         testSaveLoadLevel(gamelvl);
     }
 
-    public void testSaveLoadLevel(GameLevel gl) {
-        try {
-            tfld.saveLevel(gl);
-            GameLevel gl2 = tfld.loadLevel(gl.toString());
-            testLevelsEqual(gl2, gl);
-        } catch (IllegalArgumentException i) {
-            fail(i.getMessage());
-        } catch (Exception e) {
-            fail("An exception that is not an illegal argument exception got thrown: " + e.getClass().getCanonicalName() + ": " + e.getMessage());
+    @Test
+    public void testSLL4() {
+        String levelName = "Test_Level.txt";
+        BasicPlayerCharacter player = new BasicPlayerCharacter(10, 1, 2, 1, 5, new Coords(3, 3, 0), Direction.DOWN);
+        List<NonPlayerCharacter> npcs = new ArrayList<>();
+        //Add some npcs.
+        npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.VILLAGER, new Coords(7, 10, 0), Direction.DOWN));
+        npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.RAT, new Coords(8, 8, 0), Direction.DOWN));
+        npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.DEER, new Coords(4, 9, 0), Direction.DOWN));
+        npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.FOLLOWER, new Coords(1, 1, 0), Direction.DOWN));
+        List<ImmutableObject> blocks = new ArrayList<>();
+        for (int x = 0; x < BasicGameLevel.DIMENSIONS.getX(); x++) {
+            for (int y = 0; y < BasicGameLevel.DIMENSIONS.getY(); y++) {
+                if (x == 0 || x == BasicGameLevel.DIMENSIONS.getX() - 1) {
+                    //Some solid blocks.
+                    blocks.add(new ImmutableObject(ImmutableObjectArchetype.STONE_WALL, new Coords(x, y, 1), Direction.DOWN));
+                } else {
+                    //Non-solid blocks.
+                    blocks.add(new ImmutableObject(ImmutableObjectArchetype.GRASS, new Coords(x, y, 1), Direction.DOWN));
+                }
+            }
         }
+        List<InteractiveObject> interactives = new ArrayList<>();
+        List<LinkObject> levelLinks = new ArrayList<>();
+        levelLinks.add(new LinkObject('d', new Coords(0, 0, 0), "Other_Level.txt"));
+        List<PointsBall> points = new ArrayList<>();
+        BasicGameLevel gamelvl = new BasicGameLevel(
+                levelName,
+                player,
+                npcs,
+                blocks,
+                interactives,
+                levelLinks,
+                points
+        );
+
+        testSaveLoadLevel(gamelvl);
+    }
+
+    public void testSaveLevel(GameLevel g1) {
+        try {
+            tfld.saveLevel(g1);
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+    }
+
+    public void testSaveLoadLevel(GameLevel gl) {
+        testSaveLevel(gl);
+        GameLevel g2 = tfld.loadLevel(gl.toString());
+        assertTrue(g2 != null);
+        testLevelsEqual(g2, gl);
+
     }
 
     public void testLevelsEqual(GameLevel g1, GameLevel g2) {
@@ -176,7 +219,8 @@ public class TextFileLevelDaoTest {
         assertThat(g1Name, is(g2Name));
         List<GameObject> g1objs = g1.getGameObjects();
         List<GameObject> g2objs = g2.getGameObjects();
-        assertThat(g1objs, is(g2objs));
+        assertTrue(g1objs.containsAll(g2objs));
+        assertTrue(g2objs.containsAll(g1objs));
     }
 
 }

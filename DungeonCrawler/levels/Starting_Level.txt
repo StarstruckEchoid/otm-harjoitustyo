@@ -1,11 +1,11 @@
-﻿Starting_Level.txt
+Starting_Level.txt
 
 10;1;1;1;1;3,3,0;0
 
 %;7,10,0
 r;8,8,0
 d;4,9,0
-¨;1,1,0
+�;1,1,0
 
 0,,,,,,,,,,,,,,0
 0,,,,,,,,,,,,,,0
@@ -26,6 +26,6 @@ d;4,9,0
 
 EMPTY
 
-[;14,14,0;Second_Level.txt
+d;14,14,0;Second_Level.txt
 
 EMPTY

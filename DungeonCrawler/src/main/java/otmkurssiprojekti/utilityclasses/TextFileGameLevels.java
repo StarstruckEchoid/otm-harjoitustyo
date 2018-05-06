@@ -61,7 +61,7 @@ public class TextFileGameLevels {
      * @param string The game level data as a string representation.
      * @return Returns the concrete GameLevel based on the string.
      */
-    public static GameLevel makeGameLevel(String string) {
+    public static GameLevel makeGameLevel(String string) throws IllegalArgumentException {
         String[] fields = string.split("\n\n");
         String levelName = fields[0];
         PlayerCharacter player = TextFileGameObjects.makePlayerCharacter(fields[1]);
@@ -102,7 +102,7 @@ public class TextFileGameLevels {
      * @param field The list of NonPlayerCharacters as a string.
      * @return The concrete list of NonPlayerCharacters.
      */
-    public static List<NonPlayerCharacter> makeNPCList(String field) {
+    public static List<NonPlayerCharacter> makeNPCList(String field) throws IllegalArgumentException {
         if (field.equals(EMPTY_IDENTIFIER)) {
             return new ArrayList<>();
         }
@@ -147,7 +147,7 @@ public class TextFileGameLevels {
      * @return List of ImmutableObjects.
      * @see ImmutableObject
      */
-    public static List<ImmutableObject> makeBlockList(String field) {
+    public static List<ImmutableObject> makeBlockList(String field) throws IllegalArgumentException {
         if (field.equals(EMPTY_IDENTIFIER)) {
             return new ArrayList<>();
         }
@@ -193,7 +193,7 @@ public class TextFileGameLevels {
         return sb.toString();
     }
 
-    public static List<InteractiveObject> makeInteractiveObjectList(String field) {
+    public static List<InteractiveObject> makeInteractiveObjectList(String field) throws IllegalArgumentException {
         if (field.equals(EMPTY_IDENTIFIER)) {
             return new ArrayList<>();
         }
@@ -204,7 +204,7 @@ public class TextFileGameLevels {
         return EMPTY_IDENTIFIER + "\n";
     }
 
-    public static List<LinkObject> makeLevelLinkList(String field) {
+    public static List<LinkObject> makeLevelLinkList(String field) throws IllegalArgumentException {
         if (field.equals(EMPTY_IDENTIFIER)) {
             return new ArrayList<>();
         }
@@ -225,7 +225,7 @@ public class TextFileGameLevels {
         return sb.toString();
     }
 
-    public static List<PointsBall> makePointsSourceList(String field) {
+    public static List<PointsBall> makePointsSourceList(String field) throws IllegalArgumentException {
         if (field.equals(EMPTY_IDENTIFIER)) {
             return new ArrayList<>();
         }

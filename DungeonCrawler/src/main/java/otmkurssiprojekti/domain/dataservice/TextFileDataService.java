@@ -64,7 +64,7 @@ public class TextFileDataService implements DataService {
 
     @Override
     public void loadLevel(String levelName) {
-        this.currentLevel = fetchGameLevel(levelName);
+        this.currentLevel = new TextFileLevelDao(levelsDir).loadLevel(levelName);
     }
 
     public void loadSave(String saveName) {

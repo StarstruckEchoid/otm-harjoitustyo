@@ -25,15 +25,10 @@ public class DungeonCrawler extends Application {
 
     //Initialize constants.
     public static final String USERS_DIR = "users";
-    public static final String FIRST_LEVEL = "Starting_Level.txt";
     public static final String LEVELS_DIR = "levels";
+    public static final String FIRST_LEVEL = "Starting_Level.txt";
     private static final DataService DATA_SERVICE = new TextFileDataService();
 
-    static {
-        DATA_SERVICE.setUsersDir(USERS_DIR);
-        DATA_SERVICE.setLevelsDir(LEVELS_DIR);
-        DATA_SERVICE.loadLevel(FIRST_LEVEL);
-    }
     private static final Timer TIMER = new Timer();
     private static final int TICKS_PERIOD = 500; //Controls how often the game updates, eg. how often npcs move.
     private static final int FRAMES_PERIOD = 50; //Controls how often the screen updates. Reciprocal of frames per millisecond.
@@ -46,7 +41,11 @@ public class DungeonCrawler extends Application {
 
     @Override
     public void init() throws Exception {
+        DATA_SERVICE.setUsersDir(USERS_DIR);
+        DATA_SERVICE.setLevelsDir(LEVELS_DIR);
+        DATA_SERVICE.loadLevel(FIRST_LEVEL);
         this.setGameScreen(new MainMenuScreen(this));
+
         //Debug
         if (this.getParameters().getRaw().contains("debug")) {
             initDebug();

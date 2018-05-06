@@ -45,7 +45,7 @@ public class TextFileGameLevelsTest {
     private String linksString;
     private List<LinkObject> links;
 
-    private final String levelName = "testLevel";
+    private final String levelName = "Test_Level.txt";
     private String gameLevelString;
     private GameLevel gameLevel;
 
@@ -131,7 +131,7 @@ public class TextFileGameLevelsTest {
     @Test
     public void testMakeGameLevel() {
         GameLevel madeGameLevel = TextFileGameLevels.makeGameLevel(gameLevelString);
-
+        assertThat(madeGameLevel.getLevelName(), is(levelName));
         assertThat(madeGameLevel, is(gameLevel));
     }
 

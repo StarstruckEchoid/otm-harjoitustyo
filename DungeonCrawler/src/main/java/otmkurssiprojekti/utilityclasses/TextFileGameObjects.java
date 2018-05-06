@@ -29,7 +29,7 @@ public class TextFileGameObjects {
      * @param attr The coords as a string.
      * @return The converted coords.
      */
-    public static Coords makeCoords(String attr) {
+    public static Coords makeCoords(String attr) throws IllegalArgumentException {
         if (!attr.matches("[0-9]+,[0-9]+,[0-9]+")) {
             throw new IllegalArgumentException();
         }
@@ -63,7 +63,7 @@ public class TextFileGameObjects {
      * @param attr The string by which the enumerator object is identified.
      * @return Returns the enumerator that matches the string, if one exists.
      */
-    public static <T extends Enum<?>> Optional<T> makeArcheType(Class<T> t, String attr) {
+    public static <T extends Enum<?>> Optional<T> makeArcheType(Class<T> t, String attr) throws IllegalArgumentException {
         for (T arch : t.getEnumConstants()) {
             if (arch.toString().equals(attr)) {
                 return Optional.of(arch);
@@ -93,7 +93,7 @@ public class TextFileGameObjects {
      * @see PlayerCharacter
      * @see BasicPlayerCharacter
      */
-    public static PlayerCharacter makePlayerCharacter(String field) {
+    public static PlayerCharacter makePlayerCharacter(String field) throws IllegalArgumentException {
         String[] attrs = field.split(";");
         int hp = Integer.parseInt(attrs[0]);
         int str = Integer.parseInt(attrs[1]);
@@ -127,7 +127,7 @@ public class TextFileGameObjects {
      * string. Else returns empty.
      * @see NonPlayerCharacter
      */
-    public static Optional<NonPlayerCharacter> makeNonPlayerCharacter(String field) {
+    public static Optional<NonPlayerCharacter> makeNonPlayerCharacter(String field) throws IllegalArgumentException {
         String[] attrs = field.split(";");
         if (attrs.length < 2) {
             return Optional.empty();
@@ -157,7 +157,7 @@ public class TextFileGameObjects {
      * @param linkDat The
      * @return
      */
-    public static Optional<LinkObject> makeLinkObject(String linkDat) {
+    public static Optional<LinkObject> makeLinkObject(String linkDat) throws IllegalArgumentException {
         String[] attrs = linkDat.split(";");
         if (attrs.length < 3) {
             return Optional.empty();

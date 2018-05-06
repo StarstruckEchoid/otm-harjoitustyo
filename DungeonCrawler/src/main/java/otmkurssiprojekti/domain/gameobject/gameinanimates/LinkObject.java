@@ -90,4 +90,9 @@ public class LinkObject implements GameObject {
         return Objects.equals(this.coords, other.coords);
     }
 
+    @Override
+    public String toString() {
+        return this.id + ": " + this.coords.toString() + " -> " + this.linkAddress;
+    }
+
 }

@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
@@ -21,12 +20,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import otmkurssiprojekti.dataaccessobject.TextFileLevelDao;
 import otmkurssiprojekti.dataaccessobject.dataobject.GameSave;
-import otmkurssiprojekti.domain.gameobject.archetypes.PlayerCharacterArchetype;
-import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.BasicPlayerCharacter;
-import otmkurssiprojekti.domain.gameobject.location.Coords;
-import otmkurssiprojekti.domain.gameobject.location.Direction;
-import otmkurssiprojekti.domain.level.BasicGameLevel;
 import otmkurssiprojekti.domain.level.GameLevel;
+import otmkurssiprojekti.utilityclasses.TextFileGameLevels;
 
 /**
  *
@@ -39,15 +34,39 @@ public class TextFileDataServiceTest {
     private final String user = "TestUser";
     private final String player = "TestPlayer";
     private final String saveName = "24000330022";
-    private final String levelName = "Test_Level.txt";
-    private final GameLevel gameLevel = new BasicGameLevel(
-            levelName,
-            new BasicPlayerCharacter(PlayerCharacterArchetype.THIEF, new Coords(), Direction.DOWN),
-            new ArrayList<>(),
-            new ArrayList<>(),
-            new ArrayList<>(),
-            new ArrayList<>(),
-            new ArrayList<>()
+    private final String levelName = "Starting_Level.txt";
+    private final GameLevel gameLevel = TextFileGameLevels.makeGameLevel(
+            levelName + "\n"
+            + "\n"
+            + "10;1;1;1;1;3,3,0;0\n"
+            + "\n"
+            + "%;7,10,0\n"
+            + "r;8,8,0\n"
+            + "d;4,9,0\n"
+            + "¨;1,1,0\n"
+            + "\n"
+            + "0,,,,,,,,,,,,,,0\n"
+            + "0,,,,,,,,,,,,,,0\n"
+            + "0,,,000000000000\n"
+            + "0,,,,,,,,,,,,,,0\n"
+            + "0,,,,,,,,,,,,,,0\n"
+            + "0,,000,,000,,,00\n"
+            + "0,,0,,,,0,,,,,,0\n"
+            + "0,,0,,,,0,,,,,,0\n"
+            + "000000000,,,,,,0\n"
+            + "0,,,,,,,0,,,,,,0\n"
+            + "0,,,0,,,0,,,,,,0\n"
+            + "0,,,0,,,0,,,,,,0\n"
+            + "0,,,00000,,,,,,0\n"
+            + "0,,,,,,,,,,,,,,0\n"
+            + "0,,,,,,,,,,,,,,0\n"
+            + "000000000000,,,0\n"
+            + "\n"
+            + "EMPTY\n"
+            + "\n"
+            + "[;14,14,0;Second_Level.txt\n"
+            + "\n"
+            + "EMPTY"
     );
     private TextFileDataService dataService;
 
@@ -152,6 +171,7 @@ public class TextFileDataServiceTest {
         testSetLevelsDir();
         dataService.loadLevel(gameLevel.getLevelName());
 
+        assertTrue(dataService.currentLevel != null);
         assertThat(dataService.currentLevel, is(gameLevel));
     }
 
@@ -170,11 +190,24 @@ public class TextFileDataServiceTest {
      * Test of fetchGameSaves method, of class TextFileDataService.
      */
     @Test
-    public void testFetchGameSaves() {
+    public void testFetchGameSaves1() {
         testSetPlayer();
         List<GameSave> gameSaves = dataService.fetchGameSaves();
 
         assertTrue(gameSaves.isEmpty());
+    }
+
+    /**
+     * Test of fetchGameSaves method, of class TextFileDataService.
+     */
+    @Test
+    public void testFetchGameSaves2() {
+        testSetPlayer();
+        GameSave gameSave = new GameSave(new Date(Long.parseLong(saveName)), gameLevel);
+        dataService.saveGame(gameSave);
+        List<GameSave> gameSaves = dataService.fetchGameSaves();
+
+        assertTrue(gameSaves.contains(gameSave));
     }
 
     /**
@@ -314,6 +347,20 @@ public class TextFileDataServiceTest {
                 + "currentLevel: " + levelName;
 
         assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void simulateDungeonCrawler() throws IOException {
+        String usersDir = Files.createTempDirectory("usersTest2").toString();
+        Path levelsPath = Files.createTempDirectory("levelsTest2");
+        new TextFileLevelDao(levelsPath).saveLevel(gameLevel);
+        String levelsDir = levelsPath.toString();
+
+        dataService.setUsersDir(usersDir);
+        dataService.setLevelsDir(levelsDir);
+        dataService.loadLevel(levelName);
+
+        assertThat(dataService.currentLevel, is(gameLevel));
     }
 
 }
