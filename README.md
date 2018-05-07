@@ -31,4 +31,4 @@ Jarin voi suorittaa komennolla
 
 ## [Julkaisut](https://github.com/StarstruckEchoid/otm-harjoitustyo/releases)
 
-[Neljäs julkaisu, DungeonCrawler 0.3](https://github.com/StarstruckEchoid/otm-harjoitustyo/releases/tag/30.4.2018).
+[Pelin ensimmäinen "valmis" julkaisu, DungeonCrawler 1.0](https://github.com/StarstruckEchoid/otm-harjoitustyo/releases/tag/7.5.2018).
