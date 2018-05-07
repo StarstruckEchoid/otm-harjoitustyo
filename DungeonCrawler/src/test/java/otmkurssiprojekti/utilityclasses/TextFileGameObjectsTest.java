@@ -5,6 +5,7 @@
  */
 package otmkurssiprojekti.utilityclasses;
 
+import java.util.Optional;
 import static org.hamcrest.CoreMatchers.is;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -66,6 +67,17 @@ public class TextFileGameObjectsTest {
     }
 
     @Test
+    public void testMakeCoords_invalid() {
+        try {
+            Coords c = TextFileGameObjects.makeCoords("0,1");
+            fail();
+        } catch (IllegalArgumentException iae) {
+        } catch (Exception e) {
+            fail();
+        }
+    }
+
+    @Test
     public void testPrintCoords() {
         String c = TextFileGameObjects.printCoords(new Coords(3, 4, 55));
         String expected = "3,4,55";
@@ -108,7 +120,7 @@ public class TextFileGameObjectsTest {
     public void testMakePlayerCharacter() {
         PlayerCharacter madePc = TextFileGameObjects.makePlayerCharacter(pcString);
 
-        assertTrue("Expected " + pc.toString() + " but got " + madePc.toString(), madePc.equals(pc));
+        assertThat(madePc, is(pc));
     }
 
     @Test
@@ -125,7 +137,23 @@ public class TextFileGameObjectsTest {
         NonPlayerCharacter npc = TextFileGameObjects.makeNonPlayerCharacter(npca.toString() + ";4,5,6").get();
         NonPlayerCharacter expected = new HostileNonPlayerCharacter(npca, new Coords(4, 5, 6), Direction.DOWN);
 
-        assertTrue("Expected " + expected.toString() + " but got " + npc.toString(), npc.equals(expected));
+        assertThat(npc, is(expected));
+    }
+
+    @Test
+    public void testMakeNonPlayerCharacter_invalid1() {
+
+        Optional<NonPlayerCharacter> npcOpt = TextFileGameObjects.makeNonPlayerCharacter("R");
+
+        assertThat(npcOpt, is(Optional.empty()));
+    }
+
+    @Test
+    public void testMakeNonPlayerCharacter_invalid2() {
+
+        Optional<NonPlayerCharacter> npcOpt = TextFileGameObjects.makeNonPlayerCharacter("R;0,0,0");
+
+        assertThat(npcOpt, is(Optional.empty()));
     }
 
     @Test
@@ -135,7 +163,7 @@ public class TextFileGameObjectsTest {
         String npcS = TextFileGameObjects.printNonPlayerCharacter(new HostileNonPlayerCharacter(npca, new Coords(0, 1, 2), Direction.DOWN));
         String expected = npca.toString() + ";0,1,2";
 
-        assertTrue("Expected " + expected + " but got " + npcS, npcS.equals(expected));
+        assertThat(npcS, is(expected));
     }
 
     /**
@@ -146,6 +174,16 @@ public class TextFileGameObjectsTest {
         LevelLink madeLo = TextFileGameObjects.makeLinkObject(loString).get();
 
         assertThat(madeLo, is(lo));
+    }
+
+    /**
+     * Test of makeLinkObject method, of class TextFileGameObjects.
+     */
+    @Test
+    public void testMakeLinkObject_invalid() {
+        Optional<LevelLink> madeLo = TextFileGameObjects.makeLinkObject("@");
+
+        assertThat(madeLo, is(Optional.empty()));
     }
 
     @Test

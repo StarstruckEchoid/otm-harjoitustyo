@@ -19,7 +19,7 @@ import otmkurssiprojekti.domain.level.GameLevel;
 public interface DataService {
 
     /**
-     * Fetch a game level by name. Note that levelsDir has to be set beforehand.
+     * Fetches the current gameLevel. Note that current level has to be set beforehand.
      *
      * @return Returns the current GameLevel stored in DataService.
      */
