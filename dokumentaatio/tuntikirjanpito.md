@@ -25,7 +25,10 @@
 | 27.4. | 6        | Pakkausrakenteesta nätimpi. Sovellus käyttää TextFileLevelDao ja sen johdannaista TextFileGameSaveDaoa pelitietojen latailuun ja tallenteluun. Tekoälyyn pieniä parannuksia. |
 | 29.4. | 0        | Tehtiin uusi julkaisu, DungeonCrawler 0.2. |
 | 30.4. | 6        | Implementoitiin pisteiden kerryttäminen. Tehtiin suuri määrä javadocceja. Luotiin julkaisu DungeonCrawler 0.3. Tehtiin pakkauskaavio. |
-|  1.5. | 7        | Tehtiin DataService luokka, jotta käyttöliittymän ei tarvitsisi koskea daoihin. Poistettiin turhaksi jäänyttä koodia. |
+| 1.5.  | 7        | Tehtiin DataService luokka, jotta käyttöliittymän ei tarvitsisi koskea daoihin. Poistettiin turhaksi jäänyttä koodia. |
+| 4.5.  | 9        | Aloitettiin tasojen välillä siirtymisen toteuttaminen. Tasosiirtymät eivät toimi, joten tehdään valtavasti testejä vian paikantamiseksi. |
+| 6.5.  | 3        | Saatiin tasosiirtymät toimimaan. |
+| 7.5.  | 3        | Höylättiin käyttöliittymän ilmeiset bugit pois. |
 
 
-Työtunteja yhteensä: 119h
+Työtunteja yhteensä: 136h
