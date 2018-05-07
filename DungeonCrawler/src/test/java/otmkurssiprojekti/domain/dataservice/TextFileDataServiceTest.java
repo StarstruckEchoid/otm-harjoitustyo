@@ -23,6 +23,7 @@ import otmkurssiprojekti.dataaccessobject.TextFileLevelDao;
 import otmkurssiprojekti.dataaccessobject.dataobject.GameSave;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.PlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
+import otmkurssiprojekti.domain.gameobject.location.Direction;
 import otmkurssiprojekti.domain.level.GameLevel;
 import otmkurssiprojekti.utilityclasses.TextFileGameLevels;
 
@@ -286,12 +287,25 @@ public class TextFileDataServiceTest {
      * Test of saveGame method, of class TextFileDataService.
      */
     @Test
-    public void testSaveGame_GameLevel() {
+    public void testSaveGame_GameLevel1() {
         testSetGameLevel1();
         testSetPlayer();
         dataService.saveGame(gameLevel);
 
-        assertThat(dataService.currentLevel, is(gameLevel));
+        assertTrue(dataService.fetchGameSaves().removeIf(gs -> gs.getGameLevel().equals(gameLevel)));
+    }
+
+    /**
+     * Test of saveGame method, of class TextFileDataService.
+     */
+    @Test
+    public void testSaveGame_GameLevel2() {
+        testSetGameLevel1();
+        testSetPlayer();
+        gameLevel.movePlayer(Direction.LEFT);
+        dataService.saveGame(gameLevel);
+
+        assertTrue(dataService.fetchGameSaves().removeIf(gs -> gs.getGameLevel().equals(gameLevel)));
     }
 
     /**
@@ -320,11 +334,11 @@ public class TextFileDataServiceTest {
      * Test of loadLevel method, of class TextFileDataService.
      */
     @Test
-    public void testLoadLevel() {
+    public void testSwapLevel_String() {
         testSetLevelsDir();
         dataService.swapLevel(levelName);
 
-        assertThat(dataService.fetchGameLevel().getLevelName(), is(levelName));
+        assertThat(dataService.fetchGameLevel(), is(gameLevel));
     }
 
     /**
@@ -368,7 +382,7 @@ public class TextFileDataServiceTest {
     @Test
     public void testSaveGame_0args() {
         testSetPlayer();
-        testLoadLevel();
+        testSwapLevel_String();
         dataService.saveGame();
 
         assertThat(dataService.fetchGameSaves().size(), is(1));
@@ -412,8 +426,8 @@ public class TextFileDataServiceTest {
         dataService.setCurrentLevel(levelName);
         assertThat(dataService.currentLevel, is(gameLevel));
     }
-    
-        /**
+
+    /**
      * Test of setCurrentLevel method, of class TextFileDataService.
      */
     @Test

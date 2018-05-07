@@ -29,7 +29,7 @@ public class LoadGameScreen extends VerticalMenuScreen {
     @Override
     protected void doEnterAction(int index) {
         GameSave gameSave = saves.get(index);
-        main.getDataService().swapLevel(gameSave.getGameLevel().getLevelName());
+        main.getDataService().setCurrentLevel(gameSave.getGameLevel());
         switchTo(new LevelScreen(main));
     }
     
