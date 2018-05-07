@@ -38,7 +38,7 @@ public class GameSave {
 
     @Override
     public String toString() {
-        return saveDate.toString() + " in " + gameLevel.toString();
+        return saveDate.toString() + " in " + gameLevel.getLevelName();
     }
 
     @Override

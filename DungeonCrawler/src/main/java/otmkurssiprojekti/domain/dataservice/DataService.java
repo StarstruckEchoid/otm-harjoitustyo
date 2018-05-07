@@ -104,7 +104,19 @@ public interface DataService {
      * stored.
      */
     void setUsersDir(String usersDir);
-    
+
+    /**
+     * Sets the current game level. NB! levelsDir has to be set beforehand!
+     *
+     * @param levelName The name of the level to be set.
+     */
     void setCurrentLevel(String levelName);
+
+    /**
+     * Sets the current game level directly.
+     *
+     * @param gameLevel The GameLevel to be set.
+     */
+    public void setCurrentLevel(GameLevel gameLevel);
 
 }

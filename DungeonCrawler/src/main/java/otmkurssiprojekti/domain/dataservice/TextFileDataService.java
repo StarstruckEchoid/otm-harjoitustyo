@@ -71,6 +71,11 @@ public class TextFileDataService implements DataService {
     }
 
     @Override
+    public void setCurrentLevel(GameLevel gameLevel) {
+        this.currentLevel = gameLevel;
+    }
+
+    @Override
     public void swapLevel(String levelName) {
         GameLevel newLevel = this.makeLevelDao().loadLevel(levelName);
         PlayerCharacter currentPlayer;

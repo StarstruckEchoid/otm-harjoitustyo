@@ -376,7 +376,7 @@ public class TextFileDataServiceTest {
 
     @Test
     public void testToString() {
-        testSetCurrentLevel();
+        testSetCurrentLevel_String();
         testSaveGame_GameSave();
         String actual = dataService.toString();
         String expected
@@ -407,9 +407,18 @@ public class TextFileDataServiceTest {
      * Test of setCurrentLevel method, of class TextFileDataService.
      */
     @Test
-    public void testSetCurrentLevel() {
+    public void testSetCurrentLevel_String() {
         testSetLevelsDir();
         dataService.setCurrentLevel(levelName);
+        assertThat(dataService.currentLevel, is(gameLevel));
+    }
+    
+        /**
+     * Test of setCurrentLevel method, of class TextFileDataService.
+     */
+    @Test
+    public void testSetCurrentLevel_GameLevel() {
+        dataService.setCurrentLevel(gameLevel);
         assertThat(dataService.currentLevel, is(gameLevel));
     }
 
