@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 import otmkurssiprojekti.domain.level.BasicGameLevel;
 import otmkurssiprojekti.domain.level.GameLevel;
-import otmkurssiprojekti.domain.gameobject.archetypes.ImmutableObjectArchetype;
-import otmkurssiprojekti.domain.gameobject.gameinanimates.ImmutableObject;
+import otmkurssiprojekti.domain.gameobject.archetypes.BlockArchetype;
+import otmkurssiprojekti.domain.gameobject.gameinanimates.Block;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.InteractiveObject;
-import otmkurssiprojekti.domain.gameobject.gameinanimates.LinkObject;
+import otmkurssiprojekti.domain.gameobject.gameinanimates.LevelLink;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.PointsBall;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.NonPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.PlayerCharacter;
@@ -66,9 +66,9 @@ public class TextFileGameLevels {
         String levelName = fields[0];
         PlayerCharacter player = TextFileGameObjects.makePlayerCharacter(fields[1]);
         List<NonPlayerCharacter> npcs = makeNPCList(fields[2]);
-        List<ImmutableObject> blocks = makeBlockList(fields[3]);
+        List<Block> blocks = makeBlockList(fields[3]);
         List<InteractiveObject> interactives = makeInteractiveObjectList(fields[4]);
-        List<LinkObject> levelLinks = makeLevelLinkList(fields[5]);
+        List<LevelLink> levelLinks = makeLevelLinkList(fields[5]);
         List<PointsBall> points = makePointsSourceList(fields[6]);
 
         return new BasicGameLevel(levelName, player, npcs, blocks, interactives, levelLinks, points);
@@ -85,11 +85,11 @@ public class TextFileGameLevels {
         StringBuilder sb = new StringBuilder();
         sb.append(gameLevel.getLevelName()).append("\n\n");
         sb.append(TextFileGameObjects.printPlayerCharacter(gameLevel.getPlayer())).append("\n\n");
-        sb.append(printNPCList(gameLevel.getNpcs())).append("\n");
+        sb.append(printNPCList(gameLevel.getNonPlayerCharacters())).append("\n");
         sb.append(printBlockList(gameLevel.getBlocks())).append("\n");
-        sb.append(printInteractiveObjectList(gameLevel.getInteractives())).append("\n");
+        sb.append(printInteractiveObjectList(gameLevel.getInteractiveObjects())).append("\n");
         sb.append(printLevelLinkList(gameLevel.getLevelLinks())).append("\n");
-        sb.append(printPointsSourceList(gameLevel.getPoints())).append("\n");
+        sb.append(printPointsSourceList(gameLevel.getPointsBalls())).append("\n");
 
         return sb.toString();
     }
@@ -145,20 +145,19 @@ public class TextFileGameLevels {
      *
      * @param field Input string.
      * @return List of ImmutableObjects.
-     * @see ImmutableObject
+     * @see Block
      */
-    public static List<ImmutableObject> makeBlockList(String field) throws IllegalArgumentException {
+    public static List<Block> makeBlockList(String field) throws IllegalArgumentException {
         if (field.equals(EMPTY_IDENTIFIER)) {
             return new ArrayList<>();
         }
-        List<ImmutableObject> blocks = new ArrayList<>();
+        List<Block> blocks = new ArrayList<>();
         String[] rows = field.split("\n");
         for (int y = 0; y < rows.length; y++) {
             String row = rows[y];
             for (int x = 0; x < row.length(); x++) {
                 String id = Character.toString(row.charAt(x));
-                blocks.add(
-                        new ImmutableObject(TextFileGameObjects.makeArcheType(ImmutableObjectArchetype.class, id).orElse(ImmutableObjectArchetype.AIR),
+                blocks.add(new Block(TextFileGameObjects.makeArcheType(BlockArchetype.class, id).orElse(BlockArchetype.AIR),
                                 new Coords(x, y, BLOCKS_LEVEL),
                                 Direction.DOWN)
                 );
@@ -174,7 +173,7 @@ public class TextFileGameLevels {
      * @param blocks List of ImmutableObjects.
      * @return TextFileGameLevels compatible string representation.
      */
-    public static String printBlockList(List<ImmutableObject> blocks) {
+    public static String printBlockList(List<Block> blocks) {
         if (blocks.isEmpty()) {
             return EMPTY_IDENTIFIER + "\n";
         }
@@ -204,11 +203,11 @@ public class TextFileGameLevels {
         return EMPTY_IDENTIFIER + "\n";
     }
 
-    public static List<LinkObject> makeLevelLinkList(String field) throws IllegalArgumentException {
+    public static List<LevelLink> makeLevelLinkList(String field) throws IllegalArgumentException {
         if (field.equals(EMPTY_IDENTIFIER)) {
             return new ArrayList<>();
         }
-        List<LinkObject> links = new ArrayList<>();
+        List<LevelLink> links = new ArrayList<>();
         String[] linkDats = field.split("\n");
         for (String linkDat : linkDats) {
             TextFileGameObjects.makeLinkObject(linkDat).ifPresent(i -> links.add(i));
@@ -216,7 +215,7 @@ public class TextFileGameLevels {
         return links;
     }
 
-    public static String printLevelLinkList(List<LinkObject> linkObjects) {
+    public static String printLevelLinkList(List<LevelLink> linkObjects) {
         if (linkObjects.isEmpty()) {
             return EMPTY_IDENTIFIER + "\n";
         }

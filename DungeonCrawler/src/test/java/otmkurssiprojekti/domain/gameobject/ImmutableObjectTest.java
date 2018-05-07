@@ -5,14 +5,14 @@
  */
 package otmkurssiprojekti.domain.gameobject;
 
-import otmkurssiprojekti.domain.gameobject.gameinanimates.ImmutableObject;
+import otmkurssiprojekti.domain.gameobject.gameinanimates.Block;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import otmkurssiprojekti.domain.gameobject.archetypes.ImmutableObjectArchetype;
+import otmkurssiprojekti.domain.gameobject.archetypes.BlockArchetype;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
 import otmkurssiprojekti.domain.gameobject.location.Direction;
 
@@ -27,7 +27,7 @@ public class ImmutableObjectTest {
     private boolean solid;
     private Coords coords;
     private Direction direction;
-    private ImmutableObject immo;
+    private Block immo;
 
     public ImmutableObjectTest() {
     }
@@ -47,7 +47,7 @@ public class ImmutableObjectTest {
         solid = false;
         coords = new Coords(0, 0, 0);
         direction = Direction.UP;
-        immo = new ImmutableObject(id, transparent, solid, coords, direction);
+        immo = new Block(id, transparent, solid, coords, direction);
     }
 
     @After
@@ -56,13 +56,13 @@ public class ImmutableObjectTest {
 
     @Test
     public void testAllArchetypeConstructors() {
-        for (ImmutableObjectArchetype arche : ImmutableObjectArchetype.values()) {
+        for (BlockArchetype arche : BlockArchetype.values()) {
             testArchetypeConstructor(arche);
         }
     }
 
-    public void testArchetypeConstructor(ImmutableObjectArchetype arche) {
-        ImmutableObject immarch = new ImmutableObject(arche, new Coords(0, 0, 0), Direction.UP);
+    public void testArchetypeConstructor(BlockArchetype arche) {
+        Block immarch = new Block(arche, new Coords(0, 0, 0), Direction.UP);
         assertTrue("ID should have been " + arche.getId() + " but was " + immarch.getId(), immarch.getId() == arche.getId());
         assertTrue("Transparency should have been " + arche.isTransparent() + " but was " + immarch.isTransparent(), immarch.isTransparent() == arche.isTransparent());
         assertTrue("Solid should have been " + arche.isSolid() + " but was " + immarch.isSolid(), immarch.isSolid() == arche.isSolid());

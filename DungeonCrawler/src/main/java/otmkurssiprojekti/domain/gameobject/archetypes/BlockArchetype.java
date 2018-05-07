@@ -10,7 +10,7 @@ package otmkurssiprojekti.domain.gameobject.archetypes;
  *
  * @author Juho Gröhn
  */
-public enum ImmutableObjectArchetype implements Archetype {
+public enum BlockArchetype implements Archetype {
     AIR(' ', true, false),
     STONE_PATH('.', false, false),
     GRASS(',', false, false),
@@ -21,7 +21,7 @@ public enum ImmutableObjectArchetype implements Archetype {
     private final boolean transparent;
     private final boolean solid;
 
-    private ImmutableObjectArchetype(char id, boolean transparent, boolean solid) {
+    private BlockArchetype(char id, boolean transparent, boolean solid) {
         this.id = id;
         this.transparent = transparent;
         this.solid = solid;

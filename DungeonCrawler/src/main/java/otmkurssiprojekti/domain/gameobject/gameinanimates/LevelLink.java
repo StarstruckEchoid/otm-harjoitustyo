@@ -14,7 +14,7 @@ import otmkurssiprojekti.domain.gameobject.location.Direction;
  *
  * @author Juho Gröhn
  */
-public class LinkObject implements GameObject {
+public class LevelLink implements GameObject {
 
     private final char id;
     private static final boolean TRANSPARENT = true;
@@ -24,7 +24,7 @@ public class LinkObject implements GameObject {
 
     private final String linkAddress;
 
-    public LinkObject(char id, Coords coords, String linkAddress) {
+    public LevelLink(char id, Coords coords, String linkAddress) {
         this.id = id;
         this.coords = coords;
         this.linkAddress = linkAddress;
@@ -80,7 +80,7 @@ public class LinkObject implements GameObject {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final LinkObject other = (LinkObject) obj;
+        final LevelLink other = (LevelLink) obj;
         if (this.id != other.id) {
             return false;
         }

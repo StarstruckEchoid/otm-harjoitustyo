@@ -16,7 +16,7 @@ import otmkurssiprojekti.domain.gameobject.archetypes.NonPlayerCharacterArchetyp
 import otmkurssiprojekti.domain.gameobject.archetypes.PlayerCharacterArchetype;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.nonplayercharacter.HostileNonPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.BasicPlayerCharacter;
-import otmkurssiprojekti.domain.gameobject.gameinanimates.LinkObject;
+import otmkurssiprojekti.domain.gameobject.gameinanimates.LevelLink;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.NonPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.PlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
@@ -32,7 +32,7 @@ public class TextFileGameObjectsTest {
     private PlayerCharacter pc;
 
     private String loString;
-    private LinkObject lo;
+    private LevelLink lo;
 
     public TextFileGameObjectsTest() {
     }
@@ -51,7 +51,7 @@ public class TextFileGameObjectsTest {
         pc = new BasicPlayerCharacter(20, 0, 1, 2, 3, new Coords(4, 5, 6), Direction.DOWN, 240_000);
 
         loString = "[;8,8,0;Test_Level.txt";
-        lo = new LinkObject('[', new Coords(8, 8, 0), "Test_Level.txt");
+        lo = new LevelLink('[', new Coords(8, 8, 0), "Test_Level.txt");
     }
 
     @After
@@ -143,7 +143,7 @@ public class TextFileGameObjectsTest {
      */
     @Test
     public void testMakeLinkObject() {
-        LinkObject madeLo = TextFileGameObjects.makeLinkObject(loString).get();
+        LevelLink madeLo = TextFileGameObjects.makeLinkObject(loString).get();
 
         assertThat(madeLo, is(lo));
     }

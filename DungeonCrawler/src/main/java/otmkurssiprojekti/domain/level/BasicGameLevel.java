@@ -9,8 +9,8 @@ import otmkurssiprojekti.domain.gameobject.location.Direction;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.InteractiveObject;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.PointsBall;
-import otmkurssiprojekti.domain.gameobject.gameinanimates.ImmutableObject;
-import otmkurssiprojekti.domain.gameobject.gameinanimates.LinkObject;
+import otmkurssiprojekti.domain.gameobject.gameinanimates.Block;
+import otmkurssiprojekti.domain.gameobject.gameinanimates.LevelLink;
 import otmkurssiprojekti.domain.gameobject.interfaces.GameObject;
 import java.util.*;
 import otmkurssiprojekti.domain.gameobject.interfaces.Mobile;
@@ -34,9 +34,9 @@ public class BasicGameLevel implements GameLevel {
     private final String levelName;
     private PlayerCharacter player;
     private final List<NonPlayerCharacter> npcs;
-    private final List<ImmutableObject> blocks;
+    private final List<Block> blocks;
     private final List<InteractiveObject> interactives;
-    private final List<LinkObject> levelLinks;
+    private final List<LevelLink> levelLinks;
     private final List<PointsBall> points;
 
     public BasicGameLevel() {
@@ -49,7 +49,7 @@ public class BasicGameLevel implements GameLevel {
         this.points = null;
     }
 
-    public BasicGameLevel(String levelName, PlayerCharacter player, List<NonPlayerCharacter> npcs, List<ImmutableObject> blocks, List<InteractiveObject> interactives, List<LinkObject> levelLinks, List<PointsBall> points) {
+    public BasicGameLevel(String levelName, PlayerCharacter player, List<NonPlayerCharacter> npcs, List<Block> blocks, List<InteractiveObject> interactives, List<LevelLink> levelLinks, List<PointsBall> points) {
         this.levelName = levelName;
         this.player = player;
         this.npcs = npcs;
@@ -71,27 +71,27 @@ public class BasicGameLevel implements GameLevel {
     }
 
     @Override
-    public List<NonPlayerCharacter> getNpcs() {
+    public List<NonPlayerCharacter> getNonPlayerCharacters() {
         return npcs;
     }
 
     @Override
-    public List<ImmutableObject> getBlocks() {
+    public List<Block> getBlocks() {
         return blocks;
     }
 
     @Override
-    public List<InteractiveObject> getInteractives() {
+    public List<InteractiveObject> getInteractiveObjects() {
         return interactives;
     }
 
     @Override
-    public List<LinkObject> getLevelLinks() {
+    public List<LevelLink> getLevelLinks() {
         return levelLinks;
     }
 
     @Override
-    public List<PointsBall> getPoints() {
+    public List<PointsBall> getPointsBalls() {
         return points;
     }
 

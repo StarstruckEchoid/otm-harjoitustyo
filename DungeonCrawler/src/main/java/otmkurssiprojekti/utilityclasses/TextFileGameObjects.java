@@ -9,7 +9,7 @@ import java.util.Optional;
 import otmkurssiprojekti.domain.gameobject.archetypes.NonPlayerCharacterArchetype;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.nonplayercharacter.HostileNonPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.BasicPlayerCharacter;
-import otmkurssiprojekti.domain.gameobject.gameinanimates.LinkObject;
+import otmkurssiprojekti.domain.gameobject.gameinanimates.LevelLink;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.NonPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.PlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
@@ -154,21 +154,21 @@ public class TextFileGameObjects {
 
     /**
      *
-     * @param linkDat The
-     * @return
+     * @param field The string representation of this LinkObject.
+     * @return The parsed LinkObject.
      */
-    public static Optional<LinkObject> makeLinkObject(String linkDat) throws IllegalArgumentException {
-        String[] attrs = linkDat.split(";");
+    public static Optional<LevelLink> makeLinkObject(String field) throws IllegalArgumentException {
+        String[] attrs = field.split(";");
         if (attrs.length < 3) {
             return Optional.empty();
         }
         char id = attrs[0].charAt(0);
         Coords coords = makeCoords(attrs[1]);
         String address = attrs[2];
-        return Optional.of(new LinkObject(id, coords, address));
+        return Optional.of(new LevelLink(id, coords, address));
     }
 
-    public static String printLinkObject(LinkObject linkObject) {
+    public static String printLinkObject(LevelLink linkObject) {
         return linkObject.getId() + ";" + printCoords(linkObject.getCoords()) + ";" + linkObject.getLinkAddress();
     }
 

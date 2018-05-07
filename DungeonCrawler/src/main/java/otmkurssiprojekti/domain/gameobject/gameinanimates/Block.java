@@ -7,7 +7,7 @@ package otmkurssiprojekti.domain.gameobject.gameinanimates;
 
 import java.util.Objects;
 import otmkurssiprojekti.domain.gameobject.interfaces.GameObject;
-import otmkurssiprojekti.domain.gameobject.archetypes.ImmutableObjectArchetype;
+import otmkurssiprojekti.domain.gameobject.archetypes.BlockArchetype;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
 import otmkurssiprojekti.domain.gameobject.location.Direction;
 
@@ -15,7 +15,7 @@ import otmkurssiprojekti.domain.gameobject.location.Direction;
  *
  * @author Juho Gröhn
  */
-public class ImmutableObject implements GameObject {
+public class Block implements GameObject {
 
     private final char id;
     private final boolean transparent;
@@ -23,7 +23,7 @@ public class ImmutableObject implements GameObject {
     private final Coords coords;
     private final Direction direction;
 
-    public ImmutableObject(char id, boolean transparent, boolean solid, Coords coords, Direction direction) {
+    public Block(char id, boolean transparent, boolean solid, Coords coords, Direction direction) {
         this.id = id;
         this.transparent = transparent;
         this.solid = solid;
@@ -31,7 +31,7 @@ public class ImmutableObject implements GameObject {
         this.direction = direction;
     }
 
-    public ImmutableObject(ImmutableObjectArchetype archetype, Coords coords, Direction direction) {
+    public Block(BlockArchetype archetype, Coords coords, Direction direction) {
         this.id = archetype.getId();
         this.transparent = archetype.isTransparent();
         this.solid = archetype.isSolid();
@@ -88,7 +88,7 @@ public class ImmutableObject implements GameObject {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final ImmutableObject other = (ImmutableObject) obj;
+        final Block other = (Block) obj;
         if (this.id != other.id) {
             return false;
         }

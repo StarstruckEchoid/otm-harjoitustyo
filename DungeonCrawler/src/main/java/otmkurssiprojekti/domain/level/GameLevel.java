@@ -8,9 +8,9 @@ package otmkurssiprojekti.domain.level;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
-import otmkurssiprojekti.domain.gameobject.gameinanimates.ImmutableObject;
+import otmkurssiprojekti.domain.gameobject.gameinanimates.Block;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.InteractiveObject;
-import otmkurssiprojekti.domain.gameobject.gameinanimates.LinkObject;
+import otmkurssiprojekti.domain.gameobject.gameinanimates.LevelLink;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.PointsBall;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
 import otmkurssiprojekti.domain.gameobject.location.Direction;
@@ -98,14 +98,35 @@ public interface GameLevel extends Serializable {
     @Override
     public boolean equals(Object obj);
 
-    public List<NonPlayerCharacter> getNpcs();
+    /**
+     *
+     * @return The NPCs in this level.
+     */
+    public List<NonPlayerCharacter> getNonPlayerCharacters();
 
-    public List<ImmutableObject> getBlocks();
+    /**
+     *
+     * @return The immutable objects in this level.
+     */
+    public List<Block> getBlocks();
 
-    public List<InteractiveObject> getInteractives();
+    /**
+     *
+     * @return The interactive objects, such as doors or switches, of this
+     * level.
+     */
+    public List<InteractiveObject> getInteractiveObjects();
 
-    public List<LinkObject> getLevelLinks();
+    /**
+     *
+     * @return The link objects in this level.
+     */
+    public List<LevelLink> getLevelLinks();
 
-    public List<PointsBall> getPoints();
+    /**
+     *
+     * @return The PointsBall objects in this level.
+     */
+    public List<PointsBall> getPointsBalls();
 
 }

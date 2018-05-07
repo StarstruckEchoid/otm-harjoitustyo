@@ -9,9 +9,9 @@ import otmkurssiprojekti.domain.level.BasicGameLevel;
 import otmkurssiprojekti.domain.gameobject.interfaces.GameObject;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.PointsBall;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.InteractiveObject;
-import otmkurssiprojekti.domain.gameobject.gameinanimates.LinkObject;
+import otmkurssiprojekti.domain.gameobject.gameinanimates.LevelLink;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.BasicPlayerCharacter;
-import otmkurssiprojekti.domain.gameobject.gameinanimates.ImmutableObject;
+import otmkurssiprojekti.domain.gameobject.gameinanimates.Block;
 import java.util.*;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -36,9 +36,9 @@ public class BasicGameLevelTest {
     private String levelName;
     private BasicPlayerCharacter player;
     private List<NonPlayerCharacter> npcs;
-    private List<ImmutableObject> blocks;
+    private List<Block> blocks;
     private List<InteractiveObject> interactives;
-    private List<LinkObject> levelLinks;
+    private List<LevelLink> levelLinks;
     private List<PointsBall> points;
 
     public BasicGameLevelTest() {
@@ -61,7 +61,7 @@ public class BasicGameLevelTest {
         npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.VILLAGER, new Coords(10, 10, 4), Direction.DOWN));
 
         blocks = new ArrayList<>();
-        blocks.add(new ImmutableObject(',', true, false, new Coords(8, 6, 0), Direction.DOWN));
+        blocks.add(new Block(',', true, false, new Coords(8, 6, 0), Direction.DOWN));
 
         interactives = new ArrayList<>();
         levelLinks = new ArrayList<>();

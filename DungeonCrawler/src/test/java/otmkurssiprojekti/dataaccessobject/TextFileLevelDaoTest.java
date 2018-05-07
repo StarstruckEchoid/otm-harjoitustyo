@@ -19,16 +19,16 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import otmkurssiprojekti.domain.gameobject.archetypes.ImmutableObjectArchetype;
+import otmkurssiprojekti.domain.gameobject.archetypes.BlockArchetype;
 import otmkurssiprojekti.domain.level.BasicGameLevel;
 import otmkurssiprojekti.domain.level.GameLevel;
 import otmkurssiprojekti.domain.gameobject.archetypes.NonPlayerCharacterArchetype;
 import otmkurssiprojekti.domain.gameobject.archetypes.PlayerCharacterArchetype;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.nonplayercharacter.HostileNonPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.BasicPlayerCharacter;
-import otmkurssiprojekti.domain.gameobject.gameinanimates.ImmutableObject;
+import otmkurssiprojekti.domain.gameobject.gameinanimates.Block;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.InteractiveObject;
-import otmkurssiprojekti.domain.gameobject.gameinanimates.LinkObject;
+import otmkurssiprojekti.domain.gameobject.gameinanimates.LevelLink;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.PointsBall;
 import otmkurssiprojekti.domain.gameobject.interfaces.GameObject;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.NonPlayerCharacter;
@@ -102,7 +102,7 @@ public class TextFileLevelDaoTest {
         List<NonPlayerCharacter> npcs = new ArrayList<>();
         npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.RAT, new Coords(2, 2, 0), Direction.DOWN));
 
-        List<ImmutableObject> blocks = TextFileGameLevels.makeBlockList(
+        List<Block> blocks = TextFileGameLevels.makeBlockList(
                 "   0 \n"
                 + " ... \n"
                 + "  .  \n"
@@ -130,20 +130,20 @@ public class TextFileLevelDaoTest {
         npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.RAT, new Coords(8, 8, 0), Direction.DOWN));
         npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.DEER, new Coords(4, 9, 0), Direction.DOWN));
         npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.FLY, new Coords(1, 1, 0), Direction.DOWN));
-        List<ImmutableObject> blocks = new ArrayList<>();
+        List<Block> blocks = new ArrayList<>();
         for (int x = 0; x < BasicGameLevel.DIMENSIONS.getX(); x++) {
             for (int y = 0; y < BasicGameLevel.DIMENSIONS.getY(); y++) {
                 if (x == 0 || x == BasicGameLevel.DIMENSIONS.getX() - 1) {
                     //Some solid blocks.
-                    blocks.add(new ImmutableObject(ImmutableObjectArchetype.STONE_WALL, new Coords(x, y, 1), Direction.DOWN));
+                    blocks.add(new Block(BlockArchetype.STONE_WALL, new Coords(x, y, 1), Direction.DOWN));
                 } else {
                     //Non-solid blocks.
-                    blocks.add(new ImmutableObject(ImmutableObjectArchetype.GRASS, new Coords(x, y, 1), Direction.DOWN));
+                    blocks.add(new Block(BlockArchetype.GRASS, new Coords(x, y, 1), Direction.DOWN));
                 }
             }
         }
         List<InteractiveObject> interactives = new ArrayList<>();
-        List<LinkObject> levelLinks = new ArrayList<>();
+        List<LevelLink> levelLinks = new ArrayList<>();
         List<PointsBall> points = new ArrayList<>();
         BasicGameLevel gamelvl = new BasicGameLevel(
                 levelName,
@@ -168,21 +168,21 @@ public class TextFileLevelDaoTest {
         npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.RAT, new Coords(8, 8, 0), Direction.DOWN));
         npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.DEER, new Coords(4, 9, 0), Direction.DOWN));
         npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.FOLLOWER, new Coords(1, 1, 0), Direction.DOWN));
-        List<ImmutableObject> blocks = new ArrayList<>();
+        List<Block> blocks = new ArrayList<>();
         for (int x = 0; x < BasicGameLevel.DIMENSIONS.getX(); x++) {
             for (int y = 0; y < BasicGameLevel.DIMENSIONS.getY(); y++) {
                 if (x == 0 || x == BasicGameLevel.DIMENSIONS.getX() - 1) {
                     //Some solid blocks.
-                    blocks.add(new ImmutableObject(ImmutableObjectArchetype.STONE_WALL, new Coords(x, y, 1), Direction.DOWN));
+                    blocks.add(new Block(BlockArchetype.STONE_WALL, new Coords(x, y, 1), Direction.DOWN));
                 } else {
                     //Non-solid blocks.
-                    blocks.add(new ImmutableObject(ImmutableObjectArchetype.GRASS, new Coords(x, y, 1), Direction.DOWN));
+                    blocks.add(new Block(BlockArchetype.GRASS, new Coords(x, y, 1), Direction.DOWN));
                 }
             }
         }
         List<InteractiveObject> interactives = new ArrayList<>();
-        List<LinkObject> levelLinks = new ArrayList<>();
-        levelLinks.add(new LinkObject('d', new Coords(0, 0, 0), "Other_Level.txt"));
+        List<LevelLink> levelLinks = new ArrayList<>();
+        levelLinks.add(new LevelLink('d', new Coords(0, 0, 0), "Other_Level.txt"));
         List<PointsBall> points = new ArrayList<>();
         BasicGameLevel gamelvl = new BasicGameLevel(
                 levelName,

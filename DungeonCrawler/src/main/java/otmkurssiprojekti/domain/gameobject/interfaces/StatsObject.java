@@ -13,14 +13,34 @@ package otmkurssiprojekti.domain.gameobject.interfaces;
  */
 public interface StatsObject extends GameObject {
 
+    /**
+     *
+     * @return Hit points of a StatsObject.
+     */
     public int getHp();
 
+    /**
+     *
+     * @return Strength of a StatsObject.
+     */
     public int getStr();
 
+    /**
+     *
+     * @return Perception of a StatsObject.
+     */
     public int getPer();
 
+    /**
+     *
+     * @return Endurance of a StatsObject.
+     */
     public int getEnd();
 
+    /**
+     *
+     * @return Agility of a StatsObject.
+     */
     public int getAgl();
 
 }

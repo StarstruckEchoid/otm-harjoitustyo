@@ -14,14 +14,14 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import otmkurssiprojekti.domain.gameobject.archetypes.ImmutableObjectArchetype;
+import otmkurssiprojekti.domain.gameobject.archetypes.BlockArchetype;
 import otmkurssiprojekti.domain.level.BasicGameLevel;
 import otmkurssiprojekti.domain.level.GameLevel;
 import otmkurssiprojekti.domain.gameobject.archetypes.NonPlayerCharacterArchetype;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.nonplayercharacter.HostileNonPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.BasicPlayerCharacter;
-import otmkurssiprojekti.domain.gameobject.gameinanimates.ImmutableObject;
-import otmkurssiprojekti.domain.gameobject.gameinanimates.LinkObject;
+import otmkurssiprojekti.domain.gameobject.gameinanimates.Block;
+import otmkurssiprojekti.domain.gameobject.gameinanimates.LevelLink;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.NonPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.PlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
@@ -40,10 +40,10 @@ public class TextFileGameLevelsTest {
     private List<NonPlayerCharacter> npcs;
 
     private String blocksString;
-    private List<ImmutableObject> blocks;
+    private List<Block> blocks;
 
     private String linksString;
-    private List<LinkObject> links;
+    private List<LevelLink> links;
 
     private final String levelName = "Test_Level.txt";
     private String gameLevelString;
@@ -86,11 +86,11 @@ public class TextFileGameLevelsTest {
             for (int x = 0; x < 5; x++) {
                 Coords coords = new Coords(x, y, TextFileGameLevels.BLOCKS_LEVEL);
                 if (x == 0 || x == 4 || y == 0 || y == 4) {
-                    blocks.add(new ImmutableObject(ImmutableObjectArchetype.STONE_WALL, coords, Direction.DOWN));
+                    blocks.add(new Block(BlockArchetype.STONE_WALL, coords, Direction.DOWN));
                 } else if (x == 2 && y == 2) {
-                    blocks.add(new ImmutableObject(ImmutableObjectArchetype.GRASS, coords, Direction.DOWN));
+                    blocks.add(new Block(BlockArchetype.GRASS, coords, Direction.DOWN));
                 } else {
-                    blocks.add(new ImmutableObject(ImmutableObjectArchetype.STONE_PATH, coords, Direction.DOWN));
+                    blocks.add(new Block(BlockArchetype.STONE_PATH, coords, Direction.DOWN));
                 }
             }
         }
@@ -101,9 +101,9 @@ public class TextFileGameLevelsTest {
                 + "[;2,0,0;Test3.txt\n";
 
         links = new ArrayList<>();
-        links.add(new LinkObject('[', new Coords(0, 1, 11), "Test1.txt"));
-        links.add(new LinkObject('[', new Coords(3, 6, 5), "Test2.txt"));
-        links.add(new LinkObject('[', new Coords(2, 0, 0), "Test3.txt"));
+        links.add(new LevelLink('[', new Coords(0, 1, 11), "Test1.txt"));
+        links.add(new LevelLink('[', new Coords(3, 6, 5), "Test2.txt"));
+        links.add(new LevelLink('[', new Coords(2, 0, 0), "Test3.txt"));
 
         gameLevelString
                 = levelName + "\n"
@@ -158,7 +158,7 @@ public class TextFileGameLevelsTest {
 
     @Test
     public void testMakeBlockList() {
-        List<ImmutableObject> madeBlocks = TextFileGameLevels.makeBlockList(blocksString);
+        List<Block> madeBlocks = TextFileGameLevels.makeBlockList(blocksString);
 
         assertTrue("Expected\n" + blocks.toString() + "\nbut got\n" + madeBlocks.toString(), madeBlocks.containsAll(blocks));
     }
@@ -179,7 +179,7 @@ public class TextFileGameLevelsTest {
 //    }
     @Test
     public void testMakeLevelLinkList() {
-        List<LinkObject> madeLinks = TextFileGameLevels.makeLevelLinkList(linksString);
+        List<LevelLink> madeLinks = TextFileGameLevels.makeLevelLinkList(linksString);
 
         assertTrue(madeLinks.containsAll(links));
     }
