@@ -14,9 +14,12 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import otmkurssiprojekti.dataaccessobject.BasicFileDao;
+import otmkurssiprojekti.dataaccessobject.GameLevelDao;
+import otmkurssiprojekti.dataaccessobject.GameSaveDao;
 import otmkurssiprojekti.dataaccessobject.TextFileGameSaveDao;
 import otmkurssiprojekti.dataaccessobject.TextFileLevelDao;
 import otmkurssiprojekti.dataaccessobject.dataobject.GameSave;
+import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.PlayerCharacter;
 import otmkurssiprojekti.domain.level.GameLevel;
 
 /**
@@ -63,17 +66,26 @@ public class TextFileDataService implements DataService {
     }
 
     @Override
-    public void loadLevel(String levelName) {
-        this.currentLevel = new TextFileLevelDao(levelsDir).loadLevel(levelName);
-    }
-
-    public void loadSave(String saveName) {
-        this.currentLevel = fetchGameSave(saveName).getGameLevel();
+    public void setCurrentLevel(String levelName) {
+        this.currentLevel = this.makeLevelDao().loadLevel(levelName);
     }
 
     @Override
-    public GameLevel fetchGameLevel(String levelName) {
-        return new TextFileLevelDao(levelsDir).loadLevel(levelName);
+    public void swapLevel(String levelName) {
+        GameLevel newLevel = this.makeLevelDao().loadLevel(levelName);
+        PlayerCharacter currentPlayer;
+        if (this.currentLevel != null) {
+            currentPlayer = this.currentLevel.getPlayer();
+        } else {
+            currentPlayer = newLevel.getPlayer();
+        }
+        currentPlayer.move(newLevel.getPlayer().getCoords());
+        newLevel.setPlayer(currentPlayer);
+        this.currentLevel = newLevel;
+    }
+
+    protected GameLevel fetchGameLevel(String levelName) {
+        return this.makeLevelDao().loadLevel(levelName);
     }
 
     @Override
@@ -83,17 +95,16 @@ public class TextFileDataService implements DataService {
 
     @Override
     public List<GameSave> fetchGameSaves() {
-        return new TextFileGameSaveDao(playerDir).listGameSaves();
+        return this.makeSaveDao().listGameSaves();
     }
 
     @Override
     public GameSave fetchGameSave(String saveName) {
-        return new TextFileGameSaveDao(playerDir).loadSave(saveName);
+        return this.makeSaveDao().loadSave(saveName);
     }
 
-    public void saveGame(GameSave gameSave) {
-        new TextFileGameSaveDao(playerDir).saveGame(gameSave);
-        this.currentLevel = gameSave.getGameLevel();
+    protected void saveGame(GameSave gameSave) {
+        this.makeSaveDao().saveGame(gameSave);
     }
 
     @Override
@@ -132,7 +143,7 @@ public class TextFileDataService implements DataService {
                 + "usersDir: " + safeToString(usersDir) + "\n"
                 + "userDir: " + safeToString(userDir) + "\n"
                 + "playerDir: " + safeToString(playerDir) + "\n"
-                + "currentLevel: " + safeToString(currentLevel);
+                + "currentLevel: " + (currentLevel == null ? "null" : currentLevel.getLevelName());
 
     }
 
@@ -141,6 +152,14 @@ public class TextFileDataService implements DataService {
             return "null";
         }
         return o.toString();
+    }
+
+    private GameLevelDao makeLevelDao() {
+        return new TextFileLevelDao(levelsDir);
+    }
+
+    private GameSaveDao makeSaveDao() {
+        return new TextFileGameSaveDao(playerDir);
     }
 
 }

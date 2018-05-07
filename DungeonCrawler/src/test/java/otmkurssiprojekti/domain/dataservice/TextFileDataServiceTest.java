@@ -18,8 +18,11 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import otmkurssiprojekti.dataaccessobject.GameLevelDao;
 import otmkurssiprojekti.dataaccessobject.TextFileLevelDao;
 import otmkurssiprojekti.dataaccessobject.dataobject.GameSave;
+import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.PlayerCharacter;
+import otmkurssiprojekti.domain.gameobject.location.Coords;
 import otmkurssiprojekti.domain.level.GameLevel;
 import otmkurssiprojekti.utilityclasses.TextFileGameLevels;
 
@@ -68,6 +71,38 @@ public class TextFileDataServiceTest {
             + "\n"
             + "EMPTY"
     );
+    private final String otherLevelName = "Other_Level.txt";
+    private final GameLevel otherLevel = TextFileGameLevels.makeGameLevel(
+            otherLevelName + "\n"
+            + "\n"
+            + "200;1;1;1;1;2,2,2;0\n"
+            + "\n"
+            + "EMPTY\n"
+            + "\n"
+            + "0,,,,,,,,,,,,,,0\n"
+            + "0,,,,,,,,,,,,,,0\n"
+            + "0,,,,,,,,,,,,,,0\n"
+            + "0,,,,,,,,,,,,,,0\n"
+            + "0,,,,,,,,,,,,,,0\n"
+            + "0,,,,,,,,,,,,,,0\n"
+            + "0,,,,,...,,,,,,0\n"
+            + "0,,,,,...,,,,,,0\n"
+            + "0,,,,,...,,,,,,0\n"
+            + "0,,,,,,,,,,,,,,0\n"
+            + "0,,,,,,,,,,,,,,0\n"
+            + "0,,,,,,,,,,,,,,0\n"
+            + "0,,,,,,,,,,,,,,0\n"
+            + "0,,,,,,,,,,,,,,0\n"
+            + "0,,,,,,,,,,,,,,0\n"
+            + "0,,,,,,,,,,,,,,0\n"
+            + "\n"
+            + "EMPTY\n"
+            + "\n"
+            + "EMPTY\n"
+            + "\n"
+            + "EMPTY"
+    );
+
     private TextFileDataService dataService;
 
     public TextFileDataServiceTest() {
@@ -85,7 +120,9 @@ public class TextFileDataServiceTest {
     public void setUp() throws IOException {
         Path levelsDir = Files.createTempDirectory("testLevels");
         levelsDirName = levelsDir.toString();
-        new TextFileLevelDao(levelsDir).saveLevel(gameLevel);
+        GameLevelDao dao = new TextFileLevelDao(levelsDir);
+        dao.saveLevel(gameLevel);
+        dao.saveLevel(otherLevel);
         usersDirName = Files.createTempDirectory("testUsers").toString();
         dataService = new TextFileDataService();
     }
@@ -167,12 +204,24 @@ public class TextFileDataServiceTest {
      * Test of setGameLevel method, of class TextFileDataService.
      */
     @Test
-    public void testSetGameLevel() {
+    public void testSetGameLevel1() {
         testSetLevelsDir();
-        dataService.loadLevel(gameLevel.getLevelName());
+        dataService.swapLevel(gameLevel.getLevelName());
 
         assertTrue(dataService.currentLevel != null);
         assertThat(dataService.currentLevel, is(gameLevel));
+    }
+
+    /**
+     * Test of setGameLevel method, of class TextFileDataService.
+     */
+    @Test
+    public void testSetGameLevel2() {
+        testSetLevelsDir();
+        dataService.swapLevel(otherLevel.getLevelName());
+
+        assertTrue(dataService.currentLevel != null);
+        assertThat(dataService.currentLevel, is(otherLevel));
     }
 
     /**
@@ -226,6 +275,7 @@ public class TextFileDataServiceTest {
      */
     @Test
     public void testSaveGame_GameSave() {
+        testSetGameLevel1();
         testSetPlayer();
         dataService.saveGame(new GameSave(new Date(Long.parseLong(saveName)), gameLevel));
 
@@ -237,6 +287,7 @@ public class TextFileDataServiceTest {
      */
     @Test
     public void testSaveGame_GameLevel() {
+        testSetGameLevel1();
         testSetPlayer();
         dataService.saveGame(gameLevel);
 
@@ -271,20 +322,9 @@ public class TextFileDataServiceTest {
     @Test
     public void testLoadLevel() {
         testSetLevelsDir();
-        dataService.loadLevel(levelName);
+        dataService.swapLevel(levelName);
 
         assertThat(dataService.fetchGameLevel().getLevelName(), is(levelName));
-    }
-
-    /**
-     * Test of loadSave method, of class TextFileDataService.
-     */
-    @Test
-    public void testLoadSave() {
-        testSaveGame_GameSave();
-        dataService.loadSave(saveName);
-
-        assertThat(dataService.fetchGameLevel(), is(gameLevel));
     }
 
     /**
@@ -303,7 +343,7 @@ public class TextFileDataServiceTest {
      */
     @Test
     public void testFetchGameLevel_0args() {
-        testSetGameLevel();
+        testSetGameLevel1();
         GameLevel gl = dataService.fetchGameLevel();
 
         assertThat(gl, is(gameLevel));
@@ -336,7 +376,7 @@ public class TextFileDataServiceTest {
 
     @Test
     public void testToString() {
-        testSetLevelsDir();
+        testSetCurrentLevel();
         testSaveGame_GameSave();
         String actual = dataService.toString();
         String expected
@@ -358,9 +398,45 @@ public class TextFileDataServiceTest {
 
         dataService.setUsersDir(usersDir);
         dataService.setLevelsDir(levelsDir);
-        dataService.loadLevel(levelName);
+        dataService.swapLevel(levelName);
 
         assertThat(dataService.currentLevel, is(gameLevel));
+    }
+
+    /**
+     * Test of setCurrentLevel method, of class TextFileDataService.
+     */
+    @Test
+    public void testSetCurrentLevel() {
+        testSetLevelsDir();
+        dataService.setCurrentLevel(levelName);
+        assertThat(dataService.currentLevel, is(gameLevel));
+    }
+
+    /**
+     * Test of swapLevel method, of class TextFileDataService.
+     */
+    @Test
+    public void testSwapLevel() {
+        testSetGameLevel1();
+        dataService.swapLevel(otherLevel.getLevelName());
+        assertThat(dataService.currentLevel.getLevelName(), is(otherLevel.getLevelName()));
+        PlayerCharacter pc = dataService.currentLevel.getPlayer();
+        assertThat(pc.getCoords(), is(new Coords(2, 2, 2)));
+        assertThat(pc.getHp(), is(10));
+        assertThat(pc.getPoints(), is(0));
+    }
+
+    /**
+     * Test of fetchGameSaves method, of class TextFileDataService.
+     */
+    @Test
+    public void testFetchGameSaves() {
+        testSaveGame_0args();
+        List<GameSave> fetched = dataService.fetchGameSaves();
+
+        assertTrue(fetched.size() == 1);
+        assertFalse(fetched.removeIf(i -> i == null));
     }
 
 }

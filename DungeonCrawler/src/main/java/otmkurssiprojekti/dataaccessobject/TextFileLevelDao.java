@@ -47,27 +47,20 @@ public class TextFileLevelDao extends AbstractLevelDao implements GameLevelDao {
 
     @Override
     public GameLevel loadLevel(String levelName) {
-        try {
-            StringBuilder lines = new StringBuilder();
-            Scanner lineScanner = new Scanner(Paths.get(directory.toString(), levelName), CHARSET.name());
+        StringBuilder lines = new StringBuilder();
+        try (Scanner lineScanner = new Scanner(Paths.get(directory.toString(), levelName), CHARSET.name())) {
             while (lineScanner.hasNextLine()) {
                 lines.append(lineScanner.nextLine()).append("\n");
             }
 //            String lines = Files.readAllLines(Paths.get(directory.toString(), levelName), CHARSET)
 //                    .stream()
 //                    .reduce("", (a, b) -> a + b + "\n");
-            GameLevel gameLevel = TextFileGameLevels.makeGameLevel(lines.toString());
-            return gameLevel;
         } catch (IOException ex) {
-            Logger.getLogger(TextFileLevelDao.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NullPointerException npe) {
-            throw npe;
-        } catch (IllegalArgumentException iae) {
-            throw iae;
-        } catch (Exception e) {
-            throw e;
+            throw new IllegalArgumentException(ex.getMessage());
         }
-        return null;
+
+        GameLevel gameLevel = TextFileGameLevels.makeGameLevel(lines.toString());
+        return gameLevel;
     }
 
 }

@@ -21,11 +21,8 @@ public interface DataService {
     /**
      * Fetch a game level by name. Note that levelsDir has to be set beforehand.
      *
-     * @param levelName Name of the level to be fetched.
-     * @return Returns the GameLevel by this name.
+     * @return Returns the current GameLevel stored in DataService.
      */
-    public GameLevel fetchGameLevel(String levelName);
-
     public GameLevel fetchGameLevel();
 
     /**
@@ -74,7 +71,7 @@ public interface DataService {
      *
      * @param levelName The name of the GameLevel.
      */
-    void loadLevel(String levelName);
+    void swapLevel(String levelName);
 
     /**
      * Sets the default directory for game levels.
@@ -107,5 +104,7 @@ public interface DataService {
      * stored.
      */
     void setUsersDir(String usersDir);
+    
+    void setCurrentLevel(String levelName);
 
 }

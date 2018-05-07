@@ -78,7 +78,7 @@ public class ByteFileLevelDaoTest {
     @Test
     public void testSaveLoadLevel() {
         bfldao.saveLevel(glvl);
-        GameLevel glvl2 = bfldao.loadLevel(glvl.toString());
+        GameLevel glvl2 = bfldao.loadLevel(glvl.getLevelName());
 
         assertTrue("Levels are not equal according to equals().", glvl.equals(glvl2));
     }

@@ -205,11 +205,11 @@ public class TextFileLevelDaoTest {
         }
     }
 
-    public void testSaveLoadLevel(GameLevel gl) {
-        testSaveLevel(gl);
-        GameLevel g2 = tfld.loadLevel(gl.toString());
+    public void testSaveLoadLevel(GameLevel g1) {
+        testSaveLevel(g1);
+        GameLevel g2 = tfld.loadLevel(g1.getLevelName());
         assertTrue(g2 != null);
-        testLevelsEqual(g2, gl);
+        testLevelsEqual(g2, g1);
 
     }
 

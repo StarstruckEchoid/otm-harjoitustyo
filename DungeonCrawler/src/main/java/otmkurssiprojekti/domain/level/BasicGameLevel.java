@@ -16,6 +16,7 @@ import java.util.*;
 import otmkurssiprojekti.domain.gameobject.interfaces.Mobile;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.NonPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.PlayerCharacter;
+import otmkurssiprojekti.utilityclasses.TextFileGameLevels;
 
 /**
  * The most basic implementation of a GameLevel.
@@ -160,13 +161,13 @@ public class BasicGameLevel implements GameLevel {
 
     @Override
     public String toString() {
-        return this.levelName;
+        return TextFileGameLevels.printGameLevel(this);
     }
 
     @Override
     public boolean doGameTick() {
         npcs.forEach(npc -> npc.act(this));
-        npcs.removeIf(npc -> npc.isDead());
+//        npcs.removeIf(npc -> npc.isDead());
         return this.player.isDead();
     }
 

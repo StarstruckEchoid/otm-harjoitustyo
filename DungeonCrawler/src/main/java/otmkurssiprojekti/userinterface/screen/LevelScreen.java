@@ -30,7 +30,7 @@ public class LevelScreen extends SwitchingScreen {
     public LevelScreen(DungeonCrawler main) {
         super(main);
         this.gameLevel = main.getDataService().fetchGameLevel();
-        main.getDataService().loadLevel(gameLevel.getLevelName());
+        main.getDataService().swapLevel(gameLevel.getLevelName());
     }
     
     @Override
@@ -83,7 +83,7 @@ public class LevelScreen extends SwitchingScreen {
         switch (e.getCode()) {
             case ENTER:
                 gameLevel.playerInteract().ifPresent(addr -> {
-                    main.getDataService().loadLevel(addr);
+                    main.getDataService().swapLevel(addr);
 //                    main.getDataService().saveGame(gameLevel);
                     switchTo(new LevelScreen(main));
                 });

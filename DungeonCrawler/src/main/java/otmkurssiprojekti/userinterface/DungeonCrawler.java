@@ -43,7 +43,7 @@ public class DungeonCrawler extends Application {
     public void init() throws Exception {
         DATA_SERVICE.setUsersDir(USERS_DIR);
         DATA_SERVICE.setLevelsDir(LEVELS_DIR);
-        DATA_SERVICE.loadLevel(FIRST_LEVEL);
+        DATA_SERVICE.swapLevel(FIRST_LEVEL);
         this.setGameScreen(new MainMenuScreen(this));
 
         //Debug
