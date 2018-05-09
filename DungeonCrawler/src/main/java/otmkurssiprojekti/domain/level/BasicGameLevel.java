@@ -151,8 +151,9 @@ public class BasicGameLevel implements GameLevel {
             return false;
         }
         if (obj instanceof GameLevel) {
-            return ((GameLevel) obj).getLevelName().equals(this.getLevelName())
-                    && ((GameLevel) obj).getGameObjects().containsAll(this.getGameObjects());
+            GameLevel gobj = (GameLevel) obj;
+            return gobj.getLevelName().equals(this.getLevelName())
+                    && gobj.getGameObjects().equals(this.getGameObjects());
 
         } else {
             return false;
