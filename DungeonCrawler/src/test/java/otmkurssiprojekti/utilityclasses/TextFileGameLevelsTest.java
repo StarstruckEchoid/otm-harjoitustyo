@@ -170,13 +170,6 @@ public class TextFileGameLevelsTest {
         assertThat(madeBlocksString, is(blocksString));
     }
 
-//    @Test
-//    public void testMakeInteractiveObjectList() {
-//    }
-//    
-//    @Test
-//    public void testPrintInteractiveObjectList() {
-//    }
     @Test
     public void testMakeLevelLinkList() {
         List<LevelLink> madeLinks = TextFileGameLevels.makeLevelLinkList(linksString);
@@ -190,12 +183,4 @@ public class TextFileGameLevelsTest {
 
         assertThat(madeLinksString, is(linksString));
     }
-//    
-//    @Test
-//    public void testMakePointsSourceList() {
-//    }
-//    
-//    @Test
-//    public void testPrintPointsSourceList() {
-//    }
 }

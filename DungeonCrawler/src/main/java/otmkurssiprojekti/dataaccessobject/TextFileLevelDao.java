@@ -46,9 +46,6 @@ public class TextFileLevelDao extends AbstractLevelDao implements GameLevelDao {
         while (lineScanner.hasNextLine()) {
             lines.append(lineScanner.nextLine()).append("\n");
         }
-//            String lines = Files.readAllLines(Paths.get(directory.toString(), levelName), CHARSET)
-//                    .stream()
-//                    .reduce("", (a, b) -> a + b + "\n");
 
         GameLevel gameLevel = TextFileGameLevels.makeGameLevel(lines.toString());
         return gameLevel;
