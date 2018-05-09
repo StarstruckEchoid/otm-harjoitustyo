@@ -18,11 +18,6 @@ public class GameSave {
     private final Date saveDate;
     private final GameLevel gameLevel;
 
-    public GameSave() {
-        this.saveDate = null;
-        this.gameLevel = null;
-    }
-
     public GameSave(Date saveDate, GameLevel gameLevel) {
         this.saveDate = saveDate;
         this.gameLevel = gameLevel;
@@ -69,7 +64,5 @@ public class GameSave {
         }
         return true;
     }
-    
-   
 
 }
