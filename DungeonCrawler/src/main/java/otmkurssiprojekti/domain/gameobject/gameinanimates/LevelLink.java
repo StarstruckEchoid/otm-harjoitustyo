@@ -17,10 +17,10 @@ import otmkurssiprojekti.domain.gameobject.location.Direction;
 public class LevelLink implements GameObject {
 
     private final char id;
-    private static final boolean TRANSPARENT = true;
-    private static final boolean SOLID = false;
+    public static final boolean TRANSPARENT = true;
+    public static final boolean SOLID = false;
     private final Coords coords;
-    private static final Direction DIRECTION = Direction.UP;
+    public static final Direction DIRECTION = Direction.UP;
 
     private final String linkAddress;
 

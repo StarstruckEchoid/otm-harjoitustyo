@@ -21,6 +21,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import otmkurssiprojekti.domain.gameobject.archetypes.NonPlayerCharacterArchetype;
 import otmkurssiprojekti.domain.gameobject.archetypes.PlayerCharacterArchetype;
+import otmkurssiprojekti.domain.gameobject.gamecharacter.nonplayercharacter.BasicNonPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.nonplayercharacter.HostileNonPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.NonPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.PlayerCharacter;
@@ -32,67 +33,67 @@ import otmkurssiprojekti.domain.gameobject.location.Direction;
  * @author Juho Gröhn
  */
 public class BasicGameLevelTest {
-
+    
     private BasicGameLevel gameLevel;
     private String levelName;
-
+    
     private PlayerCharacter player;
     private PlayerCharacter newPlayer;
-
+    
     private Coords monsterCoords;
-    private NonPlayerCharacter monster;
+    private BasicNonPlayerCharacter monster;
     private List<NonPlayerCharacter> nonPlayerCharacters;
-
+    
     private List<Block> blocks;
-
+    
     private List<InteractiveObject> interactiveObjects;
-
+    
     private List<LevelLink> levelLinks;
-
+    
     private List<PointsBall> pointsBalls;
-
+    
     private Coords solidBlockCoords;
-
+    
     private GameLevel otherLevel;
-
+    
     public BasicGameLevelTest() {
     }
-
+    
     @BeforeClass
     public static void setUpClass() {
     }
-
+    
     @AfterClass
     public static void tearDownClass() {
     }
-
+    
     @Before
     public void setUp() {
         levelName = "testLevel.txt";
-        player = new BasicPlayerCharacter(PlayerCharacterArchetype.THIEF, new Coords(0, 0, 1), Direction.DOWN);
+        player = new BasicPlayerCharacter(PlayerCharacterArchetype.SOLDIER, new Coords(0, 0, 1), Direction.DOWN);
         newPlayer = new BasicPlayerCharacter(PlayerCharacterArchetype.ASSASSIN, new Coords(3, 3, 2), Direction.DOWN);
-
+        
         nonPlayerCharacters = new ArrayList<>();
         monsterCoords = new Coords(0, 3, 0);
         monster = new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.RAT, monsterCoords, Direction.DOWN);
         nonPlayerCharacters.add(monster);
-
+        
         blocks = new ArrayList<>();
-
+        
         solidBlockCoords = new Coords(8, 6, 0);
-
+        
         blocks.add(new Block('0', false, true, solidBlockCoords, Direction.DOWN));
-
+        
         interactiveObjects = new ArrayList<>();
         levelLinks = new ArrayList<>();
         levelLinks.add(new LevelLink('[', new Coords(7, 7, 7), levelName));
         pointsBalls = new ArrayList<>();
-
+        
         gameLevel = new BasicGameLevel(levelName, player, nonPlayerCharacters, blocks, interactiveObjects, levelLinks, pointsBalls);
-
+        
         otherLevel = new BasicGameLevel("other.txt", new BasicPlayerCharacter(PlayerCharacterArchetype.WARRIOR, solidBlockCoords, Direction.DOWN), new ArrayList<NonPlayerCharacter>(), blocks, interactiveObjects, new ArrayList<>(), pointsBalls);
     }
-
+    
     @After
     public void tearDown() {
     }
@@ -232,7 +233,7 @@ public class BasicGameLevelTest {
     @Test
     public void testMovePlayer() {
         gameLevel.movePlayer(Direction.RIGHT);
-
+        
         assertThat(gameLevel.getPlayer().getCoords(), is(new Coords(1, 0, 1)));
     }
 
@@ -242,7 +243,7 @@ public class BasicGameLevelTest {
     @Test
     public void testMoveMobile() {
         gameLevel.moveMobile(monster, Direction.UP);
-
+        
         assertThat(monster.getCoords(), is(new Coords(0, 4, 0)));
     }
 
@@ -253,7 +254,7 @@ public class BasicGameLevelTest {
     public void testHashCode() {
         int hash = gameLevel.hashCode();
         int hashOther = otherLevel.hashCode();
-
+        
         assertTrue(hash != hashOther);
     }
 
@@ -288,7 +289,7 @@ public class BasicGameLevelTest {
     public void testToString() {
         String string = gameLevel.toString();
         String otherString = otherLevel.toString();
-
+        
         assertFalse(string.equals(otherString));
     }
 
@@ -298,7 +299,7 @@ public class BasicGameLevelTest {
     @Test
     public void testDoGameTick() {
         gameLevel.doGameTick();
-
+        
         assertFalse(monster.toString() + "has not moved.", monster.getCoords().equals(monsterCoords));
     }
 
@@ -322,5 +323,16 @@ public class BasicGameLevelTest {
     public void testPlayerInteract() {
         assertThat(gameLevel.playerInteract(), is(Optional.empty()));
     }
-
+    
+    @Test(timeout = 100)
+    public void testPlayerAttack() {
+        player.move(monsterCoords);
+        player.move(Direction.DOWN);
+        while (!monster.isDead()) {
+            gameLevel.playerAttack(Direction.UP);
+        }
+        assertThat(monster.isDead(), is(true));
+        assertThat(player.getPoints(), is(monster.getPoints()));
+    }
+    
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package otmkurssiprojekti.domain.gameobject;
+package otmkurssiprojekti.domain.gameobject.gameinanimates;
 
 import otmkurssiprojekti.domain.gameobject.gameinanimates.InteractiveObject;
 import java.util.ArrayList;
