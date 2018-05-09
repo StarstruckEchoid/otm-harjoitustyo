@@ -9,7 +9,7 @@ package otmkurssiprojekti.domain.gameobject.location;
  *
  * @author Juho Gröhn
  */
-public class FlatCoords implements Comparable<FlatCoords>, java.io.Serializable {
+public class FlatCoords implements Comparable<FlatCoords> {
 
     protected int x;
     protected int y;

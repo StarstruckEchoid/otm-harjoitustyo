@@ -81,7 +81,7 @@ public class HostileNonPlayerCharacterTest {
         for (int i = 0; i < 3; i++) {
             hostileNPC.act(gameLevel);
         }
-        assertThat(hostileNPC.getCoords(), is(new Coords(3, 0, 0)));
+        assertTrue(hostileNPC.getCoords().manhattanDistance(playerCoords) <= 2);
     }
 
     @Test

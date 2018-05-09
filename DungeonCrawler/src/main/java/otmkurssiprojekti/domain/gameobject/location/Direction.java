@@ -9,7 +9,7 @@ package otmkurssiprojekti.domain.gameobject.location;
  *
  * @author gjuho
  */
-public enum Direction implements java.io.Serializable {
+public enum Direction {
     UP(new Coords(0, 1, 0), "UP"),
     DOWN(new Coords(0, -1, 0), "DOWN"),
     LEFT(new Coords(-1, 0, 0), "LEFT"),

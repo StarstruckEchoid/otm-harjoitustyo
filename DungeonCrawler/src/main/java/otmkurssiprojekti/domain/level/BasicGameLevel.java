@@ -39,16 +39,6 @@ public class BasicGameLevel implements GameLevel {
     private final List<LevelLink> levelLinks;
     private final List<PointsBall> points;
 
-    public BasicGameLevel() {
-        this.levelName = null;
-        this.player = null;
-        this.npcs = null;
-        this.blocks = null;
-        this.interactives = null;
-        this.levelLinks = null;
-        this.points = null;
-    }
-
     public BasicGameLevel(String levelName, PlayerCharacter player, List<NonPlayerCharacter> npcs, List<Block> blocks, List<InteractiveObject> interactives, List<LevelLink> levelLinks, List<PointsBall> points) {
         this.levelName = levelName;
         this.player = player;

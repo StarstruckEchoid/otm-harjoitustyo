@@ -4,8 +4,6 @@
  * and open the template in the editor.
  */
 package otmkurssiprojekti.domain.level;
-
-import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.Block;

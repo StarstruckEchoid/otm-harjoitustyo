@@ -14,7 +14,7 @@ import otmkurssiprojekti.domain.gameobject.location.Direction;
  *
  * @author gjuho
  */
-public interface GameObject extends java.io.Serializable {
+public interface GameObject {
 
     /**
      * Returns the char associated with this GameObject. Can function as a means
