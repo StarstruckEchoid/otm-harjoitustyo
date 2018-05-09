@@ -6,6 +6,7 @@
 package otmkurssiprojekti.dataaccessobject;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,7 @@ public abstract class AbstractLevelDao implements GameLevelDao {
     }
 
     @Override
-    public List<GameLevel> listGameLevels() {
+    public List<GameLevel> listGameLevels() throws IOException {
         File[] gameLevels = directory.toFile().listFiles();
         List<GameLevel> levels = new ArrayList<>();
         for (File f : gameLevels) {
@@ -34,7 +35,7 @@ public abstract class AbstractLevelDao implements GameLevelDao {
     }
 
     @Override
-    public void saveLevel(GameLevel level) {
+    public void saveLevel(GameLevel level) throws IOException {
         this.saveLevel(level, level.getLevelName());
     }
 

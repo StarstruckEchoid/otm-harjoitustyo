@@ -232,11 +232,8 @@ public class TextFileDataServiceTest {
         }
     }
 
-    /**
-     * Test of setGameLevel method, of class TextFileDataService.
-     */
     @Test
-    public void testSetGameLevel1() {
+    public void testSetGameLevel1() throws IOException {
         testSetLevelsDir();
         dataService.swapLevel(gameLevel.getLevelName());
 
@@ -244,11 +241,8 @@ public class TextFileDataServiceTest {
         assertThat(dataService.currentLevel, is(gameLevel));
     }
 
-    /**
-     * Test of setGameLevel method, of class TextFileDataService.
-     */
     @Test
-    public void testSetGameLevel2() {
+    public void testSetGameLevel2() throws IOException {
         testSetLevelsDir();
         dataService.swapLevel(otherLevel.getLevelName());
 
@@ -256,33 +250,24 @@ public class TextFileDataServiceTest {
         assertThat(dataService.currentLevel, is(otherLevel));
     }
 
-    /**
-     * Test of fetchGameLevel method, of class TextFileDataService.
-     */
     @Test
-    public void testFetchGameLevel() {
+    public void testFetchGameLevel() throws IOException {
         testSetLevelsDir();
         GameLevel gameLevel2 = dataService.fetchGameLevel(gameLevel.getLevelName());
 
         assertThat(gameLevel2, is(gameLevel));
     }
 
-    /**
-     * Test of fetchGameSaves method, of class TextFileDataService.
-     */
     @Test
-    public void testFetchGameSaves1() {
+    public void testFetchGameSaves1() throws IOException {
         testSetPlayer();
         List<GameSave> gameSaves = dataService.fetchGameSaves();
 
         assertTrue(gameSaves.isEmpty());
     }
 
-    /**
-     * Test of fetchGameSaves method, of class TextFileDataService.
-     */
     @Test
-    public void testFetchGameSaves2() {
+    public void testFetchGameSaves2() throws IOException {
         testSetPlayer();
         GameSave gameSave = new GameSave(new Date(Long.parseLong(saveName)), gameLevel);
         dataService.saveGame(gameSave);
@@ -292,21 +277,10 @@ public class TextFileDataServiceTest {
     }
 
     /**
-     * Test of fetchGameSave method, of class TextFileDataService.
-     */
-    @Test
-    public void testFetchGameSave_String() {
-        testSaveGame_GameSave();
-        GameSave gameSave1 = dataService.fetchGameSave(saveName);
-
-        assertEquals(gameSave1, new GameSave(new Date(Long.parseLong(saveName)), gameLevel));
-    }
-
-    /**
      * Test of saveGame method, of class TextFileDataService.
      */
     @Test
-    public void testSaveGame_GameSave() {
+    public void testSaveGame_GameSave() throws IOException {
         testSetGameLevel1();
         testSetPlayer();
         dataService.saveGame(new GameSave(new Date(Long.parseLong(saveName)), gameLevel));
@@ -318,7 +292,7 @@ public class TextFileDataServiceTest {
      * Test of saveGame method, of class TextFileDataService.
      */
     @Test
-    public void testSaveGame_GameLevel1() {
+    public void testSaveGame_GameLevel1() throws IOException {
         testSetGameLevel1();
         testSetPlayer();
         dataService.saveGame(gameLevel);
@@ -330,7 +304,7 @@ public class TextFileDataServiceTest {
      * Test of saveGame method, of class TextFileDataService.
      */
     @Test
-    public void testSaveGame_GameLevel2() {
+    public void testSaveGame_GameLevel2() throws IOException {
         testSetGameLevel1();
         testSetPlayer();
         gameLevel.movePlayer(Direction.LEFT);
@@ -361,66 +335,32 @@ public class TextFileDataServiceTest {
         assertTrue(users.contains(user));
     }
 
-    /**
-     * Test of loadLevel method, of class TextFileDataService.
-     */
     @Test
-    public void testSwapLevel_String() {
+    public void testSwapLevel_String() throws IOException {
         testSetLevelsDir();
         dataService.swapLevel(levelName);
 
         assertThat(dataService.fetchGameLevel(), is(gameLevel));
     }
 
-    /**
-     * Test of fetchGameLevel method, of class TextFileDataService.
-     */
     @Test
-    public void testFetchGameLevel_String() {
+    public void testFetchGameLevel_String() throws IOException {
         testSetLevelsDir();
         GameLevel gl = dataService.fetchGameLevel(levelName);
 
         assertThat(gl, is(gameLevel));
     }
 
-    /**
-     * Test of fetchGameLevel method, of class TextFileDataService.
-     */
     @Test
-    public void testFetchGameLevel_0args() {
+    public void testFetchGameLevel_0args() throws IOException {
         testSetGameLevel1();
         GameLevel gl = dataService.fetchGameLevel();
 
         assertThat(gl, is(gameLevel));
     }
 
-    /**
-     * Test of fetchGameSave method, of class TextFileDataService.
-     */
     @Test
-    public void testFetchGameSave() {
-        testSaveGame_GameSave();
-        GameSave gs = dataService.fetchGameSave(saveName);
-
-        assertTrue(gs != null);
-        assertThat(gs.getSaveDate().getTime(), is(Long.parseLong(saveName)));
-        assertThat(gs.getGameLevel(), is(gameLevel));
-    }
-
-    /**
-     * Test of saveGame method, of class TextFileDataService.
-     */
-    @Test
-    public void testSaveGame_0args() {
-        testSetPlayer();
-        testSwapLevel_String();
-        dataService.saveGame();
-
-        assertThat(dataService.fetchGameSaves().size(), is(1));
-    }
-
-    @Test
-    public void testToString() {
+    public void testToString() throws IOException {
         testSetCurrentLevel_String();
         testSaveGame_GameSave();
         String actual = dataService.toString();
@@ -452,7 +392,7 @@ public class TextFileDataServiceTest {
      * Test of setCurrentLevel method, of class TextFileDataService.
      */
     @Test
-    public void testSetCurrentLevel_String() {
+    public void testSetCurrentLevel_String() throws IOException {
         testSetLevelsDir();
         dataService.setCurrentLevel(levelName);
         assertThat(dataService.currentLevel, is(gameLevel));
@@ -471,7 +411,7 @@ public class TextFileDataServiceTest {
      * Test of swapLevel method, of class TextFileDataService.
      */
     @Test
-    public void testSwapLevel() {
+    public void testSwapLevel() throws IOException {
         testSetGameLevel1();
         dataService.swapLevel(otherLevel.getLevelName());
         assertThat(dataService.currentLevel.getLevelName(), is(otherLevel.getLevelName()));
@@ -481,12 +421,9 @@ public class TextFileDataServiceTest {
         assertThat(pc.getPoints(), is(0));
     }
 
-    /**
-     * Test of fetchGameSaves method, of class TextFileDataService.
-     */
     @Test
-    public void testFetchGameSaves() {
-        testSaveGame_0args();
+    public void testFetchGameSaves() throws IOException {
+        testSaveGame_GameSave();
         List<GameSave> fetched = dataService.fetchGameSaves();
 
         assertTrue(fetched.size() == 1);

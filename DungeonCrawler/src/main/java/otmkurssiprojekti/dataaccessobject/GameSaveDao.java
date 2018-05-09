@@ -5,6 +5,7 @@
  */
 package otmkurssiprojekti.dataaccessobject;
 
+import java.io.IOException;
 import java.util.List;
 import otmkurssiprojekti.dataaccessobject.dataobject.GameSave;
 
@@ -16,9 +17,9 @@ import otmkurssiprojekti.dataaccessobject.dataobject.GameSave;
  */
 public interface GameSaveDao {
 
-    public List<GameSave> listGameSaves();
+    public List<GameSave> listGameSaves() throws IOException;
 
-    public void saveGame(GameSave gameSave);
+    public void saveGame(GameSave gameSave) throws IOException;
 
-    public GameSave loadSave(String name);
+    public GameSave loadSave(String name) throws IOException;
 }

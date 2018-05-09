@@ -11,7 +11,6 @@ import java.util.List;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import otmkurssiprojekti.userinterface.DungeonCrawler;
-import otmkurssiprojekti.userinterface.screen.ErrorScreen;
 import otmkurssiprojekti.userinterface.screen.GameScreen;
 import otmkurssiprojekti.userinterface.screen.MainMenuScreen;
 import otmkurssiprojekti.userinterface.screen.VerticalMenuScreen;
@@ -23,12 +22,12 @@ import otmkurssiprojekti.userinterface.screen.VerticalMenuScreen;
 public class NewUserScreen extends VerticalMenuScreen {
 
     private final StringBuilder username;
-    
+
     public NewUserScreen(DungeonCrawler main) {
         super(main);
         this.username = new StringBuilder();
     }
-    
+
     @Override
     public void handleKeyEvent(KeyEvent e) {
         super.handleKeyEvent(e);
@@ -44,33 +43,30 @@ public class NewUserScreen extends VerticalMenuScreen {
                 break;
         }
     }
-    
+
     @Override
-    protected void doEnterAction(int index) {
-        try {
-            //Save user and continue to player selection.
-            main.getDataService().setUser(username.toString());
-            switchTo(new LoadPlayerScreen(main));
-        } catch (IOException ex) {
-            switchTo(new ErrorScreen(main, ex));
-        }
+    protected void doEnterAction(int index) throws IOException {
+        //Save user and continue to player selection.
+        main.getDataService().setUser(username.toString());
+        switchTo(new LoadPlayerScreen(main));
+
     }
-    
+
     @Override
     protected List<Object> getOptsList() {
         List<Object> ret = new ArrayList<>();
         ret.add(username);
         return ret;
     }
-    
+
     @Override
     protected String getTitle() {
         return "Create new user";
     }
-    
+
     @Override
     protected GameScreen getReturnScreen() {
         return new MainMenuScreen(main);
     }
-    
+
 }

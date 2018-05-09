@@ -5,7 +5,6 @@
  */
 package otmkurssiprojekti.userinterface.screen.daousers;
 
-import otmkurssiprojekti.userinterface.screen.ErrorScreen;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,30 +17,26 @@ import otmkurssiprojekti.userinterface.screen.VerticalMenuScreen;
  * @author Juho Gröhn
  */
 public class LoadPlayerScreen extends VerticalMenuScreen {
-    
+
     private final List<String> players;
-    
+
     public LoadPlayerScreen(DungeonCrawler main) {
         super(main);
-        
+
         this.players = main.getDataService().fetchPlayers();
     }
-    
+
     @Override
-    protected void doEnterAction(int index) {
+    protected void doEnterAction(int index) throws IOException {
         if (index == 0) {
             switchTo(new NewPlayerScreen(main));
         } else {
-            try {
-                String player = players.get(index - 1);
-                main.getDataService().setPlayer(player);
-                switchTo(new LoadGameScreen(main));
-            } catch (IOException ex) {
-                main.setGameScreen(new ErrorScreen(main, ex));
-            }
+            String player = players.get(index - 1);
+            main.getDataService().setPlayer(player);
+            switchTo(new LoadGameScreen(main));
         }
     }
-    
+
     @Override
     protected List<Object> getOptsList() {
         List<Object> optsList = new ArrayList<>();
@@ -49,15 +44,15 @@ public class LoadPlayerScreen extends VerticalMenuScreen {
         optsList.addAll(players);
         return optsList;
     }
-    
+
     @Override
     protected String getTitle() {
         return "Select player";
     }
-    
+
     @Override
     protected GameScreen getReturnScreen() {
         return new LoadUserScreen(main);
     }
-    
+
 }

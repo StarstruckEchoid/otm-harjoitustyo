@@ -58,8 +58,16 @@ public class BasicPlayerCharacter extends BasicStatsCharacter implements PlayerC
         return this.points;
     }
 
+    /**
+     * Hurts a Destructible. But, also, if the Destructible is a PointsSource,
+     * then, if the Destructible dies as a result of the PlayerCharacter's
+     * attack, increase the player's points.
+     */
     @Override
     public void hurt(Destructible d) {
+        if (d.isDead()) {
+            return;
+        }
         super.hurt(d);
         if (d.isDead() && d instanceof PointsSource) {
             this.points += ((PointsSource) d).getPoints();

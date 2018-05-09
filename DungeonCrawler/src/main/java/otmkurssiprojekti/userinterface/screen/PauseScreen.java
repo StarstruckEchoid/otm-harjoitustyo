@@ -5,6 +5,7 @@
  */
 package otmkurssiprojekti.userinterface.screen;
 
+import java.io.IOException;
 import otmkurssiprojekti.userinterface.screen.daousers.SaveGameScreen;
 import otmkurssiprojekti.userinterface.screen.daousers.LoadGameScreen;
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class PauseScreen extends VerticalMenuScreen {
     }
 
     @Override
-    protected void doEnterAction(int index) {
+    protected void doEnterAction(int index) throws IOException {
         switch (index) {
             case 0:
                 switchTo(new LevelScreen(main));

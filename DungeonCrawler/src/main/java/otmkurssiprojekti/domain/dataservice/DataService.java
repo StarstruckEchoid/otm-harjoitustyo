@@ -28,29 +28,23 @@ public interface DataService {
     public GameLevel fetchGameLevel();
 
     /**
-     * Fetch a particular game save.
-     *
-     * @param saveName The name of the game save. NB! name of the file, not
-     * toString()!
-     * @return Returns the GameSave by this name.
-     */
-    GameSave fetchGameSave(String saveName);
-
-    /**
      * Saves the game of the player. Note that player as well as game level has
      * to be set beforehand.
      *
      * @param gameLevel The GameLevel to be saved in the GameSave.
+     * @throws java.io.IOException Throw this if gameLevel could not be saved.
+     * This may happen, for example, because player directory is null.
      */
-    void saveGame(GameLevel gameLevel);
+    void saveGame(GameLevel gameLevel) throws IOException;
 
     /**
      * Returns the list of game saves for the player. Note that player name has
      * to be set beforehand.
      *
      * @return The list of game saves for the player.
+     * @throws java.io.IOException Throw this if could not load game saves.
      */
-    List<GameSave> fetchGameSaves();
+    List<GameSave> fetchGameSaves() throws IOException;
 
     /**
      * Returns the list of players for the user. Note that username has to be
@@ -72,8 +66,10 @@ public interface DataService {
      * Set the currently loaded game level.
      *
      * @param levelName The name of the GameLevel.
+     * @throws java.io.IOException Throw this if could not swap to a level with
+     * this name.
      */
-    void swapLevel(String levelName);
+    void swapLevel(String levelName) throws IOException;
 
     /**
      * Sets the default directory for game levels.
@@ -119,8 +115,11 @@ public interface DataService {
      * Sets the current game level. NB! levelsDir has to be set beforehand!
      *
      * @param levelName The name of the level to be set.
+     * @throws java.io.IOException If level could not be set, throw this. This
+     * may happen for example because of a misspelled name or the level file
+     * simply not existing.
      */
-    void setCurrentLevel(String levelName);
+    void setCurrentLevel(String levelName) throws IOException;
 
     /**
      * Sets the current game level directly.

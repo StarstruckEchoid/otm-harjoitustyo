@@ -12,6 +12,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static org.hamcrest.CoreMatchers.is;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -200,16 +202,20 @@ public class TextFileLevelDaoTest {
     public void testSaveLevel(GameLevel g1) {
         try {
             tfld.saveLevel(g1);
-        } catch (Exception e) {
+        } catch (IOException e) {
             fail(e.getMessage());
         }
     }
 
     public void testSaveLoadLevel(GameLevel g1) {
-        testSaveLevel(g1);
-        GameLevel g2 = tfld.loadLevel(g1.getLevelName());
-        assertTrue(g2 != null);
-        testLevelsEqual(g2, g1);
+        try {
+            testSaveLevel(g1);
+            GameLevel g2 = tfld.loadLevel(g1.getLevelName());
+            assertTrue(g2 != null);
+            testLevelsEqual(g2, g1);
+        } catch (IOException ex) {
+            fail(ex.getMessage());
+        }
 
     }
 

@@ -22,7 +22,7 @@ import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.PlayerCharacte
  *
  * @author Juho Gröhn
  */
-public interface GameLevel extends Serializable {
+public interface GameLevel {
 
     /**
      * Returns the name of this level. NB! not necessarily the same as
@@ -91,12 +91,6 @@ public interface GameLevel extends Serializable {
      * possible.
      */
     boolean isInaccessible(Coords coords);
-
-    @Override
-    String toString();
-
-    @Override
-    public boolean equals(Object obj);
 
     /**
      *

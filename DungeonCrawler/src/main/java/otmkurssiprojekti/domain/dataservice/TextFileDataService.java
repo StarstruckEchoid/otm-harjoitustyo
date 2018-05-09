@@ -64,7 +64,7 @@ public class TextFileDataService implements DataService {
     }
 
     @Override
-    public void setCurrentLevel(String levelName) {
+    public void setCurrentLevel(String levelName) throws IOException {
         this.currentLevel = this.makeLevelDao().loadLevel(levelName);
     }
 
@@ -74,7 +74,7 @@ public class TextFileDataService implements DataService {
     }
 
     @Override
-    public void swapLevel(String levelName) {
+    public void swapLevel(String levelName) throws IOException {
         GameLevel newLevel = this.makeLevelDao().loadLevel(levelName);
         PlayerCharacter currentPlayer;
         if (this.currentLevel != null) {
@@ -87,7 +87,7 @@ public class TextFileDataService implements DataService {
         this.currentLevel = newLevel;
     }
 
-    protected GameLevel fetchGameLevel(String levelName) {
+    protected GameLevel fetchGameLevel(String levelName) throws IOException {
         return this.makeLevelDao().loadLevel(levelName);
     }
 
@@ -97,26 +97,21 @@ public class TextFileDataService implements DataService {
     }
 
     @Override
-    public List<GameSave> fetchGameSaves() {
+    public List<GameSave> fetchGameSaves() throws IOException {
         return this.makeSaveDao().listGameSaves();
     }
 
-    @Override
-    public GameSave fetchGameSave(String saveName) {
-        return this.makeSaveDao().loadSave(saveName);
-    }
-
-    protected void saveGame(GameSave gameSave) {
+    protected void saveGame(GameSave gameSave) throws IOException {
         this.makeSaveDao().saveGame(gameSave);
     }
 
     @Override
-    public void saveGame(GameLevel gameLevel) {
+    public void saveGame(GameLevel gameLevel) throws IOException {
         GameSave gameSave = new GameSave(new Date(System.currentTimeMillis()), gameLevel);
         saveGame(gameSave);
     }
 
-    public void saveGame() {
+    private void saveGame() throws IOException {
         saveGame(currentLevel);
     }
 
@@ -160,12 +155,6 @@ public class TextFileDataService implements DataService {
 
     private GameSaveDao makeSaveDao() {
         return new TextFileGameSaveDao(playerDir);
-    }
-
-    private static void checkForNull(Object arg) throws IOException {
-        if (arg == null) {
-            throw new IOException();
-        }
     }
 
 }

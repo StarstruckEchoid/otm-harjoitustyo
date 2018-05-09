@@ -15,7 +15,7 @@ import otmkurssiprojekti.domain.level.GameLevel;
  */
 public interface GameLevelDao {
 
-    public List<GameLevel> listGameLevels();
+    public List<GameLevel> listGameLevels() throws IOException;
 
     /**
      * Saves a GameLevel by its default name.

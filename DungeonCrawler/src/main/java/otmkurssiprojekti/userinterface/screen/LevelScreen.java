@@ -5,6 +5,9 @@
  */
 package otmkurssiprojekti.userinterface.screen;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.input.KeyEvent;
@@ -82,14 +85,17 @@ public class LevelScreen extends SwitchingScreen {
         switch (e.getCode()) {
             case ENTER:
                 gameLevel.playerInteract().ifPresent(addr -> {
-                    main.getDataService().swapLevel(addr);
-//                    main.getDataService().saveGame(gameLevel);
-                    switchTo(new LevelScreen(main));
+                    try {
+                        main.getDataService().swapLevel(addr);
+                        switchTo(new LevelScreen(main));
+                    } catch (IOException ex) {
+                        switchTo(new ErrorScreen(main, ex));
+                    }
                 });
                 break;
             default:
                 break;
-        }
+        };
     }
 
     private void goToPauseMenu(KeyEvent e) {

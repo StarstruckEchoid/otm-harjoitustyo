@@ -5,6 +5,7 @@
  */
 package otmkurssiprojekti.userinterface.screen;
 
+import java.io.IOException;
 import java.util.List;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -39,7 +40,13 @@ public abstract class VerticalMenuScreen extends SwitchingScreen {
                 switchTo(getReturnScreen());
                 break;
             case ENTER:
+        {
+            try {
                 doEnterAction(pointer);
+            } catch (IOException ex) {
+                switchTo(new ErrorScreen(main, ex));
+            }
+        }
                 break;
             default:
                 break;
@@ -101,7 +108,7 @@ public abstract class VerticalMenuScreen extends SwitchingScreen {
     }
 
     //Abstract methods.
-    protected abstract void doEnterAction(int index);
+    protected abstract void doEnterAction(int index) throws IOException;
 
     protected abstract String getTitle();
 

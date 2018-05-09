@@ -5,6 +5,7 @@
  */
 package otmkurssiprojekti.userinterface.screen.daousers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import otmkurssiprojekti.userinterface.DungeonCrawler;
@@ -23,13 +24,13 @@ public class SaveGameScreen extends VerticalMenuScreen {
 
     private final List<GameSave> saves;
 
-    public SaveGameScreen(DungeonCrawler main) {
+    public SaveGameScreen(DungeonCrawler main) throws IOException {
         super(main);
         saves = main.getDataService().fetchGameSaves();
     }
 
     @Override
-    protected void doEnterAction(int index) {
+    protected void doEnterAction(int index) throws IOException {
         if (index == 0) {
             GameLevel gameLevel = main.getDataService().fetchGameLevel();
             main.getDataService().saveGame(gameLevel);
