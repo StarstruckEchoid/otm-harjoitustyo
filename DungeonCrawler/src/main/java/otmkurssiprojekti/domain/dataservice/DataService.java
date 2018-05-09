@@ -5,6 +5,7 @@
  */
 package otmkurssiprojekti.domain.dataservice;
 
+import java.io.IOException;
 import java.util.List;
 import otmkurssiprojekti.dataaccessobject.dataobject.GameSave;
 import otmkurssiprojekti.domain.level.GameLevel;
@@ -19,7 +20,8 @@ import otmkurssiprojekti.domain.level.GameLevel;
 public interface DataService {
 
     /**
-     * Fetches the current gameLevel. Note that current level has to be set beforehand.
+     * Fetches the current gameLevel. Note that current level has to be set
+     * beforehand.
      *
      * @return Returns the current GameLevel stored in DataService.
      */
@@ -77,24 +79,30 @@ public interface DataService {
      * Sets the default directory for game levels.
      *
      * @param levelsDir The default directory from where levels are fetched.
+     * @throws java.io.IOException If levelsDir could not be set, for example
+     * because root directory is null, throw this. Very unlikely to happen.
      */
-    void setLevelsDir(String levelsDir);
+    void setLevelsDir(String levelsDir) throws IOException;
 
     /**
      * Sets the name of the player. Note that user has to be set before calling
      * this method.
      *
      * @param playerName The name of the player currently being played as.
+     * @throws java.io.IOException If a player by this name could not be
+     * created, for example because user hadn't been set beforehand, throw this.
      */
-    void setPlayer(String playerName);
+    void setPlayer(String playerName) throws IOException;
 
     /**
      * Sets the name of the user currently playing. Note that UsersDir has to be
      * set before calling this method.
      *
      * @param userName The name of the user currently playing.
+     * @throws java.io.IOException Throw this if user could not be set, for
+     * example because usersDir has not been set.
      */
-    void setUser(String userName);
+    void setUser(String userName) throws IOException;
 
     /**
      * Sets the default directory from where users are found. This should be
@@ -102,8 +110,10 @@ public interface DataService {
      *
      * @param usersDir The string representation of the path in which users are
      * stored.
+     * @throws java.io.IOException Throws this if usersDir could not be set, for
+     * example when root directory is null. Very unlikely to happen.
      */
-    void setUsersDir(String usersDir);
+    void setUsersDir(String usersDir) throws IOException;
 
     /**
      * Sets the current game level. NB! levelsDir has to be set beforehand!

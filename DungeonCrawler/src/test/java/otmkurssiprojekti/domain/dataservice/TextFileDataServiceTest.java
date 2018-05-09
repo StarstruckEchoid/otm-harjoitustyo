@@ -137,9 +137,13 @@ public class TextFileDataServiceTest {
      */
     @Test
     public void testSetLevelsDir() {
-        dataService.setLevelsDir(levelsDirName);
+        try {
+            dataService.setLevelsDir(levelsDirName);
 
-        assertThat(dataService.levelsDir.toString(), is(levelsDirName));
+            assertThat(dataService.levelsDir.toString(), is(levelsDirName));
+        } catch (IOException | NullPointerException ex) {
+            fail(ex.getMessage());
+        }
     }
 
     @Test
@@ -147,7 +151,8 @@ public class TextFileDataServiceTest {
         try {
             dataService.setLevelsDir(null);
             fail();
-        } catch (NullPointerException e) {
+        } catch (IOException | NullPointerException ex) {
+            //Failed as expected.
         }
     }
 
@@ -156,9 +161,13 @@ public class TextFileDataServiceTest {
      */
     @Test
     public void testSetUsersDir() {
-        dataService.setUsersDir(usersDirName);
+        try {
+            dataService.setUsersDir(usersDirName);
 
-        assertThat(dataService.usersDir.toString(), is(usersDirName));
+            assertThat(dataService.usersDir.toString(), is(usersDirName));
+        } catch (IOException | NullPointerException ex) {
+            fail(ex.getMessage());
+        }
     }
 
     @Test
@@ -166,8 +175,10 @@ public class TextFileDataServiceTest {
         try {
             dataService.setUsersDir(null);
             fail();
-        } catch (NullPointerException e) {
+        } catch (IOException | NullPointerException ex) {
+            //Failed as expected.
         }
+
     }
 
     /**
@@ -175,10 +186,14 @@ public class TextFileDataServiceTest {
      */
     @Test
     public void testSetUser() {
-        testSetUsersDir();
-        dataService.setUser(user);
+        try {
+            testSetUsersDir();
+            dataService.setUser(user);
 
-        assertThat(dataService.userDir.toString(), is(usersDirName + File.separator + user));
+            assertThat(dataService.userDir.toString(), is(usersDirName + File.separator + user));
+        } catch (IOException | NullPointerException ex) {
+            fail(ex.getMessage());
+        }
     }
 
     @Test
@@ -186,7 +201,8 @@ public class TextFileDataServiceTest {
         try {
             dataService.setUser(user);
             fail();
-        } catch (Exception e) {
+        } catch (IOException | NullPointerException e) {
+            //Failed as expected.
         }
     }
 
@@ -195,10 +211,25 @@ public class TextFileDataServiceTest {
      */
     @Test
     public void testSetPlayer() {
-        testSetUser();
-        dataService.setPlayer(player);
+        try {
+            testSetUser();
+            dataService.setPlayer(player);
 
-        assertThat(dataService.playerDir.toString(), is(usersDirName + File.separator + user + File.separator + player));
+            assertThat(dataService.playerDir.toString(), is(usersDirName + File.separator + user + File.separator + player));
+        } catch (IOException | NullPointerException ex) {
+            fail(ex.getMessage());
+        }
+    }
+
+    @Test
+    public void testSetPlayer_invalid() {
+        try {
+            dataService.setPlayer(player);
+
+            fail();
+        } catch (IOException | NullPointerException ex) {
+            //Failed as expected.
+        }
     }
 
     /**

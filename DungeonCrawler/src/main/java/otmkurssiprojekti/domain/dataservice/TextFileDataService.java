@@ -11,8 +11,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import otmkurssiprojekti.dataaccessobject.BasicFileDao;
 import otmkurssiprojekti.dataaccessobject.GameLevelDao;
 import otmkurssiprojekti.dataaccessobject.GameSaveDao;
@@ -38,28 +36,28 @@ public class TextFileDataService implements DataService {
     }
 
     @Override
-    public void setLevelsDir(String levelsDir) {
+    public void setLevelsDir(String levelsDir) throws IOException, NullPointerException {
         Path path = Paths.get(levelsDir);
         createDirectoryIfAbsent(path);
         this.levelsDir = path;
     }
 
     @Override
-    public void setUsersDir(String usersDir) {
+    public void setUsersDir(String usersDir) throws IOException, NullPointerException {
         Path path = Paths.get(usersDir);
         createDirectoryIfAbsent(path);
         this.usersDir = path;
     }
 
     @Override
-    public void setUser(String userName) {
+    public void setUser(String userName) throws IOException, NullPointerException {
         Path path = Paths.get(this.usersDir.toString(), userName);
         createDirectoryIfAbsent(path);
         this.userDir = path;
     }
 
     @Override
-    public void setPlayer(String playerName) {
+    public void setPlayer(String playerName) throws IOException, NullPointerException {
         Path path = Paths.get(this.userDir.toString(), playerName);
         createDirectoryIfAbsent(path);
         this.playerDir = path;
@@ -132,13 +130,10 @@ public class TextFileDataService implements DataService {
         return new BasicFileDao(usersDir).loadFiles();
     }
 
-    private void createDirectoryIfAbsent(Path path) {
+    private void createDirectoryIfAbsent(Path path) throws IOException {
         if (!Files.exists(path)) {
-            try {
-                Files.createDirectory(path);
-            } catch (IOException ex) {
-                Logger.getLogger(TextFileDataService.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            Files.createDirectory(path);
+
         }
     }
 
@@ -165,6 +160,12 @@ public class TextFileDataService implements DataService {
 
     private GameSaveDao makeSaveDao() {
         return new TextFileGameSaveDao(playerDir);
+    }
+
+    private static void checkForNull(Object arg) throws IOException {
+        if (arg == null) {
+            throw new IOException();
+        }
     }
 
 }

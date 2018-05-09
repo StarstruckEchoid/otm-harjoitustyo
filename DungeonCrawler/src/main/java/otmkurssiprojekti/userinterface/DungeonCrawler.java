@@ -8,8 +8,6 @@ package otmkurssiprojekti.userinterface;
 import otmkurssiprojekti.userinterface.screen.GameScreen;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -71,17 +69,10 @@ public class DungeonCrawler extends Application {
     }
 
     @Override
-    public void stop() {
+    public void stop() throws Exception {
         TIMER.cancel();
-        try {
-            super.stop();
-            System.exit(0);
-        } catch (Exception ex) {
-            Logger.getLogger(DungeonCrawler.class.getName()).log(Level.SEVERE, null, ex);
-            System.exit(1);
-        } finally {
-            System.exit(2);
-        }
+        super.stop();
+
     }
     //Getters and setters.
 

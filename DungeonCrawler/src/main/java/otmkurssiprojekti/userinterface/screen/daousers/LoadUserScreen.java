@@ -5,9 +5,11 @@
  */
 package otmkurssiprojekti.userinterface.screen.daousers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import otmkurssiprojekti.userinterface.DungeonCrawler;
+import otmkurssiprojekti.userinterface.screen.ErrorScreen;
 import otmkurssiprojekti.userinterface.screen.GameScreen;
 import otmkurssiprojekti.userinterface.screen.MainMenuScreen;
 import otmkurssiprojekti.userinterface.screen.VerticalMenuScreen;
@@ -31,9 +33,13 @@ public class LoadUserScreen extends VerticalMenuScreen {
         if (index == 0) {
             switchTo(new NewUserScreen(main));
         } else {
-            String userName = userNames.get(index - 1);
-            main.getDataService().setUser(userName);
-            switchTo(new LoadPlayerScreen(main));
+            try {
+                String userName = userNames.get(index - 1);
+                main.getDataService().setUser(userName);
+                switchTo(new LoadPlayerScreen(main));
+            } catch (IOException ex) {
+                switchTo(new ErrorScreen(main, ex));
+            }
         }
     }
 

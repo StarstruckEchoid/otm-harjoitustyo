@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import otmkurssiprojekti.domain.level.GameLevel;
 import otmkurssiprojekti.utilityclasses.Serializer;
 
@@ -25,26 +23,24 @@ public class ByteFileLevelDao extends AbstractLevelDao implements GameLevelDao {
     }
 
     @Override
-    public GameLevel loadLevel(String levelName) {
+    public GameLevel loadLevel(String levelName) throws IOException {
+        byte[] byteData = Files.readAllBytes(Paths.get(this.directory.toString(), levelName));
+        GameLevel glvl;
         try {
-            byte[] byteData = Files.readAllBytes(Paths.get(this.directory.toString(), levelName));
-            GameLevel glvl = (GameLevel) Serializer.deserialize(byteData);
-            return glvl;
-        } catch (IOException | ClassNotFoundException ex) {
-            Logger.getLogger(ByteFileLevelDao.class.getName()).log(Level.SEVERE, null, ex);
+            glvl = (GameLevel) Serializer.deserialize(byteData);
+        } catch (ClassNotFoundException ex) {
+            throw new IOException();
         }
-        return null;
+        return glvl;
+
     }
 
     @Override
-    public void saveLevel(GameLevel level, String name) {
-        try {
-            Path levelPath = Paths.get(directory.toString(), name);
-            byte[] bytedata = Serializer.serialize(level);
-            Files.write(levelPath, bytedata);
-        } catch (IOException ex) {
-            Logger.getLogger(ByteFileLevelDao.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public void saveLevel(GameLevel level, String name) throws IOException {
+        Path levelPath = Paths.get(directory.toString(), name);
+        byte[] bytedata = Serializer.serialize(level);
+        Files.write(levelPath, bytedata);
+
     }
 
 }

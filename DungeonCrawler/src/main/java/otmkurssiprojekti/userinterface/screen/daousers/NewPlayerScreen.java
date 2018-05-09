@@ -5,6 +5,8 @@
  */
 package otmkurssiprojekti.userinterface.screen.daousers;
 
+import otmkurssiprojekti.userinterface.screen.ErrorScreen;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.input.KeyCode;
@@ -23,17 +25,17 @@ import otmkurssiprojekti.userinterface.screen.VerticalMenuScreen;
  * @author Juho Gröhn
  */
 public class NewPlayerScreen extends VerticalMenuScreen {
-
+    
     StringBuilder playerName;
     PlayerCharacterArchetype[] pcaArr = PlayerCharacterArchetype.values();
     PlayerCharacterArchetype pca = pcaArr[0];
     int pcaArrPointer = 0;
-
+    
     public NewPlayerScreen(DungeonCrawler main) {
         super(main);
         playerName = new StringBuilder();
     }
-
+    
     @Override
     public void handleKeyEvent(KeyEvent e) {
         super.handleKeyEvent(e);
@@ -48,7 +50,7 @@ public class NewPlayerScreen extends VerticalMenuScreen {
                 break;
         }
     }
-
+    
     private void handleNameEdit(KeyEvent e) {
         KeyCode kc = e.getCode();
         if (kc.equals(KeyCode.BACK_SPACE)) {
@@ -57,7 +59,7 @@ public class NewPlayerScreen extends VerticalMenuScreen {
             playerName.append(kc.toString());
         }
     }
-
+    
     private void handleArchetypeEdit(KeyEvent e) {
         switch (e.getCode()) {
             case LEFT:
@@ -75,15 +77,15 @@ public class NewPlayerScreen extends VerticalMenuScreen {
         }
         pca = pcaArr[pcaArrPointer];
     }
-
-    private void initialiseNewGame() {
+    
+    private void initialiseNewGame() throws IOException {
         GameLevel startingLevel = main.getDataService().fetchGameLevel();
         main.getDataService().setPlayer(playerName.toString());
         initialisePlayer(startingLevel);
         main.getDataService().saveGame(startingLevel);
         switchTo(new LevelScreen(main));
     }
-
+    
     private void initialisePlayer(GameLevel gameLevel) {
         BasicPlayerCharacter playerCharacter = new BasicPlayerCharacter(
                 pcaArr[pcaArrPointer],
@@ -92,12 +94,16 @@ public class NewPlayerScreen extends VerticalMenuScreen {
         );
         gameLevel.setPlayer(playerCharacter);
     }
-
+    
     @Override
     protected void doEnterAction(int index) {
-        initialiseNewGame();
+        try {
+            initialiseNewGame();
+        } catch (IOException ex) {
+            switchTo(new ErrorScreen(main, ex));
+        }
     }
-
+    
     @Override
     protected List<Object> getOptsList() {
         List<Object> opts = new ArrayList<>();
@@ -105,15 +111,15 @@ public class NewPlayerScreen extends VerticalMenuScreen {
         opts.add(pca);
         return opts;
     }
-
+    
     @Override
     protected String getTitle() {
         return "Create your character";
     }
-
+    
     @Override
     protected GameScreen getReturnScreen() {
         return new LoadPlayerScreen(main);
     }
-
+    
 }
