@@ -27,22 +27,23 @@ public class HostileNonPlayerCharacter extends BasicNonPlayerCharacter {
 
     @Override
     public void act(GameLevel gameLevel) {
-        huntPlayer(gameLevel);
         PlayerCharacter pc = gameLevel.getPlayer();
         if (this.getCoords().manhattanDistance(pc.getCoords()) < 2) {
             this.hurt(pc);
+        } else {
+            huntPlayer(gameLevel);
         }
     }
 
     private void huntPlayer(GameLevel gameLevel) {
-        final int maxDetectionRange = 5;
+        final int maxDetectionRange = 6;
         Coords npcCoords = this.coords;
         Coords pcCoords = gameLevel.getPlayer().getCoords();
         //If distance to player is more than 10, don't bother.
         if (npcCoords.manhattanDistance(pcCoords) >= maxDetectionRange) {
             return;
         }
-        if (plan.size() < 5) {
+        if (plan.size() < 8) {
             plan = AI.greedyRoute(npcCoords, pcCoords, gameLevel);
         }
         if (!plan.empty()) {
