@@ -12,7 +12,6 @@ import otmkurssiprojekti.domain.level.GameLevel;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.PlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
 import otmkurssiprojekti.domain.gameobject.location.FlatCoords;
-import otmkurssiprojekti.utilityclasses.FormatConverter;
 
 public class TextRenderer implements Renderer {
 
@@ -21,7 +20,7 @@ public class TextRenderer implements Renderer {
     @Override
     public Node getRender(GameLevel gameLevel) {
         Text levelContents = new Text(
-                FormatConverter.projectionToDenseString(gameLevelToMatrix(gameLevel))
+                projectionToDenseString(gameLevelToMatrix(gameLevel))
         );
         levelContents.setFont(Font.font("MONOSPACED"));
         return levelContents;
@@ -43,6 +42,16 @@ public class TextRenderer implements Renderer {
         matrix[pcCoords.getY()][pcCoords.getX()] = pc.getId();
 
         return matrix;
+    }
+
+    private static String projectionToDenseString(char[][] matrix) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = matrix.length; i > 0; i--) {
+            char[] row = matrix[i - 1];
+            sb.append(String.valueOf(row));
+            sb.append('\n');
+        }
+        return sb.toString();
     }
 
 }
