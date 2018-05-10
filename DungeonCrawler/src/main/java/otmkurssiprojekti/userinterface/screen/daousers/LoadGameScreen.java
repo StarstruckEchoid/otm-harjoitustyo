@@ -48,7 +48,7 @@ public class LoadGameScreen extends VerticalMenuScreen {
     }
 
     @Override
-    protected GameScreen getReturnScreen() {
+    protected GameScreen getReturnScreen() throws IOException {
         return new LoadPlayerScreen(main);
     }
 

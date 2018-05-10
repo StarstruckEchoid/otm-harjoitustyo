@@ -83,6 +83,7 @@ public class NewPlayerScreen extends VerticalMenuScreen {
     }
 
     private void initialiseNewGame() throws IOException {
+        main.getDataService().setCurrentLevel(DungeonCrawler.FIRST_LEVEL);
         GameLevel startingLevel = main.getDataService().fetchGameLevel();
         main.getDataService().setPlayer(playerName.toString());
         initialisePlayer(startingLevel);
@@ -113,7 +114,7 @@ public class NewPlayerScreen extends VerticalMenuScreen {
     }
 
     @Override
-    protected GameScreen getReturnScreen() {
+    protected GameScreen getReturnScreen() throws IOException {
         return new LoadPlayerScreen(main);
     }
 

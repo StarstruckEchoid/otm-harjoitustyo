@@ -20,9 +20,8 @@ public class LoadPlayerScreen extends VerticalMenuScreen {
 
     private final List<String> players;
 
-    public LoadPlayerScreen(DungeonCrawler main) {
+    public LoadPlayerScreen(DungeonCrawler main) throws IOException {
         super(main);
-
         this.players = main.getDataService().fetchPlayers();
     }
 
