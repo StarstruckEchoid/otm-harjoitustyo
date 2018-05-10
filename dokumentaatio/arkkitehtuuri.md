@@ -1,4 +1,4 @@
-# Arkkitehtuurikuvaus
+﻿# Arkkitehtuurikuvaus
 ## Arkkitehtuuri
 
 Sovelluksessa on neljä pakkausta:
@@ -10,7 +10,7 @@ Sovelluksessa on neljä pakkausta:
 Userinterface-pakkaus vuorovaikuttaa domainin kanssa. Domain ja dataaccessobject vuorovaikuttavat domainin pakkauksen dataservice kautta. Utilityclasses sisältää mihin vain pakkaukseen liittyviä apuluokkia, ja voi periaatteessa vuorovaikuttaa minkä tahansa pakkauksen kanssa.
 
 Pakkauskaavio:
-![Pakkauskaavio](/dokumentaatio/pakkauskaavio.png)
+![Pakkauskaavio](/dokumentaatio/kuvat/pakkauskaavio.png)
 
 ## Käyttöliittymä
 
@@ -47,4 +47,4 @@ Sovelluslogiikkaan kuuluu myös rajapinta DataService, joka hoitaa levyoperaatio
 ## Päätoiminnallisuudet
 
 Sekvenssikaavio: pelaaja painaa nappia ja liikkuu ylös.
-![Sekvenssikaavio](/dokumentaatio/Move_Player_Up.png)
+![Sekvenssikaavio](/dokumentaatio/kuvat/Move_Player_Up.png)
