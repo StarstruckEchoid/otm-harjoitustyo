@@ -67,13 +67,18 @@ Kirjoittamisen hetkellä valikossa osoittimen voi viedä aikaisempien pelitallen
 
 Latausvalikossa voi ladata aikaisemmin tallennetun pelitilanteen.
 ![Latausvalikko](/dokumentaatio/kuvat/LoadGameScreen.PNG)
-Valikkossa on aina vähintään yksi tallennus, sillä uuden pelin luomisen yhteydessä peli tallennetaan kerran.  
+Valikossa on aina vähintään yksi tallennus, sillä uuden pelin luomisen yhteydessä peli tallennetaan kerran.  
 Pelin lataaminen lataa tallennuksen pelitilanteen ja vie sitten takaisin [pelinäkymään](#pelinäkymä).
 
-### Peli Ohi -näkymä
+### Peli ohi -näkymä
 
-TODO
+Peli voi päättyä, ja tällä hetkellä ainoa tilanne, jossa näin käy, on kun pelaaja kuolee, eli hänen elämäpisteet laskevat nollaan.
+![Peli ohi](/dokumentaatio/kuvat/GameOverScreen.PNG)
+Peli ohi -näkymästä minkä tahansa napin painaminen johtaa pelaajan siirtymiseen takaisin [päävalikkoon](#päävalikko).
 
 ### Virhenäkymä
 
-TODO
+Silloin tällöin pelissä voi tapahtua virheitä, joista pelin logiikka ei selviä itse, vaan suoritus täytyy keskeyttää. Tällöin käyttäjä ohjataan virhenäkymään.
+![Virhenäkymä](/dokumentaatio/kuvat/ErrorScreen.PNG)
+Virhenäkymä näyttää pelaajalle lyhyen virheilmoituksen. Minkä tahansa napin painaminen vie pelaajan takaisin [päävalikkoon](#päävalikko).
+Tyypillisin syy joutua virhenäkymään on IO-poikkeus, joka voi aiheutua esimerkiksi siitä, että levels-kansiossa ei ole haettua tasotiedostoa tai siitä, että käyttäjälle tai pelaajalle on yritetty antaa kielletty nimi, kuten CON, NUL, tai AUX.
