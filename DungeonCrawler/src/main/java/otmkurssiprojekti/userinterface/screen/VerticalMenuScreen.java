@@ -20,37 +20,45 @@ import otmkurssiprojekti.userinterface.DungeonCrawler;
  * @author Juho Gröhn
  */
 public abstract class VerticalMenuScreen extends SwitchingScreen {
-    
+
     protected int pointer = 0;
-    
+
     public VerticalMenuScreen(DungeonCrawler main) {
         super(main);
     }
-    
+
     @Override
     public void handleKeyEvent(KeyEvent e) {
+        movePointer(e);
         try {
-            switch (e.getCode()) {
-                case UP:
-                    movePointer(-1);
-                    break;
-                case DOWN:
-                    movePointer(+1);
-                    break;
-                case ESCAPE:
-                    switchTo(getReturnScreen());
-                    break;
-                case ENTER:
-                    doEnterAction(pointer);
-                    break;
-                default:
-                    break;
-            }
+            backOrForwards(e);
         } catch (IOException ioe) {
             switchTo(new ErrorScreen(main, ioe));
         }
     }
-    
+
+    private void movePointer(KeyEvent e) {
+        switch (e.getCode()) {
+            case UP:
+                movePointer(-1);
+                break;
+            case DOWN:
+                movePointer(+1);
+                break;
+        }
+    }
+
+    private void backOrForwards(KeyEvent e) throws IOException {
+        switch (e.getCode()) {
+            case ESCAPE:
+                switchTo(getReturnScreen());
+                break;
+            case ENTER:
+                doEnterAction(pointer);
+                break;
+        }
+    }
+
     @Override
     public Parent getVisualisation() {
         BorderPane visual = new BorderPane();
@@ -66,10 +74,10 @@ public abstract class VerticalMenuScreen extends SwitchingScreen {
         //LEGEND
         Text legend = getAsText(getLegend());
         visual.setBottom(legend);
-        
+
         return visual;
     }
-    
+
     @Override
     public void doGameTick() {
         //Nothing happens while in a menu screen.
@@ -83,14 +91,14 @@ public abstract class VerticalMenuScreen extends SwitchingScreen {
             pointer++;
         }
     }
-    
+
     private Text getAsText(String string) {
         Text text = new Text(string);
         text.setFont(Font.font("MONOSPACED"));
         BorderPane.setAlignment(text, Pos.CENTER);
         return text;
     }
-    
+
     private String optsToString(List<Object> opts) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < opts.size(); i++) {
@@ -107,17 +115,17 @@ public abstract class VerticalMenuScreen extends SwitchingScreen {
 
     //Abstract methods.
     protected abstract void doEnterAction(int index) throws IOException;
-    
+
     protected abstract String getTitle();
-    
+
     protected abstract List<Object> getOptsList();
-    
+
     protected String getLegend() {
         return "UP: up\t"
                 + "DOWN: down\t"
                 + "ESC: back\t"
                 + "ENTER: select";
     }
-    
+
     protected abstract GameScreen getReturnScreen() throws IOException;
 }
