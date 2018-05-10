@@ -49,8 +49,31 @@ ESCAPE-napilla pelaaja siirtyy [taukovalikkoon](#taukovalikko).
 
 ### Taukovalikko
 
+Taukovalikossa on neljä vaihtoehtoa: Continue, Save Game, Load Game, ja Quit Game.
+![Taukovalikko](/dokumentaatio/kuvat/PauseMenuScreen.PNG)
+Continue vie takaisin [pelinäkymään](#pelinäkymä), eikä tämä prosessi eroa mitenkään ESCAPE-näppäimen painamisesta.  
+Save Game vie [tallennusvalikkoon](#tallennusvalikko).  
+Load Game vie [latausvalikkoon](#latausvalikko).  
+Quit Game vie takaisin [päävalikkoon](#päävalikko).
+
+### Tallennusvalikko
+
+Tallennusvalikossa voi nimensä mukaisesti tallentaa pelitilanteen.
+![Tallennusvalikko](/dokumentaatio/kuvat/SaveGameScreen.PNG)
+Vaihtoehdon '\<new save\>' valitseminen tallentaa pelitilanteen ja vie sitten takaisin [pelinäkymään](#pelinäkymä).
+Kirjoittamisen hetkellä valikossa osoittimen voi viedä aikaisempien pelitallennusten päälle, mutta niiden valinta ei tee mitään. Tulevaisuudessa tämän olisi tarkoitus ylikirjoittaa kyseinen tallennus.
+
+### Latausvalikko
+
+Latausvalikossa voi ladata aikaisemmin tallennetun pelitilanteen.
+![Latausvalikko](/dokumentaatio/kuvat/LoadGameScreen.PNG)
+Valikkossa on aina vähintään yksi tallennus, sillä uuden pelin luomisen yhteydessä peli tallennetaan kerran.  
+Pelin lataaminen lataa tallennuksen pelitilanteen ja vie sitten takaisin [pelinäkymään](#pelinäkymä).
+
+### Peli Ohi -näkymä
+
 TODO
 
-### Pelin lataaminen
+### Virhenäkymä
 
 TODO
