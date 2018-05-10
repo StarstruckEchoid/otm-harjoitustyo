@@ -15,6 +15,7 @@ import otmkurssiprojekti.domain.level.GameLevel;
 import otmkurssiprojekti.domain.gameobject.archetypes.PlayerCharacterArchetype;
 import otmkurssiprojekti.domain.gameobject.location.Direction;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.BasicPlayerCharacter;
+import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.PlayerCharacter;
 import otmkurssiprojekti.userinterface.screen.GameScreen;
 import otmkurssiprojekti.userinterface.screen.LevelScreen;
 import otmkurssiprojekti.userinterface.screen.VerticalMenuScreen;
@@ -94,7 +95,7 @@ public class NewPlayerScreen extends VerticalMenuScreen {
     }
 
     private void initialisePlayer(GameLevel gameLevel) {
-        BasicPlayerCharacter playerCharacter = new BasicPlayerCharacter(
+        PlayerCharacter playerCharacter = new BasicPlayerCharacter(
                 pcaArr[pcaArrPointer],
                 gameLevel.getPlayer().getCoords(),
                 Direction.DOWN

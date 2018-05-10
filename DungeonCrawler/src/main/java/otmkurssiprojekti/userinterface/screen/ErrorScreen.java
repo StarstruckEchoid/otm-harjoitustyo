@@ -8,6 +8,7 @@ package otmkurssiprojekti.userinterface.screen;
 import javafx.scene.Parent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import otmkurssiprojekti.userinterface.DungeonCrawler;
 import otmkurssiprojekti.userinterface.screen.GameScreen;
@@ -34,13 +35,13 @@ public class ErrorScreen extends SwitchingScreen implements GameScreen {
 
     @Override
     public Parent getVisualisation() {
-        return new BorderPane(
-                new Text(
-                        "The game encountered an unexpected exception and was forced to close:\n"
-                        + ex.getMessage() + "\n"
-                        + "Press any key to continue."
-                )
+        Text errorMessage = new Text(
+                "The game encountered an unexpected exception and was forced to close:\n"
+                + ex.toString() + "\n"
+                + "Press any key to continue."
         );
+        errorMessage.setFont(Font.font("MONOSPACED"));
+        return new BorderPane(errorMessage);
     }
 
     @Override
