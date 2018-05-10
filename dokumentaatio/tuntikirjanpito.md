@@ -29,6 +29,8 @@
 | 4.5.  | 9        | Aloitettiin tasojen välillä siirtymisen toteuttaminen. Tasosiirtymät eivät toimi, joten tehdään valtavasti testejä vian paikantamiseksi. |
 | 6.5.  | 3        | Saatiin tasosiirtymät toimimaan. |
 | 7.5.  | 3        | Höylättiin käyttöliittymän ilmeiset bugit pois. |
+| 9.5.  | 4        | Viikatemies niittää turhaa koodia. Eloon jäänyt koodi sai lisää testejä. Rikottiin 200 testin raja. |
+| 10.5. | 6        | Jynssättiin dokumentaatiota edustuskuntoon. Pientä koodin siloittelua. Uusi julkaisu. |
 
 
-Työtunteja yhteensä: 136h
+Työtunteja yhteensä: 152h
