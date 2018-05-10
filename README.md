@@ -6,6 +6,7 @@ Dungeon Crawler (nimi saattaa vielä muuttua) on ylhäältäpäin kuvattu seikka
 * [Arkkitehtuuri](/dokumentaatio/arkkitehtuuri.md)
 * [Työaikakirjanpito](/dokumentaatio/tuntikirjanpito.md)
 * [Käyttöohjeet](/dokumentaatio/kaytto-ohjeet.md)
+* [Testausdokumentaatio](/dokumentaatio/testaus.md)
 
 ## Testauksesta
 Sovellusta voi testata terminaalista komennolla
