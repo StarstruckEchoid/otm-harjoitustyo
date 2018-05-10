@@ -79,7 +79,9 @@ public class NewPlayerScreen extends VerticalMenuScreen {
 
     @Override
     protected void doEnterAction(int index) throws IOException {
-        initialiseNewGame();
+        if (playerName.length() > 0) {
+            initialiseNewGame();
+        }
     }
 
     private void initialiseNewGame() throws IOException {

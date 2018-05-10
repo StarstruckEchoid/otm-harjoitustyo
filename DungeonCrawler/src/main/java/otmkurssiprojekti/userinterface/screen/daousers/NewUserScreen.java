@@ -46,6 +46,9 @@ public class NewUserScreen extends VerticalMenuScreen {
 
     @Override
     protected void doEnterAction(int index) throws IOException {
+        if (username.length() == 0) {
+            return;
+        }
         //Save user and continue to player selection.
         main.getDataService().setUser(username.toString());
         switchTo(new LoadPlayerScreen(main));
