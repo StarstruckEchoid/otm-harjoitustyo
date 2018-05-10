@@ -5,27 +5,26 @@
  */
 package otmkurssiprojekti.dataaccessobject;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
+import static java.nio.file.Files.createTempDirectory;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import static org.hamcrest.CoreMatchers.is;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
-import otmkurssiprojekti.domain.gameobject.archetypes.BlockArchetype;
-import otmkurssiprojekti.domain.level.BasicGameLevel;
-import otmkurssiprojekti.domain.level.GameLevel;
-import otmkurssiprojekti.domain.gameobject.archetypes.NonPlayerCharacterArchetype;
-import otmkurssiprojekti.domain.gameobject.archetypes.PlayerCharacterArchetype;
+import static otmkurssiprojekti.domain.gameobject.archetypes.BlockArchetype.GRASS;
+import static otmkurssiprojekti.domain.gameobject.archetypes.BlockArchetype.STONE_WALL;
+import static otmkurssiprojekti.domain.gameobject.archetypes.NonPlayerCharacterArchetype.DEER;
+import static otmkurssiprojekti.domain.gameobject.archetypes.NonPlayerCharacterArchetype.FLY;
+import static otmkurssiprojekti.domain.gameobject.archetypes.NonPlayerCharacterArchetype.FOLLOWER;
+import static otmkurssiprojekti.domain.gameobject.archetypes.NonPlayerCharacterArchetype.RAT;
+import static otmkurssiprojekti.domain.gameobject.archetypes.NonPlayerCharacterArchetype.VILLAGER;
+import static otmkurssiprojekti.domain.gameobject.archetypes.PlayerCharacterArchetype.THIEF;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.nonplayercharacter.HostileNonPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.BasicPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.Block;
@@ -35,8 +34,11 @@ import otmkurssiprojekti.domain.gameobject.gameinanimates.PointsBall;
 import otmkurssiprojekti.domain.gameobject.interfaces.GameObject;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.NonPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
-import otmkurssiprojekti.domain.gameobject.location.Direction;
-import otmkurssiprojekti.utilityclasses.TextFileGameLevels;
+import static otmkurssiprojekti.domain.gameobject.location.Direction.DOWN;
+import otmkurssiprojekti.domain.level.BasicGameLevel;
+import static otmkurssiprojekti.domain.level.BasicGameLevel.DIMENSIONS;
+import otmkurssiprojekti.domain.level.GameLevel;
+import static otmkurssiprojekti.utilityclasses.TextFileGameLevels.makeBlockList;
 
 /**
  *
@@ -60,7 +62,7 @@ public class TextFileLevelDaoTest {
 
     @Before
     public void setUp() throws IOException {
-        directory = Files.createTempDirectory("levelsTest");
+        directory = createTempDirectory("levelsTest");
         tfld = new TextFileLevelDao(directory);
     }
 
@@ -72,7 +74,7 @@ public class TextFileLevelDaoTest {
     public void testSLL0() {
         BasicGameLevel gl = new BasicGameLevel(
                 "testLevel",
-                new BasicPlayerCharacter(PlayerCharacterArchetype.THIEF, new Coords(0, 0, 0), Direction.DOWN),
+                new BasicPlayerCharacter(THIEF, new Coords(0, 0, 0), DOWN),
                 new ArrayList<>(),
                 new ArrayList<>(),
                 new ArrayList<>(),
@@ -85,11 +87,11 @@ public class TextFileLevelDaoTest {
     @Test
     public void testSLL1() {
         List<NonPlayerCharacter> npcs = new ArrayList<>();
-        npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.RAT, new Coords(), Direction.DOWN));
+        npcs.add(new HostileNonPlayerCharacter(RAT, new Coords(), DOWN));
 
         BasicGameLevel gl = new BasicGameLevel(
                 "testLevel",
-                new BasicPlayerCharacter(PlayerCharacterArchetype.THIEF, new Coords(0, 0, 0), Direction.DOWN),
+                new BasicPlayerCharacter(THIEF, new Coords(0, 0, 0), DOWN),
                 npcs,
                 new ArrayList<>(),
                 new ArrayList<>(),
@@ -102,9 +104,9 @@ public class TextFileLevelDaoTest {
     @Test
     public void testSLL2() {
         List<NonPlayerCharacter> npcs = new ArrayList<>();
-        npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.RAT, new Coords(2, 2, 0), Direction.DOWN));
+        npcs.add(new HostileNonPlayerCharacter(RAT, new Coords(2, 2, 0), DOWN));
 
-        List<Block> blocks = TextFileGameLevels.makeBlockList(
+        List<Block> blocks = makeBlockList(
                 "   0 \n"
                 + " ... \n"
                 + "  .  \n"
@@ -112,7 +114,7 @@ public class TextFileLevelDaoTest {
 
         BasicGameLevel gl = new BasicGameLevel(
                 "testLevel",
-                new BasicPlayerCharacter(PlayerCharacterArchetype.THIEF, new Coords(0, 0, 0), Direction.DOWN),
+                new BasicPlayerCharacter(THIEF, new Coords(0, 0, 0), DOWN),
                 npcs,
                 blocks,
                 new ArrayList<>(),
@@ -125,22 +127,22 @@ public class TextFileLevelDaoTest {
     //If this looks familiar, it's because it's the default starting level from the main class.
     public void testSLL3() {
         String levelName = "Test Level";
-        BasicPlayerCharacter player = new BasicPlayerCharacter(10, 1, 1, 1, 1, new Coords(3, 3, 0), Direction.DOWN);
+        BasicPlayerCharacter player = new BasicPlayerCharacter(10, 1, 1, 1, 1, new Coords(3, 3, 0), DOWN);
         List<NonPlayerCharacter> npcs = new ArrayList<>();
         //Add some npcs.
-        npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.VILLAGER, new Coords(7, 10, 0), Direction.DOWN));
-        npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.RAT, new Coords(8, 8, 0), Direction.DOWN));
-        npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.DEER, new Coords(4, 9, 0), Direction.DOWN));
-        npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.FLY, new Coords(1, 1, 0), Direction.DOWN));
+        npcs.add(new HostileNonPlayerCharacter(VILLAGER, new Coords(7, 10, 0), DOWN));
+        npcs.add(new HostileNonPlayerCharacter(RAT, new Coords(8, 8, 0), DOWN));
+        npcs.add(new HostileNonPlayerCharacter(DEER, new Coords(4, 9, 0), DOWN));
+        npcs.add(new HostileNonPlayerCharacter(FLY, new Coords(1, 1, 0), DOWN));
         List<Block> blocks = new ArrayList<>();
-        for (int x = 0; x < BasicGameLevel.DIMENSIONS.getX(); x++) {
-            for (int y = 0; y < BasicGameLevel.DIMENSIONS.getY(); y++) {
-                if (x == 0 || x == BasicGameLevel.DIMENSIONS.getX() - 1) {
+        for (int x = 0; x < DIMENSIONS.getX(); x++) {
+            for (int y = 0; y < DIMENSIONS.getY(); y++) {
+                if (x == 0 || x == DIMENSIONS.getX() - 1) {
                     //Some solid blocks.
-                    blocks.add(new Block(BlockArchetype.STONE_WALL, new Coords(x, y, 1), Direction.DOWN));
+                    blocks.add(new Block(STONE_WALL, new Coords(x, y, 1), DOWN));
                 } else {
                     //Non-solid blocks.
-                    blocks.add(new Block(BlockArchetype.GRASS, new Coords(x, y, 1), Direction.DOWN));
+                    blocks.add(new Block(GRASS, new Coords(x, y, 1), DOWN));
                 }
             }
         }
@@ -163,22 +165,22 @@ public class TextFileLevelDaoTest {
     @Test
     public void testSLL4() {
         String levelName = "Test_Level.txt";
-        BasicPlayerCharacter player = new BasicPlayerCharacter(10, 1, 2, 1, 5, new Coords(3, 3, 0), Direction.DOWN);
+        BasicPlayerCharacter player = new BasicPlayerCharacter(10, 1, 2, 1, 5, new Coords(3, 3, 0), DOWN);
         List<NonPlayerCharacter> npcs = new ArrayList<>();
         //Add some npcs.
-        npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.VILLAGER, new Coords(7, 10, 0), Direction.DOWN));
-        npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.RAT, new Coords(8, 8, 0), Direction.DOWN));
-        npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.DEER, new Coords(4, 9, 0), Direction.DOWN));
-        npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.FOLLOWER, new Coords(1, 1, 0), Direction.DOWN));
+        npcs.add(new HostileNonPlayerCharacter(VILLAGER, new Coords(7, 10, 0), DOWN));
+        npcs.add(new HostileNonPlayerCharacter(RAT, new Coords(8, 8, 0), DOWN));
+        npcs.add(new HostileNonPlayerCharacter(DEER, new Coords(4, 9, 0), DOWN));
+        npcs.add(new HostileNonPlayerCharacter(FOLLOWER, new Coords(1, 1, 0), DOWN));
         List<Block> blocks = new ArrayList<>();
-        for (int x = 0; x < BasicGameLevel.DIMENSIONS.getX(); x++) {
-            for (int y = 0; y < BasicGameLevel.DIMENSIONS.getY(); y++) {
-                if (x == 0 || x == BasicGameLevel.DIMENSIONS.getX() - 1) {
+        for (int x = 0; x < DIMENSIONS.getX(); x++) {
+            for (int y = 0; y < DIMENSIONS.getY(); y++) {
+                if (x == 0 || x == DIMENSIONS.getX() - 1) {
                     //Some solid blocks.
-                    blocks.add(new Block(BlockArchetype.STONE_WALL, new Coords(x, y, 1), Direction.DOWN));
+                    blocks.add(new Block(STONE_WALL, new Coords(x, y, 1), DOWN));
                 } else {
                     //Non-solid blocks.
-                    blocks.add(new Block(BlockArchetype.GRASS, new Coords(x, y, 1), Direction.DOWN));
+                    blocks.add(new Block(GRASS, new Coords(x, y, 1), DOWN));
                 }
             }
         }

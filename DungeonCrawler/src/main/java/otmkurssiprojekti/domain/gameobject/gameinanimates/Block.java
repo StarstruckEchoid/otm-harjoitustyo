@@ -6,8 +6,8 @@
 package otmkurssiprojekti.domain.gameobject.gameinanimates;
 
 import java.util.Objects;
-import otmkurssiprojekti.domain.gameobject.interfaces.GameObject;
 import otmkurssiprojekti.domain.gameobject.archetypes.BlockArchetype;
+import otmkurssiprojekti.domain.gameobject.interfaces.GameObject;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
 import otmkurssiprojekti.domain.gameobject.location.Direction;
 

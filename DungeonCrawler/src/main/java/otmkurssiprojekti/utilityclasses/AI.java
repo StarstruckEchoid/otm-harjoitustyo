@@ -5,11 +5,13 @@
  */
 package otmkurssiprojekti.utilityclasses;
 
+import static java.lang.Integer.compare;
 import java.util.*;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.NonPlayerCharacter;
-import otmkurssiprojekti.domain.level.GameLevel;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
 import otmkurssiprojekti.domain.gameobject.location.Direction;
+import static otmkurssiprojekti.domain.gameobject.location.Direction.values;
+import otmkurssiprojekti.domain.level.GameLevel;
 
 /**
  * An utility class that implements path finding algorithms to be used by Mobile
@@ -67,11 +69,11 @@ public class AI {
     }
 
     private static Comparator<Coords> nearestEuclidean(Coords to) {
-        return (a, b) -> Integer.compare(a.squaredEuclideanDistance(to), b.squaredEuclideanDistance(to));
+        return (a, b) -> compare(a.squaredEuclideanDistance(to), b.squaredEuclideanDistance(to));
     }
 
     private static Comparator<Coords> nearestManhattan(Coords to) {
-        return (a, b) -> Integer.compare(a.manhattanDistance(to), b.manhattanDistance(to));
+        return (a, b) -> compare(a.manhattanDistance(to), b.manhattanDistance(to));
     }
 
     private static Map<Coords, Coords> performSearchOnQueue(GameLevel gameLevel, Queue<Coords> searchQueue, Coords to) {
@@ -84,7 +86,7 @@ public class AI {
             }
             searched.add(current);
             //Iterate on neighbours.
-            for (Direction d : Direction.values()) {
+            for (Direction d : values()) {
                 Coords next = current.sum(d.getCoords());
                 if (!searched.contains(next) && !gameLevel.isInaccessible(current)) {
                     searchQueue.add(next);

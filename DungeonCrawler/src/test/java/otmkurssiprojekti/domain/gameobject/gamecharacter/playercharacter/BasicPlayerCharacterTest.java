@@ -8,14 +8,15 @@ package otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter;
 import static org.hamcrest.CoreMatchers.is;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.nonplayercharacter.HostileNonPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.interfaces.Destructible;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
 import otmkurssiprojekti.domain.gameobject.location.Direction;
+import static otmkurssiprojekti.domain.gameobject.location.Direction.DOWN;
 
 /**
  *
@@ -38,7 +39,7 @@ public class BasicPlayerCharacterTest {
 
     @Before
     public void setUp() {
-        bpc = new BasicPlayerCharacter(20, 100, 0, 0, 0, new Coords(0, 0, 0), Direction.DOWN, 2400);
+        bpc = new BasicPlayerCharacter(20, 100, 0, 0, 0, new Coords(0, 0, 0), DOWN, 2400);
     }
 
     @After
@@ -50,7 +51,7 @@ public class BasicPlayerCharacterTest {
      */
     @Test
     public void testCoordsAt() {
-        Direction dir = Direction.DOWN;
+        Direction dir = DOWN;
         BasicPlayerCharacter instance = bpc;
         Coords expResult = new Coords(0, -1, 0);
         Coords result = instance.coordsAt(dir);
@@ -84,7 +85,7 @@ public class BasicPlayerCharacterTest {
      */
     @Test
     public void testHurt() {
-        Destructible d = new HostileNonPlayerCharacter('v', 20, 0, 0, 0, 0, 0, new Coords(), Direction.DOWN);
+        Destructible d = new HostileNonPlayerCharacter('v', 20, 0, 0, 0, 0, 0, new Coords(), DOWN);
         BasicPlayerCharacter instance = bpc;
         instance.hurt(d);
         assertTrue(d.isDead());

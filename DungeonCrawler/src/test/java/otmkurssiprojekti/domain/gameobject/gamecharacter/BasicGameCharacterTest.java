@@ -5,17 +5,18 @@
  */
 package otmkurssiprojekti.domain.gameobject.gamecharacter;
 
-import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.BasicPlayerCharacter;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
-import otmkurssiprojekti.domain.gameobject.archetypes.PlayerCharacterArchetype;
-import otmkurssiprojekti.domain.gameobject.gamecharacter.BasicGameCharacter;
+import static otmkurssiprojekti.domain.gameobject.archetypes.PlayerCharacterArchetype.THIEF;
+import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.BasicPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
 import otmkurssiprojekti.domain.gameobject.location.Direction;
+import static otmkurssiprojekti.domain.gameobject.location.Direction.DOWN;
+import static otmkurssiprojekti.domain.gameobject.location.Direction.LEFT;
 
 /**
  *
@@ -25,7 +26,7 @@ public class BasicGameCharacterTest {
 
     private BasicGameCharacter bgc;
     private static final Coords TEST_COORDS = new Coords(8, 2, 1);
-    private static final Direction TEST_DIRECTION = Direction.DOWN;
+    private static final Direction TEST_DIRECTION = DOWN;
 
     public BasicGameCharacterTest() {
     }
@@ -40,7 +41,7 @@ public class BasicGameCharacterTest {
 
     @Before
     public void setUp() {
-        bgc = new BasicPlayerCharacter(PlayerCharacterArchetype.THIEF, TEST_COORDS, TEST_DIRECTION);
+        bgc = new BasicPlayerCharacter(THIEF, TEST_COORDS, TEST_DIRECTION);
     }
 
     @After
@@ -84,7 +85,7 @@ public class BasicGameCharacterTest {
 
     @Test
     public void testTurn() {
-        Direction turn = Direction.LEFT;
+        Direction turn = LEFT;
         bgc.turn(turn);
         assertTrue(bgc.getDirection().equals(turn));
     }

@@ -7,9 +7,9 @@ package otmkurssiprojekti.domain.gameobject.gamecharacter;
 
 import otmkurssiprojekti.domain.gameobject.gameinanimates.BasicMobileObject;
 import otmkurssiprojekti.domain.gameobject.interfaces.Destructible;
+import otmkurssiprojekti.domain.gameobject.interfaces.Mobile;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
 import otmkurssiprojekti.domain.gameobject.location.Direction;
-import otmkurssiprojekti.domain.gameobject.interfaces.Mobile;
 
 /**
  *

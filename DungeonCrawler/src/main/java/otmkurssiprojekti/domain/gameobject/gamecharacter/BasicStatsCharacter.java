@@ -5,8 +5,8 @@
  */
 package otmkurssiprojekti.domain.gameobject.gamecharacter;
 
-import otmkurssiprojekti.domain.gameobject.interfaces.Destructible;
 import java.util.Random;
+import otmkurssiprojekti.domain.gameobject.interfaces.Destructible;
 import otmkurssiprojekti.domain.gameobject.interfaces.GameObject;
 import otmkurssiprojekti.domain.gameobject.interfaces.Hurtful;
 import otmkurssiprojekti.domain.gameobject.interfaces.PointsSource;

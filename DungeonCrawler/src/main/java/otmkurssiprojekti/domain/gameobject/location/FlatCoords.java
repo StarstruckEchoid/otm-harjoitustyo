@@ -5,6 +5,8 @@
  */
 package otmkurssiprojekti.domain.gameobject.location;
 
+import static java.lang.Math.abs;
+
 /**
  *
  * @author Juho Gröhn
@@ -55,8 +57,8 @@ public class FlatCoords implements Comparable<FlatCoords> {
     }
 
     public int manhattanDistance(FlatCoords coords) {
-        int dx = Math.abs(this.x - coords.x);
-        int dy = Math.abs(this.y - coords.y);
+        int dx = abs(this.x - coords.x);
+        int dy = abs(this.y - coords.y);
 
         return dx + dy;
     }

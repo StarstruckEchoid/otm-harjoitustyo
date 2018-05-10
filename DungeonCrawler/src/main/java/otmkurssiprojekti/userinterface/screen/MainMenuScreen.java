@@ -5,10 +5,11 @@
  */
 package otmkurssiprojekti.userinterface.screen;
 
-import otmkurssiprojekti.userinterface.screen.daousers.LoadUserScreen;
+import static java.lang.System.exit;
 import java.util.ArrayList;
 import java.util.List;
 import otmkurssiprojekti.userinterface.DungeonCrawler;
+import otmkurssiprojekti.userinterface.screen.daousers.LoadUserScreen;
 
 /**
  *
@@ -27,7 +28,7 @@ public class MainMenuScreen extends VerticalMenuScreen {
                 switchTo(new LoadUserScreen(main));
                 break;
             case 1:
-                System.exit(0);
+                exit(0);
                 break;
             default:
                 break;

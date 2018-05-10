@@ -5,7 +5,6 @@
  */
 package otmkurssiprojekti.userinterface;
 
-import otmkurssiprojekti.userinterface.screen.GameScreen;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.application.Application;
@@ -13,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import otmkurssiprojekti.domain.dataservice.DataService;
 import otmkurssiprojekti.domain.dataservice.TextFileDataService;
+import otmkurssiprojekti.userinterface.screen.GameScreen;
 import otmkurssiprojekti.userinterface.screen.MainMenuScreen;
 
 /**
@@ -43,11 +43,6 @@ public class DungeonCrawler extends Application {
         DATA_SERVICE.setLevelsDir(LEVELS_DIR);
         DATA_SERVICE.swapLevel(FIRST_LEVEL);
         this.setGameScreen(new MainMenuScreen(this));
-
-        //Debug
-        if (this.getParameters().getRaw().contains("debug")) {
-            initDebug();
-        }
     }
 
     @Override
@@ -117,15 +112,6 @@ public class DungeonCrawler extends Application {
                 gameScreen.doGameTick(); //What to do.
             }
         }, 0, TICKS_PERIOD);
-    }
-
-    private void initDebug() {
-        TIMER.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                System.out.println(DATA_SERVICE.toString());
-            }
-        }, 0, DEBUG_PERIOD);
     }
 
 }

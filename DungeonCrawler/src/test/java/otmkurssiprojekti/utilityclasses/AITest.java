@@ -10,20 +10,22 @@ import java.util.List;
 import java.util.Stack;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
-import otmkurssiprojekti.domain.level.BasicGameLevel;
-import otmkurssiprojekti.domain.level.GameLevel;
-import otmkurssiprojekti.domain.gameobject.archetypes.NonPlayerCharacterArchetype;
-import otmkurssiprojekti.domain.gameobject.archetypes.PlayerCharacterArchetype;
-import otmkurssiprojekti.domain.gameobject.location.Coords;
-import otmkurssiprojekti.domain.gameobject.location.Direction;
+import static otmkurssiprojekti.domain.gameobject.archetypes.NonPlayerCharacterArchetype.RAT;
+import static otmkurssiprojekti.domain.gameobject.archetypes.PlayerCharacterArchetype.THIEF;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.nonplayercharacter.BasicNonPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.nonplayercharacter.HostileNonPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.BasicPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.interfaces.Mobile;
+import otmkurssiprojekti.domain.gameobject.location.Coords;
+import static otmkurssiprojekti.domain.gameobject.location.Direction.DOWN;
+import otmkurssiprojekti.domain.level.BasicGameLevel;
+import otmkurssiprojekti.domain.level.GameLevel;
+import static otmkurssiprojekti.utilityclasses.AI.bestRoute;
+import static otmkurssiprojekti.utilityclasses.AI.greedyRoute;
 
 /**
  *
@@ -48,13 +50,13 @@ public class AITest {
 
     @Before
     public void setUp() {
-        npc = new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.RAT, new Coords(0, 0, 0), Direction.DOWN);
+        npc = new HostileNonPlayerCharacter(RAT, new Coords(0, 0, 0), DOWN);
         mobileObjects = new ArrayList<>();
         mobileObjects.add(npc);
 
         gameLevel = new BasicGameLevel(
                 "test",
-                new BasicPlayerCharacter(PlayerCharacterArchetype.THIEF, new Coords(3, 3, 0), Direction.DOWN),
+                new BasicPlayerCharacter(THIEF, new Coords(3, 3, 0), DOWN),
                 new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>()
         );
     }
@@ -97,7 +99,7 @@ public class AITest {
     }
 
     public void testBestRoute(Coords c1, Coords c2, Stack<Coords> expected) {
-        Stack<Coords> actual = AI.bestRoute(c1, c2, gameLevel);
+        Stack<Coords> actual = bestRoute(c1, c2, gameLevel);
         assertTrue(actual.equals(expected));
     }
 
@@ -135,7 +137,7 @@ public class AITest {
     }
 
     public void testGreedyRoute(Coords c1, Coords c2, Stack<Coords> expected) {
-        Stack<Coords> actual = AI.greedyRoute(c1, c2, gameLevel);
+        Stack<Coords> actual = greedyRoute(c1, c2, gameLevel);
         assertTrue(actual.equals(expected));
     }
 

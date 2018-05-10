@@ -5,16 +5,17 @@
  */
 package otmkurssiprojekti.dataaccessobject.dataobject;
 
+import static java.lang.System.currentTimeMillis;
 import java.util.Date;
 import static org.hamcrest.CoreMatchers.is;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import otmkurssiprojekti.domain.level.GameLevel;
-import otmkurssiprojekti.utilityclasses.TextFileGameLevels;
+import static otmkurssiprojekti.utilityclasses.TextFileGameLevels.makeGameLevel;
 
 /**
  *
@@ -40,8 +41,8 @@ public class GameSaveTest {
 
     @Before
     public void setUp() {
-        date = new Date(System.currentTimeMillis());
-        gameLevel = TextFileGameLevels.makeGameLevel(
+        date = new Date(currentTimeMillis());
+        gameLevel = makeGameLevel(
                 "Starting_Level.txt\n"
                 + "\n"
                 + "10;1;1;1;1;3,3,0;0\n"

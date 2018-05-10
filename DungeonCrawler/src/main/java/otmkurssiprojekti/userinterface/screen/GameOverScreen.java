@@ -8,7 +8,7 @@ package otmkurssiprojekti.userinterface.screen;
 import javafx.scene.Parent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.text.Font;
+import static javafx.scene.text.Font.font;
 import javafx.scene.text.Text;
 import otmkurssiprojekti.userinterface.DungeonCrawler;
 
@@ -31,7 +31,7 @@ public class GameOverScreen extends SwitchingScreen {
     public Parent getVisualisation() {
         BorderPane bp = new BorderPane();
         Text t = new Text("Game over.\nPress any key to continue.");
-        t.setFont(Font.font("MONOSPACED"));
+        t.setFont(font("MONOSPACED"));
         bp.setCenter(t);
         return bp;
     }

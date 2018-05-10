@@ -6,12 +6,12 @@
 package otmkurssiprojekti.domain.gameobject.gamecharacter.nonplayercharacter;
 
 import java.util.Stack;
-import otmkurssiprojekti.domain.level.GameLevel;
 import otmkurssiprojekti.domain.gameobject.archetypes.NonPlayerCharacterArchetype;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.PlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
 import otmkurssiprojekti.domain.gameobject.location.Direction;
-import otmkurssiprojekti.utilityclasses.AI;
+import otmkurssiprojekti.domain.level.GameLevel;
+import static otmkurssiprojekti.utilityclasses.AI.greedyRoute;
 
 public class HostileNonPlayerCharacter extends BasicNonPlayerCharacter {
 
@@ -44,7 +44,7 @@ public class HostileNonPlayerCharacter extends BasicNonPlayerCharacter {
             return;
         }
         if (plan.size() < 8) {
-            plan = AI.greedyRoute(npcCoords, pcCoords, gameLevel);
+            plan = greedyRoute(npcCoords, pcCoords, gameLevel);
         }
         if (!plan.empty()) {
             this.move(plan.pop());

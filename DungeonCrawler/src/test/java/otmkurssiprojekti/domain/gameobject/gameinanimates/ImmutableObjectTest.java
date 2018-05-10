@@ -5,16 +5,17 @@
  */
 package otmkurssiprojekti.domain.gameobject.gameinanimates;
 
-import otmkurssiprojekti.domain.gameobject.gameinanimates.Block;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import otmkurssiprojekti.domain.gameobject.archetypes.BlockArchetype;
+import static otmkurssiprojekti.domain.gameobject.archetypes.BlockArchetype.values;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
 import otmkurssiprojekti.domain.gameobject.location.Direction;
+import static otmkurssiprojekti.domain.gameobject.location.Direction.UP;
 
 /**
  *
@@ -46,7 +47,7 @@ public class ImmutableObjectTest {
         transparent = false;
         solid = false;
         coords = new Coords(0, 0, 0);
-        direction = Direction.UP;
+        direction = UP;
         immo = new Block(id, transparent, solid, coords, direction);
     }
 
@@ -56,13 +57,13 @@ public class ImmutableObjectTest {
 
     @Test
     public void testAllArchetypeConstructors() {
-        for (BlockArchetype arche : BlockArchetype.values()) {
+        for (BlockArchetype arche : values()) {
             testArchetypeConstructor(arche);
         }
     }
 
     public void testArchetypeConstructor(BlockArchetype arche) {
-        Block immarch = new Block(arche, new Coords(0, 0, 0), Direction.UP);
+        Block immarch = new Block(arche, new Coords(0, 0, 0), UP);
         assertTrue("ID should have been " + arche.getId() + " but was " + immarch.getId(), immarch.getId() == arche.getId());
         assertTrue("Transparency should have been " + arche.isTransparent() + " but was " + immarch.isTransparent(), immarch.isTransparent() == arche.isTransparent());
         assertTrue("Solid should have been " + arche.isSolid() + " but was " + immarch.isSolid(), immarch.isSolid() == arche.isSolid());

@@ -5,7 +5,6 @@
  */
 package otmkurssiprojekti.dataaccessobject;
 
-import java.nio.file.Path;
 import java.util.List;
 
 /**

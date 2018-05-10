@@ -10,14 +10,14 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
-import otmkurssiprojekti.domain.gameobject.archetypes.BlockArchetype;
-import otmkurssiprojekti.domain.level.BasicGameLevel;
-import otmkurssiprojekti.domain.level.GameLevel;
-import otmkurssiprojekti.domain.gameobject.archetypes.NonPlayerCharacterArchetype;
+import static otmkurssiprojekti.domain.gameobject.archetypes.BlockArchetype.GRASS;
+import static otmkurssiprojekti.domain.gameobject.archetypes.BlockArchetype.STONE_PATH;
+import static otmkurssiprojekti.domain.gameobject.archetypes.BlockArchetype.STONE_WALL;
+import static otmkurssiprojekti.domain.gameobject.archetypes.NonPlayerCharacterArchetype.RAT;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.nonplayercharacter.HostileNonPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.BasicPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.Block;
@@ -25,7 +25,18 @@ import otmkurssiprojekti.domain.gameobject.gameinanimates.LevelLink;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.NonPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.PlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
-import otmkurssiprojekti.domain.gameobject.location.Direction;
+import static otmkurssiprojekti.domain.gameobject.location.Direction.DOWN;
+import otmkurssiprojekti.domain.level.BasicGameLevel;
+import otmkurssiprojekti.domain.level.GameLevel;
+import static otmkurssiprojekti.utilityclasses.TextFileGameLevels.BLOCKS_LEVEL;
+import static otmkurssiprojekti.utilityclasses.TextFileGameLevels.makeBlockList;
+import static otmkurssiprojekti.utilityclasses.TextFileGameLevels.makeGameLevel;
+import static otmkurssiprojekti.utilityclasses.TextFileGameLevels.makeLevelLinkList;
+import static otmkurssiprojekti.utilityclasses.TextFileGameLevels.makeNPCList;
+import static otmkurssiprojekti.utilityclasses.TextFileGameLevels.printBlockList;
+import static otmkurssiprojekti.utilityclasses.TextFileGameLevels.printGameLevel;
+import static otmkurssiprojekti.utilityclasses.TextFileGameLevels.printLevelLinkList;
+import static otmkurssiprojekti.utilityclasses.TextFileGameLevels.printNPCList;
 
 /**
  *
@@ -63,7 +74,7 @@ public class TextFileGameLevelsTest {
     @Before
     public void setUp() {
         pcString = "20;0;1;2;3;4,5,6;240000";
-        pc = new BasicPlayerCharacter(20, 0, 1, 2, 3, new Coords(4, 5, 6), Direction.DOWN, 240_000);
+        pc = new BasicPlayerCharacter(20, 0, 1, 2, 3, new Coords(4, 5, 6), DOWN, 240_000);
 
         npcsString
                 = "r;0,1,2\n"
@@ -71,9 +82,9 @@ public class TextFileGameLevelsTest {
                 + "r;3,3,3\n";
 
         npcs = new ArrayList<>();
-        npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.RAT, new Coords(0, 1, 2), Direction.DOWN));
-        npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.RAT, new Coords(2, 4, 7), Direction.DOWN));
-        npcs.add(new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.RAT, new Coords(3, 3, 3), Direction.DOWN));
+        npcs.add(new HostileNonPlayerCharacter(RAT, new Coords(0, 1, 2), DOWN));
+        npcs.add(new HostileNonPlayerCharacter(RAT, new Coords(2, 4, 7), DOWN));
+        npcs.add(new HostileNonPlayerCharacter(RAT, new Coords(3, 3, 3), DOWN));
 
         blocksString
                 = "00000\n"
@@ -84,13 +95,13 @@ public class TextFileGameLevelsTest {
         blocks = new ArrayList<>();
         for (int y = 0; y < 5; y++) {
             for (int x = 0; x < 5; x++) {
-                Coords coords = new Coords(x, y, TextFileGameLevels.BLOCKS_LEVEL);
+                Coords coords = new Coords(x, y, BLOCKS_LEVEL);
                 if (x == 0 || x == 4 || y == 0 || y == 4) {
-                    blocks.add(new Block(BlockArchetype.STONE_WALL, coords, Direction.DOWN));
+                    blocks.add(new Block(STONE_WALL, coords, DOWN));
                 } else if (x == 2 && y == 2) {
-                    blocks.add(new Block(BlockArchetype.GRASS, coords, Direction.DOWN));
+                    blocks.add(new Block(GRASS, coords, DOWN));
                 } else {
-                    blocks.add(new Block(BlockArchetype.STONE_PATH, coords, Direction.DOWN));
+                    blocks.add(new Block(STONE_PATH, coords, DOWN));
                 }
             }
         }
@@ -130,56 +141,56 @@ public class TextFileGameLevelsTest {
 
     @Test
     public void testMakeGameLevel() {
-        GameLevel madeGameLevel = TextFileGameLevels.makeGameLevel(gameLevelString);
+        GameLevel madeGameLevel = makeGameLevel(gameLevelString);
         assertThat(madeGameLevel.getLevelName(), is(levelName));
         assertThat(madeGameLevel, is(gameLevel));
     }
 
     @Test
     public void testPrintGameLevel() {
-        String madeGameLevelString = TextFileGameLevels.printGameLevel((BasicGameLevel) gameLevel);
+        String madeGameLevelString = printGameLevel(gameLevel);
 
         assertThat(madeGameLevelString, is(gameLevelString));
     }
 
     @Test
     public void testMakeNPCList() {
-        List<NonPlayerCharacter> madeNpcs = TextFileGameLevels.makeNPCList(npcsString);
+        List<NonPlayerCharacter> madeNpcs = makeNPCList(npcsString);
 
         assertThat(madeNpcs, is(npcs));
     }
 
     @Test
     public void testPrintNPCList() {
-        String madeNpcsString = TextFileGameLevels.printNPCList(npcs);
+        String madeNpcsString = printNPCList(npcs);
 
         assertThat(madeNpcsString, is(npcsString));
     }
 
     @Test
     public void testMakeBlockList() {
-        List<Block> madeBlocks = TextFileGameLevels.makeBlockList(blocksString);
+        List<Block> madeBlocks = makeBlockList(blocksString);
 
         assertTrue("Expected\n" + blocks.toString() + "\nbut got\n" + madeBlocks.toString(), madeBlocks.containsAll(blocks));
     }
 
     @Test
     public void testPrintBlockList() {
-        String madeBlocksString = TextFileGameLevels.printBlockList(blocks);
+        String madeBlocksString = printBlockList(blocks);
 
         assertThat(madeBlocksString, is(blocksString));
     }
 
     @Test
     public void testMakeLevelLinkList() {
-        List<LevelLink> madeLinks = TextFileGameLevels.makeLevelLinkList(linksString);
+        List<LevelLink> madeLinks = makeLevelLinkList(linksString);
 
         assertTrue(madeLinks.containsAll(links));
     }
 
     @Test
     public void testPrintLevelLinkList() {
-        String madeLinksString = TextFileGameLevels.printLevelLinkList(links);
+        String madeLinksString = printLevelLinkList(links);
 
         assertThat(madeLinksString, is(linksString));
     }

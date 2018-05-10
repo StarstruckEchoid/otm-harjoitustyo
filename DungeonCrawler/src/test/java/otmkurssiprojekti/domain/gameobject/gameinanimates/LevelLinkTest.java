@@ -8,12 +8,14 @@ package otmkurssiprojekti.domain.gameobject.gameinanimates;
 import static org.hamcrest.CoreMatchers.is;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
+import static otmkurssiprojekti.domain.gameobject.gameinanimates.LevelLink.DIRECTION;
+import static otmkurssiprojekti.domain.gameobject.gameinanimates.LevelLink.SOLID;
+import static otmkurssiprojekti.domain.gameobject.gameinanimates.LevelLink.TRANSPARENT;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
-import otmkurssiprojekti.domain.gameobject.location.Direction;
 
 /**
  *
@@ -64,7 +66,7 @@ public class LevelLinkTest {
      */
     @Test
     public void testIsTransparent() {
-        assertThat(levelLink.isTransparent(), is(LevelLink.TRANSPARENT));
+        assertThat(levelLink.isTransparent(), is(TRANSPARENT));
     }
 
     /**
@@ -72,7 +74,7 @@ public class LevelLinkTest {
      */
     @Test
     public void testIsSolid() {
-        assertThat(levelLink.isSolid(), is(LevelLink.SOLID));
+        assertThat(levelLink.isSolid(), is(SOLID));
     }
 
     /**
@@ -88,7 +90,7 @@ public class LevelLinkTest {
      */
     @Test
     public void testGetDirection() {
-        assertThat(levelLink.getDirection(), is(LevelLink.DIRECTION));
+        assertThat(levelLink.getDirection(), is(DIRECTION));
     }
 
     /**

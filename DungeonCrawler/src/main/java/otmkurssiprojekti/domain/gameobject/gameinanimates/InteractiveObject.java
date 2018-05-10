@@ -5,11 +5,13 @@
  */
 package otmkurssiprojekti.domain.gameobject.gameinanimates;
 
-import otmkurssiprojekti.domain.gameobject.interfaces.GameObject;
 import java.util.List;
 import java.util.function.Consumer;
 import otmkurssiprojekti.domain.gameobject.archetypes.ActivationType;
+import static otmkurssiprojekti.domain.gameobject.archetypes.ActivationType.ON_PRESSED;
+import static otmkurssiprojekti.domain.gameobject.archetypes.ActivationType.ON_TOUCHED;
 import otmkurssiprojekti.domain.gameobject.archetypes.InteractiveObjectArchetype;
+import otmkurssiprojekti.domain.gameobject.interfaces.GameObject;
 import otmkurssiprojekti.domain.gameobject.interfaces.Mobile;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
 import otmkurssiprojekti.domain.gameobject.location.Direction;
@@ -102,13 +104,13 @@ public class InteractiveObject extends BasicMobileObject implements GameObject, 
     }
 
     public void reactToTouch() {
-        if (activationType.equals(ActivationType.ON_TOUCHED)) {
+        if (activationType.equals(ON_TOUCHED)) {
             action.accept(this);
         }
     }
 
     public void reactToPress() {
-        if (activationType.equals(ActivationType.ON_PRESSED)) {
+        if (activationType.equals(ON_PRESSED)) {
             action.accept(this);
         }
     }

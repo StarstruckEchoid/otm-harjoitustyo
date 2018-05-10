@@ -6,18 +6,19 @@
 package otmkurssiprojekti.userinterface.screen;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.text.Font;
+import static javafx.scene.text.Font.font;
 import javafx.scene.text.Text;
-import otmkurssiprojekti.userinterface.DungeonCrawler;
-import otmkurssiprojekti.domain.level.GameLevel;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.PlayerCharacter;
-import otmkurssiprojekti.domain.gameobject.location.Direction;
+import static otmkurssiprojekti.domain.gameobject.location.Direction.DOWN;
+import static otmkurssiprojekti.domain.gameobject.location.Direction.LEFT;
+import static otmkurssiprojekti.domain.gameobject.location.Direction.RIGHT;
+import static otmkurssiprojekti.domain.gameobject.location.Direction.UP;
+import otmkurssiprojekti.domain.level.GameLevel;
+import otmkurssiprojekti.userinterface.DungeonCrawler;
 import otmkurssiprojekti.userinterface.renderer.Renderer;
 import otmkurssiprojekti.userinterface.renderer.TextRenderer;
 
@@ -46,16 +47,16 @@ public class LevelScreen extends SwitchingScreen {
     private void movePlayer(KeyEvent e) {
         switch (e.getCode()) {
             case W:
-                gameLevel.movePlayer(Direction.UP);
+                gameLevel.movePlayer(UP);
                 break;
             case A:
-                gameLevel.movePlayer(Direction.LEFT);
+                gameLevel.movePlayer(LEFT);
                 break;
             case S:
-                gameLevel.movePlayer(Direction.DOWN);
+                gameLevel.movePlayer(DOWN);
                 break;
             case D:
-                gameLevel.movePlayer(Direction.RIGHT);
+                gameLevel.movePlayer(RIGHT);
                 break;
             default:
                 break;
@@ -65,16 +66,16 @@ public class LevelScreen extends SwitchingScreen {
     private void playerAttack(KeyEvent e) {
         switch (e.getCode()) {
             case UP:
-                gameLevel.playerAttack(Direction.UP);
+                gameLevel.playerAttack(UP);
                 break;
             case DOWN:
-                gameLevel.playerAttack(Direction.DOWN);
+                gameLevel.playerAttack(DOWN);
                 break;
             case LEFT:
-                gameLevel.playerAttack(Direction.LEFT);
+                gameLevel.playerAttack(LEFT);
                 break;
             case RIGHT:
-                gameLevel.playerAttack(Direction.RIGHT);
+                gameLevel.playerAttack(RIGHT);
                 break;
             default:
                 break;
@@ -115,7 +116,7 @@ public class LevelScreen extends SwitchingScreen {
         BorderPane hud = new BorderPane();
         //Kentän nimi.
         Text t = new Text(gameLevel.getLevelName());
-        t.setFont(Font.font("MONOSPACED"));
+        t.setFont(font("MONOSPACED"));
         hud.setTop(t);
 
         //Kentän data.

@@ -5,9 +5,9 @@
  */
 package otmkurssiprojekti.domain.gameobject.gameinanimates;
 
+import otmkurssiprojekti.domain.gameobject.interfaces.Mobile;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
 import otmkurssiprojekti.domain.gameobject.location.Direction;
-import otmkurssiprojekti.domain.gameobject.interfaces.Mobile;
 
 /**
  *

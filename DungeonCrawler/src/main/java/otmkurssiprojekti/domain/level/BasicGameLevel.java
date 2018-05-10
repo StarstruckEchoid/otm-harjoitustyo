@@ -5,18 +5,18 @@
  */
 package otmkurssiprojekti.domain.level;
 
-import otmkurssiprojekti.domain.gameobject.location.Direction;
-import otmkurssiprojekti.domain.gameobject.location.Coords;
-import otmkurssiprojekti.domain.gameobject.gameinanimates.InteractiveObject;
-import otmkurssiprojekti.domain.gameobject.gameinanimates.PointsBall;
-import otmkurssiprojekti.domain.gameobject.gameinanimates.Block;
-import otmkurssiprojekti.domain.gameobject.gameinanimates.LevelLink;
-import otmkurssiprojekti.domain.gameobject.interfaces.GameObject;
 import java.util.*;
+import otmkurssiprojekti.domain.gameobject.gameinanimates.Block;
+import otmkurssiprojekti.domain.gameobject.gameinanimates.InteractiveObject;
+import otmkurssiprojekti.domain.gameobject.gameinanimates.LevelLink;
+import otmkurssiprojekti.domain.gameobject.gameinanimates.PointsBall;
+import otmkurssiprojekti.domain.gameobject.interfaces.GameObject;
 import otmkurssiprojekti.domain.gameobject.interfaces.Mobile;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.NonPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.PlayerCharacter;
-import otmkurssiprojekti.utilityclasses.TextFileGameLevels;
+import otmkurssiprojekti.domain.gameobject.location.Coords;
+import otmkurssiprojekti.domain.gameobject.location.Direction;
+import static otmkurssiprojekti.utilityclasses.TextFileGameLevels.printGameLevel;
 
 /**
  * The most basic implementation of a GameLevel.
@@ -94,7 +94,7 @@ public class BasicGameLevel implements GameLevel {
     //Others
     @Override
     public boolean isInaccessible(Coords coords) {
-        return !BasicGameLevel.hasCoords(coords) || this.hasSolidBlockAt(coords);
+        return !hasCoords(coords) || this.hasSolidBlockAt(coords);
     }
 
     protected static Boolean hasCoords(Coords coords) {
@@ -152,7 +152,7 @@ public class BasicGameLevel implements GameLevel {
 
     @Override
     public String toString() {
-        return TextFileGameLevels.printGameLevel(this);
+        return printGameLevel(this);
     }
 
     @Override

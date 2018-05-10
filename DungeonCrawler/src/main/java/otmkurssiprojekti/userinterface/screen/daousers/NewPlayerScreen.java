@@ -9,13 +9,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.input.KeyCode;
+import static javafx.scene.input.KeyCode.BACK_SPACE;
 import javafx.scene.input.KeyEvent;
-import otmkurssiprojekti.userinterface.DungeonCrawler;
-import otmkurssiprojekti.domain.level.GameLevel;
 import otmkurssiprojekti.domain.gameobject.archetypes.PlayerCharacterArchetype;
-import otmkurssiprojekti.domain.gameobject.location.Direction;
+import static otmkurssiprojekti.domain.gameobject.archetypes.PlayerCharacterArchetype.values;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.BasicPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.PlayerCharacter;
+import static otmkurssiprojekti.domain.gameobject.location.Direction.DOWN;
+import otmkurssiprojekti.domain.level.GameLevel;
+import otmkurssiprojekti.userinterface.DungeonCrawler;
+import static otmkurssiprojekti.userinterface.DungeonCrawler.FIRST_LEVEL;
 import otmkurssiprojekti.userinterface.screen.GameScreen;
 import otmkurssiprojekti.userinterface.screen.LevelScreen;
 import otmkurssiprojekti.userinterface.screen.VerticalMenuScreen;
@@ -27,7 +30,7 @@ import otmkurssiprojekti.userinterface.screen.VerticalMenuScreen;
 public class NewPlayerScreen extends VerticalMenuScreen {
 
     StringBuilder playerName;
-    PlayerCharacterArchetype[] pcaArr = PlayerCharacterArchetype.values();
+    PlayerCharacterArchetype[] pcaArr = values();
     PlayerCharacterArchetype pca = pcaArr[0];
     int pcaArrPointer = 0;
 
@@ -53,7 +56,7 @@ public class NewPlayerScreen extends VerticalMenuScreen {
 
     private void handleNameEdit(KeyEvent e) {
         KeyCode kc = e.getCode();
-        if (kc.equals(KeyCode.BACK_SPACE)) {
+        if (kc.equals(BACK_SPACE)) {
             playerName.deleteCharAt(playerName.length() - 1);
         } else if (kc.isLetterKey()) {
             playerName.append(kc.toString());
@@ -86,7 +89,7 @@ public class NewPlayerScreen extends VerticalMenuScreen {
     }
 
     private void initialiseNewGame() throws IOException {
-        main.getDataService().setCurrentLevel(DungeonCrawler.FIRST_LEVEL);
+        main.getDataService().setCurrentLevel(FIRST_LEVEL);
         GameLevel startingLevel = main.getDataService().fetchGameLevel();
         main.getDataService().setPlayer(playerName.toString());
         initialisePlayer(startingLevel);
@@ -97,9 +100,7 @@ public class NewPlayerScreen extends VerticalMenuScreen {
     private void initialisePlayer(GameLevel gameLevel) {
         PlayerCharacter playerCharacter = new BasicPlayerCharacter(
                 pcaArr[pcaArrPointer],
-                gameLevel.getPlayer().getCoords(),
-                Direction.DOWN
-        );
+                gameLevel.getPlayer().getCoords(), DOWN);
         gameLevel.setPlayer(playerCharacter);
     }
 

@@ -9,6 +9,7 @@ import java.util.Objects;
 import otmkurssiprojekti.domain.gameobject.interfaces.GameObject;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
 import otmkurssiprojekti.domain.gameobject.location.Direction;
+import static otmkurssiprojekti.domain.gameobject.location.Direction.UP;
 
 /**
  *
@@ -20,7 +21,7 @@ public class LevelLink implements GameObject {
     public static final boolean TRANSPARENT = true;
     public static final boolean SOLID = false;
     private final Coords coords;
-    public static final Direction DIRECTION = Direction.UP;
+    public static final Direction DIRECTION = UP;
 
     private final String linkAddress;
 

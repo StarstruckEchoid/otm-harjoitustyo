@@ -5,11 +5,11 @@
  */
 package otmkurssiprojekti.utilityclasses;
 
+import static java.lang.String.copyValueOf;
 import java.util.ArrayList;
 import java.util.List;
-import otmkurssiprojekti.domain.level.BasicGameLevel;
-import otmkurssiprojekti.domain.level.GameLevel;
 import otmkurssiprojekti.domain.gameobject.archetypes.BlockArchetype;
+import static otmkurssiprojekti.domain.gameobject.archetypes.BlockArchetype.AIR;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.Block;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.InteractiveObject;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.LevelLink;
@@ -17,7 +17,16 @@ import otmkurssiprojekti.domain.gameobject.gameinanimates.PointsBall;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.NonPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.PlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
-import otmkurssiprojekti.domain.gameobject.location.Direction;
+import static otmkurssiprojekti.domain.gameobject.location.Direction.DOWN;
+import otmkurssiprojekti.domain.level.BasicGameLevel;
+import otmkurssiprojekti.domain.level.GameLevel;
+import static otmkurssiprojekti.utilityclasses.TextFileGameObjects.makeArcheType;
+import static otmkurssiprojekti.utilityclasses.TextFileGameObjects.makeLinkObject;
+import static otmkurssiprojekti.utilityclasses.TextFileGameObjects.makeNonPlayerCharacter;
+import static otmkurssiprojekti.utilityclasses.TextFileGameObjects.makePlayerCharacter;
+import static otmkurssiprojekti.utilityclasses.TextFileGameObjects.printLinkObject;
+import static otmkurssiprojekti.utilityclasses.TextFileGameObjects.printNonPlayerCharacter;
+import static otmkurssiprojekti.utilityclasses.TextFileGameObjects.printPlayerCharacter;
 
 /**
  * An utility class whose purpose is to convert GameLevels into Strings and
@@ -64,7 +73,7 @@ public class TextFileGameLevels {
     public static GameLevel makeGameLevel(String string) throws IllegalArgumentException {
         String[] fields = string.split("\n\n");
         String levelName = fields[0];
-        PlayerCharacter player = TextFileGameObjects.makePlayerCharacter(fields[1]);
+        PlayerCharacter player = makePlayerCharacter(fields[1]);
         List<NonPlayerCharacter> npcs = makeNPCList(fields[2]);
         List<Block> blocks = makeBlockList(fields[3]);
         List<InteractiveObject> interactives = makeInteractiveObjectList(fields[4]);
@@ -84,7 +93,7 @@ public class TextFileGameLevels {
     public static String printGameLevel(GameLevel gameLevel) {
         StringBuilder sb = new StringBuilder();
         sb.append(gameLevel.getLevelName()).append("\n\n");
-        sb.append(TextFileGameObjects.printPlayerCharacter(gameLevel.getPlayer())).append("\n\n");
+        sb.append(printPlayerCharacter(gameLevel.getPlayer())).append("\n\n");
         sb.append(printNPCList(gameLevel.getNonPlayerCharacters())).append("\n");
         sb.append(printBlockList(gameLevel.getBlocks())).append("\n");
         sb.append(printInteractiveObjectList(gameLevel.getInteractiveObjects())).append("\n");
@@ -109,7 +118,7 @@ public class TextFileGameLevels {
         List<NonPlayerCharacter> npcs = new ArrayList<>();
         String[] npcDats = field.split("\n");
         for (String npcDat : npcDats) {
-            TextFileGameObjects.makeNonPlayerCharacter(npcDat).ifPresent(i -> npcs.add(i));
+            makeNonPlayerCharacter(npcDat).ifPresent(i -> npcs.add(i));
         }
         return npcs;
     }
@@ -125,7 +134,7 @@ public class TextFileGameLevels {
             return EMPTY_IDENTIFIER + "\n";
         }
         StringBuilder sb = new StringBuilder();
-        npcs.forEach(npc -> sb.append(TextFileGameObjects.printNonPlayerCharacter(npc)).append("\n"));
+        npcs.forEach(npc -> sb.append(printNonPlayerCharacter(npc)).append("\n"));
         return sb.toString();
     }
 
@@ -157,9 +166,8 @@ public class TextFileGameLevels {
             String row = rows[y];
             for (int x = 0; x < row.length(); x++) {
                 String id = Character.toString(row.charAt(x));
-                blocks.add(new Block(TextFileGameObjects.makeArcheType(BlockArchetype.class, id).orElse(BlockArchetype.AIR),
-                                new Coords(x, y, BLOCKS_LEVEL),
-                                Direction.DOWN)
+                blocks.add(new Block(makeArcheType(BlockArchetype.class, id).orElse(AIR),
+                                new Coords(x, y, BLOCKS_LEVEL), DOWN)
                 );
             }
         }
@@ -186,7 +194,7 @@ public class TextFileGameLevels {
         });
         StringBuilder sb = new StringBuilder();
         for (char[] line : matrix) {
-            sb.append(String.copyValueOf(line));
+            sb.append(copyValueOf(line));
             sb.append("\n");
         }
         return sb.toString();
@@ -210,7 +218,7 @@ public class TextFileGameLevels {
         List<LevelLink> links = new ArrayList<>();
         String[] linkDats = field.split("\n");
         for (String linkDat : linkDats) {
-            TextFileGameObjects.makeLinkObject(linkDat).ifPresent(i -> links.add(i));
+            makeLinkObject(linkDat).ifPresent(i -> links.add(i));
         }
         return links;
     }
@@ -220,7 +228,7 @@ public class TextFileGameLevels {
             return EMPTY_IDENTIFIER + "\n";
         }
         StringBuilder sb = new StringBuilder();
-        linkObjects.forEach(link -> sb.append(TextFileGameObjects.printLinkObject(link)).append("\n"));
+        linkObjects.forEach(link -> sb.append(printLinkObject(link)).append("\n"));
         return sb.toString();
     }
 

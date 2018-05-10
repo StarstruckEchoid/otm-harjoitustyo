@@ -5,13 +5,14 @@
  */
 package otmkurssiprojekti.userinterface.renderer;
 
+import static java.lang.String.valueOf;
 import javafx.scene.Node;
-import javafx.scene.text.Font;
+import static javafx.scene.text.Font.font;
 import javafx.scene.text.Text;
-import otmkurssiprojekti.domain.level.GameLevel;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.PlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
 import otmkurssiprojekti.domain.gameobject.location.FlatCoords;
+import otmkurssiprojekti.domain.level.GameLevel;
 
 public class TextRenderer implements Renderer {
 
@@ -22,7 +23,7 @@ public class TextRenderer implements Renderer {
         Text levelContents = new Text(
                 projectionToDenseString(gameLevelToMatrix(gameLevel))
         );
-        levelContents.setFont(Font.font("MONOSPACED"));
+        levelContents.setFont(font("MONOSPACED"));
         return levelContents;
     }
 
@@ -48,7 +49,7 @@ public class TextRenderer implements Renderer {
         StringBuilder sb = new StringBuilder();
         for (int i = matrix.length; i > 0; i--) {
             char[] row = matrix[i - 1];
-            sb.append(String.valueOf(row));
+            sb.append(valueOf(row));
             sb.append('\n');
         }
         return sb.toString();

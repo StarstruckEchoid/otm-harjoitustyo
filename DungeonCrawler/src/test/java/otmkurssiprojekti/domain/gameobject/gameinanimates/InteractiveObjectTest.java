@@ -5,20 +5,23 @@
  */
 package otmkurssiprojekti.domain.gameobject.gameinanimates;
 
-import otmkurssiprojekti.domain.gameobject.gameinanimates.InteractiveObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import otmkurssiprojekti.domain.gameobject.archetypes.ActivationType;
-import otmkurssiprojekti.domain.gameobject.archetypes.InteractiveObjectArchetype;
+import static otmkurssiprojekti.domain.gameobject.archetypes.ActivationType.SIGNAL_ONLY;
+import static otmkurssiprojekti.domain.gameobject.archetypes.InteractiveObjectArchetype.SWITCH;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
 import otmkurssiprojekti.domain.gameobject.location.Direction;
+import static otmkurssiprojekti.domain.gameobject.location.Direction.DOWN;
+import static otmkurssiprojekti.domain.gameobject.location.Direction.LEFT;
+import static otmkurssiprojekti.domain.gameobject.location.Direction.UP;
 
 /**
  *
@@ -51,8 +54,8 @@ public class InteractiveObjectTest {
         id = 'D';
         solid = true;
         coords = new Coords(0, 0, 0);
-        dir = Direction.DOWN;
-        at = ActivationType.SIGNAL_ONLY;
+        dir = DOWN;
+        at = SIGNAL_ONLY;
         children = new ArrayList<>();
         action = (i) -> i.setSolid(false);
         into = new InteractiveObject(id, solid, coords, dir, at, children, action);
@@ -105,19 +108,19 @@ public class InteractiveObjectTest {
     
     @Test
     public void testMove() {
-        into.move(Direction.UP);
+        into.move(UP);
         assertTrue(into.getCoords().equals(new Coords(0, 1, 0)));
     }
     
     @Test
     public void testTurn() {
-        into.turn(Direction.LEFT);
-        assertTrue(into.getDirection().equals(Direction.LEFT));
+        into.turn(LEFT);
+        assertTrue(into.getDirection().equals(LEFT));
     }
     
     @Test
     public void testAddChild() {
-        InteractiveObject into2 = new InteractiveObject(InteractiveObjectArchetype.SWITCH, coords, dir, children);
+        InteractiveObject into2 = new InteractiveObject(SWITCH, coords, dir, children);
         into.addChild(into2);
         assertTrue(into.getChildren().contains(into2));
     }

@@ -5,6 +5,8 @@
  */
 package otmkurssiprojekti.domain.gameobject.location;
 
+import static java.lang.Math.abs;
+
 /**
  *
  * @author gjuho
@@ -54,7 +56,7 @@ public class Coords extends FlatCoords {
     }
 
     public int manhattanDistance(Coords coords) {
-        int dz = Math.abs(this.z - coords.z);
+        int dz = abs(this.z - coords.z);
         return super.manhattanDistance(coords) + dz;
     }
 

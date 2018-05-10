@@ -5,28 +5,34 @@
  */
 package otmkurssiprojekti.domain.level;
 
-import otmkurssiprojekti.domain.gameobject.interfaces.GameObject;
-import otmkurssiprojekti.domain.gameobject.gameinanimates.PointsBall;
-import otmkurssiprojekti.domain.gameobject.gameinanimates.InteractiveObject;
-import otmkurssiprojekti.domain.gameobject.gameinanimates.LevelLink;
-import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.BasicPlayerCharacter;
-import otmkurssiprojekti.domain.gameobject.gameinanimates.Block;
 import java.util.*;
+import static java.util.Optional.empty;
 import static org.hamcrest.CoreMatchers.is;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
-import otmkurssiprojekti.domain.gameobject.archetypes.NonPlayerCharacterArchetype;
-import otmkurssiprojekti.domain.gameobject.archetypes.PlayerCharacterArchetype;
+import static otmkurssiprojekti.domain.gameobject.archetypes.NonPlayerCharacterArchetype.RAT;
+import static otmkurssiprojekti.domain.gameobject.archetypes.PlayerCharacterArchetype.ASSASSIN;
+import static otmkurssiprojekti.domain.gameobject.archetypes.PlayerCharacterArchetype.SOLDIER;
+import static otmkurssiprojekti.domain.gameobject.archetypes.PlayerCharacterArchetype.WARRIOR;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.nonplayercharacter.BasicNonPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.nonplayercharacter.HostileNonPlayerCharacter;
+import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.BasicPlayerCharacter;
+import otmkurssiprojekti.domain.gameobject.gameinanimates.Block;
+import otmkurssiprojekti.domain.gameobject.gameinanimates.InteractiveObject;
+import otmkurssiprojekti.domain.gameobject.gameinanimates.LevelLink;
+import otmkurssiprojekti.domain.gameobject.gameinanimates.PointsBall;
+import otmkurssiprojekti.domain.gameobject.interfaces.GameObject;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.NonPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.PlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
-import otmkurssiprojekti.domain.gameobject.location.Direction;
+import static otmkurssiprojekti.domain.gameobject.location.Direction.DOWN;
+import static otmkurssiprojekti.domain.gameobject.location.Direction.RIGHT;
+import static otmkurssiprojekti.domain.gameobject.location.Direction.UP;
+import static otmkurssiprojekti.domain.level.BasicGameLevel.hasCoords;
 
 /**
  *
@@ -70,19 +76,19 @@ public class BasicGameLevelTest {
     @Before
     public void setUp() {
         levelName = "testLevel.txt";
-        player = new BasicPlayerCharacter(PlayerCharacterArchetype.SOLDIER, new Coords(0, 0, 1), Direction.DOWN);
-        newPlayer = new BasicPlayerCharacter(PlayerCharacterArchetype.ASSASSIN, new Coords(3, 3, 2), Direction.DOWN);
+        player = new BasicPlayerCharacter(SOLDIER, new Coords(0, 0, 1), DOWN);
+        newPlayer = new BasicPlayerCharacter(ASSASSIN, new Coords(3, 3, 2), DOWN);
 
         nonPlayerCharacters = new ArrayList<>();
         monsterCoords = new Coords(0, 3, 0);
-        monster = new HostileNonPlayerCharacter(NonPlayerCharacterArchetype.RAT, monsterCoords, Direction.DOWN);
+        monster = new HostileNonPlayerCharacter(RAT, monsterCoords, DOWN);
         nonPlayerCharacters.add(monster);
 
         blocks = new ArrayList<>();
 
         solidBlockCoords = new Coords(8, 6, 0);
 
-        blocks.add(new Block('0', false, true, solidBlockCoords, Direction.DOWN));
+        blocks.add(new Block('0', false, true, solidBlockCoords, DOWN));
 
         interactiveObjects = new ArrayList<>();
         levelLinks = new ArrayList<>();
@@ -91,7 +97,7 @@ public class BasicGameLevelTest {
 
         gameLevel = new BasicGameLevel(levelName, player, nonPlayerCharacters, blocks, interactiveObjects, levelLinks, pointsBalls);
 
-        otherLevel = new BasicGameLevel("other.txt", new BasicPlayerCharacter(PlayerCharacterArchetype.WARRIOR, solidBlockCoords, Direction.DOWN), new ArrayList<NonPlayerCharacter>(), blocks, interactiveObjects, new ArrayList<>(), pointsBalls);
+        otherLevel = new BasicGameLevel("other.txt", new BasicPlayerCharacter(WARRIOR, solidBlockCoords, DOWN), new ArrayList<>(), blocks, interactiveObjects, new ArrayList<>(), pointsBalls);
     }
 
     @After
@@ -200,7 +206,7 @@ public class BasicGameLevelTest {
      */
     @Test
     public void testHasCoords1() {
-        assertTrue(BasicGameLevel.hasCoords(solidBlockCoords));
+        assertTrue(hasCoords(solidBlockCoords));
     }
 
     /**
@@ -208,7 +214,7 @@ public class BasicGameLevelTest {
      */
     @Test
     public void testHasCoords2() {
-        assertFalse(BasicGameLevel.hasCoords(new Coords(1_000, 1_000, 1_000)));
+        assertFalse(hasCoords(new Coords(1_000, 1_000, 1_000)));
     }
 
     /**
@@ -232,7 +238,7 @@ public class BasicGameLevelTest {
      */
     @Test
     public void testMovePlayer() {
-        gameLevel.movePlayer(Direction.RIGHT);
+        gameLevel.movePlayer(RIGHT);
 
         assertThat(gameLevel.getPlayer().getCoords(), is(new Coords(1, 0, 1)));
     }
@@ -242,7 +248,7 @@ public class BasicGameLevelTest {
      */
     @Test
     public void testMoveMobile() {
-        gameLevel.moveMobile(monster, Direction.UP);
+        gameLevel.moveMobile(monster, UP);
 
         assertThat(monster.getCoords(), is(new Coords(0, 4, 0)));
     }
@@ -331,15 +337,15 @@ public class BasicGameLevelTest {
      */
     @Test
     public void testPlayerInteract() {
-        assertThat(gameLevel.playerInteract(), is(Optional.empty()));
+        assertThat(gameLevel.playerInteract(), is(empty()));
     }
 
     @Test(timeout = 100)
     public void testPlayerAttack() {
         player.move(monsterCoords);
-        player.move(Direction.DOWN);
+        player.move(DOWN);
         while (!monster.isDead()) {
-            gameLevel.playerAttack(Direction.UP);
+            gameLevel.playerAttack(UP);
         }
         assertThat(monster.isDead(), is(true));
         assertThat(player.getPoints(), is(monster.getPoints()));

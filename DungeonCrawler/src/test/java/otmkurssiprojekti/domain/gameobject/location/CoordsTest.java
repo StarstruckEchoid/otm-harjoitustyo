@@ -5,13 +5,12 @@
  */
 package otmkurssiprojekti.domain.gameobject.location;
 
-import otmkurssiprojekti.domain.gameobject.location.Coords;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *

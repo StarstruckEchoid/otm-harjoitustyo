@@ -8,12 +8,9 @@ package otmkurssiprojekti.userinterface.screen;
 import javafx.scene.Parent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.text.Font;
+import static javafx.scene.text.Font.font;
 import javafx.scene.text.Text;
 import otmkurssiprojekti.userinterface.DungeonCrawler;
-import otmkurssiprojekti.userinterface.screen.GameScreen;
-import otmkurssiprojekti.userinterface.screen.MainMenuScreen;
-import otmkurssiprojekti.userinterface.screen.SwitchingScreen;
 
 /**
  *
@@ -40,7 +37,7 @@ public class ErrorScreen extends SwitchingScreen implements GameScreen {
                 + ex.toString() + "\n"
                 + "Press any key to continue."
         );
-        errorMessage.setFont(Font.font("MONOSPACED"));
+        errorMessage.setFont(font("MONOSPACED"));
         return new BorderPane(errorMessage);
     }
 

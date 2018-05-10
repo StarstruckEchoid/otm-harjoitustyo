@@ -5,18 +5,17 @@
  */
 package otmkurssiprojekti.domain.gameobject.gamecharacter;
 
-import otmkurssiprojekti.domain.gameobject.gamecharacter.BasicStatsCharacter;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.nonplayercharacter.HostileNonPlayerCharacter;
-import otmkurssiprojekti.domain.gameobject.location.Coords;
-import otmkurssiprojekti.domain.gameobject.location.Direction;
 import otmkurssiprojekti.domain.gameobject.interfaces.Destructible;
 import otmkurssiprojekti.domain.gameobject.interfaces.Hurtful;
+import otmkurssiprojekti.domain.gameobject.location.Coords;
+import static otmkurssiprojekti.domain.gameobject.location.Direction.DOWN;
 
 /**
  *
@@ -39,7 +38,7 @@ public class BasicStatsCharacterTest {
 
     @Before
     public void setUp() {
-        bsc = new BasicStatsCharacter(20, 100, 100, 0, 0, new Coords(0, 0, 0), Direction.DOWN) {
+        bsc = new BasicStatsCharacter(20, 100, 100, 0, 0, new Coords(0, 0, 0), DOWN) {
             @Override
             public char getId() {
                 return 'B';
@@ -69,7 +68,7 @@ public class BasicStatsCharacterTest {
 
     @Test
     public void testDoDamage() {
-        Destructible gc = new HostileNonPlayerCharacter('_', 10, 0, 0, 0, 0, 0, new Coords(), Direction.DOWN);
+        Destructible gc = new HostileNonPlayerCharacter('_', 10, 0, 0, 0, 0, 0, new Coords(), DOWN);
         gc.takeDamage(bsc);
         assertTrue(gc.isDead());
     }

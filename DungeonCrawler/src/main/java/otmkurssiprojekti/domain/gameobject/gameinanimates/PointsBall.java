@@ -5,10 +5,11 @@
  */
 package otmkurssiprojekti.domain.gameobject.gameinanimates;
 
-import otmkurssiprojekti.domain.gameobject.interfaces.PointsSource;
 import otmkurssiprojekti.domain.gameobject.interfaces.GameObject;
+import otmkurssiprojekti.domain.gameobject.interfaces.PointsSource;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
 import otmkurssiprojekti.domain.gameobject.location.Direction;
+import static otmkurssiprojekti.domain.gameobject.location.Direction.UP;
 
 /**
  *
@@ -20,7 +21,7 @@ public class PointsBall implements GameObject, PointsSource {
     public static final boolean TRANSPARENT = true; //Points objects don't take an entire block.
     public static final boolean SOLID = false; //Points objects can be walked on.
     public final Coords coords;
-    public static final Direction DIRECTION = Direction.UP; //All points objects point up. This is a stylistic choice.
+    public static final Direction DIRECTION = UP; //All points objects point up. This is a stylistic choice.
     public final int points;
 
     public PointsBall(char id, Coords coords, int points) {

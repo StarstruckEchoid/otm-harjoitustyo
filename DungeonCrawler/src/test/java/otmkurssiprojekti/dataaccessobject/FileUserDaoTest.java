@@ -6,17 +6,18 @@
 package otmkurssiprojekti.dataaccessobject;
 
 import java.io.IOException;
-import java.nio.file.Files;
+import static java.nio.file.Files.createTempDirectory;
+import static java.nio.file.Files.createTempFile;
+import static java.nio.file.Files.deleteIfExists;
 import java.nio.file.Path;
-import java.nio.file.Paths;
+import static java.nio.file.Paths.get;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -41,8 +42,8 @@ public class FileUserDaoTest {
 
     @Before
     public void setUp() throws IOException {
-        path = Files.createTempDirectory("testFolder");
-        sub = Files.createTempDirectory(path, "testSubfolder");
+        path = createTempDirectory("testFolder");
+        sub = createTempDirectory(path, "testSubfolder");
         fudao = new BasicFileDao(sub);
     }
 
@@ -56,7 +57,7 @@ public class FileUserDaoTest {
         fudao.saveFile(user);
 
         List<String> userList = fudao.loadFiles();
-        assertTrue("Expected list to contain " + Paths.get(user).toString() + " but list onlu had " + userList.toString(), userList.contains(user));
+        assertTrue("Expected list to contain " + get(user).toString() + " but list onlu had " + userList.toString(), userList.contains(user));
     }
 
     @Test
@@ -77,7 +78,7 @@ public class FileUserDaoTest {
 
     @Test
     public void testFail() throws IOException {
-        Path broke = Files.createTempFile("broke", "txt");
+        Path broke = createTempFile("broke", "txt");
 
         try {
             FileDao brokeDao = new BasicFileDao(broke);
@@ -85,7 +86,7 @@ public class FileUserDaoTest {
         } catch (IllegalArgumentException iae) {
             assertTrue(true);
         }
-        Files.deleteIfExists(broke);
+        deleteIfExists(broke);
     }
 
 }

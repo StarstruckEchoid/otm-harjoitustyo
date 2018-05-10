@@ -5,7 +5,10 @@
  */
 package otmkurssiprojekti.utilityclasses;
 
+import static java.lang.Integer.parseInt;
 import java.util.Optional;
+import static java.util.Optional.empty;
+import static java.util.Optional.of;
 import otmkurssiprojekti.domain.gameobject.archetypes.NonPlayerCharacterArchetype;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.nonplayercharacter.HostileNonPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.BasicPlayerCharacter;
@@ -13,7 +16,7 @@ import otmkurssiprojekti.domain.gameobject.gameinanimates.LevelLink;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.NonPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.PlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
-import otmkurssiprojekti.domain.gameobject.location.Direction;
+import static otmkurssiprojekti.domain.gameobject.location.Direction.DOWN;
 
 /**
  *
@@ -35,9 +38,9 @@ public class TextFileGameObjects {
         }
 
         String[] attrs = attr.split(",");
-        int x = Integer.parseInt(attrs[0]);
-        int y = Integer.parseInt(attrs[1]);
-        int z = Integer.parseInt(attrs[2]);
+        int x = parseInt(attrs[0]);
+        int y = parseInt(attrs[1]);
+        int z = parseInt(attrs[2]);
 
         return new Coords(x, y, z);
     }
@@ -66,10 +69,10 @@ public class TextFileGameObjects {
     public static <T extends Enum<?>> Optional<T> makeArcheType(Class<T> t, String attr) throws IllegalArgumentException {
         for (T arch : t.getEnumConstants()) {
             if (arch.toString().equals(attr)) {
-                return Optional.of(arch);
+                return of(arch);
             }
         }
-        return Optional.empty();
+        return empty();
     }
 
     /**
@@ -95,15 +98,15 @@ public class TextFileGameObjects {
      */
     public static PlayerCharacter makePlayerCharacter(String field) throws IllegalArgumentException {
         String[] attrs = field.split(";");
-        int hp = Integer.parseInt(attrs[0]);
-        int str = Integer.parseInt(attrs[1]);
-        int per = Integer.parseInt(attrs[2]);
-        int end = Integer.parseInt(attrs[3]);
-        int agl = Integer.parseInt(attrs[4]);
+        int hp = parseInt(attrs[0]);
+        int str = parseInt(attrs[1]);
+        int per = parseInt(attrs[2]);
+        int end = parseInt(attrs[3]);
+        int agl = parseInt(attrs[4]);
         Coords coords = makeCoords(attrs[5]);
-        int points = Integer.parseInt(attrs[6]);
+        int points = parseInt(attrs[6]);
 
-        return new BasicPlayerCharacter(hp, str, per, end, agl, coords, Direction.DOWN, points);
+        return new BasicPlayerCharacter(hp, str, per, end, agl, coords, DOWN, points);
     }
 
     /**
@@ -130,15 +133,15 @@ public class TextFileGameObjects {
     public static Optional<NonPlayerCharacter> makeNonPlayerCharacter(String field) throws IllegalArgumentException {
         String[] attrs = field.split(";");
         if (attrs.length < 2) {
-            return Optional.empty();
+            return empty();
         }
         Optional<NonPlayerCharacterArchetype> npca = makeArcheType(NonPlayerCharacterArchetype.class, attrs[0]);
         Coords coords = makeCoords(attrs[1]);
 
         if (npca.isPresent()) {
-            return Optional.of(new HostileNonPlayerCharacter(npca.get(), coords, Direction.DOWN));
+            return of(new HostileNonPlayerCharacter(npca.get(), coords, DOWN));
         }
-        return Optional.empty();
+        return empty();
     }
 
     /**
@@ -160,12 +163,12 @@ public class TextFileGameObjects {
     public static Optional<LevelLink> makeLinkObject(String field) throws IllegalArgumentException {
         String[] attrs = field.split(";");
         if (attrs.length < 3) {
-            return Optional.empty();
+            return empty();
         }
         char id = attrs[0].charAt(0);
         Coords coords = makeCoords(attrs[1]);
         String address = attrs[2];
-        return Optional.of(new LevelLink(id, coords, address));
+        return of(new LevelLink(id, coords, address));
     }
 
     public static String printLinkObject(LevelLink linkObject) {

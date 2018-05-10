@@ -5,27 +5,28 @@
  */
 package otmkurssiprojekti.domain.dataservice;
 
-import java.io.File;
+import static java.io.File.separator;
 import java.io.IOException;
-import java.nio.file.Files;
+import static java.lang.Long.parseLong;
+import static java.nio.file.Files.createTempDirectory;
 import java.nio.file.Path;
 import java.util.Date;
 import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import otmkurssiprojekti.dataaccessobject.GameLevelDao;
 import otmkurssiprojekti.dataaccessobject.TextFileLevelDao;
 import otmkurssiprojekti.dataaccessobject.dataobject.GameSave;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.PlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
-import otmkurssiprojekti.domain.gameobject.location.Direction;
+import static otmkurssiprojekti.domain.gameobject.location.Direction.LEFT;
 import otmkurssiprojekti.domain.level.GameLevel;
-import otmkurssiprojekti.utilityclasses.TextFileGameLevels;
+import static otmkurssiprojekti.utilityclasses.TextFileGameLevels.makeGameLevel;
 
 /**
  *
@@ -39,7 +40,7 @@ public class TextFileDataServiceTest {
     private final String player = "TestPlayer";
     private final String saveName = "24000330022";
     private final String levelName = "Starting_Level.txt";
-    private final GameLevel gameLevel = TextFileGameLevels.makeGameLevel(
+    private final GameLevel gameLevel = makeGameLevel(
             levelName + "\n"
             + "\n"
             + "10;1;1;1;1;3,3,0;0\n"
@@ -73,7 +74,7 @@ public class TextFileDataServiceTest {
             + "EMPTY"
     );
     private final String otherLevelName = "Other_Level.txt";
-    private final GameLevel otherLevel = TextFileGameLevels.makeGameLevel(
+    private final GameLevel otherLevel = makeGameLevel(
             otherLevelName + "\n"
             + "\n"
             + "200;1;1;1;1;2,2,2;0\n"
@@ -119,12 +120,12 @@ public class TextFileDataServiceTest {
 
     @Before
     public void setUp() throws IOException {
-        Path levelsDir = Files.createTempDirectory("testLevels");
+        Path levelsDir = createTempDirectory("testLevels");
         levelsDirName = levelsDir.toString();
         GameLevelDao dao = new TextFileLevelDao(levelsDir);
         dao.saveLevel(gameLevel);
         dao.saveLevel(otherLevel);
-        usersDirName = Files.createTempDirectory("testUsers").toString();
+        usersDirName = createTempDirectory("testUsers").toString();
         dataService = new TextFileDataService();
     }
 
@@ -190,7 +191,7 @@ public class TextFileDataServiceTest {
             testSetUsersDir();
             dataService.setUser(user);
 
-            assertThat(dataService.userDir.toString(), is(usersDirName + File.separator + user));
+            assertThat(dataService.userDir.toString(), is(usersDirName + separator + user));
         } catch (IOException | NullPointerException ex) {
             fail(ex.getMessage());
         }
@@ -215,7 +216,7 @@ public class TextFileDataServiceTest {
             testSetUser();
             dataService.setPlayer(player);
 
-            assertThat(dataService.playerDir.toString(), is(usersDirName + File.separator + user + File.separator + player));
+            assertThat(dataService.playerDir.toString(), is(usersDirName + separator + user + separator + player));
         } catch (IOException | NullPointerException ex) {
             fail(ex.getMessage());
         }
@@ -269,7 +270,7 @@ public class TextFileDataServiceTest {
     @Test
     public void testFetchGameSaves2() throws IOException {
         testSetPlayer();
-        GameSave gameSave = new GameSave(new Date(Long.parseLong(saveName)), gameLevel);
+        GameSave gameSave = new GameSave(new Date(parseLong(saveName)), gameLevel);
         dataService.saveGame(gameSave);
         List<GameSave> gameSaves = dataService.fetchGameSaves();
 
@@ -283,7 +284,7 @@ public class TextFileDataServiceTest {
     public void testSaveGame_GameSave() throws IOException {
         testSetGameLevel1();
         testSetPlayer();
-        dataService.saveGame(new GameSave(new Date(Long.parseLong(saveName)), gameLevel));
+        dataService.saveGame(new GameSave(new Date(parseLong(saveName)), gameLevel));
 
         assertThat(dataService.currentLevel, is(gameLevel));
     }
@@ -307,7 +308,7 @@ public class TextFileDataServiceTest {
     public void testSaveGame_GameLevel2() throws IOException {
         testSetGameLevel1();
         testSetPlayer();
-        gameLevel.movePlayer(Direction.LEFT);
+        gameLevel.movePlayer(LEFT);
         dataService.saveGame(gameLevel);
 
         assertTrue(dataService.fetchGameSaves().removeIf(gs -> gs.getGameLevel().equals(gameLevel)));
@@ -367,8 +368,8 @@ public class TextFileDataServiceTest {
         String expected
                 = "levelsDir: " + levelsDirName + "\n"
                 + "usersDir: " + usersDirName + "\n"
-                + "userDir: " + usersDirName + File.separator + user + "\n"
-                + "playerDir: " + usersDirName + File.separator + user + File.separator + player + "\n"
+                + "userDir: " + usersDirName + separator + user + "\n"
+                + "playerDir: " + usersDirName + separator + user + separator + player + "\n"
                 + "currentLevel: " + levelName;
 
         assertThat(actual, is(expected));
@@ -376,8 +377,8 @@ public class TextFileDataServiceTest {
 
     @Test
     public void simulateDungeonCrawler() throws IOException {
-        String usersDir = Files.createTempDirectory("usersTest2").toString();
-        Path levelsPath = Files.createTempDirectory("levelsTest2");
+        String usersDir = createTempDirectory("usersTest2").toString();
+        Path levelsPath = createTempDirectory("levelsTest2");
         new TextFileLevelDao(levelsPath).saveLevel(gameLevel);
         String levelsDir = levelsPath.toString();
 

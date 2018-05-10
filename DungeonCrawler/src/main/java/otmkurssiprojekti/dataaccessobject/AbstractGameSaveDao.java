@@ -7,6 +7,7 @@ package otmkurssiprojekti.dataaccessobject;
 
 import java.io.File;
 import java.io.IOException;
+import static java.lang.Long.parseLong;
 import java.nio.file.Path;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public abstract class AbstractGameSaveDao implements GameSaveDao {
 
     @Override
     public GameSave loadSave(String name) throws IOException { //A gamesave is constructed so that the date is the name of the file and the gamelevel is the contents.
-        long time = Long.parseLong(name);
+        long time = parseLong(name);
         Date date = new Date(time);
         GameLevel gameLevel = levelDao.loadLevel(name);
         return new GameSave(date, gameLevel);

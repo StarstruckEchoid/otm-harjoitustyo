@@ -6,9 +6,11 @@
 package otmkurssiprojekti.domain.dataservice;
 
 import java.io.IOException;
-import java.nio.file.Files;
+import static java.lang.System.currentTimeMillis;
+import static java.nio.file.Files.createDirectory;
+import static java.nio.file.Files.exists;
 import java.nio.file.Path;
-import java.nio.file.Paths;
+import static java.nio.file.Paths.get;
 import java.util.Date;
 import java.util.List;
 import otmkurssiprojekti.dataaccessobject.BasicFileDao;
@@ -37,28 +39,28 @@ public class TextFileDataService implements DataService {
 
     @Override
     public void setLevelsDir(String levelsDir) throws IOException, NullPointerException {
-        Path path = Paths.get(levelsDir);
+        Path path = get(levelsDir);
         createDirectoryIfAbsent(path);
         this.levelsDir = path;
     }
 
     @Override
     public void setUsersDir(String usersDir) throws IOException, NullPointerException {
-        Path path = Paths.get(usersDir);
+        Path path = get(usersDir);
         createDirectoryIfAbsent(path);
         this.usersDir = path;
     }
 
     @Override
     public void setUser(String userName) throws IOException, NullPointerException {
-        Path path = Paths.get(this.usersDir.toString(), userName);
+        Path path = get(this.usersDir.toString(), userName);
         createDirectoryIfAbsent(path);
         this.userDir = path;
     }
 
     @Override
     public void setPlayer(String playerName) throws IOException, NullPointerException {
-        Path path = Paths.get(this.userDir.toString(), playerName);
+        Path path = get(this.userDir.toString(), playerName);
         createDirectoryIfAbsent(path);
         this.playerDir = path;
     }
@@ -107,7 +109,7 @@ public class TextFileDataService implements DataService {
 
     @Override
     public void saveGame(GameLevel gameLevel) throws IOException {
-        GameSave gameSave = new GameSave(new Date(System.currentTimeMillis()), gameLevel);
+        GameSave gameSave = new GameSave(new Date(currentTimeMillis()), gameLevel);
         saveGame(gameSave);
     }
 
@@ -126,8 +128,8 @@ public class TextFileDataService implements DataService {
     }
 
     private void createDirectoryIfAbsent(Path path) throws IOException {
-        if (!Files.exists(path)) {
-            Files.createDirectory(path);
+        if (!exists(path)) {
+            createDirectory(path);
 
         }
     }

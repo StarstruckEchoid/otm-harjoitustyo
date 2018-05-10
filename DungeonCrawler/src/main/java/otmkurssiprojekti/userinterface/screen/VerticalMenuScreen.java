@@ -7,11 +7,12 @@ package otmkurssiprojekti.userinterface.screen;
 
 import java.io.IOException;
 import java.util.List;
-import javafx.geometry.Pos;
+import static javafx.geometry.Pos.CENTER;
 import javafx.scene.Parent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.text.Font;
+import static javafx.scene.layout.BorderPane.setAlignment;
+import static javafx.scene.text.Font.font;
 import javafx.scene.text.Text;
 import otmkurssiprojekti.userinterface.DungeonCrawler;
 
@@ -94,8 +95,8 @@ public abstract class VerticalMenuScreen extends SwitchingScreen {
 
     private Text getAsText(String string) {
         Text text = new Text(string);
-        text.setFont(Font.font("MONOSPACED"));
-        BorderPane.setAlignment(text, Pos.CENTER);
+        text.setFont(font("MONOSPACED"));
+        setAlignment(text, CENTER);
         return text;
     }
 
