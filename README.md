@@ -31,5 +31,5 @@ Jarin voi suorittaa komennolla
     java -jar target/DungeonCrawler-1.0-SNAPSHOT.jar 
 
 ## [Julkaisut](https://github.com/StarstruckEchoid/otm-harjoitustyo/releases)
-
-[Pelin ensimmäinen "valmis" julkaisu, DungeonCrawler 1.0](https://github.com/StarstruckEchoid/otm-harjoitustyo/releases/tag/7.5.2018).
+*[Pelin toinen valmis julkaisu, DungeonCrawler 1.1](https://github.com/StarstruckEchoid/otm-harjoitustyo/releases/tag/10.5.2018)
+*[Pelin ensimmäinen valmis julkaisu, DungeonCrawler 1.0](https://github.com/StarstruckEchoid/otm-harjoitustyo/releases/tag/7.5.2018).
