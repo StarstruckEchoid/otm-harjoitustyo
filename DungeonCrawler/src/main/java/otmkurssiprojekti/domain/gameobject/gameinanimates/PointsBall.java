@@ -5,6 +5,7 @@
  */
 package otmkurssiprojekti.domain.gameobject.gameinanimates;
 
+import java.util.Objects;
 import otmkurssiprojekti.domain.gameobject.interfaces.GameObject;
 import otmkurssiprojekti.domain.gameobject.interfaces.PointsSource;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
@@ -58,6 +59,36 @@ public class PointsBall implements GameObject, PointsSource {
     @Override
     public int getPoints() {
         return points;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 59 * hash + this.id;
+        hash = 59 * hash + Objects.hashCode(this.coords);
+        hash = 59 * hash + this.points;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final PointsBall other = (PointsBall) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (this.points != other.points) {
+            return false;
+        }
+        return Objects.equals(this.coords, other.coords);
     }
 
 }

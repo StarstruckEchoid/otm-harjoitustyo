@@ -21,20 +21,12 @@ import static otmkurssiprojekti.domain.gameobject.archetypes.PlayerCharacterArch
 import otmkurssiprojekti.domain.gameobject.gamecharacter.nonplayercharacter.HostileNonPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.BasicPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.LevelLink;
+import otmkurssiprojekti.domain.gameobject.gameinanimates.PointsBall;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.NonPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.PlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
 import static otmkurssiprojekti.domain.gameobject.location.Direction.DOWN;
-import static otmkurssiprojekti.utilityclasses.StringGameObjects.makeArcheType;
-import static otmkurssiprojekti.utilityclasses.StringGameObjects.makeCoords;
-import static otmkurssiprojekti.utilityclasses.StringGameObjects.makeLinkObject;
-import static otmkurssiprojekti.utilityclasses.StringGameObjects.makeNonPlayerCharacter;
-import static otmkurssiprojekti.utilityclasses.StringGameObjects.makePlayerCharacter;
-import static otmkurssiprojekti.utilityclasses.StringGameObjects.printArchetype;
-import static otmkurssiprojekti.utilityclasses.StringGameObjects.printCoords;
-import static otmkurssiprojekti.utilityclasses.StringGameObjects.printLinkObject;
-import static otmkurssiprojekti.utilityclasses.StringGameObjects.printNonPlayerCharacter;
-import static otmkurssiprojekti.utilityclasses.StringGameObjects.printPlayerCharacter;
+import static otmkurssiprojekti.utilityclasses.StringGameObjects.*;
 
 /**
  *
@@ -47,6 +39,9 @@ public class StringGameObjectsTest {
 
     private String loString;
     private LevelLink lo;
+
+    private String pbString;
+    private PointsBall pb;
 
     public StringGameObjectsTest() {
     }
@@ -66,6 +61,9 @@ public class StringGameObjectsTest {
 
         loString = "[;8,8,0;Test_Level.txt";
         lo = new LevelLink('[', new Coords(8, 8, 0), "Test_Level.txt");
+
+        pbString = "*;0,3,5;3380";
+        pb = new PointsBall('*', new Coords(0, 3, 5), 3380);
     }
 
     @After
@@ -74,20 +72,14 @@ public class StringGameObjectsTest {
 
     @Test
     public void testMakeCoords() {
-        Coords c = makeCoords("0,1,7");
+        Coords c = makeCoords("0,1,7").get();
         Coords expected = new Coords(0, 1, 7);
         assertTrue(c.equals(expected));
     }
 
     @Test
     public void testMakeCoords_invalid() {
-        try {
-            Coords c = makeCoords("0,1");
-            fail();
-        } catch (IllegalArgumentException iae) {
-        } catch (Exception e) {
-            fail();
-        }
+        assertThat(makeCoords("0,1"), is(empty()));
     }
 
     @Test
@@ -131,7 +123,7 @@ public class StringGameObjectsTest {
 
     @Test
     public void testMakePlayerCharacter() {
-        PlayerCharacter madePc = makePlayerCharacter(pcString);
+        PlayerCharacter madePc = makePlayerCharacter(pcString).get();
 
         assertThat(madePc, is(pc));
     }
@@ -204,6 +196,26 @@ public class StringGameObjectsTest {
         String madeLoString = printLinkObject(lo);
 
         assertThat(madeLoString, is(loString));
+    }
+
+    /**
+     * Test of makePointsBall method, of class StringGameObjects.
+     */
+    @Test
+    public void testMakePointsBall() {
+        PointsBall madePb = makePointsBall(pbString).get();
+
+        assertThat(madePb, is(pb));
+    }
+
+    /**
+     * Test of printPointsBall method, of class StringGameObjects.
+     */
+    @Test
+    public void testPrintPointsBall() {
+        String madePbString = printPointsBall(pb);
+
+        assertThat(madePbString, is(pbString));
     }
 
 }

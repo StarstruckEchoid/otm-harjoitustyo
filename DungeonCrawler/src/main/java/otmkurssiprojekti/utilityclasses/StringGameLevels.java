@@ -20,13 +20,7 @@ import otmkurssiprojekti.domain.gameobject.location.Coords;
 import static otmkurssiprojekti.domain.gameobject.location.Direction.DOWN;
 import otmkurssiprojekti.domain.level.BasicGameLevel;
 import otmkurssiprojekti.domain.level.GameLevel;
-import static otmkurssiprojekti.utilityclasses.StringGameObjects.makeArcheType;
-import static otmkurssiprojekti.utilityclasses.StringGameObjects.makeLinkObject;
-import static otmkurssiprojekti.utilityclasses.StringGameObjects.makeNonPlayerCharacter;
-import static otmkurssiprojekti.utilityclasses.StringGameObjects.makePlayerCharacter;
-import static otmkurssiprojekti.utilityclasses.StringGameObjects.printLinkObject;
-import static otmkurssiprojekti.utilityclasses.StringGameObjects.printNonPlayerCharacter;
-import static otmkurssiprojekti.utilityclasses.StringGameObjects.printPlayerCharacter;
+import static otmkurssiprojekti.utilityclasses.StringGameObjects.*;
 
 /**
  * An utility class whose purpose is to convert GameLevels into Strings and
@@ -73,12 +67,12 @@ public class StringGameLevels {
     public static GameLevel makeGameLevel(String string) throws IllegalArgumentException {
         String[] fields = string.split("\n\n");
         String levelName = fields[0];
-        PlayerCharacter player = makePlayerCharacter(fields[1]);
-        List<NonPlayerCharacter> npcs = makeNPCList(fields[2]);
-        List<Block> blocks = makeBlockList(fields[3]);
-        List<InteractiveObject> interactives = makeInteractiveObjectList(fields[4]);
-        List<LevelLink> levelLinks = makeLevelLinkList(fields[5]);
-        List<PointsBall> points = makePointsSourceList(fields[6]);
+        PlayerCharacter player = makePlayerCharacter(fields[1]).get();
+        List<NonPlayerCharacter> npcs = makeNPCs(fields[2]);
+        List<Block> blocks = makeBlocks(fields[3]);
+        List<InteractiveObject> interactives = makeInteractiveObjects(fields[4]);
+        List<LevelLink> levelLinks = makeLevelLinks(fields[5]);
+        List<PointsBall> points = makePointsBalls(fields[6]);
 
         return new BasicGameLevel(levelName, player, npcs, blocks, interactives, levelLinks, points);
     }
@@ -94,11 +88,11 @@ public class StringGameLevels {
         StringBuilder sb = new StringBuilder();
         sb.append(gameLevel.getLevelName()).append("\n\n");
         sb.append(printPlayerCharacter(gameLevel.getPlayer())).append("\n\n");
-        sb.append(printNPCList(gameLevel.getNonPlayerCharacters())).append("\n");
-        sb.append(printBlockList(gameLevel.getBlocks())).append("\n");
-        sb.append(printInteractiveObjectList(gameLevel.getInteractiveObjects())).append("\n");
-        sb.append(printLevelLinkList(gameLevel.getLevelLinks())).append("\n");
-        sb.append(printPointsSourceList(gameLevel.getPointsBalls())).append("\n");
+        sb.append(printNPCs(gameLevel.getNonPlayerCharacters())).append("\n");
+        sb.append(printBlocks(gameLevel.getBlocks())).append("\n");
+        sb.append(printInteractiveObjects(gameLevel.getInteractiveObjects())).append("\n");
+        sb.append(printLevelLinks(gameLevel.getLevelLinks())).append("\n");
+        sb.append(printPointsBalls(gameLevel.getPointsBalls())).append("\n");
 
         return sb.toString();
     }
@@ -111,7 +105,7 @@ public class StringGameLevels {
      * @param field The list of NonPlayerCharacters as a string.
      * @return The concrete list of NonPlayerCharacters.
      */
-    public static List<NonPlayerCharacter> makeNPCList(String field) throws IllegalArgumentException {
+    public static List<NonPlayerCharacter> makeNPCs(String field) throws IllegalArgumentException {
         if (field.equals(EMPTY_IDENTIFIER)) {
             return new ArrayList<>();
         }
@@ -124,12 +118,12 @@ public class StringGameLevels {
     }
 
     /**
-     * Inverse operation of makeNPCList:{@link #makeNPCList(java.lang.String)}.
+     * Inverse operation of makeNPCs:{@link #makeNPCs(java.lang.String)}.
      *
      * @param npcs The list of NonPlayerCharacters.
      * @return String representation.
      */
-    public static String printNPCList(List<NonPlayerCharacter> npcs) {
+    public static String printNPCs(List<NonPlayerCharacter> npcs) {
         if (npcs.isEmpty()) {
             return EMPTY_IDENTIFIER + "\n";
         }
@@ -156,7 +150,7 @@ public class StringGameLevels {
      * @return List of ImmutableObjects.
      * @see Block
      */
-    public static List<Block> makeBlockList(String field) throws IllegalArgumentException {
+    public static List<Block> makeBlocks(String field) throws IllegalArgumentException {
         if (field.equals(EMPTY_IDENTIFIER)) {
             return new ArrayList<>();
         }
@@ -167,7 +161,7 @@ public class StringGameLevels {
             for (int x = 0; x < row.length(); x++) {
                 String id = Character.toString(row.charAt(x));
                 blocks.add(new Block(makeArcheType(BlockArchetype.class, id).orElse(AIR),
-                                new Coords(x, y, BLOCKS_LEVEL), DOWN)
+                        new Coords(x, y, BLOCKS_LEVEL), DOWN)
                 );
             }
         }
@@ -175,13 +169,12 @@ public class StringGameLevels {
     }
 
     /**
-     * Inverse operation of
-     * makeBlockList:{@link #makeBlockList(java.lang.String)}.
+     * Inverse operation of makeBlocks:{@link #makeBlocks(java.lang.String)}.
      *
      * @param blocks List of ImmutableObjects.
      * @return StringGameLevels compatible string representation.
      */
-    public static String printBlockList(List<Block> blocks) {
+    public static String printBlocks(List<Block> blocks) {
         if (blocks.isEmpty()) {
             return EMPTY_IDENTIFIER + "\n";
         }
@@ -200,18 +193,18 @@ public class StringGameLevels {
         return sb.toString();
     }
 
-    public static List<InteractiveObject> makeInteractiveObjectList(String field) throws IllegalArgumentException {
+    public static List<InteractiveObject> makeInteractiveObjects(String field) throws IllegalArgumentException {
         if (field.equals(EMPTY_IDENTIFIER)) {
             return new ArrayList<>();
         }
         return new ArrayList<>();
     }
 
-    public static String printInteractiveObjectList(List<InteractiveObject> interactiveObjects) {
+    protected static String printInteractiveObjects(List<InteractiveObject> interactiveObjects) {
         return EMPTY_IDENTIFIER + "\n";
     }
 
-    public static List<LevelLink> makeLevelLinkList(String field) throws IllegalArgumentException {
+    protected static List<LevelLink> makeLevelLinks(String field) throws IllegalArgumentException {
         if (field.equals(EMPTY_IDENTIFIER)) {
             return new ArrayList<>();
         }
@@ -223,7 +216,7 @@ public class StringGameLevels {
         return links;
     }
 
-    public static String printLevelLinkList(List<LevelLink> linkObjects) {
+    protected static String printLevelLinks(List<LevelLink> linkObjects) {
         if (linkObjects.isEmpty()) {
             return EMPTY_IDENTIFIER + "\n";
         }
@@ -232,15 +225,26 @@ public class StringGameLevels {
         return sb.toString();
     }
 
-    public static List<PointsBall> makePointsSourceList(String field) throws IllegalArgumentException {
+    protected static List<PointsBall> makePointsBalls(String field) throws IllegalArgumentException {
         if (field.equals(EMPTY_IDENTIFIER)) {
             return new ArrayList<>();
         }
-        return new ArrayList<>();
+        List<PointsBall> balls = new ArrayList<>();
+        String[] pointsDats = field.split("\n");
+        for (String pointsDat : pointsDats) {
+            makePointsBall(pointsDat).ifPresent(pb -> balls.add(pb));
+        }
+        return balls;
     }
 
-    public static String printPointsSourceList(List<PointsBall> interactiveObjects) {
-        return EMPTY_IDENTIFIER + "\n";
+    protected static String printPointsBalls(List<PointsBall> pointsBalls) {
+        if (pointsBalls.isEmpty()) {
+            return EMPTY_IDENTIFIER + "\n";
+        } else {
+            StringBuilder sb = new StringBuilder();
+            pointsBalls.forEach(pb -> sb.append(printPointsBall(pb)).append("\n"));
+            return sb.toString();
+        }
     }
 
 }

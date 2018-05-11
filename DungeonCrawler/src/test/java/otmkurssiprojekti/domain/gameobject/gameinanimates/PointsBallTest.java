@@ -13,7 +13,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
-import otmkurssiprojekti.domain.gameobject.location.Direction;
 
 /**
  *
@@ -25,6 +24,7 @@ public class PointsBallTest {
     private Coords coords;
     private int points;
     private PointsBall pointsBall;
+    PointsBall pbOther;
 
     public PointsBallTest() {
     }
@@ -43,6 +43,7 @@ public class PointsBallTest {
         coords = new Coords(8, 9, 14);
         points = 20;
         pointsBall = new PointsBall(id, coords, points);
+        pbOther = new PointsBall('^', new Coords(0, 0, 3), points);
     }
 
     @After
@@ -95,6 +96,46 @@ public class PointsBallTest {
     @Test
     public void testGetPoints() {
         assertThat(pointsBall.getPoints(), is(points));
+    }
+
+    /**
+     * Test of hashCode method, of class PointsBall.
+     */
+    @Test
+    public void testHashCode() {
+        assertNotEquals(pbOther.hashCode(), pointsBall.hashCode());
+    }
+
+    /**
+     * Test of equals method, of class PointsBall.
+     */
+    @Test
+    public void testEquals1() {
+        assertNotEquals(pbOther, pointsBall);
+    }
+
+    /**
+     * Test of equals method, of class PointsBall.
+     */
+    @Test
+    public void testEquals2() {
+        assertEquals(pbOther, pbOther);
+    }
+
+    /**
+     * Test of equals method, of class PointsBall.
+     */
+    @Test
+    public void testEquals3() {
+        assertNotEquals(pointsBall, pbOther);
+    }
+
+    /**
+     * Test of equals method, of class PointsBall.
+     */
+    @Test
+    public void testEquals4() {
+        assertEquals(pointsBall, pointsBall);
     }
 
 }

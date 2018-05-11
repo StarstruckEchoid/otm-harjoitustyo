@@ -22,21 +22,14 @@ import otmkurssiprojekti.domain.gameobject.gamecharacter.nonplayercharacter.Host
 import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.BasicPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.Block;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.LevelLink;
+import otmkurssiprojekti.domain.gameobject.gameinanimates.PointsBall;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.NonPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.PlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
 import static otmkurssiprojekti.domain.gameobject.location.Direction.DOWN;
 import otmkurssiprojekti.domain.level.BasicGameLevel;
 import otmkurssiprojekti.domain.level.GameLevel;
-import static otmkurssiprojekti.utilityclasses.StringGameLevels.BLOCKS_LEVEL;
-import static otmkurssiprojekti.utilityclasses.StringGameLevels.makeBlockList;
-import static otmkurssiprojekti.utilityclasses.StringGameLevels.makeGameLevel;
-import static otmkurssiprojekti.utilityclasses.StringGameLevels.makeLevelLinkList;
-import static otmkurssiprojekti.utilityclasses.StringGameLevels.makeNPCList;
-import static otmkurssiprojekti.utilityclasses.StringGameLevels.printBlockList;
-import static otmkurssiprojekti.utilityclasses.StringGameLevels.printGameLevel;
-import static otmkurssiprojekti.utilityclasses.StringGameLevels.printLevelLinkList;
-import static otmkurssiprojekti.utilityclasses.StringGameLevels.printNPCList;
+import static otmkurssiprojekti.utilityclasses.StringGameLevels.*;
 
 /**
  *
@@ -55,6 +48,9 @@ public class StringGameLevelsTest {
 
     private String linksString;
     private List<LevelLink> links;
+
+    private String pointsBallsString;
+    private List<PointsBall> pointsBalls;
 
     private final String levelName = "Test_Level.txt";
     private String gameLevelString;
@@ -116,6 +112,16 @@ public class StringGameLevelsTest {
         links.add(new LevelLink('[', new Coords(3, 6, 5), "Test2.txt"));
         links.add(new LevelLink('[', new Coords(2, 0, 0), "Test3.txt"));
 
+        pointsBallsString
+                = "*;0,0,0;3400\n"
+                + "*;1,1,1;1700\n"
+                + "*;2,5,0;240\n";
+
+        pointsBalls = new ArrayList<>();
+        pointsBalls.add(new PointsBall('*', new Coords(0, 0, 0), 3400));
+        pointsBalls.add(new PointsBall('*', new Coords(1, 1, 1), 1700));
+        pointsBalls.add(new PointsBall('*', new Coords(2, 5, 0), 240));
+
         gameLevelString
                 = levelName + "\n"
                 + "\n"
@@ -154,44 +160,64 @@ public class StringGameLevelsTest {
     }
 
     @Test
-    public void testMakeNPCList() {
-        List<NonPlayerCharacter> madeNpcs = makeNPCList(npcsString);
+    public void testMakeNPCs() {
+        List<NonPlayerCharacter> madeNpcs = makeNPCs(npcsString);
 
         assertThat(madeNpcs, is(npcs));
     }
 
     @Test
-    public void testPrintNPCList() {
-        String madeNpcsString = printNPCList(npcs);
+    public void testPrintNPCs() {
+        String madeNpcsString = printNPCs(npcs);
 
         assertThat(madeNpcsString, is(npcsString));
     }
 
     @Test
-    public void testMakeBlockList() {
-        List<Block> madeBlocks = makeBlockList(blocksString);
+    public void testMakeBlocks() {
+        List<Block> madeBlocks = makeBlocks(blocksString);
 
         assertTrue("Expected\n" + blocks.toString() + "\nbut got\n" + madeBlocks.toString(), madeBlocks.containsAll(blocks));
     }
 
     @Test
-    public void testPrintBlockList() {
-        String madeBlocksString = printBlockList(blocks);
+    public void testPrintBlocks() {
+        String madeBlocksString = printBlocks(blocks);
 
         assertThat(madeBlocksString, is(blocksString));
     }
 
     @Test
-    public void testMakeLevelLinkList() {
-        List<LevelLink> madeLinks = makeLevelLinkList(linksString);
+    public void testMakeLevelLinks() {
+        List<LevelLink> madeLinks = makeLevelLinks(linksString);
 
         assertTrue(madeLinks.containsAll(links));
     }
 
     @Test
-    public void testPrintLevelLinkList() {
-        String madeLinksString = printLevelLinkList(links);
+    public void testPrintLevelLinks() {
+        String madeLinksString = printLevelLinks(links);
 
         assertThat(madeLinksString, is(linksString));
+    }
+
+    /**
+     * Test of makePointsBalls method, of class StringGameLevels.
+     */
+    @Test
+    public void testMakePointsBalls() {
+        List<PointsBall> madePointsBalls = makePointsBalls(pointsBallsString);
+        
+        assertEquals(madePointsBalls, pointsBalls);
+    }
+
+    /**
+     * Test of printPointsBalls method, of class StringGameLevels.
+     */
+    @Test
+    public void testPrintPointsBalls() {
+        String madePointsBallsString = printPointsBalls(pointsBalls);
+        
+        assertEquals(madePointsBallsString, pointsBallsString);
     }
 }

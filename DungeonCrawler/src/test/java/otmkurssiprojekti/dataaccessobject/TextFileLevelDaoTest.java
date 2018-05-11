@@ -38,7 +38,7 @@ import static otmkurssiprojekti.domain.gameobject.location.Direction.DOWN;
 import otmkurssiprojekti.domain.level.BasicGameLevel;
 import static otmkurssiprojekti.domain.level.BasicGameLevel.DIMENSIONS;
 import otmkurssiprojekti.domain.level.GameLevel;
-import static otmkurssiprojekti.utilityclasses.StringGameLevels.makeBlockList;
+import static otmkurssiprojekti.utilityclasses.StringGameLevels.makeBlocks;
 
 /**
  *
@@ -106,7 +106,7 @@ public class TextFileLevelDaoTest {
         List<NonPlayerCharacter> npcs = new ArrayList<>();
         npcs.add(new HostileNonPlayerCharacter(RAT, new Coords(2, 2, 0), DOWN));
 
-        List<Block> blocks = makeBlockList(
+        List<Block> blocks = makeBlocks(
                 "   0 \n"
                 + " ... \n"
                 + "  .  \n"

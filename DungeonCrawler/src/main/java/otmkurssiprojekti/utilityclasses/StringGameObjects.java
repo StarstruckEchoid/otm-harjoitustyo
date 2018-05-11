@@ -13,6 +13,7 @@ import otmkurssiprojekti.domain.gameobject.archetypes.NonPlayerCharacterArchetyp
 import otmkurssiprojekti.domain.gameobject.gamecharacter.nonplayercharacter.HostileNonPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.BasicPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.LevelLink;
+import otmkurssiprojekti.domain.gameobject.gameinanimates.PointsBall;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.NonPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.PlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
@@ -32,9 +33,9 @@ public class StringGameObjects {
      * @param attr The coords as a string.
      * @return The converted coords.
      */
-    public static Coords makeCoords(String attr) throws IllegalArgumentException {
-        if (!attr.matches("[0-9]+,[0-9]+,[0-9]+")) {
-            throw new IllegalArgumentException();
+    public static Optional<Coords> makeCoords(String attr) throws IllegalArgumentException {
+        if (!attr.matches("\\d+,\\d+,\\d+")) {
+            return empty();
         }
 
         String[] attrs = attr.split(",");
@@ -42,7 +43,7 @@ public class StringGameObjects {
         int y = parseInt(attrs[1]);
         int z = parseInt(attrs[2]);
 
-        return new Coords(x, y, z);
+        return of(new Coords(x, y, z));
     }
 
     /**
@@ -96,17 +97,20 @@ public class StringGameObjects {
      * @see PlayerCharacter
      * @see BasicPlayerCharacter
      */
-    public static PlayerCharacter makePlayerCharacter(String field) throws IllegalArgumentException {
+    public static Optional<PlayerCharacter> makePlayerCharacter(String field) {
+        if (!field.matches("(\\d+;){5}\\d+,\\d+,\\d+;\\d+")) {
+            return empty();
+        }
         String[] attrs = field.split(";");
         int hp = parseInt(attrs[0]);
         int str = parseInt(attrs[1]);
         int per = parseInt(attrs[2]);
         int end = parseInt(attrs[3]);
         int agl = parseInt(attrs[4]);
-        Coords coords = makeCoords(attrs[5]);
+        Coords coords = makeCoords(attrs[5]).get();
         int points = parseInt(attrs[6]);
 
-        return new BasicPlayerCharacter(hp, str, per, end, agl, coords, DOWN, points);
+        return of(new BasicPlayerCharacter(hp, str, per, end, agl, coords, DOWN, points));
     }
 
     /**
@@ -130,16 +134,16 @@ public class StringGameObjects {
      * string. Else returns empty.
      * @see NonPlayerCharacter
      */
-    public static Optional<NonPlayerCharacter> makeNonPlayerCharacter(String field) throws IllegalArgumentException {
+    public static Optional<NonPlayerCharacter> makeNonPlayerCharacter(String field) {
         String[] attrs = field.split(";");
         if (attrs.length < 2) {
             return empty();
         }
         Optional<NonPlayerCharacterArchetype> npca = makeArcheType(NonPlayerCharacterArchetype.class, attrs[0]);
-        Coords coords = makeCoords(attrs[1]);
+        Optional<Coords> coords = makeCoords(attrs[1]);
 
-        if (npca.isPresent()) {
-            return of(new HostileNonPlayerCharacter(npca.get(), coords, DOWN));
+        if (coords.isPresent() && npca.isPresent()) {
+            return of(new HostileNonPlayerCharacter(npca.get(), coords.get(), DOWN));
         }
         return empty();
     }
@@ -160,19 +164,41 @@ public class StringGameObjects {
      * @param field The string representation of this LinkObject.
      * @return The parsed LinkObject.
      */
-    public static Optional<LevelLink> makeLinkObject(String field) throws IllegalArgumentException {
+    public static Optional<LevelLink> makeLinkObject(String field) {
         String[] attrs = field.split(";");
         if (attrs.length < 3) {
             return empty();
         }
         char id = attrs[0].charAt(0);
-        Coords coords = makeCoords(attrs[1]);
+        Optional<Coords> coords = makeCoords(attrs[1]);
         String address = attrs[2];
-        return of(new LevelLink(id, coords, address));
+        if (coords.isPresent()) {
+            return of(new LevelLink(id, coords.get(), address));
+        } else {
+            return empty();
+        }
     }
 
     public static String printLinkObject(LevelLink linkObject) {
         return linkObject.getId() + ";" + printCoords(linkObject.getCoords()) + ";" + linkObject.getLinkAddress();
     }
 
+    public static Optional<PointsBall> makePointsBall(String field) throws IllegalArgumentException {
+        if (!field.matches(".{1};(\\d|,)+;\\d+")) {
+            return empty();
+        }
+        String[] attrs = field.split(";");
+        char id = attrs[0].charAt(0);
+        Optional<Coords> coords = makeCoords(attrs[1]);
+        int points = Integer.parseInt(attrs[2]);
+        if (coords.isPresent()) {
+            return of(new PointsBall(id, coords.get(), points));
+        } else {
+            return empty();
+        }
+    }
+
+    public static String printPointsBall(PointsBall pointsBall) {
+        return pointsBall.id + ";" + printCoords(pointsBall.coords) + ";" + Integer.toString(pointsBall.points);
+    }
 }
