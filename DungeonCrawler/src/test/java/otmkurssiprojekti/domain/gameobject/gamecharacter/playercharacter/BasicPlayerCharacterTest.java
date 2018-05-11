@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.nonplayercharacter.HostileNonPlayerCharacter;
+import otmkurssiprojekti.domain.gameobject.gameinanimates.PointsBall;
 import otmkurssiprojekti.domain.gameobject.interfaces.Destructible;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
 import otmkurssiprojekti.domain.gameobject.location.Direction;
@@ -24,6 +25,8 @@ import static otmkurssiprojekti.domain.gameobject.location.Direction.DOWN;
  */
 public class BasicPlayerCharacterTest {
 
+    private Coords bpcCoords;
+    private int initPoints;
     private BasicPlayerCharacter bpc;
 
     public BasicPlayerCharacterTest() {
@@ -39,7 +42,9 @@ public class BasicPlayerCharacterTest {
 
     @Before
     public void setUp() {
-        bpc = new BasicPlayerCharacter(20, 100, 0, 0, 0, new Coords(0, 0, 0), DOWN, 2400);
+        bpcCoords = new Coords(0, 0, 0);
+        initPoints = 2400;
+        bpc = new BasicPlayerCharacter(20, 100, 0, 0, 0, bpcCoords, DOWN, initPoints);
     }
 
     @After
@@ -90,6 +95,27 @@ public class BasicPlayerCharacterTest {
         instance.hurt(d);
         assertTrue(d.isDead());
         assertThat(bpc.getPoints(), is(2420));
+    }
+
+    /**
+     * Test of collectPoint method, of class BasicPlayerCharacter.
+     */
+    @Test
+    public void testCollectPoint1() {
+        int points = 20;
+        PointsBall pb = new PointsBall('*', bpcCoords, points);
+        assertTrue(bpc.collectPoint(pb));
+        assertThat(bpc.getPoints(), is(initPoints + points));
+    }
+
+    /**
+     * Test of collectPoint method, of class BasicPlayerCharacter.
+     */
+    @Test
+    public void testCollectPoint2() {
+        PointsBall pb = new PointsBall('*', new Coords(-1, 3, 22), 20);
+        assertFalse(bpc.collectPoint(pb));
+        assertThat(bpc.getPoints(), is(initPoints));
     }
 
 }
