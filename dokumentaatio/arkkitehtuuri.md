@@ -42,7 +42,7 @@ Sovelluslogiikkaan kuuluu myös rajapinta DataService, joka hoitaa levyoperaatio
 * fetchUsers(), joka palauttaa listan tallennettujen käyttäjien nimistä.
 * setPlayer(String playerName), joka asettaa pelaajaksi pelaajan, jonka nimi on playerName. Lisäksi tallettaa pelaajan levylle, jos ei ole vielä olemassa.
 
-...ja niin edelleen. Tarkoituksena on, että yksikään käyttöjärjestelmän luokka ei kutsu daoja suoraan, vaan aina DataServicen kautta. Näin myös varmistetaan, että kaikkialla ohjelmassa käytetään yhteensopivia daoja: Ohjelmassa kun on olemassa sekä ihmisen luettaviin tekstitiedostoihin erikoistuneita daoja, kuten TextFileGameSaveDao ja TextFileLevelDao, mutta myös binääritiedostoihin erikoituneita daoja kuten ByteFileGameSaveDao ja ByteFileLevelDao. Näitä taas on todella huono käyttää ristiin.
+...ja niin edelleen. Tarkoituksena on, että yksikään käyttöjärjestelmän luokka ei kutsu daoja suoraan, vaan aina DataServicen kautta. Näin myös varmistetaan, että kaikkialla ohjelmassa käytetään yhteensopivia daoja: Ohjelmassa kun oli vielä aikaisemmissa versioissa sekä ihmisen luettaviin tekstitiedostoihin erikoistuneita daoja, kuten TextFileGameSaveDao ja TextFileLevelDao, mutta myös binääritiedostoihin erikoituneita daoja kuten ByteFileGameSaveDao ja ByteFileLevelDao. Näitä taas oli todella huono käyttää ristiin.
 
 ## Päätoiminnallisuudet
 
