@@ -16,10 +16,10 @@ import static otmkurssiprojekti.domain.gameobject.archetypes.interactiveobject.C
  */
 public enum InteractiveObjectArchetype implements Archetype {
 
-    SWITCH('T', false, ActivationType.ON_PRESSED, SIGNAL_CHILDREN.getInteraction()),
-    IRON_GATE('#', true, ActivationType.SIGNAL_ONLY, OPEN_GATE.getInteraction()),
+    SWITCH('t', false, ActivationType.ON_PRESSED, SIGNAL_CHILDREN.getInteraction()),
+    IRON_GATE('G', true, ActivationType.SIGNAL_ONLY, OPEN_GATE.getInteraction()),
     PRESSURE_PLATE('_', false, ActivationType.ON_TOUCHED, SIGNAL_CHILDREN.getInteraction()),
-    TOGGLE_DOOR('|', true, ActivationType.ON_PRESSED, TOGGLE_GATE.getInteraction());
+    TOGGLE_DOOR('D', true, ActivationType.ON_PRESSED, TOGGLE_GATE.getInteraction());
 
     private final char id;
     private final boolean solid;

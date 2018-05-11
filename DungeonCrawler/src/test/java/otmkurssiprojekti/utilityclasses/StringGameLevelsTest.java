@@ -109,9 +109,9 @@ public class StringGameLevelsTest {
         }
 
         interactivesString
-                = "T;0,0,0\n"
-                + "\t#;4,4,2\n"
-                + "|;3,3,3\n";
+                = "t;0,0,0\n"
+                + "\tG;4,4,2\n"
+                + "D;3,3,3\n";
 
         interactives = new Stack<>();
         interactives.push(new InteractiveObject(InteractiveObjectArchetype.SWITCH, new Coords(0, 0, 0), new ArrayList<>()));

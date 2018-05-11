@@ -50,9 +50,20 @@ public class InteractiveObject extends BasicMobileObject implements GameObject, 
     }
 
     //Getters
+    /**
+     * Unlike any other GameObject, interactive objects dynamically switch
+     * between uppercase and lowercase depending on whether they're solid or
+     * not.
+     *
+     * @return
+     */
     @Override
     public char getId() {
-        return id;
+        if (this.solid) {
+            return Character.toUpperCase(id);
+        } else {
+            return Character.toLowerCase(id);
+        }
     }
 
     @Override

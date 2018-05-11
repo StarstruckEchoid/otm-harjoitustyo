@@ -104,7 +104,10 @@ public class BasicGameLevel implements GameLevel {
     protected Boolean hasSolidBlockAt(Coords coords) {
         List<GameObject> possiblySolidBlocks = new ArrayList<>();
         possiblySolidBlocks.addAll(blocks);
-        possiblySolidBlocks.addAll(interactives);
+        for (InteractiveObject io : interactives) {
+            possiblySolidBlocks.add(io);
+            possiblySolidBlocks.addAll(io.getChildren());
+        }
         return possiblySolidBlocks.stream()
                 .filter(b -> b.getCoords().toFlatCoords().equals(coords.toFlatCoords()))
                 .anyMatch(b -> b.isSolid());
@@ -166,9 +169,11 @@ public class BasicGameLevel implements GameLevel {
     @Override
     public List<GameObject> getGameObjects() {
         List<GameObject> all = new ArrayList<>();
-        all.add(player);
         all.addAll(blocks);
-        all.addAll(interactives);
+        for (InteractiveObject io : interactives) {
+            all.add(io);
+            all.addAll(io.getChildren());
+        }
         all.addAll(levelLinks);
         all.addAll(npcs);
         all.addAll(points);
