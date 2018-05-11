@@ -3,10 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package otmkurssiprojekti.domain.gameobject.archetypes;
+package otmkurssiprojekti.domain.gameobject.archetypes.interactiveobject;
 
 import java.util.function.Consumer;
+import otmkurssiprojekti.domain.gameobject.archetypes.Archetype;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.InteractiveObject;
+import static otmkurssiprojekti.domain.gameobject.archetypes.interactiveobject.ConsumerArchetype.*;
 
 /**
  *
@@ -14,10 +16,10 @@ import otmkurssiprojekti.domain.gameobject.gameinanimates.InteractiveObject;
  */
 public enum InteractiveObjectArchetype implements Archetype {
 
-    SWITCH('T', false, ActivationType.ON_PRESSED, (i) -> i.getChildren().forEach(c -> c.reactToSignal())),
-    IRON_GATE('#', true, ActivationType.SIGNAL_ONLY, (i) -> i.setSolid(false)),
-    PRESSURE_PLATE('_', false, ActivationType.ON_TOUCHED, (i) -> i.getChildren().forEach(c -> c.reactToSignal())),
-    TOGGLE_DOOR('|', true, ActivationType.ON_PRESSED, (i) -> i.setSolid(!i.isSolid()));
+    SWITCH('T', false, ActivationType.ON_PRESSED, SIGNAL_CHILDREN.getInteraction()),
+    IRON_GATE('#', true, ActivationType.SIGNAL_ONLY, OPEN_GATE.getInteraction()),
+    PRESSURE_PLATE('_', false, ActivationType.ON_TOUCHED, SIGNAL_CHILDREN.getInteraction()),
+    TOGGLE_DOOR('|', true, ActivationType.ON_PRESSED, TOGGLE_GATE.getInteraction());
 
     private final char id;
     private final boolean solid;

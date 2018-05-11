@@ -91,4 +91,9 @@ public class PointsBall implements GameObject, PointsSource {
         return Objects.equals(this.coords, other.coords);
     }
 
+    @Override
+    public String toString() {
+        return this.id + ": " + this.coords.toString() + "(" + this.points + ")";
+    }
+
 }

@@ -6,12 +6,16 @@
 package otmkurssiprojekti.utilityclasses;
 
 import static java.lang.Integer.parseInt;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import static java.util.Optional.empty;
 import static java.util.Optional.of;
 import otmkurssiprojekti.domain.gameobject.archetypes.NonPlayerCharacterArchetype;
+import otmkurssiprojekti.domain.gameobject.archetypes.interactiveobject.InteractiveObjectArchetype;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.nonplayercharacter.HostileNonPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.BasicPlayerCharacter;
+import otmkurssiprojekti.domain.gameobject.gameinanimates.InteractiveObject;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.LevelLink;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.PointsBall;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.NonPlayerCharacter;
@@ -200,5 +204,22 @@ public class StringGameObjects {
 
     public static String printPointsBall(PointsBall pointsBall) {
         return pointsBall.id + ";" + printCoords(pointsBall.coords) + ";" + Integer.toString(pointsBall.points);
+    }
+
+    public static Optional<InteractiveObject> makeInteractiveObject(String field) throws IllegalArgumentException {
+        String[] attrs = field.split(";");
+        Optional<InteractiveObjectArchetype> archetype = makeArcheType(InteractiveObjectArchetype.class, attrs[0]);
+        Optional<Coords> coords = makeCoords(attrs[1]);
+        List<InteractiveObject> children = new ArrayList<>();
+
+        if (archetype.isPresent() && coords.isPresent()) {
+            return of(new InteractiveObject(archetype.get(), coords.get(), children));
+        } else {
+            return empty();
+        }
+    }
+
+    public static String printInteractiveObject(InteractiveObject interactiveObject) {
+        return interactiveObject.getId() + ";" + printCoords(interactiveObject.getCoords());
     }
 }

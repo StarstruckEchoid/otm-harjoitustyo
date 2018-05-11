@@ -8,6 +8,7 @@ package otmkurssiprojekti.utilityclasses;
 import static java.lang.String.copyValueOf;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 import otmkurssiprojekti.domain.gameobject.archetypes.BlockArchetype;
 import static otmkurssiprojekti.domain.gameobject.archetypes.BlockArchetype.AIR;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.Block;
@@ -92,7 +93,7 @@ public class StringGameLevels {
         sb.append(printBlocks(gameLevel.getBlocks())).append("\n");
         sb.append(printInteractiveObjects(gameLevel.getInteractiveObjects())).append("\n");
         sb.append(printLevelLinks(gameLevel.getLevelLinks())).append("\n");
-        sb.append(printPointsBalls(gameLevel.getPointsBalls())).append("\n");
+        sb.append(printPointsBalls(gameLevel.getPointsBalls()));
 
         return sb.toString();
     }
@@ -150,7 +151,7 @@ public class StringGameLevels {
      * @return List of ImmutableObjects.
      * @see Block
      */
-    public static List<Block> makeBlocks(String field) throws IllegalArgumentException {
+    protected static List<Block> makeBlocks(String field) throws IllegalArgumentException {
         if (field.equals(EMPTY_IDENTIFIER)) {
             return new ArrayList<>();
         }
@@ -174,7 +175,7 @@ public class StringGameLevels {
      * @param blocks List of ImmutableObjects.
      * @return StringGameLevels compatible string representation.
      */
-    public static String printBlocks(List<Block> blocks) {
+    protected static String printBlocks(List<Block> blocks) {
         if (blocks.isEmpty()) {
             return EMPTY_IDENTIFIER + "\n";
         }
@@ -193,15 +194,34 @@ public class StringGameLevels {
         return sb.toString();
     }
 
-    public static List<InteractiveObject> makeInteractiveObjects(String field) throws IllegalArgumentException {
+    protected static List<InteractiveObject> makeInteractiveObjects(String field) throws IllegalArgumentException {
         if (field.equals(EMPTY_IDENTIFIER)) {
             return new ArrayList<>();
         }
-        return new ArrayList<>();
+        Stack<InteractiveObject> interactives = new Stack<>();
+        String[] iaoDats = field.split("\n");
+        for (String iaoDat : iaoDats) {
+            if (iaoDat.startsWith("\t")) {
+                makeInteractiveObject(iaoDat.substring(1)).ifPresent(iao -> interactives.peek().getChildren().add(iao));
+            } else {
+                makeInteractiveObject(iaoDat).ifPresent(iao -> interactives.push(iao));
+            }
+        }
+        return interactives;
     }
 
     protected static String printInteractiveObjects(List<InteractiveObject> interactiveObjects) {
-        return EMPTY_IDENTIFIER + "\n";
+        if (interactiveObjects.isEmpty()) {
+            return EMPTY_IDENTIFIER + "\n";
+        }
+        StringBuilder sb = new StringBuilder();
+        for (InteractiveObject interactiveObject : interactiveObjects) {
+            sb.append(printInteractiveObject(interactiveObject)).append("\n");
+            for (InteractiveObject child : interactiveObject.getChildren()) {
+                sb.append("\t").append(printInteractiveObject(child)).append("\n");
+            }
+        }
+        return sb.toString();
     }
 
     protected static List<LevelLink> makeLevelLinks(String field) throws IllegalArgumentException {

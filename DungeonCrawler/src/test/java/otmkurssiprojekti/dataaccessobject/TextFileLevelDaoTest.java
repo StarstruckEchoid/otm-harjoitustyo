@@ -38,7 +38,8 @@ import static otmkurssiprojekti.domain.gameobject.location.Direction.DOWN;
 import otmkurssiprojekti.domain.level.BasicGameLevel;
 import static otmkurssiprojekti.domain.level.BasicGameLevel.DIMENSIONS;
 import otmkurssiprojekti.domain.level.GameLevel;
-import static otmkurssiprojekti.utilityclasses.StringGameLevels.makeBlocks;
+import otmkurssiprojekti.utilityclasses.StringGameLevels;
+import otmkurssiprojekti.utilityclasses.StringGameObjects;
 
 /**
  *
@@ -106,20 +107,22 @@ public class TextFileLevelDaoTest {
         List<NonPlayerCharacter> npcs = new ArrayList<>();
         npcs.add(new HostileNonPlayerCharacter(RAT, new Coords(2, 2, 0), DOWN));
 
-        List<Block> blocks = makeBlocks(
-                "   0 \n"
+        GameLevel gl = StringGameLevels.makeGameLevel(
+                "testLevel\n"
+                + "\n"
+                + StringGameObjects.printPlayerCharacter(new BasicPlayerCharacter(THIEF, new Coords(0, 0, 0), DOWN)) + "\n"
+                + "\n"
+                + "   0 \n"
                 + " ... \n"
                 + "  .  \n"
-        );
-
-        BasicGameLevel gl = new BasicGameLevel(
-                "testLevel",
-                new BasicPlayerCharacter(THIEF, new Coords(0, 0, 0), DOWN),
-                npcs,
-                blocks,
-                new ArrayList<>(),
-                new ArrayList<>(),
-                new ArrayList<>()
+                + "\n"
+                + StringGameLevels.printNPCs(npcs)
+                + "\n"
+                + "EMPTY\n"
+                + "\n"
+                + "EMPTY\n"
+                + "\n"
+                + "EMPTY\n"
         );
         testSaveLoadLevel(gl);
     }

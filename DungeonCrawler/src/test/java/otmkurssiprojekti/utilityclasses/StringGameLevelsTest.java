@@ -7,6 +7,7 @@ package otmkurssiprojekti.utilityclasses;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 import static org.hamcrest.CoreMatchers.is;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -18,9 +19,11 @@ import static otmkurssiprojekti.domain.gameobject.archetypes.BlockArchetype.GRAS
 import static otmkurssiprojekti.domain.gameobject.archetypes.BlockArchetype.STONE_PATH;
 import static otmkurssiprojekti.domain.gameobject.archetypes.BlockArchetype.STONE_WALL;
 import static otmkurssiprojekti.domain.gameobject.archetypes.NonPlayerCharacterArchetype.RAT;
+import otmkurssiprojekti.domain.gameobject.archetypes.interactiveobject.InteractiveObjectArchetype;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.nonplayercharacter.HostileNonPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter.BasicPlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.Block;
+import otmkurssiprojekti.domain.gameobject.gameinanimates.InteractiveObject;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.LevelLink;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.PointsBall;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.NonPlayerCharacter;
@@ -51,6 +54,9 @@ public class StringGameLevelsTest {
 
     private String pointsBallsString;
     private List<PointsBall> pointsBalls;
+
+    private String interactivesString;
+    private Stack<InteractiveObject> interactives;
 
     private final String levelName = "Test_Level.txt";
     private String gameLevelString;
@@ -102,6 +108,16 @@ public class StringGameLevelsTest {
             }
         }
 
+        interactivesString
+                = "T;0,0,0\n"
+                + "\t#;4,4,2\n"
+                + "|;3,3,3\n";
+
+        interactives = new Stack<>();
+        interactives.push(new InteractiveObject(InteractiveObjectArchetype.SWITCH, new Coords(0, 0, 0), new ArrayList<>()));
+        interactives.peek().addChild(new InteractiveObject(InteractiveObjectArchetype.IRON_GATE, new Coords(4, 4, 2), new ArrayList<>()));
+        interactives.push(new InteractiveObject(InteractiveObjectArchetype.TOGGLE_DOOR, new Coords(3, 3, 3), new ArrayList<>()));
+
         linksString
                 = "[;0,1,11;Test1.txt\n"
                 + "[;3,6,5;Test2.txt\n"
@@ -131,14 +147,13 @@ public class StringGameLevelsTest {
                 + "\n"
                 + blocksString
                 + "\n"
-                + "EMPTY\n"
+                + interactivesString
                 + "\n"
                 + linksString
                 + "\n"
-                + "EMPTY\n"
-                + "\n";
+                + pointsBallsString;
 
-        gameLevel = new BasicGameLevel(levelName, pc, npcs, blocks, new ArrayList<>(), links, new ArrayList<>());
+        gameLevel = new BasicGameLevel(levelName, pc, npcs, blocks, interactives, links, pointsBalls);
     }
 
     @After
@@ -207,7 +222,7 @@ public class StringGameLevelsTest {
     @Test
     public void testMakePointsBalls() {
         List<PointsBall> madePointsBalls = makePointsBalls(pointsBallsString);
-        
+
         assertEquals(madePointsBalls, pointsBalls);
     }
 
@@ -217,7 +232,27 @@ public class StringGameLevelsTest {
     @Test
     public void testPrintPointsBalls() {
         String madePointsBallsString = printPointsBalls(pointsBalls);
-        
+
         assertEquals(madePointsBallsString, pointsBallsString);
+    }
+
+    /**
+     * Test of makeInteractiveObjects method, of class StringGameLevels.
+     */
+    @Test
+    public void testMakeInteractiveObjects() {
+        List<InteractiveObject> madeInteractives = makeInteractiveObjects(interactivesString);
+
+        assertArrayEquals(madeInteractives.toArray(), interactives.toArray());
+    }
+
+    /**
+     * Test of printInteractiveObjects method, of class StringGameLevels.
+     */
+    @Test
+    public void testPrintInteractiveObjects() {
+        String madeInteractivesString = printInteractiveObjects(interactives);
+
+        assertThat(madeInteractivesString, is(interactivesString));
     }
 }
