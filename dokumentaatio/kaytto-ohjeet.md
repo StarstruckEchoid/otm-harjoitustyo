@@ -52,7 +52,7 @@ Sovelluksen suola, itse peli!
 ![Pelinäkymä](/dokumentaatio/kuvat/LevelScreen.PNG)
 Pelaajan hahmoa symboloi merkki '@'. Pelissä liikutaan [WASD](https://en.wikipedia.org/wiki/Arrow_keys#WASD_keys):illa ylös, alas, vasemmalle ja oikealle. Nuolinäppäimet eivät kuitenkaan ole turhat, sillä niillä pelaaja lyö kuhunkin ilmansuuntaan. Lyönnin kantama on 1 palikka. Pelaaja lyö myös palikoita, jotka ovat pelaajan kanssa päällekäin.  
 Lyönti tekee vahinkoa vihollishahmoille. Viholliset tunnistaa siitä, että ne lähtevät liikkumaan pelaajaa kohti pelaajan ollessa tarpeeksi lähellä ja tekevät pelaajalle vahinkoa päästessään iholle.  
-ENTER-napilla pelaaja vuorovaikuttaa tason interaktiivisten esineiden kanssa tai siirtyy tasolinkkejä pitkin toisiin tasoihin. Tasolinkkejä symboloi yleisimmin merkki '\['.  
+ENTER-napilla pelaaja vuorovaikuttaa tason interaktiivisten esineiden kanssa (esimerkiksi vivun symboli on 't') tai siirtyy tasolinkkejä pitkin toisiin tasoihin. Tasolinkkejä symboloi yleisimmin merkki '\['.  
 ESCAPE-napilla pelaaja siirtyy [taukovalikkoon](#taukovalikko).
 </details>
 <details>
