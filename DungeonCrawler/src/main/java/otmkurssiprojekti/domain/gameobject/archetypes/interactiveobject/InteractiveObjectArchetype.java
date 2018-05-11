@@ -6,15 +6,15 @@
 package otmkurssiprojekti.domain.gameobject.archetypes.interactiveobject;
 
 import java.util.function.Consumer;
-import otmkurssiprojekti.domain.gameobject.archetypes.Archetype;
 import otmkurssiprojekti.domain.gameobject.gameinanimates.InteractiveObject;
 import static otmkurssiprojekti.domain.gameobject.archetypes.interactiveobject.ConsumerArchetype.*;
 
 /**
+ * Archetypes for InteractiveObjects.
  *
  * @author Juho Gröhn
  */
-public enum InteractiveObjectArchetype implements Archetype {
+public enum InteractiveObjectArchetype {
 
     SWITCH('t', false, ActivationType.ON_PRESSED, SIGNAL_CHILDREN.getInteraction()),
     IRON_GATE('G', true, ActivationType.SIGNAL_ONLY, OPEN_GATE.getInteraction()),
@@ -33,7 +33,6 @@ public enum InteractiveObjectArchetype implements Archetype {
         this.action = action;
     }
 
-    @Override
     public char getId() {
         return id;
     }

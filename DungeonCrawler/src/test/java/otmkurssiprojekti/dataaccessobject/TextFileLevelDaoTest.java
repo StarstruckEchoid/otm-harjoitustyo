@@ -20,7 +20,6 @@ import org.junit.Test;
 import static otmkurssiprojekti.domain.gameobject.archetypes.BlockArchetype.GRASS;
 import static otmkurssiprojekti.domain.gameobject.archetypes.BlockArchetype.STONE_WALL;
 import static otmkurssiprojekti.domain.gameobject.archetypes.NonPlayerCharacterArchetype.DEER;
-import static otmkurssiprojekti.domain.gameobject.archetypes.NonPlayerCharacterArchetype.FLY;
 import static otmkurssiprojekti.domain.gameobject.archetypes.NonPlayerCharacterArchetype.FOLLOWER;
 import static otmkurssiprojekti.domain.gameobject.archetypes.NonPlayerCharacterArchetype.RAT;
 import static otmkurssiprojekti.domain.gameobject.archetypes.NonPlayerCharacterArchetype.VILLAGER;
@@ -40,6 +39,7 @@ import static otmkurssiprojekti.domain.level.BasicGameLevel.DIMENSIONS;
 import otmkurssiprojekti.domain.level.GameLevel;
 import otmkurssiprojekti.utilityclasses.StringGameLevels;
 import otmkurssiprojekti.utilityclasses.StringGameObjects;
+import static otmkurssiprojekti.domain.gameobject.archetypes.NonPlayerCharacterArchetype.BEE;
 
 /**
  *
@@ -136,7 +136,7 @@ public class TextFileLevelDaoTest {
         npcs.add(new HostileNonPlayerCharacter(VILLAGER, new Coords(7, 10, 0), DOWN));
         npcs.add(new HostileNonPlayerCharacter(RAT, new Coords(8, 8, 0), DOWN));
         npcs.add(new HostileNonPlayerCharacter(DEER, new Coords(4, 9, 0), DOWN));
-        npcs.add(new HostileNonPlayerCharacter(FLY, new Coords(1, 1, 0), DOWN));
+        npcs.add(new HostileNonPlayerCharacter(BEE, new Coords(1, 1, 0), DOWN));
         List<Block> blocks = new ArrayList<>();
         for (int x = 0; x < DIMENSIONS.getX(); x++) {
             for (int y = 0; y < DIMENSIONS.getY(); y++) {

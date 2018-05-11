@@ -5,17 +5,21 @@
  */
 package otmkurssiprojekti.domain.gameobject.archetypes;
 
+import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.StatsCharacter;
+
 /**
+ * Archetypes for NonPlayerCharacters. Include the id and all statistics.
  *
  * @author Juho Gröhn
+ * @see StatsCharacter
  */
-public enum NonPlayerCharacterArchetype implements Archetype {
+public enum NonPlayerCharacterArchetype {
     //(id,lvl,hp,str,per,end,agl,behaviour)
     VILLAGER('%', 1, 10, 0, 0, 0, 10),
     RAT('r', 1, 3, 1, 0, 0, 20),
     FOLLOWER('f', 0, 10, 0, 0, 0, 80),
     DEER('d', 5, 10, 0, 0, 0, 30),
-    FLY('¨', 1, 1, 0, 0, 0, 90);
+    BEE('b', 1, 1, 0, 0, 0, 90);
 
     private final char id;
 
@@ -37,7 +41,6 @@ public enum NonPlayerCharacterArchetype implements Archetype {
         this.agl = agl;
     }
 
-    @Override
     public char getId() {
         return id;
     }

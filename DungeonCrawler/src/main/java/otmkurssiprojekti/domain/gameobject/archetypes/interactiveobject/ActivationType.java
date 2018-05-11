@@ -6,6 +6,7 @@
 package otmkurssiprojekti.domain.gameobject.archetypes.interactiveobject;
 
 /**
+ * The ways in which an object, typically an InteractiveObject can be activated.
  *
  * @author Juho Gröhn
  */

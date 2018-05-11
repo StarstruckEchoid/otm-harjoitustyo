@@ -18,6 +18,8 @@ import otmkurssiprojekti.domain.gameobject.location.Coords;
 import otmkurssiprojekti.domain.gameobject.location.Direction;
 
 /**
+ * An InteractiveObject reacts to the player or other InteractiveObjects. These
+ * objects include doors, switches, and pressure plates.
  *
  * @author Juho Gröhn
  */
@@ -55,7 +57,8 @@ public class InteractiveObject extends BasicMobileObject implements GameObject, 
      * between uppercase and lowercase depending on whether they're solid or
      * not.
      *
-     * @return
+     * @return The id of this InteractiveObject, but lowercase if the object is
+     * not solid. Else the id is in uppercase.
      */
     @Override
     public char getId() {

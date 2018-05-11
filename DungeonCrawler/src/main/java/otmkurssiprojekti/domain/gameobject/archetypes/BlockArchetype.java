@@ -10,7 +10,7 @@ package otmkurssiprojekti.domain.gameobject.archetypes;
  *
  * @author Juho Gröhn
  */
-public enum BlockArchetype implements Archetype {
+public enum BlockArchetype {
     AIR(' ', true, false),
     STONE_PATH('.', false, false),
     GRASS(',', false, false),
@@ -32,7 +32,6 @@ public enum BlockArchetype implements Archetype {
      *
      * @return id
      */
-    @Override
     public char getId() {
         return id;
     }
