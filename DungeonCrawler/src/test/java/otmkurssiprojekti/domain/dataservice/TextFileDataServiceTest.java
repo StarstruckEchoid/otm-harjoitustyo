@@ -26,7 +26,7 @@ import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.PlayerCharacte
 import otmkurssiprojekti.domain.gameobject.location.Coords;
 import static otmkurssiprojekti.domain.gameobject.location.Direction.LEFT;
 import otmkurssiprojekti.domain.level.GameLevel;
-import static otmkurssiprojekti.utilityclasses.TextFileGameLevels.makeGameLevel;
+import static otmkurssiprojekti.utilityclasses.StringGameLevels.makeGameLevel;
 
 /**
  *

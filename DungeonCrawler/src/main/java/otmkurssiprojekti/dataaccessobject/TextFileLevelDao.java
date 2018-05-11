@@ -15,8 +15,8 @@ import static java.util.Arrays.asList;
 import java.util.List;
 import java.util.Scanner;
 import otmkurssiprojekti.domain.level.GameLevel;
-import static otmkurssiprojekti.utilityclasses.TextFileGameLevels.makeGameLevel;
-import static otmkurssiprojekti.utilityclasses.TextFileGameLevels.printGameLevel;
+import static otmkurssiprojekti.utilityclasses.StringGameLevels.makeGameLevel;
+import static otmkurssiprojekti.utilityclasses.StringGameLevels.printGameLevel;
 
 /**
  *

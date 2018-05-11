@@ -15,7 +15,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import otmkurssiprojekti.domain.level.GameLevel;
-import static otmkurssiprojekti.utilityclasses.TextFileGameLevels.makeGameLevel;
+import static otmkurssiprojekti.utilityclasses.StringGameLevels.makeGameLevel;
 
 /**
  *

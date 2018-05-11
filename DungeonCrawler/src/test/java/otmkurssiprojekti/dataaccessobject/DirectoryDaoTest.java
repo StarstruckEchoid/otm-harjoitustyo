@@ -23,13 +23,13 @@ import org.junit.Test;
  *
  * @author Juho Gröhn
  */
-public class FileUserDaoTest {
+public class DirectoryDaoTest {
 
-    private BasicFileDao fudao;
+    private DirectoryDao fudao;
     private Path sub;
     private Path path;
 
-    public FileUserDaoTest() {
+    public DirectoryDaoTest() {
     }
 
     @BeforeClass
@@ -44,7 +44,7 @@ public class FileUserDaoTest {
     public void setUp() throws IOException {
         path = createTempDirectory("testFolder");
         sub = createTempDirectory(path, "testSubfolder");
-        fudao = new BasicFileDao(sub);
+        fudao = new DirectoryDao(sub);
     }
 
     @After
@@ -81,7 +81,7 @@ public class FileUserDaoTest {
         Path broke = createTempFile("broke", "txt");
 
         try {
-            FileDao brokeDao = new BasicFileDao(broke);
+            FileDao brokeDao = new DirectoryDao(broke);
             assertTrue("FileUserDao accepts invalid path" + broke.toString() + "in constructor.", false);
         } catch (IllegalArgumentException iae) {
             assertTrue(true);

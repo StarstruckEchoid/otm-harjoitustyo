@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * A dao that reads directories in a source directory.
  * @author Juho Gröhn
  */
-public class BasicFileDao implements FileDao {
+public class DirectoryDao implements FileDao {
 
     private final Path source;
 
@@ -25,7 +25,7 @@ public class BasicFileDao implements FileDao {
      * @param source The source directory. Most likely something like
      * "../DungeonCrawler/users".
      */
-    public BasicFileDao(Path source) {
+    public DirectoryDao(Path source) {
         if (!source.toFile().isDirectory()) {
             throw new IllegalArgumentException();
         }

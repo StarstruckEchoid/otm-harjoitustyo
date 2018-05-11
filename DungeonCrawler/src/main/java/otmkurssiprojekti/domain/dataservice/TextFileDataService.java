@@ -13,7 +13,7 @@ import java.nio.file.Path;
 import static java.nio.file.Paths.get;
 import java.util.Date;
 import java.util.List;
-import otmkurssiprojekti.dataaccessobject.BasicFileDao;
+import otmkurssiprojekti.dataaccessobject.DirectoryDao;
 import otmkurssiprojekti.dataaccessobject.GameLevelDao;
 import otmkurssiprojekti.dataaccessobject.GameSaveDao;
 import otmkurssiprojekti.dataaccessobject.TextFileGameSaveDao;
@@ -119,12 +119,12 @@ public class TextFileDataService implements DataService {
 
     @Override
     public List<String> fetchPlayers() {
-        return new BasicFileDao(userDir).loadFiles();
+        return new DirectoryDao(userDir).loadFiles();
     }
 
     @Override
     public List<String> fetchUsers() {
-        return new BasicFileDao(usersDir).loadFiles();
+        return new DirectoryDao(usersDir).loadFiles();
     }
 
     private void createDirectoryIfAbsent(Path path) throws IOException {

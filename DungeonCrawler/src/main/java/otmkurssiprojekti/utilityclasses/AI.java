@@ -26,7 +26,9 @@ public class AI {
     /**
      * Searches for the best route from coordinates from to coordinates to in
      * the context of gameLevel. bestRoute uses breadth-first search to find the
-     * route. Method returns the path as a stack of coordinates.
+     * route. Method returns the path as a stack of coordinates. NB! This method
+     * is much slower than greedyRoute, and will cause considerable lag if run
+     * too often.
      *
      * @param from The coords from which path generation begins.
      * @param to The coords to which we want to find the path.
@@ -66,10 +68,6 @@ public class AI {
         Map<Coords, Coords> backTrack = performSearchOnQueue(gameLevel, searchQueue, to);
 
         return walkMap(backTrack, to, from);
-    }
-
-    private static Comparator<Coords> nearestEuclidean(Coords to) {
-        return (a, b) -> compare(a.squaredEuclideanDistance(to), b.squaredEuclideanDistance(to));
     }
 
     private static Comparator<Coords> nearestManhattan(Coords to) {

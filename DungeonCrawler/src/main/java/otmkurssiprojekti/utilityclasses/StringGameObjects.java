@@ -22,7 +22,7 @@ import static otmkurssiprojekti.domain.gameobject.location.Direction.DOWN;
  *
  * @author Juho Gröhn
  */
-public class TextFileGameObjects {
+public class StringGameObjects {
 
     /**
      * Converts string of the form [0-9]+,[0-9]+,[0-9]+ into coords. Example:

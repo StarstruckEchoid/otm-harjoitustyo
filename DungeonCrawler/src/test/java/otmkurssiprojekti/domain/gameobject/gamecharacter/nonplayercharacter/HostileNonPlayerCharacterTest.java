@@ -16,8 +16,8 @@ import static otmkurssiprojekti.domain.gameobject.archetypes.NonPlayerCharacterA
 import otmkurssiprojekti.domain.gameobject.location.Coords;
 import static otmkurssiprojekti.domain.gameobject.location.Direction.DOWN;
 import otmkurssiprojekti.domain.level.GameLevel;
-import static otmkurssiprojekti.utilityclasses.TextFileGameLevels.makeGameLevel;
-import static otmkurssiprojekti.utilityclasses.TextFileGameObjects.printCoords;
+import static otmkurssiprojekti.utilityclasses.StringGameLevels.makeGameLevel;
+import static otmkurssiprojekti.utilityclasses.StringGameObjects.printCoords;
 
 /**
  *

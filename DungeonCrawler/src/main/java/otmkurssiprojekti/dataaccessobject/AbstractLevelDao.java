@@ -13,6 +13,7 @@ import java.util.List;
 import otmkurssiprojekti.domain.level.GameLevel;
 
 /**
+ * Implements the methods that all file-and-folder based GameLevelDaos use.
  *
  * @author gjuho
  */

@@ -20,13 +20,13 @@ import otmkurssiprojekti.domain.gameobject.location.Coords;
 import static otmkurssiprojekti.domain.gameobject.location.Direction.DOWN;
 import otmkurssiprojekti.domain.level.BasicGameLevel;
 import otmkurssiprojekti.domain.level.GameLevel;
-import static otmkurssiprojekti.utilityclasses.TextFileGameObjects.makeArcheType;
-import static otmkurssiprojekti.utilityclasses.TextFileGameObjects.makeLinkObject;
-import static otmkurssiprojekti.utilityclasses.TextFileGameObjects.makeNonPlayerCharacter;
-import static otmkurssiprojekti.utilityclasses.TextFileGameObjects.makePlayerCharacter;
-import static otmkurssiprojekti.utilityclasses.TextFileGameObjects.printLinkObject;
-import static otmkurssiprojekti.utilityclasses.TextFileGameObjects.printNonPlayerCharacter;
-import static otmkurssiprojekti.utilityclasses.TextFileGameObjects.printPlayerCharacter;
+import static otmkurssiprojekti.utilityclasses.StringGameObjects.makeArcheType;
+import static otmkurssiprojekti.utilityclasses.StringGameObjects.makeLinkObject;
+import static otmkurssiprojekti.utilityclasses.StringGameObjects.makeNonPlayerCharacter;
+import static otmkurssiprojekti.utilityclasses.StringGameObjects.makePlayerCharacter;
+import static otmkurssiprojekti.utilityclasses.StringGameObjects.printLinkObject;
+import static otmkurssiprojekti.utilityclasses.StringGameObjects.printNonPlayerCharacter;
+import static otmkurssiprojekti.utilityclasses.StringGameObjects.printPlayerCharacter;
 
 /**
  * An utility class whose purpose is to convert GameLevels into Strings and
@@ -34,7 +34,7 @@ import static otmkurssiprojekti.utilityclasses.TextFileGameObjects.printPlayerCh
  *
  * @author gjuho
  */
-public class TextFileGameLevels {
+public class StringGameLevels {
 
     /**
      * The z coordinate on which ImmutableObjects are assumed to reside in.
@@ -179,7 +179,7 @@ public class TextFileGameLevels {
      * makeBlockList:{@link #makeBlockList(java.lang.String)}.
      *
      * @param blocks List of ImmutableObjects.
-     * @return TextFileGameLevels compatible string representation.
+     * @return StringGameLevels compatible string representation.
      */
     public static String printBlockList(List<Block> blocks) {
         if (blocks.isEmpty()) {

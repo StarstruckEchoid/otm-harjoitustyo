@@ -28,21 +28,21 @@ import otmkurssiprojekti.domain.gameobject.location.Coords;
 import static otmkurssiprojekti.domain.gameobject.location.Direction.DOWN;
 import otmkurssiprojekti.domain.level.BasicGameLevel;
 import otmkurssiprojekti.domain.level.GameLevel;
-import static otmkurssiprojekti.utilityclasses.TextFileGameLevels.BLOCKS_LEVEL;
-import static otmkurssiprojekti.utilityclasses.TextFileGameLevels.makeBlockList;
-import static otmkurssiprojekti.utilityclasses.TextFileGameLevels.makeGameLevel;
-import static otmkurssiprojekti.utilityclasses.TextFileGameLevels.makeLevelLinkList;
-import static otmkurssiprojekti.utilityclasses.TextFileGameLevels.makeNPCList;
-import static otmkurssiprojekti.utilityclasses.TextFileGameLevels.printBlockList;
-import static otmkurssiprojekti.utilityclasses.TextFileGameLevels.printGameLevel;
-import static otmkurssiprojekti.utilityclasses.TextFileGameLevels.printLevelLinkList;
-import static otmkurssiprojekti.utilityclasses.TextFileGameLevels.printNPCList;
+import static otmkurssiprojekti.utilityclasses.StringGameLevels.BLOCKS_LEVEL;
+import static otmkurssiprojekti.utilityclasses.StringGameLevels.makeBlockList;
+import static otmkurssiprojekti.utilityclasses.StringGameLevels.makeGameLevel;
+import static otmkurssiprojekti.utilityclasses.StringGameLevels.makeLevelLinkList;
+import static otmkurssiprojekti.utilityclasses.StringGameLevels.makeNPCList;
+import static otmkurssiprojekti.utilityclasses.StringGameLevels.printBlockList;
+import static otmkurssiprojekti.utilityclasses.StringGameLevels.printGameLevel;
+import static otmkurssiprojekti.utilityclasses.StringGameLevels.printLevelLinkList;
+import static otmkurssiprojekti.utilityclasses.StringGameLevels.printNPCList;
 
 /**
  *
  * @author gjuho
  */
-public class TextFileGameLevelsTest {
+public class StringGameLevelsTest {
 
     private String pcString;
     private PlayerCharacter pc;
@@ -60,7 +60,7 @@ public class TextFileGameLevelsTest {
     private String gameLevelString;
     private GameLevel gameLevel;
 
-    public TextFileGameLevelsTest() {
+    public StringGameLevelsTest() {
     }
 
     @BeforeClass

@@ -16,7 +16,7 @@ import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.NonPlayerChara
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.PlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
 import otmkurssiprojekti.domain.gameobject.location.Direction;
-import static otmkurssiprojekti.utilityclasses.TextFileGameLevels.printGameLevel;
+import static otmkurssiprojekti.utilityclasses.StringGameLevels.printGameLevel;
 
 /**
  * The most basic implementation of a GameLevel.

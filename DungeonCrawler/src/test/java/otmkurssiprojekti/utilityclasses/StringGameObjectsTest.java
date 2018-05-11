@@ -25,22 +25,22 @@ import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.NonPlayerChara
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.PlayerCharacter;
 import otmkurssiprojekti.domain.gameobject.location.Coords;
 import static otmkurssiprojekti.domain.gameobject.location.Direction.DOWN;
-import static otmkurssiprojekti.utilityclasses.TextFileGameObjects.makeArcheType;
-import static otmkurssiprojekti.utilityclasses.TextFileGameObjects.makeCoords;
-import static otmkurssiprojekti.utilityclasses.TextFileGameObjects.makeLinkObject;
-import static otmkurssiprojekti.utilityclasses.TextFileGameObjects.makeNonPlayerCharacter;
-import static otmkurssiprojekti.utilityclasses.TextFileGameObjects.makePlayerCharacter;
-import static otmkurssiprojekti.utilityclasses.TextFileGameObjects.printArchetype;
-import static otmkurssiprojekti.utilityclasses.TextFileGameObjects.printCoords;
-import static otmkurssiprojekti.utilityclasses.TextFileGameObjects.printLinkObject;
-import static otmkurssiprojekti.utilityclasses.TextFileGameObjects.printNonPlayerCharacter;
-import static otmkurssiprojekti.utilityclasses.TextFileGameObjects.printPlayerCharacter;
+import static otmkurssiprojekti.utilityclasses.StringGameObjects.makeArcheType;
+import static otmkurssiprojekti.utilityclasses.StringGameObjects.makeCoords;
+import static otmkurssiprojekti.utilityclasses.StringGameObjects.makeLinkObject;
+import static otmkurssiprojekti.utilityclasses.StringGameObjects.makeNonPlayerCharacter;
+import static otmkurssiprojekti.utilityclasses.StringGameObjects.makePlayerCharacter;
+import static otmkurssiprojekti.utilityclasses.StringGameObjects.printArchetype;
+import static otmkurssiprojekti.utilityclasses.StringGameObjects.printCoords;
+import static otmkurssiprojekti.utilityclasses.StringGameObjects.printLinkObject;
+import static otmkurssiprojekti.utilityclasses.StringGameObjects.printNonPlayerCharacter;
+import static otmkurssiprojekti.utilityclasses.StringGameObjects.printPlayerCharacter;
 
 /**
  *
  * @author Juho Gröhn
  */
-public class TextFileGameObjectsTest {
+public class StringGameObjectsTest {
 
     private String pcString;
     private PlayerCharacter pc;
@@ -48,7 +48,7 @@ public class TextFileGameObjectsTest {
     private String loString;
     private LevelLink lo;
 
-    public TextFileGameObjectsTest() {
+    public StringGameObjectsTest() {
     }
 
     @BeforeClass
@@ -180,7 +180,7 @@ public class TextFileGameObjectsTest {
     }
 
     /**
-     * Test of makeLinkObject method, of class TextFileGameObjects.
+     * Test of makeLinkObject method, of class StringGameObjects.
      */
     @Test
     public void testMakeLinkObject() {
@@ -190,7 +190,7 @@ public class TextFileGameObjectsTest {
     }
 
     /**
-     * Test of makeLinkObject method, of class TextFileGameObjects.
+     * Test of makeLinkObject method, of class StringGameObjects.
      */
     @Test
     public void testMakeLinkObject_invalid() {

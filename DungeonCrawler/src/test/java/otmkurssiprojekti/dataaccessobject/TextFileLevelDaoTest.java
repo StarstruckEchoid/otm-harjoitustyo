@@ -38,7 +38,7 @@ import static otmkurssiprojekti.domain.gameobject.location.Direction.DOWN;
 import otmkurssiprojekti.domain.level.BasicGameLevel;
 import static otmkurssiprojekti.domain.level.BasicGameLevel.DIMENSIONS;
 import otmkurssiprojekti.domain.level.GameLevel;
-import static otmkurssiprojekti.utilityclasses.TextFileGameLevels.makeBlockList;
+import static otmkurssiprojekti.utilityclasses.StringGameLevels.makeBlockList;
 
 /**
  *

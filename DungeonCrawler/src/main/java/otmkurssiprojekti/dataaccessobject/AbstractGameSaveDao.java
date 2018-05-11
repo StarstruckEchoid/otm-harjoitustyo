@@ -16,6 +16,8 @@ import otmkurssiprojekti.dataaccessobject.dataobject.GameSave;
 import otmkurssiprojekti.domain.level.GameLevel;
 
 /**
+ * Defines the methods of GameSaveDao that all file-and-folder based
+ * GameSaveDaos use.
  *
  * @author Juho Gröhn
  */
