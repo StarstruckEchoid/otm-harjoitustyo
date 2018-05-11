@@ -28,4 +28,6 @@ EMPTY
 
 [;14,7,0;Starting_Level.txt
 
-EMPTY
+*;1,1,0;10
+*;2,1,0;10
+*;3,1,0;10

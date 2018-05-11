@@ -5,6 +5,7 @@
  */
 package otmkurssiprojekti.domain.gameobject.interfaces.derivatives;
 
+import otmkurssiprojekti.domain.gameobject.gameinanimates.PointsBall;
 import otmkurssiprojekti.domain.gameobject.interfaces.Destructible;
 import otmkurssiprojekti.domain.gameobject.interfaces.Hurtful;
 import otmkurssiprojekti.domain.gameobject.interfaces.Mobile;
@@ -17,5 +18,11 @@ import otmkurssiprojekti.domain.gameobject.interfaces.StatsObject;
  */
 public interface PlayerCharacter extends Mobile, Destructible, Hurtful, PointsSource, StatsObject {
 
-
+    /**
+     * Attempt to collect a PointsBall.
+     *
+     * @param pb The pointsBall to be collected.
+     * @return If collection was successful, return true. Else return false.
+     */
+    public boolean collectPoint(PointsBall pb);
 }

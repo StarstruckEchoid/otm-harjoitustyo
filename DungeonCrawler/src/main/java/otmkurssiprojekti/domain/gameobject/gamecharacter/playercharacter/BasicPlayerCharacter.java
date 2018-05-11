@@ -7,6 +7,7 @@ package otmkurssiprojekti.domain.gameobject.gamecharacter.playercharacter;
 
 import otmkurssiprojekti.domain.gameobject.archetypes.PlayerCharacterArchetype;
 import otmkurssiprojekti.domain.gameobject.gamecharacter.BasicStatsCharacter;
+import otmkurssiprojekti.domain.gameobject.gameinanimates.PointsBall;
 import otmkurssiprojekti.domain.gameobject.interfaces.Destructible;
 import otmkurssiprojekti.domain.gameobject.interfaces.PointsSource;
 import otmkurssiprojekti.domain.gameobject.interfaces.derivatives.PlayerCharacter;
@@ -71,6 +72,16 @@ public class BasicPlayerCharacter extends BasicStatsCharacter implements PlayerC
         super.hurt(d);
         if (d.isDead() && d instanceof PointsSource) {
             this.points += ((PointsSource) d).getPoints();
+        }
+    }
+
+    @Override
+    public boolean collectPoint(PointsBall pb) {
+        if (pb.getCoords().equals(this.coords)) {
+            this.points += pb.getPoints();
+            return true;
+        } else {
+            return false;
         }
     }
 

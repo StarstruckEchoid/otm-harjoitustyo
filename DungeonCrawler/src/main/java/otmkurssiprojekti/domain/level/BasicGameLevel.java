@@ -113,6 +113,7 @@ public class BasicGameLevel implements GameLevel {
     @Override
     public void movePlayer(Direction dir) {
         moveMobile(player, dir);
+        playerTouch();
     }
 
     public void moveMobile(Mobile mobile, Direction dir) {
@@ -194,6 +195,14 @@ public class BasicGameLevel implements GameLevel {
                 .filter(link -> link.getCoords().toFlatCoords().equals(pcCoords.toFlatCoords()))
                 .map(link -> link.getLinkAddress())
                 .findFirst();
+    }
+
+    private void playerTouch() {
+        Coords pcCoords = this.player.getCoords();
+        this.interactives.stream()
+                .filter(i -> i.getCoords().equals(pcCoords))
+                .forEach(i -> i.reactToTouch());
+        this.points.removeIf(pb -> this.player.collectPoint(pb));
     }
 
 }
