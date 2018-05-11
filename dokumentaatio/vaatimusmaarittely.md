@@ -32,6 +32,7 @@ Pelitilanne ja pelivalikko:
 * Käyttäjä voi kerätä pisteitä.
 * Käyttäjä voi taistella vihollisia vastaan. Sekä pelaajahahmo että viholliset ottavat toisiltaan vahinkoa ja voivat kuolla.
 * Käyttäjä voi liikkua toisiin tasoihin siirtymällä tasolinkkien luokse.
+* Käyttäjä voi vuorovaikuttaa maastoon ripoteltujen interaktiivisten esineiden, kuten ovien ja vipujen kanssa.
 * Käyttäjä pääsee taukovalikkoon.
 
 ### Taukovalikossa
@@ -43,8 +44,6 @@ Pelitilanne ja pelivalikko:
 ## Lähitulevaisuuden jatkokehityskohteet
 DungeonCrawlerin lähitulevaisuudessa on muutama ilmiselvä kehityskohde. Jos DungeonCrawlerin kehitys jatkuu kurssin jälkeen, nämä tullaan toteuttamaan ensimmäisenä.
 
-* Piste-esineet, joiden kerääminen maastosta nostaa pelaajan pistemäärää. Työtä jäljellä <10 tuntia.
-* Interaktiiviset esineet, jotka muuttavat tilaansa pelaajan vuorovaikutuksen seurauksena: esim. ovet ja napit. Työtä jäljellä <10 tuntia.
 * Tekstuureja käyttävä, graafisesti vaikuttavampi pelinäkymä.
   * Kuvatiedostoja käyttävä Rendererin toteuttava luokka ImageRenderer. Arviotu työmäärä 10 tuntia.
     * ImageService. Arvioitu työmäärä 10 tuntia.
