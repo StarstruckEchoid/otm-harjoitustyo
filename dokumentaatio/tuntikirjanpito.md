@@ -31,6 +31,6 @@
 | 7.5.  | 3        | Höylättiin käyttöliittymän ilmeiset bugit pois. |
 | 9.5.  | 4        | Viikatemies niittää turhaa koodia. Eloon jäänyt koodi sai lisää testejä. Rikottiin 200 testin raja. |
 | 10.5. | 6 (S=152)| Jynssättiin dokumentaatiota edustuskuntoon. Pientä koodin siloittelua. Uusi julkaisu. |
+| 11.5. | 5        | Loppurutistus. Interaktiiviset esineet ja pistekuplat toteutettu loppuun asti. Käyttämättömän koodin ja muiden tyylivirheiden paikkailua. |
 
-
-Työtunteja yhteensä: 152h
+Työtunteja yhteensä: 157h
