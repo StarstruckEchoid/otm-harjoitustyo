@@ -1,4 +1,4 @@
-# Testauksesta
+﻿# Testauksesta
 Ohjelmaa on testattu automatisoidusta JUnitilla toteutetuin yksikkötesteillä, ja muutamalla integraatiotestillä. Ohjelman käyttöliittymää on lisäksi testattu käsipelin.  
 Aivan kaikilla luokilla ei ole omaa testiluokkaansa, (koska aika on rajalline resurssi), mutta kaikki luokat tulevat kuitenkin ainakin olennaisilta osin testatuksi viimeistään integraatiotestien kautta.
 
@@ -16,7 +16,7 @@ Levyoperaatioita tekeviä luokkia, eli daoja [testataan](/DungeonCrawler/src/tes
 [Apuluokkien testit](/DungeonCrawler/src/test/java/otmkurssiprojekti/utilityclasses) ovat hyvin suoraviivaisia yksikkötestejä, kuitenkin sillä huomautuksella, että kukin apuluokka käyttää jossain vaiheessa projektin muita luokkia - nämä luokat ovat kuitenkin tehty auttamaan nimenomaan tämän projektin luokkia joidenkin asioiden tekemisessä - joten integraatiotestejä ei päästä näissä karkuun.  
 
 ## Testikattavuus
-Kirjoitushetkellä projektilla on 202 testiä, ja niiden rivikattavuus on 94% ja haarakattavuus 86%. Testeissä ei oteta huomion käyttöliittymää eikä myöskään pelkkiä enumeita sisältävää [domain.gameobjects.archetypes](/DungeonCrawler/src/main/java/otmkurssiprojekti/domain/gameobject/archetypes)-pakkausta.
+Kirjoitushetkellä projektilla on 224 testiä, ja niiden rivikattavuus on 94% ja haarakattavuus 83% - haarakattavuutta tosin laskee se, että monen luokan equals-metodissa on paljon haaroja, ja näistä suuri osa on täysin triviaaleja, esim. null-testejä. Testeissä ei oteta huomion käyttöliittymää. Testauksessa ei oteta huomioon [domain.gameobjects.archetypes](/DungeonCrawler/src/main/java/otmkurssiprojekti/domain/gameobject/archetypes)-pakkausta, sillä se sisältää pelkkiä enumeja, joissa taas ei ole käytännössä lainkaan mielekästä testattavaa.
 ![Jacoco](/dokumentaatio/kuvat/jacoco_report.PNG)
 
 ## Järjestelmätestaus

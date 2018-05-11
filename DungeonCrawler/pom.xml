@@ -29,7 +29,7 @@
                 <configuration>
                     <excludes>
                         <exclude>otmkurssiprojekti/userinterface/**/*</exclude>
-                        <exclude>otmkurssiprojekti/domain/gameobjects/archetypes/**/*</exclude>
+                        <exclude>otmkurssiprojekti/domain/gameobject/archetypes/**/*</exclude>
                     </excludes>
                 </configuration>
                 <executions>
