@@ -1,5 +1,5 @@
 ﻿# Dungeon Crawler
-Dungeon Crawler (nimi saattaa vielä muuttua) on ylhäältäpäin kuvattu seikkailupeli. Pelin ykistyiskohdista voi lukea tarkemmin [vaatimusmäärittelystä](/dokumentaatio/vaatimusmaarittely.md).
+Dungeon Crawler on ylhäältäpäin kuvattu seikkailupeli. Pelin ykistyiskohdista voi lukea tarkemmin [vaatimusmäärittelystä](/dokumentaatio/vaatimusmaarittely.md).
 
 ## Dokumentaatio
 * [Vaatimusmäärittely](/dokumentaatio/vaatimusmaarittely.md)
@@ -19,6 +19,10 @@ Testikattavuusraportin voi luoda komennolla
 Sovelluksen tyylin voi tarkistaa komennolla
 
     mvn jxr:jxr checkstyle:checkstyle
+    
+Javadocin voi generoida komennolla
+
+    mvn javadoc:javadoc
 
 ## Ohjelman generointi ja suoritus
 
@@ -26,10 +30,11 @@ Jarin voi generoida kansiossa DungeonCrawler komennolla
 
     mvn package
 
-Jarin voi suorittaa komennolla
+Jarin voi suorittaa samassa pakkauksessa komennolla
 
     java -jar target/DungeonCrawler-1.0-SNAPSHOT.jar 
 
 ## [Julkaisut](https://github.com/StarstruckEchoid/otm-harjoitustyo/releases)
-*[Pelin toinen valmis julkaisu, DungeonCrawler 1.1](https://github.com/StarstruckEchoid/otm-harjoitustyo/releases/tag/10.5.2018)
-*[Pelin ensimmäinen valmis julkaisu, DungeonCrawler 1.0](https://github.com/StarstruckEchoid/otm-harjoitustyo/releases/tag/7.5.2018).
+* [Kolmas valmis julkaisu, ja tämän kurssin loppupalautus, DungeonCrawler 1.2.](https://github.com/StarstruckEchoid/otm-harjoitustyo/releases/tag/11.5.2018)
+* [Pelin toinen valmis julkaisu, DungeonCrawler 1.1](https://github.com/StarstruckEchoid/otm-harjoitustyo/releases/tag/10.5.2018)
+* [Pelin ensimmäinen valmis julkaisu, DungeonCrawler 1.0](https://github.com/StarstruckEchoid/otm-harjoitustyo/releases/tag/7.5.2018).
